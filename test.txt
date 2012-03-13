@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 iowetjwejwofweowjfoejfowejfowei
 oifjqowejfwioefjweowijefoweijweofwei
 
@@ -58,6 +57,5 @@ kkk igen :)
 
 
 kkk 4 life
-=======
+
 HEJ
->>>>>>> 4670e02af49a6186810132f83d794478e1fe3928
