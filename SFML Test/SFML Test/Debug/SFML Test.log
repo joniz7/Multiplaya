@@ -1,0 +1,26 @@
+﻿Build started 3/27/2012 4:43:05 PM.
+     1>Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\SFML Test.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt sys\app.cpp
+         app.cpp
+     1>d:\c++\multiplaya\sfml test\sfml test\sys\app.cpp(203): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>d:\c++\multiplaya\sfml test\sfml test\sys\app.cpp(205): warning C4305: 'argument' : truncation from 'double' to 'float'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C++\Multiplaya\SFML Test\Debug\SFML Test.exe" /NOLOGO Box2D.lib "sfml-system-d.lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\SFML Test.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\C++\Multiplaya\SFML Test\Debug\SFML Test.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C++\Multiplaya\SFML Test\Debug\SFML Test.lib" /MACHINE:X86 Debug\bullet.obj
+         Debug\window.obj
+         Debug\main.obj
+         Debug\app.obj
+         LINK : D:\C++\Multiplaya\SFML Test\Debug\SFML Test.exe not found or not built by the last incremental link; performing full link
+         SFML Test.vcxproj -> D:\C++\Multiplaya\SFML Test\Debug\SFML Test.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\C++\Multiplaya\SFML Test\Debug\SFML Test.exe;#1" /manifest "Debug\SFML Test.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Debug\SFML Test.unsuccessfulbuild".
+         Touching "Debug\SFML Test.lastbuildstate".
+     1>Done Building Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.43
