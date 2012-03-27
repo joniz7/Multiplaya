@@ -32,11 +32,11 @@ namespace mp
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &circle;
 		// Set the box density to be non-zero, so it will be dynamic.
-		fixtureDef.density = 1.0f;
+		fixtureDef.density = 1.f;
 		// Override the default friction.
 		fixtureDef.friction = 0.0f;
 		// Set restitution
-		fixtureDef.restitution = 0.99f;
+		fixtureDef.restitution = 1.0f;
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
 		body->ApplyForce( force, body->GetPosition() );

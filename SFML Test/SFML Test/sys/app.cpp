@@ -53,69 +53,72 @@ namespace mp
     {
 
         //------------Startup stuff------------
+		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
+		float pixelScale = 1/10.0f;
 		sf::RenderWindow window(videoMode, "SFML Test Window");
         sf::Clock clock;
         window.setVerticalSyncEnabled(true);
         window.setFramerateLimit(60);
-        sf::RectangleShape background( sf::Vector2f(1600,1200) );
-		background.setOrigin(800,600);
+        sf::RectangleShape background( sf::Vector2f(1600*pixelScale,1200*pixelScale) );
+		background.setOrigin(800*pixelScale,600*pixelScale);
 		background.setPosition(0,0);
         background.setFillColor( sf::Color(75,75,75) );
-		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
-		float pixelScale = 10;
         //-------------------------------------
 
         //----Test stuff----
-		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100,5) );
-		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100,5) );
-		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5,100) );
-		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5,100) );
+		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
+		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
+		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
+		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
 		ground.setFillColor( sf::Color(25,25,25) );
 		ground2.setFillColor( sf::Color(25,25,25) );
 		ground3.setFillColor( sf::Color(25,25,25) );
 		ground4.setFillColor( sf::Color(25,25,25) );
-		ground.setOrigin(50,2.5f);
-		ground2.setOrigin(50,2.5f);
-		ground3.setOrigin(2.5f,50);
-		ground4.setOrigin(2.5f,50);
-		ground.setPosition(0,-50.0f);
-		ground2.setPosition(0,50.0f);
-		ground3.setPosition(50.0f,0);
-		ground4.setPosition(-50.0f,0);
+		ground.setOrigin(50*pixelScale,2.5f*pixelScale);
+		ground2.setOrigin(50*pixelScale,2.5f*pixelScale);
+		ground3.setOrigin(2.5f*pixelScale,50*pixelScale);
+		ground4.setOrigin(2.5f*pixelScale,50*pixelScale);
+		ground.setPosition(0,-50.0f*pixelScale);
+		ground2.setPosition(0,50.0f*pixelScale);
+		ground3.setPosition(50.0f*pixelScale,0);
+		ground4.setPosition(-50.0f*pixelScale,0);
 
-		sf::RectangleShape box = sf::RectangleShape( sf::Vector2f(2,2) );
-		box.setOrigin(1,1);
+		sf::RectangleShape box = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
+		box.setOrigin(1*pixelScale,1*pixelScale);
 		box.setFillColor(sf::Color(255,128,128));
-		box.setOutlineThickness(1/pixelScale);
+		box.setOutlineThickness(0.1f*pixelScale);
 		box.setOutlineColor(sf::Color::Black);
-		sf::RectangleShape box2 = sf::RectangleShape( sf::Vector2f(2,2) );
-		box2.setOrigin(1,1);
+		sf::RectangleShape box2 = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
+		box2.setOrigin(1*pixelScale,1*pixelScale);
 		box2.setFillColor(sf::Color(128,128,255));
-		box2.setOutlineThickness(1/pixelScale);
+		box2.setOutlineThickness(0.1f*pixelScale);
 		box2.setOutlineColor(sf::Color::Black);
 
-		sf::RectangleShape bulletVis = sf::RectangleShape( sf::Vector2f(0.5f,1.5f) );
-		bulletVis.setOrigin(0.05f,0.25f);
+		sf::RectangleShape bulletVis = sf::RectangleShape( sf::Vector2f(0.5f*pixelScale,1.5f*pixelScale) );
+		bulletVis.setOrigin(0.05f*pixelScale,0.25f*pixelScale);
 		bulletVis.setFillColor(sf::Color(255,255,255));
-		bulletVis.setOutlineThickness(1/pixelScale);
+		bulletVis.setOutlineThickness(0.1f*pixelScale);
 		bulletVis.setOutlineColor(sf::Color::Black);
         //------------------
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(400,300);
-		sf::View view1(center, halfSize);
+		sf::Vector2f halfSize(400*pixelScale,300*pixelScale);
+		sf::View view1(center*pixelScale, halfSize*pixelScale);
 		// Rotate the view 180 degrees
 		view1.setRotation(180);
 		// Zoom view
-		view1.zoom( 1/(0.25*pixelScale) );
+		view1.zoom( 3.75 );
 		// Set view
 		window.setView(view1);
 		//------------------
 
 		// Setup the world properties
 		bool doSleep = true;
-		b2Vec2 gravity(0,-9.8f);
+		b2Vec2 gravity(0,-25.8f);
+		float32 timeStep = 1.0f / 60.0f;
+		int32 velocityIterations = 6;
+		int32 positionIterations = 2;
 		// Create the world
 		b2World* world;
 		world = new b2World(gravity);
@@ -147,7 +150,7 @@ namespace mp
 		groundBody3->CreateFixture(&groundBox2, 0.0f);
 		groundBody4->CreateFixture(&groundBox2, 0.0f);
 
-		Bullet* boolet = new Bullet(world,b2Vec2(10,10),b2Vec2(-10000,10000));
+		Bullet* boolet = new Bullet(world,b2Vec2(10,10),b2Vec2(2000,-2000));
 
 		// Define the dynamic body. We set its position and call the body factory.
 		b2BodyDef bodyDef;
@@ -170,15 +173,10 @@ namespace mp
 		// Override the default friction.
 		fixtureDef.friction = 0.9f;
 		// Set restitution
-		fixtureDef.restitution = 0.2f;
+		fixtureDef.restitution = 0.25f;
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
 		body2->CreateFixture(&fixtureDef);
-
-		// Prep for simulation
-		float32 timeStep = 1.0f / 60.0f;
-		int32 velocityIterations = 6;
-		int32 positionIterations = 2;
 
         // Main loop
         bool Running = true;
@@ -210,14 +208,14 @@ namespace mp
             if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
             {
 				// Move box to mouse view coordinates
-				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, view1 );
+				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, view1 ) / pixelScale;
 				body->SetTransform(b2Vec2(position.x,position.y),0);
 				body->SetAwake(true);
             }
             if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
             {
 				// Move box to mouse view coordinates
-				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, view1 );
+				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, view1 ) / pixelScale;
 				body2->SetTransform(b2Vec2(position.x,position.y),0);
 				body2->SetAwake(true);
             }
@@ -232,7 +230,7 @@ namespace mp
 				body->ApplyForce( b2Vec2(0,-100), body->GetPosition() );
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-				body->ApplyForce( b2Vec2(0,3050), body->GetPosition() );
+				body->ApplyForce( b2Vec2(0,250), body->GetPosition() );
 
 			// Perform a physics step
 			world->Step(timeStep,velocityIterations,positionIterations);
@@ -243,16 +241,16 @@ namespace mp
 			b2Vec2 position = body->GetPosition();
 			float32 angle = body->GetAngle();
 			// Set view data
-			box.setPosition(position.x,position.y);
+			box.setPosition(position.x*pixelScale,position.y*pixelScale);
 			box.setRotation( angle*180/pi );
 			// Get model data
 			position = body2->GetPosition();
 			angle = body2->GetAngle();
 			// Set view data
-			box2.setPosition(position.x,position.y);
+			box2.setPosition(position.x*pixelScale,position.y*pixelScale);
 			box2.setRotation( angle*180/pi );
 
-			bulletVis.setPosition( sf::Vector2f(boolet->getBody()->GetPosition().x,boolet->getBody()->GetPosition().y) );
+			bulletVis.setPosition( sf::Vector2f(boolet->getBody()->GetPosition().x*pixelScale,boolet->getBody()->GetPosition().y*pixelScale) );
 
 			b2Vec2 v = boolet->getBody()->GetLinearVelocity();
 			float a = atan(v.x/v.y);
