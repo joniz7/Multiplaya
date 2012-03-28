@@ -1,6 +1,14 @@
 
+*.suo
+*.user
+*.ncb
+
 SFML Test/SFML_Test.opensdf
 SFML Test/SFML_Test.sdf
 SFML Test/SFML_Test.suo
 SFML Test/Debug/
+SFML Test/Release/
+SFML Test/CodeAnalyst/
 SFML Test/SFML Test/Debug/
+SFML Test/SFML Test/Debug/
+SFML Test/SFML_Test.suo
