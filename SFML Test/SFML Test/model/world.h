@@ -28,7 +28,7 @@ namespace mp
 			void exec();
             ~World();
         private:
-			
+//			b2Wordl* world;
     };
 }
 

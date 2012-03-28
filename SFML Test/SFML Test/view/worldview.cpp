@@ -128,11 +128,6 @@ namespace mp
 			bulletVis.setRotation( a * 180/-pi );
 */
 
-
-
-
-
-			
             // Clear screen
             window->clear();
             window->draw(background);
@@ -149,8 +144,6 @@ namespace mp
 
             // Update the window
             window->display();
-
-
 
 		}
 	}

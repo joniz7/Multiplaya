@@ -97,10 +97,7 @@ namespace mp
 		body2->CreateFixture(&fixtureDef);
 
 
-		while(true) {
-
-
-
+		while (true) {
 			// Perform a physics step
 			world->Step(timeStep,velocityIterations,positionIterations);
 			// Clear physics forces in prep for next step
@@ -115,14 +112,6 @@ namespace mp
 
 			b2Vec2 v = boolet->getBody()->GetLinearVelocity();
 			float a = atan(v.x/v.y);
-
-
-
-
-
-
-
-
 		}
     }
 
