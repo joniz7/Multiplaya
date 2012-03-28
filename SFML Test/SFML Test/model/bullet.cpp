@@ -13,13 +13,12 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Bullet::Bullet( b2World* world, b2Vec2 position, b2Vec2 force )
+    Bullet::Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
+		this->owner = owner;
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position.Set(position.x, position.y);
-		//float a = atan(force.y/force.x);
 		
-		//bodyDef.angle = a;
 		bodyDef.bullet = true;
 		body = world->CreateBody(&bodyDef);
 

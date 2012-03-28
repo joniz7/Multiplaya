@@ -19,6 +19,9 @@
 // Box2D specific headers
 #include <Box2D.h>
 
+//Defines
+#include "defines.h"
+
 namespace mp
 {
     class Character

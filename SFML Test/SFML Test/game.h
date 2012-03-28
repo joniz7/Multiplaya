@@ -11,7 +11,4 @@
 #include "model/world.h"
 #include "view/worldview.h"
 
-//Defines
-#include "defines.h"
-
 #endif

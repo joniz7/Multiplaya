@@ -10,12 +10,12 @@
 #include <list>
 
 // SFML specific headers
-	#include "sfml.h"
+#include "sfml.h"
 // Box2D specific headers
 #include <Box2D.h>
 // Game specific headers
 #include "game.h"
-// Defines. (pi)
+// Defines
 #include "defines.h"
 
 ////////////////////////////////////////////////////////////
@@ -172,7 +172,7 @@ namespace mp
 		groundBody3->CreateFixture(&groundBox2, 0.0f);
 		groundBody4->CreateFixture(&groundBox2, 0.0f);
 
-		Bullet* boolet = new Bullet(world,b2Vec2(10,10),b2Vec2(2000,-2000));
+		Bullet* boolet = new Bullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(2000,-2000));
 
 		// Define the dynamic body. We set its position and call the body factory.
 		b2BodyDef bodyDef;

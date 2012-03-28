@@ -19,6 +19,9 @@
 // Game specific headers
 #include "../game.h"
 
+// Defines
+#include "../defines.h"
+
 namespace mp
 {
     class World

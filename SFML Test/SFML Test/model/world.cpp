@@ -67,7 +67,7 @@ namespace mp
 		groundBody3->CreateFixture(&groundBox2, 0.0f);
 		groundBody4->CreateFixture(&groundBox2, 0.0f);
 
-		Bullet* boolet = new Bullet(world,b2Vec2(10,10),b2Vec2(2000,-2000));
+		Bullet* boolet = new Bullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(2000,-2000));
 
 		// Define the dynamic body. We set its position and call the body factory.
 		b2BodyDef bodyDef;

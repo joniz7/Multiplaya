@@ -21,6 +21,9 @@
 // Game specific headers
 #include "../game.h"
 
+//Defines
+#include "defines.h"
+
 namespace mp
 {
     class WorldData
@@ -28,8 +31,12 @@ namespace mp
         public:
 			WorldData();
             ~WorldData();
-			std::vector<Character>* getChrVec(){return &chrVec;};
-			std::vector<Bullet>* getBltVec(){return &bltVec;};
+			std::vector<Character>* getChrVec(){ return &chrVec; };
+			std::vector<Bullet>* getBltVec(){ return &bltVec; };
+			bool addCharacter();
+			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
+			Character* getCharacter(int i){ return &chrVec.at(i); };
+			Bullet* getBullet(int i){ return &bltVec.at(i); };
 		private:
 			// Vector containing bullets
 			std::vector<Bullet> bltVec;
