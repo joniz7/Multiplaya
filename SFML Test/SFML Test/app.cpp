@@ -10,31 +10,34 @@
 #include <list>
 
 // SFML specific headers
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-
+	#include "sfml.h"
 // Box2D specific headers
 #include <Box2D.h>
-
 // Game specific headers
 #include "game.h"
-
-#define pi 3.14159265
+// Defines. (pi)
+#include "defines.h"
 
 ////////////////////////////////////////////////////////////
 /// Application class. Manages the program, the controller,
 /// if you so will.
 ////////////////////////////////////////////////////////////
 
-void RenderThread()
-{
-    // Create WorldView instance
-	// Run WorldView exec() function
-}
-
 namespace mp
 {
+
+	void createViewThread()
+	{	
+		WorldView* view = new WorldView();
+		//view->exec();
+	}
+
+	void createModelThread()
+	{
+		World* model = new World();
+		//model->exec();
+	}
+
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
@@ -72,10 +75,12 @@ namespace mp
         background.setFillColor( sf::Color(75,75,75) );
         //-------------------------------------
 
-		// Render thread
-		sf::Thread renderThread(&RenderThread);
-		// Start threads
-		renderThread.launch();
+		// Create new view and logic threads.
+		sf::Thread viewThread(&createViewThread);
+		sf::Thread logicThread(&createModelThread);
+		// Start threads.
+		viewThread.launch();
+		logicThread.launch();
 
         //----Test stuff----
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );

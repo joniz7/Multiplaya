@@ -1,19 +1,21 @@
-﻿Build started 2012-03-28 13:04:40.
+﻿Build started 2012-03-28 15:36:20.
      1>Project "C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\SFML_Test.unsuccessfulbuild".
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp main.cpp
          app.cpp
-     1>c:\users\niklas\documents\dropbox\projects\multiplaya\multiplaya\sfml test\sfml test\app.cpp(215): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\niklas\documents\dropbox\projects\multiplaya\multiplaya\sfml test\sfml test\app.cpp(217): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\niklas\documents\dropbox\projects\multiplaya\multiplaya\sfml test\sfml test\app.cpp(224): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\niklas\documents\dropbox\projects\multiplaya\multiplaya\sfml test\sfml test\app.cpp(226): warning C4305: 'argument' : truncation from 'double' to 'float'
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         main.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\Debug\SFML_Test.exe" /NOLOGO Box2D.lib "sfml-system-d.lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\SFML_Test.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\Debug\SFML_Test.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\Debug\SFML_Test.lib" /MACHINE:X86 Debug\app.obj
          Debug\main.obj
          Debug\bullet.obj
          Debug\world.obj
          Debug\worldview.obj
-         LINK : C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\Debug\SFML_Test.exe not found or not built by the last incremental link; performing full link
          SFML Test.vcxproj -> C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\Debug\SFML_Test.exe
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Niklas\Documents\Dropbox\Projects\Multiplaya\Multiplaya\SFML Test\Debug\SFML_Test.exe;#1" /manifest Debug\SFML_Test.exe.intermediate.manifest
@@ -24,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.81
+Time Elapsed 00:00:03.48

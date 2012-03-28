@@ -27,7 +27,7 @@
     <ClCompile Include="model\world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="model\worlddata.cpp">
+    <ClCompile Include="view\worldview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,10 @@
     <ClInclude Include="model\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="model\worlddata.h">
+    <ClInclude Include="view\worldview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sfml.h">

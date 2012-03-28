@@ -2,6 +2,7 @@
 /// Application class. Manages the program, the controller,
 /// if you so will.
 ////////////////////////////////////////////////////////////
+
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
@@ -13,6 +14,7 @@
 
 // SFML specific headers
 #include "sfml.h"
+#include "game.h"
 
 typedef std::list<sf::Drawable*> RenderList;
 
@@ -27,6 +29,9 @@ namespace mp
         private:
 			sf::VideoMode videoMode;
             RenderList rListObjects;
+			WorldView * view;
+			World * model;
+
     };
 }
 

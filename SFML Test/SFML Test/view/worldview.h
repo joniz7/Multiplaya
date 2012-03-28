@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////
 /// World class. Takes care of game physics and logic
 ////////////////////////////////////////////////////////////
-#ifndef WORLD_H_INCLUDED
-#define WORLD_H_INCLUDED
+#ifndef WORLDVIEW_H_INCLUDED
+#define WORLDVIEW_H_INCLUDED
 
 // Other headers
 #include <string>
@@ -11,9 +11,7 @@
 #include <cmath>
 
 // SFML specific headers
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include "../sfml.h"
 
 // Box2D specific headers
 #include <Box2D.h>
