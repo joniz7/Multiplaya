@@ -28,7 +28,7 @@ namespace mp
             int exec(); //Main game loop
         private:
 			sf::VideoMode videoMode;
-            RenderList rListObjects;
+            RenderList rListObjects; //I like turtles
 			WorldView * view;
 			World * model;
 
