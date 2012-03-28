@@ -10,7 +10,7 @@
 #include <list>
 
 //Game specific headers
-#include "sys/app.h"
+#include "app.h"
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application

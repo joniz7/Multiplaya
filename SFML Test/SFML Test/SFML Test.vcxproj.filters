@@ -18,24 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\window.cpp">
+    <ClCompile Include="app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sys\app.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\bullet.cpp">
+    <ClCompile Include="model\bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graphics\window.h">
+    <ClInclude Include="app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sys\app.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\bullet.h">
+    <ClInclude Include="model\bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

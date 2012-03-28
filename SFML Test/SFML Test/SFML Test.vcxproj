@@ -80,15 +80,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\bullet.cpp" />
-    <ClCompile Include="graphics\window.cpp" />
+    <ClCompile Include="app.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="sys\app.cpp" />
+    <ClCompile Include="model\bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\bullet.h" />
-    <ClInclude Include="graphics\window.h" />
-    <ClInclude Include="sys\app.h" />
+    <ClInclude Include="app.h" />
+    <ClInclude Include="model\bullet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
