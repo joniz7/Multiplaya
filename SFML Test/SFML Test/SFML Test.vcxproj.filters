@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\model">
+      <UniqueIdentifier>{0d210405-9113-4095-ad81-920fb9e2d020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\view">
+      <UniqueIdentifier>{f92c259f-4484-4527-84c2-a14739c77f75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\model">
+      <UniqueIdentifier>{6f5c3233-c92f-4c64-ac3a-1238dc1340ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\view">
+      <UniqueIdentifier>{aa9928b4-837d-4bc2-bc98-1fe24c86b30e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -22,24 +34,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="model\bullet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\model</Filter>
     </ClCompile>
     <ClCompile Include="model\world.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
+    <ClCompile Include="view\worldview.cpp">
+      <Filter>Source Files\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="model\bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="model\bullet.h">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
     <ClInclude Include="model\world.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="view\worldview.h">
+      <Filter>Header Files\view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
