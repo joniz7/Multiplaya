@@ -1,13 +1,14 @@
-﻿Build started 3/28/2012 10:16:45 AM.
-     1>Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
+﻿Build started 3/28/2012 10:22:27 AM.
+     1>Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\SFML_Test.lastbuildstate".
+       InitializeBuildStatus:
          Creating "Debug\SFML_Test.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp model\bullet.cpp model\world.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp main.cpp model\bullet.cpp model\world.cpp
          world.cpp
          bullet.cpp
-         Generating Code...
-         Compiling...
+         main.cpp
          app.cpp
      1>d:\c++\multiplaya\sfml test\sfml test\app.cpp(201): warning C4305: 'argument' : truncation from 'double' to 'float'
      1>d:\c++\multiplaya\sfml test\sfml test\app.cpp(203): warning C4305: 'argument' : truncation from 'double' to 'float'
@@ -17,15 +18,14 @@
          Debug\main.obj
          Debug\bullet.obj
          Debug\world.obj
-         LINK : D:\C++\Multiplaya\SFML Test\Debug\SFML_Test.exe not found or not built by the last incremental link; performing full link
          SFML Test.vcxproj -> D:\C++\Multiplaya\SFML Test\Debug\SFML_Test.exe
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\C++\Multiplaya\SFML Test\Debug\SFML_Test.exe;#1" /manifest Debug\SFML_Test.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\SFML_Test.unsuccessfulbuild".
          Touching "Debug\SFML_Test.lastbuildstate".
-     1>Done Building Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" (build target(s)).
+     1>Done Building Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.30
+Time Elapsed 00:00:06.36
