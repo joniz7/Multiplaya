@@ -1,14 +1,12 @@
-﻿Build started 3/28/2012 9:51:40 AM.
+﻿Build started 3/28/2012 10:00:05 AM.
      1>Project "D:\C++\Multiplaya\SFML Test\SFML Test\SFML Test.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\SFML_Test.unsuccessfulbuild".
+         Creating "Debug\SFML_Test.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp main.cpp
-         main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W2 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp
          app.cpp
      1>d:\c++\multiplaya\sfml test\sfml test\app.cpp(201): warning C4305: 'argument' : truncation from 'double' to 'float'
      1>d:\c++\multiplaya\sfml test\sfml test\app.cpp(203): warning C4305: 'argument' : truncation from 'double' to 'float'
-         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C++\Multiplaya\SFML Test\Debug\SFML_Test.exe" /NOLOGO Box2D.lib "sfml-system-d.lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\SFML_Test.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\C++\Multiplaya\SFML Test\Debug\SFML_Test.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C++\Multiplaya\SFML Test\Debug\SFML_Test.lib" /MACHINE:X86 Debug\app.obj
          Debug\main.obj
@@ -24,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.14
+Time Elapsed 00:00:02.02

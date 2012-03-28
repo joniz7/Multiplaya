@@ -18,7 +18,7 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "model/bullet.h"
+#include "game.h"
 
 #define pi 3.14159265
 
