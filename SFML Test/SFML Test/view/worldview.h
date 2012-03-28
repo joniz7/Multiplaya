@@ -24,13 +24,17 @@ namespace mp
     class WorldView
     {
         public:
-			 WorldView();
+			WorldView();
+			void exec();
+			sf::RenderWindow* getWindow();
+			sf::View* getView();
             ~WorldView();
 			
 		protected:
     		
 		private:
-
+			sf::RenderWindow* window;
+			sf::View* view;
     };
 }
 
