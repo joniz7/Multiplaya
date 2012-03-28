@@ -84,12 +84,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
     <ClCompile Include="model\world.cpp" />
+    <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="model\bullet.h" />
     <ClInclude Include="model\world.h" />
+    <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,8 @@
 #include "model/worlddata.h"
 #include "model/bullet.h"
 
+#include "view/worldview.h"
+
 //Defines
 #include "defines.h"
 
