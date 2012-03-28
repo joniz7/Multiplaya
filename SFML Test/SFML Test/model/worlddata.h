@@ -12,9 +12,7 @@
 #include <cmath>
 
 // SFML specific headers
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include "../sfml.h"
 
 // Box2D specific headers
 #include <Box2D.h>

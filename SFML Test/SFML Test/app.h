@@ -5,12 +5,14 @@
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
+// Other headers
 #include <iostream>
 #include <string>
 #include <map>
 #include <list>
 
-#include <SFML/Graphics.hpp>
+// SFML specific headers
+#include "sfml.h"
 
 typedef std::list<sf::Drawable*> RenderList;
 
