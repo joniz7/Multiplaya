@@ -27,6 +27,12 @@
 /// if you so will.
 ////////////////////////////////////////////////////////////
 
+void RenderThread()
+{
+    // Create WorldView instance
+	// Run WorldView exec() function
+}
+
 namespace mp
 {
 	////////////////////////////////////////////////////////////
@@ -65,6 +71,11 @@ namespace mp
 		background.setPosition(0,0);
         background.setFillColor( sf::Color(75,75,75) );
         //-------------------------------------
+
+		// Render thread
+		sf::Thread renderThread(&RenderThread);
+		// Start threads
+		renderThread.launch();
 
         //----Test stuff----
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );

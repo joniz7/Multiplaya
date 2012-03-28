@@ -28,7 +28,10 @@ namespace mp
         public:
 			 WorldView();
             ~WorldView();
-        private:
+			
+		protected:
+    		
+		private:
 
     };
 }
