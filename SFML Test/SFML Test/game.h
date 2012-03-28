@@ -4,4 +4,7 @@
 //Game specific headers
 #include "model/bullet.h"
 
+//Defines
+#include "defines.h"
+
 #endif
