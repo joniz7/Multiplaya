@@ -53,8 +53,7 @@
     <ClCompile>
       <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -80,15 +79,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\bullet.cpp" />
-    <ClCompile Include="graphics\window.cpp" />
+    <ClCompile Include="app.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="sys\app.cpp" />
+    <ClCompile Include="model\bullet.cpp" />
+    <ClCompile Include="model\character.cpp" />
+    <ClCompile Include="model\world.cpp" />
+    <ClCompile Include="model\worlddata.cpp" />
+    <ClCompile Include="services\networkhandler.cpp" />
+    <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\bullet.h" />
-    <ClInclude Include="graphics\window.h" />
-    <ClInclude Include="sys\app.h" />
+    <ClInclude Include="app.h" />
+    <ClInclude Include="defines.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="model\bullet.h" />
+    <ClInclude Include="model\character.h" />
+    <ClInclude Include="model\world.h" />
+    <ClInclude Include="model\worlddata.h" />
+    <ClInclude Include="services\networkhandler.h" />
+    <ClInclude Include="sfml.h" />
+    <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
