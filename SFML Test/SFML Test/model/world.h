@@ -24,7 +24,8 @@ namespace mp
     class World
     {
         public:
-			 World();
+			World();
+			void exec();
             ~World();
         private:
 			
