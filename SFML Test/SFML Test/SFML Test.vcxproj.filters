@@ -1,81 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\model">
+    <Filter Include="src">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="src\model">
       <UniqueIdentifier>{09bd1fe2-e439-4745-bc44-3bddb863edaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\view">
+    <Filter Include="src\view">
       <UniqueIdentifier>{23adc54d-8ee5-47bb-8457-d2cbb74a52ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\services">
+    <Filter Include="src\services">
       <UniqueIdentifier>{343e8df0-ce33-4790-9725-4365f5d0eb74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\model">
-      <UniqueIdentifier>{3b86557d-8ad4-455d-bfcb-36f83b00f9dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\services">
-      <UniqueIdentifier>{b89eb45b-cca4-4b7d-828f-b1bc3edd1bb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\view">
-      <UniqueIdentifier>{4a202542-a173-427a-8d82-476bd71d5151}</UniqueIdentifier>
+    <Filter Include="src\includes">
+      <UniqueIdentifier>{a0f3e55c-4872-4e8a-af0d-ed9aea4db6e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="app.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="services\networkhandler.cpp">
-      <Filter>Source Files\services</Filter>
-    </ClCompile>
     <ClCompile Include="model\bullet.cpp">
-      <Filter>Source Files\model</Filter>
+      <Filter>src\model</Filter>
     </ClCompile>
     <ClCompile Include="model\world.cpp">
-      <Filter>Source Files\model</Filter>
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\worlddata.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="services\networkhandler.cpp">
+      <Filter>src\services</Filter>
     </ClCompile>
     <ClCompile Include="view\worldview.cpp">
-      <Filter>Source Files\view</Filter>
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="app.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sfml.h">
-      <Filter>Header Files</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="model\bullet.h">
-      <Filter>Header Files\model</Filter>
+      <Filter>src\model</Filter>
     </ClInclude>
     <ClInclude Include="model\world.h">
-      <Filter>Header Files\model</Filter>
+      <Filter>src\model</Filter>
     </ClInclude>
     <ClInclude Include="view\worldview.h">
-      <Filter>Header Files\view</Filter>
+      <Filter>src\view</Filter>
     </ClInclude>
     <ClInclude Include="services\networkhandler.h">
-      <Filter>Header Files\services</Filter>
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="model\worlddata.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>src\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sfml.h">
+      <Filter>src\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="defines.h">
+      <Filter>src\includes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

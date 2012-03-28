@@ -84,6 +84,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
     <ClCompile Include="model\world.cpp" />
+    <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
     <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
@@ -93,6 +94,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="model\bullet.h" />
     <ClInclude Include="model\world.h" />
+    <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\networkhandler.h" />
     <ClInclude Include="sfml.h" />
     <ClInclude Include="view\worldview.h" />
