@@ -221,9 +221,9 @@ namespace mp
 				if ( Event.type == sf::Event::MouseWheelMoved )
 				{
 					if( Event.mouseWheel.delta > 0)
-						view1.zoom(0.9);
+						view1.zoom(0.9f);
 					else
-						view1.zoom(1.1);
+						view1.zoom(1.1f);
 					window.setView(view1);
 				}
             }
