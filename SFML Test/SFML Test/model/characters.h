@@ -1,8 +1,11 @@
 ////////////////////////////////////////////////////////////
-/// Bullet
+/// Character class. Holds data regarding character
+/// position, activity etc..
+/// Does NOT handle player input etc., see Player class for
+/// that kind of stuff
 ////////////////////////////////////////////////////////////
-#ifndef BULLET_H_INCLUDED
-#define BULLET_H_INCLUDED
+#ifndef CHARACTER_H_INCLUDED
+#define CHARACTER_H_INCLUDED
 
 // Other headers
 #include <string>
@@ -16,20 +19,17 @@
 // Box2D specific headers
 #include <Box2D.h>
 
+// Game specific headers
+#include "../game.h"
+
 namespace mp
 {
-    class Bullet
+    class Character
     {
         public:
-			Bullet( b2World* world, b2Vec2 position, b2Vec2 force  );
-            ~Bullet();
-			b2Vec2 getPosition();
-			b2BodyDef* getBodyDef();
-			b2Body* getBody();
+			Character();
+            ~Character();
         private:
-			b2BodyDef bodyDef;
-			b2Body* body;
-
 			
     };
 }

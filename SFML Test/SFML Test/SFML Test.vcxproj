@@ -53,8 +53,7 @@
     <ClCompile>
       <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -83,6 +82,7 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
+    <ClCompile Include="model\character.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
@@ -93,6 +93,7 @@
     <ClInclude Include="defines.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="model\bullet.h" />
+    <ClInclude Include="model\character.h" />
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\networkhandler.h" />
