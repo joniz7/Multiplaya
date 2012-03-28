@@ -79,32 +79,36 @@ namespace mp
 
         //----Test stuff----
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
-		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
-		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
-		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
 		ground.setFillColor( sf::Color(25,25,25) );
-		ground2.setFillColor( sf::Color(25,25,25) );
-		ground3.setFillColor( sf::Color(25,25,25) );
-		ground4.setFillColor( sf::Color(25,25,25) );
 		ground.setOrigin(50*pixelScale,2.5f*pixelScale);
-		ground2.setOrigin(50*pixelScale,2.5f*pixelScale);
-		ground3.setOrigin(2.5f*pixelScale,50*pixelScale);
-		ground4.setOrigin(2.5f*pixelScale,50*pixelScale);
 		ground.setPosition(0,-50.0f*pixelScale);
-		ground2.setPosition(0,50.0f*pixelScale);
-		ground3.setPosition(50.0f*pixelScale,0);
-		ground4.setPosition(-50.0f*pixelScale,0);
 
-		sf::RectangleShape box = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
-		box.setOrigin(1*pixelScale,1*pixelScale);
-		box.setFillColor(sf::Color(255,128,128));
-		box.setOutlineThickness(0.1f*pixelScale);
-		box.setOutlineColor(sf::Color::Black);
-		sf::RectangleShape box2 = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
-		box2.setOrigin(1*pixelScale,1*pixelScale);
-		box2.setFillColor(sf::Color(128,128,255));
-		box2.setOutlineThickness(0.1f*pixelScale);
-		box2.setOutlineColor(sf::Color::Black);
+		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
+		ground2.setFillColor( sf::Color(25,25,25) );
+		ground2.setOrigin(50*pixelScale,2.5f*pixelScale);
+		ground2.setPosition(0,50.0f*pixelScale);
+		
+		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
+		ground3.setFillColor( sf::Color(25,25,25) );
+		ground3.setOrigin(2.5f*pixelScale,50*pixelScale);
+		ground3.setPosition(50.0f*pixelScale,0);
+
+		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
+		ground4.setFillColor( sf::Color(25,25,25) );
+		ground4.setOrigin(2.5f*pixelScale,50*pixelScale);
+		ground4.setPosition(-50.0f*pixelScale,0);
+		
+		sf::RectangleShape redBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
+		redBox.setOrigin(1*pixelScale,1*pixelScale);
+		redBox.setFillColor(sf::Color(255,128,128));
+		redBox.setOutlineThickness(0.1f*pixelScale);
+		redBox.setOutlineColor(sf::Color::Black);
+		
+		sf::RectangleShape blueBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
+		blueBox.setOrigin(1*pixelScale,1*pixelScale);
+		blueBox.setFillColor(sf::Color(128,128,255));
+		blueBox.setOutlineThickness(0.1f*pixelScale);
+		blueBox.setOutlineColor(sf::Color::Black);
 
 		sf::RectangleShape bulletVis = sf::RectangleShape( sf::Vector2f(0.5f*pixelScale,1.5f*pixelScale) );
 		bulletVis.setOrigin(0.05f*pixelScale,0.25f*pixelScale);
@@ -140,7 +144,7 @@ namespace mp
 		b2BodyDef groundBodyDef;
 		groundBodyDef.position.Set(0.0f, -50.0f);
 		// Call the body factory which allocates memory for the ground body
-		// from a pool and creates the ground box shape (also from a pool).
+		// from a pool and creates the ground redBox shape (also from a pool).
 		// The body is also added to the world.
 		b2Body* groundBody = world->CreateBody(&groundBodyDef);
 		groundBodyDef.position.Set(0.0f, 50.0f);
@@ -150,12 +154,13 @@ namespace mp
 		groundBodyDef.position.Set(-50.0f, 0);
 		b2Body* groundBody4 = world->CreateBody(&groundBodyDef);
 
-		// Define the ground box shape.
+		// Define the ground box shape, extents are the half-widths of the box.
 		b2PolygonShape groundBox;
-		b2PolygonShape groundBox2;
-		// The extents are the half-widths of the box.
 		groundBox.SetAsBox(50.0f, 2.5f);
+
+		b2PolygonShape groundBox2;
 		groundBox2.SetAsBox(2.5f, 50.0f);
+		
 		// Add the ground fixture to the ground body.
 		groundBody->CreateFixture(&groundBox, 0.0f);
 		groundBody2->CreateFixture(&groundBox, 0.0f);
@@ -166,14 +171,15 @@ namespace mp
 
 		// Define the dynamic body. We set its position and call the body factory.
 		b2BodyDef bodyDef;
-		b2BodyDef bodyDef2;
 		bodyDef.type = b2_dynamicBody;
-		bodyDef2.type = b2_dynamicBody;
-		//bodyDef.fixedRotation = true;
 		bodyDef.position.Set(0.0f, 4.0f);
-		bodyDef2.position.Set(1.0f, 8.0f);
 		b2Body* body = world->CreateBody(&bodyDef);
+
+		b2BodyDef bodyDef2;
+		bodyDef2.type = b2_dynamicBody;
+		bodyDef2.position.Set(1.0f, 8.0f);
 		b2Body* body2 = world->CreateBody(&bodyDef2);
+		
 		// Define another box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
 		dynamicBox.SetAsBox(1.0f, 1.0f);
@@ -191,8 +197,8 @@ namespace mp
 		body2->CreateFixture(&fixtureDef);
 
         // Main loop
-        bool Running = true;
-        while (Running)
+        bool running = true;
+        while (running)
         {
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();
@@ -253,14 +259,14 @@ namespace mp
 			b2Vec2 position = body->GetPosition();
 			float32 angle = body->GetAngle();
 			// Set view data
-			box.setPosition(position.x*pixelScale,position.y*pixelScale);
-			box.setRotation( angle*180/pi );
+			redBox.setPosition(position.x*pixelScale,position.y*pixelScale);
+			redBox.setRotation( angle*180/pi );
 			// Get model data
 			position = body2->GetPosition();
 			angle = body2->GetAngle();
 			// Set view data
-			box2.setPosition(position.x*pixelScale,position.y*pixelScale);
-			box2.setRotation( angle*180/pi );
+			blueBox.setPosition(position.x*pixelScale,position.y*pixelScale);
+			blueBox.setRotation( angle*180/pi );
 
 			bulletVis.setPosition( sf::Vector2f(boolet->getBody()->GetPosition().x*pixelScale,boolet->getBody()->GetPosition().y*pixelScale) );
 
@@ -277,8 +283,8 @@ namespace mp
 			window.draw(ground2);
 			window.draw(ground3);
 			window.draw(ground4);
-			window.draw(box);
-			window.draw(box2);
+			window.draw(redBox);
+			window.draw(blueBox);
 			window.draw(bulletVis);
             //---------------------------------
 
