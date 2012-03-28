@@ -1,8 +1,6 @@
-/*
-/ World class
-/ Author: Felix Willebrand Westin
-/ License: GPLv3
-*/
+////////////////////////////////////////////////////////////
+/// World class. Takes care of game physics and logic
+////////////////////////////////////////////////////////////
 #ifndef WORLD_H_INCLUDED
 #define WORLD_H_INCLUDED
 

@@ -1,8 +1,7 @@
-/*
-/ Application run class
-/ Author: Felix Willebrand Westin
-/ License: GPLv3
-*/
+////////////////////////////////////////////////////////////
+/// Application class. Manages the program, the controller,
+/// if you so will.
+////////////////////////////////////////////////////////////
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
