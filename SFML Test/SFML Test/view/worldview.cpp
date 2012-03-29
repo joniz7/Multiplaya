@@ -57,9 +57,12 @@ namespace mp
 		if(!hudTex.loadFromFile("hud.png"))
 			std::cout<<"Failed to load texture: hud.png"<<std::endl;
 		hudSpr.setTexture(hudTex);
-		hudSpr.setScale(pixelScale,pixelScale);
-		hudSpr.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
+		hudSpr.setOrigin(WIDTH/2,HEIGHT/2);
+		hudSpr.setScale(0.01875,0.01875);
+		//hudSpr.setOrigin(WIDTH/2*1/pixelScale,HEIGHT/2*1/pixelScale);
+		//hudSpr.setOrigin(500,500);
 		hudSpr.setPosition(0,0);
+		hudSpr.setRotation(180);
 
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
 		ground.setFillColor( sf::Color(25,25,25) );
