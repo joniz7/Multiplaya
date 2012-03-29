@@ -6,7 +6,7 @@ Version: 1
 
 Date: 15/3 2012
 
-Author: Niklas Logren, Niklas Andréasson, Jonathan Orrö, Felix Willebrand Westin
+Author: Niklas Logren, Niklas Andrï¿½asson, Jonathan Orrï¿½, Felix Willebrand Westin
 
 This version overrides all previous versions.
 
@@ -34,13 +34,12 @@ GUI, Graphical User Interface
 In this section we specify all requirements
 
 2.1 Functional requirements
-1. The user hosts or joins a game
-2. If the user is hosting, she now chooses the map on which the battle will take place.
-3. The user selects a character.
-4. The user is placed on the battlefield, where she can walk, jump and fire her weapon in an effort to kill the other players.
-5. At the end of the round, the player with the highest kill count wins.
+1. The user should be able to host a game
+2. If the user is hosting, she should be able to pick a map.
+3. The user should be able to pick a character.
+4. The user should be placed on the battlefield, where she should be able to walk, jump and fire her weapon in an effort to kill the other players.
+5. At the end of the round, the player with the highest kill count should win.
 
-Skriv som krav. “The application should...”
 2.2 Non-functional requirements
 
 2.2.1 Usability
@@ -48,11 +47,12 @@ Skriv som krav. “The application should...”
 2.2.2 Reliability
 
 2.2.3 Performance
-Thou shalt not lag.
+The game should run with a reasonable frame rate on an average computer. The networking should not lag.
 2.2.4 Supportability
 
 2.2.5 Implementation
-
+The game will include both server and client software. The game must be installed on all computers who wish to run it.
+There will be working Windows, Mac and Linux versions of the game.
 2.2.6 Packaging and installation
 
 2.2.7 Legal
@@ -65,7 +65,12 @@ UML and a list of UC names (text for all in appendix)
 
 2.3.2 Use cases priority
 
-A list
+1. Walking
+2. Jumping
+3. Hosting a game
+4. Joining a game
+5. Entering a game
+6. Walljumping
 
 2.3.3 Domain model
 
