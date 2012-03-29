@@ -33,7 +33,7 @@ namespace mp
 			World();
 			void exec();
             ~World();
-			b2World* getWorld();
+			b2World* getWorld(){return world;};
 			WorldData* getWorldData();
         private:
 			WorldData* worldData;

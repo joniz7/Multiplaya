@@ -55,9 +55,6 @@ namespace mp
 			// Get a specific body
 			b2Body* getBody(int i){ return bodyVec.at(i); };
 
-			//Other
-			void ping();
-
 		private:
 			// Pointer to corresponding world object
 			World* world;
@@ -67,7 +64,6 @@ namespace mp
 			std::vector<Character> chrVec;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodyVec;
-			
     };
 }
 

@@ -30,50 +30,17 @@ namespace mp
 
 	void createModelThread(void* UserData)
 	{
-		worldMutex.lock();	// Lock world mutex since we are handling world class
+		// Lock world
+		worldMutex.lock();
 		std::cout<<"Starting logic thread..."<<std::endl;
 		// Cast to world pointer
 		World* model = static_cast<World*>(UserData);
 		model = new World();
 		std::cout<<"Logic thread up and running!"<<std::endl;
-		worldMutex.unlock(); // Unlock world mutex
+		// Unlock world
+		worldMutex.unlock();
 		model->exec();
 	}
-
-	/*
-	void createViewThread(void* UserData)
-	{
-		std::cout<<"C"<<std::endl;
-		WorldData* worldData = static_cast<WorldData*>(UserData);
-
-		//model->getWorldData();
-		
-		GlobalMutex.lock();
-		std::cout<<"C"<<std::endl;
-		// Cast to world pointer
-		World* model = static_cast<World*>(UserData);
-		// Make sure world data has been initialized before creating the view
-		
-		bool ready = false;
-		while(!ready)
-		{
-			if(model!=NULL)
-			{
-				WorldData* foo = model->getWorldData();
-				if(foo!=NULL)
-					ready = true;
-			}
-		}
-		
-		// Initialize the view and pass the world data pointer as argument
-		WorldView* view = new WorldView( model->getWorldData() );
-		std::cout<<"D"<<std::endl;
-		GlobalMutex.unlock();
-		view->exec();
-		
-		std::cout<<"D"<<std::endl;
-	}
-	*/
 
 	////////////////////////////////////////////////////////////
 	// Constructor

@@ -130,6 +130,7 @@ namespace mp
 			else
 				counter++;
 
+			/*
             // Handle events
             sf::Event Event;
             while (window->pollEvent(Event))
@@ -148,6 +149,7 @@ namespace mp
 					window->setView(*view1);
 				}
             }
+			*/
 
             if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
             {
@@ -163,6 +165,11 @@ namespace mp
             {
 				// Move box to mouse view coordinates
 				sf::Vector2f position = window->convertCoords( sf::Mouse::getPosition(*window).x,sf::Mouse::getPosition(*window).y, *view1 ) / pixelScale;
+				worldDataMutex.lock();
+				worldData->getBody(0)->SetTransform(b2Vec2(position.x,position.y),0);
+				worldData->getBody(0)->SetAwake(true);
+				worldDataMutex.unlock();
+
 				/*
 				body2->SetTransform(b2Vec2(position.x,position.y),0);
 				body2->SetAwake(true);
