@@ -94,8 +94,4 @@ namespace mp
 		bodyVec.back()->CreateFixture(&fixtureDef);
 		return false;
     }
-
-	void WorldData::ping(){
-		std::cout<<"It's working!"<<std::endl;
-	}
 }
