@@ -55,6 +55,13 @@ namespace mp
 			// Get a specific body
 			b2Body* getBody(int i){ return bodyVec.at(i); };
 
+			// Get logic fps
+			int getLogicFps(){return logicFps;};
+
+			// Setters
+			// Set logic fps
+			void setLogicFps(int fps){logicFps = fps;};
+
 		private:
 			// Pointer to corresponding world object
 			//World* world;
@@ -64,6 +71,8 @@ namespace mp
 			std::vector<Character> chrVec;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodyVec;
+			// Variable for keeping track of logic thread fps
+			int logicFps;
     };
 }
 

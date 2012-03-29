@@ -94,6 +94,8 @@ namespace mp
 				world->Step(timeStep,velocityIterations,positionIterations);
 				// Clear physics forces in prep for next step
 				world->ClearForces();
+				// Save logic fps
+				worldData->setLogicFps((int)(1/elapsed));
 				// Unlock world data
 				worldDataMutex.unlock();
 				sum = 0;

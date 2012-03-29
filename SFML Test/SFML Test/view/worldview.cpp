@@ -6,6 +6,7 @@
 #include "../model/worlddata.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "../global.h"
 
@@ -26,6 +27,13 @@ namespace mp
 	sf::View* WorldView::getView() {
 		std::cout << "getView()" << std::endl;
 		return view1;
+	}
+
+	std::string convertInt(int number)
+	{
+	   std::stringstream ss;//create a stringstream
+	   ss << number;//add number to the stream
+	   return ss.str();//return a string with the contents of the stream
 	}
 
 	const int WIDTH = 1280;
@@ -54,7 +62,7 @@ namespace mp
 
 
 		//----Test stuff----
-		if(!hudTex.loadFromFile("hud.png"))
+		if(!hudTex.loadFromFile("resources/hud.png"))
 			std::cout<<"Failed to load texture: hud.png"<<std::endl;
 		hudSpr.setTexture(hudTex);
 		hudSpr.setOrigin(WIDTH/2,HEIGHT/2);
@@ -63,6 +71,20 @@ namespace mp
 		//hudSpr.setOrigin(500,500);
 		hudSpr.setPosition(0,0);
 		hudSpr.setRotation(180);
+
+		sf::Font fontGothic;
+		fontGothic.loadFromFile("resources/gothic.ttf");
+
+		sf::Text renderFpsTxt("Render fps: 00");
+		sf::Text logicFpsTxt("Logic fps:  00");
+		renderFpsTxt.setFont(fontGothic);
+		logicFpsTxt.setFont(fontGothic);
+		renderFpsTxt.setCharacterSize(25);
+		logicFpsTxt.setCharacterSize(25);
+		renderFpsTxt.setStyle(sf::Text::Regular);
+		logicFpsTxt.setStyle(sf::Text::Regular);
+		renderFpsTxt.setPosition(8, 0);
+		logicFpsTxt.setPosition(8, 30);
 
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
 		ground.setFillColor( sf::Color(25,25,25) );
@@ -126,10 +148,20 @@ namespace mp
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
+			// Only display fps every tenth frame (easier to read)
 			if(counter==10)
 			{
-				int frameFps = (int)(1/elapsed);
-				std::cout<<"Rendering fps: "<<frameFps<<std::endl;
+				int renderFps = (int)(1/elapsed);
+				worldDataMutex.lock();
+				int logicFps = worldData->getLogicFps();
+				std::string a = convertInt(renderFps);
+				std::string b = convertInt(logicFps);
+				std::cout<<a<<std::endl;
+				//std::cout<<"Logic fps: "<<logicFps<<std::endl;
+				//renderFpsTxt.setString(elapsed);
+				renderFpsTxt.setString("Render fps: "+a);
+				logicFpsTxt.setString("Logic fps:  "+b);
+				worldDataMutex.unlock();
 				counter = 0;
 			}
 			else
@@ -250,11 +282,13 @@ namespace mp
 			*/
 			worldDataMutex.unlock();
 
+			window.setView(*view1);
+
             // Clear screen
             window.clear();
             window.draw(background);
 
-            //----------Drawing phase----------
+            //----------World Rendering phase----------
 			window.draw(ground);
 			window.draw(ground2);
 			window.draw(ground3);
@@ -263,7 +297,14 @@ namespace mp
 			window.draw(blueBox);
 			window.draw(bulletVis);
 			window.draw(hudSpr);
-            //---------------------------------
+            //-----------------------------------------
+
+			//------------UI Rendering phase-----------
+			window.setView(window.getDefaultView());
+			//window.draw(hudSpr);
+			window.draw(renderFpsTxt);
+			window.draw(logicFpsTxt);
+			//-----------------------------------------
 
             // Update the window
             window.display();
