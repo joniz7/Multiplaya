@@ -45,6 +45,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
+		std::cout<<"Added a bullet"<<std::endl;
 		// Do different things depending on the type of bullet
 		switch(type)
 		{
@@ -71,6 +72,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBody( b2World* world, b2Vec2 position, b2Vec2 size )
     {
+		std::cout<<"Added a body"<<std::endl;
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position.Set(position.x, position.y);

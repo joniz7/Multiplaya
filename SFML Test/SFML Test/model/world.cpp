@@ -34,7 +34,7 @@ namespace mp
     World::World()
     {
 		// Setup the world properties
-		b2Vec2 gravity(0,-25.8f);
+		b2Vec2 gravity(0,-9.8f);
 		// Create the world
 		world = new b2World(gravity);
 		// Initialize world data instance
@@ -116,11 +116,13 @@ namespace mp
 		*/
 
 		// New code
-		/*
+		worldDataMutex.lock();
 		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,1.0f) );
 		worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,1.0f) );
-		worldData->addBullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(2000,-2000));
-		*/
+		worldData->addBullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(0,0));
+
+		worldDataMutex.unlock();
+		
 		// Logic loop
 		worldDataMutex.unlock();
 		bool running = true;
@@ -130,6 +132,8 @@ namespace mp
 			world->Step(timeStep,velocityIterations,positionIterations);
 			// Clear physics forces in prep for next step
 			world->ClearForces();
+
+			//std::cout<<"( "<<worldData->getBody(0)->GetPosition().x<<" , "<<worldData->getBody(0)->GetPosition().y<<" )"<<std::endl;
 			
 			/*
 			// Get model data

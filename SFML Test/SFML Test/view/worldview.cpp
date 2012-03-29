@@ -20,7 +20,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     WorldView::WorldView( WorldData* worldData )
 	{
-		//this->worldData = worldData;
+		this->worldData = worldData;
 	}
 
 	sf::RenderWindow* WorldView::getWindow() {
@@ -190,6 +190,34 @@ namespace mp
 
 			// Access world data
 			worldDataMutex.lock();
+			std::vector<b2Body*>* tv = worldData->getBodyVec();
+			std::vector<Bullet>* bv = worldData->getBltVec();
+			
+			if(tv->size() > 0)
+			{
+				b2Vec2 position = worldData->getBody(0)->GetPosition();
+				float32 angle = worldData->getBody(0)->GetAngle();
+				redBox.setPosition(position.x*pixelScale,position.y*pixelScale);
+				redBox.setRotation( angle*180/pi );
+			}
+
+			if(tv->size() > 1)
+			{
+				b2Vec2 position = worldData->getBody(1)->GetPosition();
+				float32 angle = worldData->getBody(1)->GetAngle();
+				blueBox.setPosition(position.x*pixelScale,position.y*pixelScale);
+				blueBox.setRotation( angle*180/pi );
+			}
+
+			if(tv->size() > 0)
+			{
+				b2Vec2 position = worldData->getBullet(0)->getBody()->GetPosition();
+				b2Vec2 v = worldData->getBullet(0)->getBody()->GetLinearVelocity();
+				float a = atan(v.x/v.y);
+				bulletVis.setPosition(position.x*pixelScale,position.y*pixelScale);
+				bulletVis.setRotation( a * 180/-pi );
+			}
+
 			/*
 			std::cout<<"1"<<std::endl;
 
