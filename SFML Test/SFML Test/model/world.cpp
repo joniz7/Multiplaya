@@ -54,9 +54,9 @@ namespace mp
 		sf::Thread viewThread(&createViewThread, worldData);
 		viewThread.launch();
 		// World step properties
-		float32 timeStep = 1.0f / 60.0f;
-		int32 velocityIterations = 6;
-		int32 positionIterations = 2;
+		const float32 timeStep = 1.0f / 60.0f;
+		const int32 velocityIterations = 6;
+		const int32 positionIterations = 2;
 
 		// Define a ground body
 		b2BodyDef groundBodyDef;
@@ -90,17 +90,31 @@ namespace mp
 		// Unlock world data
 		worldDataMutex.unlock();
 		
+		sf::Clock clock;
+		int counter = 0;
+		float sum = 0;
+
 		// Logic loop
 		bool running = true;
 		while(running){
-			// Lock world data
-			worldDataMutex.lock();
-			// Perform a physics step
-			world->Step(timeStep,velocityIterations,positionIterations);
-			// Clear physics forces in prep for next step
-			world->ClearForces();
-			// Unlock world data
-			worldDataMutex.unlock();
+			float elapsed = clock.getElapsedTime().asSeconds();
+            clock.restart();
+
+			sum+=elapsed;
+
+			//TODO: Hard coded fps limiter for Box2D as I couldn't get it to act normally. WARNING: SUPER BAD AND SHOULD BE FIXED ASAP
+			if(sum > 1/240.0f)
+			{
+				// Lock world data
+				worldDataMutex.lock();
+				// Perform a physics step
+				world->Step(timeStep,velocityIterations,positionIterations);
+				// Clear physics forces in prep for next step
+				world->ClearForces();
+				// Unlock world data
+				worldDataMutex.unlock();
+				sum = 0;
+			}
 		}
     }
 

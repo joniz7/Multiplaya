@@ -29,15 +29,15 @@ namespace mp
         public:
 			WorldView( WorldData* worldData );
 			void exec();
-			sf::RenderWindow* getWindow();
 			sf::View* getView();
             ~WorldView();
 			
 		protected:
     		
 		private:
+			sf::Texture hudTex;
+			sf::Sprite hudSpr;
 			WorldData* worldData;
-			sf::RenderWindow* window;
 			sf::View* view1;
     };
 }

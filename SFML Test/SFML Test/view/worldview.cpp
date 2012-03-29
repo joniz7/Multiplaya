@@ -23,18 +23,13 @@ namespace mp
 		this->worldData = worldData;
 	}
 
-	sf::RenderWindow* WorldView::getWindow() {
-		std::cout << "getWindow()" << std::endl;
-		return window;
-	}
-
 	sf::View* WorldView::getView() {
 		std::cout << "getView()" << std::endl;
 		return view1;
 	}
 
-	const int WIDTH = 800;
-	const int HEIGHT = 600;
+	const int WIDTH = 1280;
+	const int HEIGHT = 720;
 
 	////////////////////////////////////////////////////////////
 	// The graphics loop.
@@ -47,18 +42,25 @@ namespace mp
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
 		float pixelScale = 1/10.0f;
 		// set member variable
-		window = new sf::RenderWindow(videoMode, "SFML Test Window");
+		sf::RenderWindow window(videoMode, "SFML Test Window");
         sf::Clock clock;
-        window->setVerticalSyncEnabled(true);
-        window->setFramerateLimit(60);
-        sf::RectangleShape background( sf::Vector2f(1600*pixelScale,1200*pixelScale) );
-		background.setOrigin(800*pixelScale,600*pixelScale);
+        window.setVerticalSyncEnabled(true);
+        window.setFramerateLimit(60);
+        sf::RectangleShape background( sf::Vector2f(WIDTH*2*pixelScale,HEIGHT*2*pixelScale) );
+		background.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
 		background.setPosition(0,0);
         background.setFillColor( sf::Color(75,75,75) );
         //-------------------------------------
 
 
 		//----Test stuff----
+		if(!hudTex.loadFromFile("hud.png"))
+			std::cout<<"Failed to load texture: hud.png"<<std::endl;
+		hudSpr.setTexture(hudTex);
+		hudSpr.setScale(pixelScale,pixelScale);
+		hudSpr.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
+		hudSpr.setPosition(0,0);
+
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
 		ground.setFillColor( sf::Color(25,25,25) );
 		ground.setOrigin(50*pixelScale,2.5f*pixelScale);
@@ -100,14 +102,14 @@ namespace mp
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(400*pixelScale,300*pixelScale);
+		sf::Vector2f halfSize(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
 		view1 = new sf::View(center*pixelScale, halfSize*pixelScale);
 		// Rotate the view 180 degrees
 		view1->setRotation(180);
 		// Zoom view
 		view1->zoom( 3.75 );
 		// Set view
-		window->setView(*view1);
+		window.setView(*view1);
 		//------------------
 
 		std::cout << "Initialized render window" << std::endl;
@@ -121,7 +123,7 @@ namespace mp
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
-			if(counter==3)
+			if(counter==10)
 			{
 				int frameFps = 1/elapsed;
 				std::cout<<"Rendering fps: "<<frameFps<<std::endl;
@@ -154,7 +156,7 @@ namespace mp
             if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
             {
 				// Move box to mouse view coordinates
-				sf::Vector2f position = window->convertCoords( sf::Mouse::getPosition(*window).x , sf::Mouse::getPosition(*window).y, *view1 ) / pixelScale;
+				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x , sf::Mouse::getPosition(window).y, *view1 ) / pixelScale;
 				redBox.setPosition(position);
 				/*
 				body->SetTransform(b2Vec2(position.x,position.y),0);
@@ -164,7 +166,7 @@ namespace mp
             if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
             {
 				// Move box to mouse view coordinates
-				sf::Vector2f position = window->convertCoords( sf::Mouse::getPosition(*window).x,sf::Mouse::getPosition(*window).y, *view1 ) / pixelScale;
+				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *view1 ) / pixelScale;
 				worldDataMutex.lock();
 				worldData->getBody(0)->SetTransform(b2Vec2(position.x,position.y),0);
 				worldData->getBody(0)->SetAwake(true);
@@ -176,24 +178,19 @@ namespace mp
 				*/
             }
 
-			/*
+			
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				body->ApplyForce( b2Vec2(100,0), body->GetPosition() );
+				worldData->getBody(0)->ApplyForce( b2Vec2(150,0), worldData->getBody(0)->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				body->ApplyForce( b2Vec2(-100,0), body->GetPosition() );
+				worldData->getBody(0)->ApplyForce( b2Vec2(-150,0), worldData->getBody(0)->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				body->ApplyForce( b2Vec2(0,100), body->GetPosition() );
+				worldData->getBody(0)->ApplyForce( b2Vec2(0,150), worldData->getBody(0)->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				body->ApplyForce( b2Vec2(0,-100), body->GetPosition() );
+				worldData->getBody(0)->ApplyForce( b2Vec2(0,-150), worldData->getBody(0)->GetPosition() );
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-				body->ApplyForce( b2Vec2(0,250), body->GetPosition() );
-
-			// Perform a physics step
-			world->Step(timeStep,velocityIterations,positionIterations);
-			// Clear physics forces in prep for next step
-			world->ClearForces();
-			*/
+				worldData->getBody(0)->ApplyForce( b2Vec2(0,250), worldData->getBody(0)->GetPosition() );
+			
 
 			// Access world data
 			worldDataMutex.lock();
@@ -251,21 +248,22 @@ namespace mp
 			worldDataMutex.unlock();
 
             // Clear screen
-            window->clear();
-            window->draw(background);
+            window.clear();
+            window.draw(background);
 
             //----------Drawing phase----------
-			window->draw(ground);
-			window->draw(ground2);
-			window->draw(ground3);
-			window->draw(ground4);
-			window->draw(redBox);
-			window->draw(blueBox);
-			window->draw(bulletVis);
+			window.draw(ground);
+			window.draw(ground2);
+			window.draw(ground3);
+			window.draw(ground4);
+			window.draw(redBox);
+			window.draw(blueBox);
+			window.draw(bulletVis);
+			window.draw(hudSpr);
             //---------------------------------
 
             // Update the window
-            window->display();
+            window.display();
 
         }
 	}

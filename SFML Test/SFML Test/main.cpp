@@ -21,8 +21,8 @@
 
 int main()
 {
-	const int WIDTH = 800;
-	const int HEIGHT = 600;
+	const int WIDTH = 1280;
+	const int HEIGHT = 720;
     // Create the application
 	mp::App application(sf::VideoMode(WIDTH, HEIGHT, 32));
 
