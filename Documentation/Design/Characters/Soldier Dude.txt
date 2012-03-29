@@ -1,0 +1,15 @@
+Class Name:
+	Soldier Dude
+Focus:
+	Balanced medium ranged combat
+
+Primary Weapon:
+	Assault Rifle
+Secondary Weapon:
+	2x Grenade (subject to change)
+Dash Move:
+	Tackle
+	
+Notes:
+	Tackle move stuns enemies momentarily, knocking them back.
+	Grenade bounces off walls, exploding after a short while (or when hits enemy).

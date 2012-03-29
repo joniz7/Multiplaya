@@ -1,0 +1,16 @@
+Class Name:
+	Stealth Gal
+Focus:
+	Stealth, quick strikes, fast movement
+
+Primary Weapon:
+	Pistol
+Secondary Weapon:
+	Knife (instakill?)
+Dash Move:
+	Ghost
+	
+Notes:
+	Can scale walls instead of just slide down them.
+	Takes less fall damage.
+	Ghost skill creates a "hologram" that keeps moving in the same direction the player was. Turns player invisible for a short period of time (or until hit/weapon fired).

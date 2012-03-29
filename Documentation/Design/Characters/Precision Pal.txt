@@ -1,0 +1,14 @@
+Class Name:
+	Precision Pal
+Focus:
+	Ranged combat, mines, getaway
+
+Primary Weapon:
+	Precision Rifle
+Secondary Weapon:
+	Mine
+Dash Move:
+	Smoke Cloud
+	
+Notes:
+	Dash move creates a smoke cloud. Enemies inside smoke cloud have their visibility reduced (vignette?).

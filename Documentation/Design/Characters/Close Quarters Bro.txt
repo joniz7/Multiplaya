@@ -1,0 +1,16 @@
+Class Name:
+	Close Quarters Bro
+Focus:
+	Close range combat
+
+Primary Weapon:
+	Shotgun
+Secondary Weapon:
+	Unarmed (punch on ground, kick in air)
+Dash Move:
+	Knife swipe
+	
+Notes:
+	When unarmed moves 75% faster (subject to change).
+	Melee causes slight knockback on enemies.
+	Dash move does damage.
