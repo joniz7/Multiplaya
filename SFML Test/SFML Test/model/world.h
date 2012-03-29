@@ -30,7 +30,7 @@ namespace mp
     class World
     {
         public:
-			World();
+			World(WorldData* worldData);
 			void exec();
             ~World();
 			b2World* getWorld(){return world;};

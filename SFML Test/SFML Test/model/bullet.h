@@ -27,10 +27,13 @@ namespace mp
         public:
 			Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force  );
             ~Bullet();
-			b2Vec2 getPosition();
-			b2BodyDef* getBodyDef();
-			b2Body* getBody();
+			b2Vec2 getPosition(){return body->GetPosition();};
+			b2BodyDef* getBodyDef(){return &bodyDef;};
+			b2Body* getBody(){return body;};
+			BulletType getType(){return type;};
+			int getOwner(){return owner;};
         private:
+			BulletType type;
 			int owner;
 			b2BodyDef bodyDef;
 			b2Body* body;

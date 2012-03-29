@@ -58,7 +58,7 @@ namespace mp
 			std::cout<<"Failed to load texture: hud.png"<<std::endl;
 		hudSpr.setTexture(hudTex);
 		hudSpr.setOrigin(WIDTH/2,HEIGHT/2);
-		hudSpr.setScale(0.01875,0.01875);
+		hudSpr.setScale(0.01875f,0.01875f);
 		//hudSpr.setOrigin(WIDTH/2*1/pixelScale,HEIGHT/2*1/pixelScale);
 		//hudSpr.setOrigin(500,500);
 		hudSpr.setPosition(0,0);
@@ -128,7 +128,7 @@ namespace mp
 
 			if(counter==10)
 			{
-				int frameFps = 1/elapsed;
+				int frameFps = (int)(1/elapsed);
 				std::cout<<"Rendering fps: "<<frameFps<<std::endl;
 				counter = 0;
 			}

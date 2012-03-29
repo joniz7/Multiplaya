@@ -27,12 +27,12 @@
 namespace mp
 {
 	//Forward declaration so WorldData can have a World pointer
-	class World;
+	//class World;
 
     class WorldData
     {
         public:
-			WorldData(World* world);
+			WorldData();
             ~WorldData();
 
 			//Adders
@@ -57,7 +57,7 @@ namespace mp
 
 		private:
 			// Pointer to corresponding world object
-			World* world;
+			//World* world;
 			// Vector containing bullets
 			std::vector<Bullet> bltVec;
 			// Vector containing characters

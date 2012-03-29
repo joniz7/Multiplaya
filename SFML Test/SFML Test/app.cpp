@@ -27,36 +27,53 @@
 
 namespace mp
 {
-
+	////////////////////////////////////////////////////////////
+	// Initializes the model thread which runs the game logic.
+	// Must have a pointer to WorldData instance as argument
+	////////////////////////////////////////////////////////////
 	void createModelThread(void* UserData)
 	{
-		// Lock world
-		worldMutex.lock();
+		// Lock world data so only one thread can access world data at the same time
+		worldDataMutex.lock();
 		std::cout<<"Starting logic thread..."<<std::endl;
-		// Cast to world pointer
-		World* model = static_cast<World*>(UserData);
-		model = new World();
+		// Cast to world data pointer
+		WorldData* worldData = static_cast<WorldData*>(UserData);
+		// Initialize the model and pass the world data pointer as argument
+		World* model = new World(worldData);
 		std::cout<<"Logic thread up and running!"<<std::endl;
-		// Unlock world
-		worldMutex.unlock();
+		// Unlock world data
+		worldDataMutex.unlock();
 		model->exec();
+	}
+
+	////////////////////////////////////////////////////////////
+	// Initializes the view thread which renders the graphics.
+	// Must have a pointer to WorldData instance as argument
+	////////////////////////////////////////////////////////////
+	void createViewThread(void* UserData)
+	{
+		// Lock world data so only one thread can access world data at the same time
+		worldDataMutex.lock();
+		std::cout<<"Starting view thread..."<<std::endl;
+		// Cast to world data pointer
+		WorldData* worldData = static_cast<WorldData*>(UserData);
+		// Initialize the view and pass the world data pointer as argument
+		WorldView* view = new WorldView(worldData);
+		std::cout<<"View thread up and running!"<<std::endl;
+		// Unlock world data
+		worldDataMutex.unlock();
+		view->exec();
 	}
 
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    App::App(sf::VideoMode mode)
-    {
-		videoMode = mode;
-    }
+    App::App(sf::VideoMode mode){videoMode = mode;}
 
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////
-    App::~App()
-    {
-
-    }
+    App::~App(){}
 
 	////////////////////////////////////////////////////////////
 	// Render window execute function. Starts the game threads
@@ -65,11 +82,16 @@ namespace mp
 	////////////////////////////////////////////////////////////
     int App::exec()
     {
-		// Create logic which in turn creates the view thread
-		sf::Thread logicThread(&createModelThread, model);
+		// Initialize world data instance
+		worldData = new WorldData();
+		// Create and launch the logic thread
+		sf::Thread logicThread(&createModelThread, worldData);
 		logicThread.launch();
+		// Create and launch the view thread
+		sf::Thread viewThread(&createViewThread, worldData);
+		viewThread.launch();
 
-        // Main loop
+        // Main loop. Do other things here I guess
         bool running = true;
         while (running)
         {

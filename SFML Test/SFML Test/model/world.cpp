@@ -16,33 +16,16 @@
 
 namespace mp
 {
-
-	void createViewThread(void* UserData)
-	{
-		std::cout<<"Starting view thread..."<<std::endl;
-		// Cast to world data pointer
-		WorldData* worldData = static_cast<WorldData*>(UserData);
-		// Initialize the view and pass the world data pointer as argument
-		WorldView* view = new WorldView( worldData );
-		std::cout<<"View thread up and running!"<<std::endl;
-		view->exec();
-	}
-
 	////////////////////////////////////////////////////////////
-	// Constructor
+	// Constructor. Initializes the world.
 	////////////////////////////////////////////////////////////
-    World::World()
+    World::World(WorldData* worldData)
     {
+		this->worldData = worldData;
 		// Setup the world properties
 		b2Vec2 gravity(0,-9.8f);
 		// Create the world
 		world = new b2World(gravity);
-		// Lock world data
-		worldDataMutex.lock();
-		// Initialize world data instance
-		worldData = new WorldData(this);
-		// Unlock world data
-		worldDataMutex.unlock();
     }
 
 	////////////////////////////////////////////////////////////
@@ -50,9 +33,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
     void World::exec()
     {
-		// Launch the view thread
-		sf::Thread viewThread(&createViewThread, worldData);
-		viewThread.launch();
 		// World step properties
 		const float32 timeStep = 1.0f / 60.0f;
 		const int32 velocityIterations = 6;
@@ -82,14 +62,17 @@ namespace mp
 		groundBody3->CreateFixture(&groundBox2, 0.0f);
 		groundBody4->CreateFixture(&groundBox2, 0.0f);
 
-		// Add test stuff to the world (by adding it to world data)
+		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
+		// Add two bodies to the world
 		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,1.0f) );
 		worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,1.0f) );
+		// Add a bullet to the world
 		worldData->addBullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(-50,0));
 		// Unlock world data
 		worldDataMutex.unlock();
 		
+		// Keep track of time. Shouldn't have to do this, really. Read comment down below.
 		sf::Clock clock;
 		int counter = 0;
 		float sum = 0;
@@ -102,10 +85,10 @@ namespace mp
 
 			sum+=elapsed;
 
-			//TODO: Hard coded fps limiter for Box2D as I couldn't get it to act normally. WARNING: SUPER BAD AND SHOULD BE FIXED ASAP
+			//TODO: Hard coded fps limiter for Box2D as I couldn't get it to act normally. WARNING: SUPER INCORRECT AND SHOULD BE FIXED ASAP
 			if(sum > 1/240.0f)
 			{
-				// Lock world data
+				// Lock world data so only one thread can access world data at the same time
 				worldDataMutex.lock();
 				// Perform a physics step
 				world->Step(timeStep,velocityIterations,positionIterations);
@@ -121,10 +104,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////
-    World::~World()
-    {
-
-    }
+    World::~World(){}
 
 	////////////////////////////////////////////////////////////
 	// Get world data pointer

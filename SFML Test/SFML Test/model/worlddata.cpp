@@ -17,18 +17,12 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldData::WorldData(World* world)
-    {
-		this->world = world;
-    }
+    WorldData::WorldData(){}
 
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////
-    WorldData::~WorldData()
-    {
-
-    }
+    WorldData::~WorldData(){}
 
 	////////////////////////////////////////////////////////////
 	// Adds a bullet to the world
@@ -92,6 +86,6 @@ namespace mp
 		fixtureDef.restitution = 0.25f;
 		// Add the shape to the body.
 		bodyVec.back()->CreateFixture(&fixtureDef);
-		return false;
+		return true;
     }
 }
