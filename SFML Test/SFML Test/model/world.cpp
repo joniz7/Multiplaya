@@ -3,9 +3,12 @@
 ////////////////////////////////////////////////////////////
 // Class header
 #include "world.h"
+#include "worlddata.h"
 
 #include <iostream>
 #include <dos.h>
+
+#include "../global.h"
 
 ////////////////////////////////////////////////////////////
 /// World class. Takes care of game physics and logic
@@ -13,12 +16,31 @@
 
 namespace mp
 {
+
+	void createViewThread(void* UserData)
+	{
+		std::cout<<"Starting view thread..."<<std::endl;
+		WorldData* worldData = static_cast<WorldData*>(UserData);
+
+		// Initialize the view and pass the world data pointer as argument
+		WorldView* view = new WorldView( worldData );
+		std::cout<<"View thread up and running!"<<std::endl;
+		view->exec();
+	}
+
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
     World::World()
     {
-		std::cout << "World constructor." << std::endl;
+		// Setup the world properties
+		b2Vec2 gravity(0,-25.8f);
+		// Create the world
+		world = new b2World(gravity);
+		// Initialize world data instance
+		worldDataMutex.lock();
+		worldData = new WorldData(this);
+		worldDataMutex.unlock();
     }
 
 	////////////////////////////////////////////////////////////
@@ -27,20 +49,17 @@ namespace mp
 	////////////////////////////////////////////////////////////
     void World::exec()
     {
-		std::cout << "World exec()" << std::endl;
 
-		// Setup the world properties
-		bool doSleep = true;
-		b2Vec2 gravity(0,-25.8f);
+		sf::Thread viewThread(&createViewThread, worldData);
+		viewThread.launch();
+
+		worldDataMutex.lock();
+		// World step properties
 		float32 timeStep = 1.0f / 60.0f;
 		int32 velocityIterations = 6;
 		int32 positionIterations = 2;
-		// Create the world
-		b2World* world;
-		world = new b2World(gravity);
-		world->SetAllowSleeping(doSleep);
 
-		//Define a ground body
+		// Define a ground body
 		b2BodyDef groundBodyDef;
 		groundBodyDef.position.Set(0.0f, -50.0f);
 		// Call the body factory which allocates memory for the ground body
@@ -67,8 +86,7 @@ namespace mp
 		groundBody3->CreateFixture(&groundBox2, 0.0f);
 		groundBody4->CreateFixture(&groundBox2, 0.0f);
 
-		Bullet* boolet = new Bullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(2000,-2000));
-
+		/*	//Old code
 		// Define the dynamic body. We set its position and call the body factory.
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
@@ -95,23 +113,35 @@ namespace mp
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
 		body2->CreateFixture(&fixtureDef);
+		*/
 
-
-		while (true) {
+		// New code
+		/*
+		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,1.0f) );
+		worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,1.0f) );
+		worldData->addBullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(2000,-2000));
+		*/
+		// Logic loop
+		worldDataMutex.unlock();
+		bool running = true;
+		while(running){
+			worldDataMutex.lock();
 			// Perform a physics step
 			world->Step(timeStep,velocityIterations,positionIterations);
 			// Clear physics forces in prep for next step
 			world->ClearForces();
-
+			
+			/*
 			// Get model data
-			b2Vec2 position = body->GetPosition();
-			float32 angle = body->GetAngle();
+			b2Vec2 position = worldData->getBody(0)->GetPosition();
+			float32 angle = worldData->getBody(0)->GetAngle();
 			// Get model data
-			position = body2->GetPosition();
-			angle = body2->GetAngle();
-
-			b2Vec2 v = boolet->getBody()->GetLinearVelocity();
+			position = worldData->getBody(1)->GetPosition();
+			angle = worldData->getBody(1)->GetAngle();
+			b2Vec2 v = worldData->getBullet(0)->getBody()->GetLinearVelocity();
 			float a = atan(v.x/v.y);
+			*/
+			worldDataMutex.unlock();
 		}
     }
 
@@ -122,4 +152,24 @@ namespace mp
     {
 
     }
+
+	////////////////////////////////////////////////////////////
+	// Get world
+	////////////////////////////////////////////////////////////
+	b2World* World::getWorld()
+	{
+		return world;
+	}
+
+	////////////////////////////////////////////////////////////
+	// Get world data pointer
+	////////////////////////////////////////////////////////////
+	WorldData* World::getWorldData()
+	{
+		worldDataMutex.lock(); // Lock world data mutex since we are handling world data class
+		std::cout<<"Someone stole the world data!"<<std::endl;
+		WorldData* temp = worldData;
+		worldDataMutex.unlock(); // Unlock world data mutex
+		return temp;
+	}
 }

@@ -47,6 +47,9 @@
     <ClCompile Include="model\character.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
+    <ClCompile Include="global.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -78,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="model\character.h">
       <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

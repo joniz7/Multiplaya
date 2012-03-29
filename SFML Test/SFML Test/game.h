@@ -8,7 +8,6 @@
 //Game specific headers
 #include "model/character.h"
 #include "model/bullet.h"
-#include "model/world.h"
 #include "view/worldview.h"
 
 #endif

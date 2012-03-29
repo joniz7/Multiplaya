@@ -3,6 +3,9 @@
 ////////////////////////////////////////////////////////////
 // Class header
 #include "worlddata.h"
+#include "world.h"
+
+#include "../global.h"
 
 ////////////////////////////////////////////////////////////
 /// World data class. Holds all data world class uses for 
@@ -14,9 +17,9 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldData::WorldData()
+    WorldData::WorldData(World* world)
     {
-		
+		this->world = world;
     }
 
 	////////////////////////////////////////////////////////////
@@ -42,6 +45,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
+		// Do different things depending on the type of bullet
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
@@ -60,4 +64,36 @@ namespace mp
     {
 		return false;
     }
+
+	////////////////////////////////////////////////////////////
+	// Adds a generic body to the world
+	// returns true upon success
+	////////////////////////////////////////////////////////////
+    bool WorldData::addBody( b2World* world, b2Vec2 position, b2Vec2 size )
+    {
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position.Set(position.x, position.y);
+		bodyVec.push_back( world->CreateBody(&bodyDef) );
+
+		// Define a box shape for our dynamic body.
+		b2PolygonShape dynamicBox;
+		dynamicBox.SetAsBox(size.x, size.y);
+		// Define the dynamic body fixture.
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &dynamicBox;
+		// Set the box density to be non-zero, so it will be dynamic.
+		fixtureDef.density = 1.0f;
+		// Override the default friction.
+		fixtureDef.friction = 0.9f;
+		// Set restitution
+		fixtureDef.restitution = 0.25f;
+		// Add the shape to the body.
+		bodyVec.back()->CreateFixture(&fixtureDef);
+		return false;
+    }
+
+	void WorldData::ping(){
+		std::cout<<"It's working!"<<std::endl;
+	}
 }

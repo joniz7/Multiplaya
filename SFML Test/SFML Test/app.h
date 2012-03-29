@@ -15,6 +15,7 @@
 // SFML specific headers
 #include "sfml.h"
 #include "game.h"
+#include "model\world.h"
 
 typedef std::list<sf::Drawable*> RenderList;
 
@@ -28,7 +29,7 @@ namespace mp
             int exec(); //Main game loop
         private:
 			sf::VideoMode videoMode;
-            RenderList rListObjects; //I like turtles
+            RenderList rListObjects;
 			WorldView * view;
 			World * model;
 

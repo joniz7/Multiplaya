@@ -21,10 +21,13 @@
 
 namespace mp
 {
+	//Forward declaration so WorldView can have a WorldData pointer
+	class WorldData;
+
     class WorldView
     {
         public:
-			WorldView();
+			WorldView( WorldData* worldData );
 			void exec();
 			sf::RenderWindow* getWindow();
 			sf::View* getView();
@@ -33,8 +36,9 @@ namespace mp
 		protected:
     		
 		private:
+			WorldData* worldData;
 			sf::RenderWindow* window;
-			sf::View* view;
+			sf::View* view1;
     };
 }
 

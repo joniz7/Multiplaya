@@ -18,25 +18,62 @@
 // Defines
 #include "defines.h"
 
+#include "global.h"
+
 ////////////////////////////////////////////////////////////
-/// Application class. Manages the program, the controller,
+/// Application class. Manages the program. The controller,
 /// if you so will.
 ////////////////////////////////////////////////////////////
 
 namespace mp
 {
 
-	void createViewThread()
-	{	
-		WorldView* view = new WorldView();
-		//view->exec();
+	void createModelThread(void* UserData)
+	{
+		worldMutex.lock();	// Lock world mutex since we are handling world class
+		std::cout<<"Starting logic thread..."<<std::endl;
+		// Cast to world pointer
+		World* model = static_cast<World*>(UserData);
+		model = new World();
+		std::cout<<"Logic thread up and running!"<<std::endl;
+		worldMutex.unlock(); // Unlock world mutex
+		model->exec();
 	}
 
-	void createModelThread()
+	/*
+	void createViewThread(void* UserData)
 	{
-		World* model = new World();
-		//model->exec();
+		std::cout<<"C"<<std::endl;
+		WorldData* worldData = static_cast<WorldData*>(UserData);
+
+		//model->getWorldData();
+		
+		GlobalMutex.lock();
+		std::cout<<"C"<<std::endl;
+		// Cast to world pointer
+		World* model = static_cast<World*>(UserData);
+		// Make sure world data has been initialized before creating the view
+		
+		bool ready = false;
+		while(!ready)
+		{
+			if(model!=NULL)
+			{
+				WorldData* foo = model->getWorldData();
+				if(foo!=NULL)
+					ready = true;
+			}
+		}
+		
+		// Initialize the view and pass the world data pointer as argument
+		WorldView* view = new WorldView( model->getWorldData() );
+		std::cout<<"D"<<std::endl;
+		GlobalMutex.unlock();
+		view->exec();
+		
+		std::cout<<"D"<<std::endl;
 	}
+	*/
 
 	////////////////////////////////////////////////////////////
 	// Constructor
@@ -61,7 +98,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     int App::exec()
     {
-
+		/*
         //------------Startup stuff------------
 		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
 		float pixelScale = 1/10.0f;
@@ -74,14 +111,13 @@ namespace mp
 		background.setPosition(0,0);
         background.setFillColor( sf::Color(75,75,75) );
         //-------------------------------------
+		*/
 
-		// Create new view and logic threads.
-		sf::Thread viewThread(&createViewThread);
-		sf::Thread logicThread(&createModelThread);
-		// Start threads.
-		viewThread.launch();
+		// Create logic which in turn creates the view thread
+		sf::Thread logicThread(&createModelThread, model);
 		logicThread.launch();
 
+		/*
         //----Test stuff----
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
 		ground.setFillColor( sf::Color(25,25,25) );
@@ -200,11 +236,13 @@ namespace mp
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
 		body2->CreateFixture(&fixtureDef);
+		*/
 
         // Main loop
         bool running = true;
         while (running)
         {
+			/*
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
@@ -295,6 +333,7 @@ namespace mp
 
             // Update the window
             window.display();
+			*/
 
         }
         return EXIT_SUCCESS;

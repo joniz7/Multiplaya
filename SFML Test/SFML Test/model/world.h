@@ -24,14 +24,20 @@
 
 namespace mp
 {
+	//Forward declaration so World can have a WorldData pointer
+	class WorldData;
+
     class World
     {
         public:
 			World();
 			void exec();
             ~World();
+			b2World* getWorld();
+			WorldData* getWorldData();
         private:
-//			b2Wordl* world;
+			WorldData* worldData;
+			b2World* world;
     };
 }
 
