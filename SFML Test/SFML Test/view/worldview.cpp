@@ -36,8 +36,8 @@ namespace mp
 	   return ss.str();//return a string with the contents of the stream
 	}
 
-	const int WIDTH = 1280;
-	const int HEIGHT = 720;
+	const float WIDTH = 1280;
+	const float HEIGHT = 720;
 
 	////////////////////////////////////////////////////////////
 	// The graphics loop.
@@ -46,14 +46,19 @@ namespace mp
 	void WorldView::exec() {
 
 		//------------Startup stuff------------
-		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
+		// Set up and initialize render window
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
-		float pixelScale = 1/10.0f;
-		// set member variable
 		sf::RenderWindow window(videoMode, "SFML Test Window");
+		// Don't display mouse cursor
+		window.setMouseCursorVisible(false);
+		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
+		float pixelScale = 1/10.0f;
+		// Clock for frame time counting
         sf::Clock clock;
+		// Set window data
         window.setVerticalSyncEnabled(true);
         window.setFramerateLimit(60);
+		// Background stuff
         sf::RectangleShape background( sf::Vector2f(WIDTH*2*pixelScale,HEIGHT*2*pixelScale) );
 		background.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
 		background.setPosition(0,0);
@@ -61,16 +66,20 @@ namespace mp
         //-------------------------------------
 
 
+
 		//----Test stuff----
 		if(!hudTex.loadFromFile("resources/hud.png"))
 			std::cout<<"Failed to load texture: hud.png"<<std::endl;
 		hudSpr.setTexture(hudTex);
-		hudSpr.setOrigin(WIDTH/2,HEIGHT/2);
-		hudSpr.setScale(0.01875f,0.01875f);
-		//hudSpr.setOrigin(WIDTH/2*1/pixelScale,HEIGHT/2*1/pixelScale);
-		//hudSpr.setOrigin(500,500);
-		hudSpr.setPosition(0,0);
-		hudSpr.setRotation(180);
+		hudSpr.setScale(WIDTH/1920,HEIGHT/1080);
+
+		sf::Texture dotTex;
+		sf::Sprite dotSpr;
+		if(!dotTex.loadFromFile("resources/reddot.png"))
+			std::cout<<"Failed to load texture: reddot.png"<<std::endl;
+		dotSpr.setTexture(dotTex);
+		dotSpr.setOrigin(32,32);
+		dotSpr.setScale(0.5,0.5);
 
 		sf::Font fontGothic;
 		fontGothic.loadFromFile("resources/gothic.ttf");
@@ -132,7 +141,8 @@ namespace mp
 		// Rotate the view 180 degrees
 		view1->setRotation(180);
 		// Zoom view
-		view1->zoom( 3.75 );
+		//view1->zoom( 3.75 );
+		view1->zoom( 1.75 );
 		// Set view
 		window.setView(*view1);
 		//------------------
@@ -141,9 +151,20 @@ namespace mp
 
 		int counter = 0;
 
+		sf::Vector2f mousePos(0,0);
+		sf::Vector2i mousePosWindow(0,0);
+		sf::Vector2f mousePosOld(0,0);
+		sf::Vector2f mouseSpeed(0,0);
+
+		bool fixedRotToggle = false;
+		bool released = true;
+
 		bool running = true;
         while (running)
         {
+			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *view1 ) / pixelScale;
+			mousePosWindow = sf::Mouse::getPosition(window);
+			mouseSpeed = (mousePos - mousePosOld)/pixelScale;
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
@@ -156,8 +177,6 @@ namespace mp
 				int logicFps = worldData->getLogicFps();
 				std::string a = convertInt(renderFps);
 				std::string b = convertInt(logicFps);
-				std::cout<<a<<std::endl;
-				//std::cout<<"Logic fps: "<<logicFps<<std::endl;
 				//renderFpsTxt.setString(elapsed);
 				renderFpsTxt.setString("Render fps: "+a);
 				logicFpsTxt.setString("Logic fps:  "+b);
@@ -170,11 +189,11 @@ namespace mp
 			/*
             // Handle events
             sf::Event Event;
-            while (window->pollEvent(Event))
+            while (window.pollEvent(Event))
             {
 				// Shut down application if user closes window or hits ESC key
                 if ( Event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )
-                    window->close();
+                    window.close();
 
 				// Handle zooming of viewport
 				if ( Event.type == sf::Event::MouseWheelMoved )
@@ -183,28 +202,32 @@ namespace mp
 						view1->zoom(0.9f);
 					else
 						view1->zoom(1.1f);
-					window->setView(*view1);
+					window.setView(*view1);
 				}
             }
 			*/
 
+			// Right mouse button is down
             if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
             {
-				// Move box to mouse view coordinates
-				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x , sf::Mouse::getPosition(window).y, *view1 ) / pixelScale;
-				redBox.setPosition(position);
-				/*
-				body->SetTransform(b2Vec2(position.x,position.y),0);
-				body->SetAwake(true);
-				*/
-            }
+				if(released)
+				{
+					fixedRotToggle = !fixedRotToggle;
+					worldData->getBody(0)->SetFixedRotation(fixedRotToggle);
+					released = false;
+				}
+            }else
+			{
+				released = true;
+			}
+			// Left mouse button is down
             if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
             {
 				// Move box to mouse view coordinates
-				sf::Vector2f position = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *view1 ) / pixelScale;
 				worldDataMutex.lock();
-				worldData->getBody(0)->SetTransform(b2Vec2(position.x,position.y),0);
-				worldData->getBody(0)->SetAwake(true);
+				worldData->getBody(1)->SetTransform(b2Vec2(mousePos.x,mousePos.y),0);
+				worldData->getBody(1)->SetAwake(true);
+				worldData->getBody(1)->SetLinearVelocity(b2Vec2(mouseSpeed.x,mouseSpeed.y));
 				worldDataMutex.unlock();
 
 				/*
@@ -212,17 +235,20 @@ namespace mp
 				body2->SetAwake(true);
 				*/
             }
-
 			
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				worldData->getBody(0)->ApplyForce( b2Vec2(150,0), worldData->getBody(0)->GetPosition() );
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				worldData->getBody(0)->ApplyForce( b2Vec2(-150,0), worldData->getBody(0)->GetPosition() );
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				worldData->getBody(0)->ApplyForce( b2Vec2(0,150), worldData->getBody(0)->GetPosition() );
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				worldData->getBody(0)->ApplyForce( b2Vec2(0,-150), worldData->getBody(0)->GetPosition() );
-
+			// Handle box movement. To be moved to Character class
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				if(worldData->getBody(0)->GetLinearVelocity().x < 10)
+				worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(5,0), worldData->getBody(0)->GetPosition() );
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)||sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				if(worldData->getBody(0)->GetLinearVelocity().x > -10)
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-5,0), worldData->getBody(0)->GetPosition() );
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)||sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				if(worldData->getBody(0)->GetLinearVelocity().y < 10)
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,5), worldData->getBody(0)->GetPosition() );
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)||sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				if(worldData->getBody(0)->GetLinearVelocity().y > -10)
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,-5), worldData->getBody(0)->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				worldData->getBody(0)->ApplyForce( b2Vec2(0,250), worldData->getBody(0)->GetPosition() );
 			
@@ -238,6 +264,16 @@ namespace mp
 				float32 angle = worldData->getBody(0)->GetAngle();
 				redBox.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
+
+				// Higher value means more focus on character
+				//int cameraBias = 10;
+
+				float x = (((position.x + mousePos.x)/2+position.x)/2+position.x)/2;
+				float y = (((position.y + mousePos.y)/2+position.y)/2+position.y)/2;
+
+				view1->setCenter(x*pixelScale,y*pixelScale);
+				window.setView(*view1);
+
 			}
 
 			if(tv->size() > 1)
@@ -256,6 +292,8 @@ namespace mp
 				bulletVis.setPosition(position.x*pixelScale,position.y*pixelScale);
 				bulletVis.setRotation( a * 180/-pi );
 			}
+
+			dotSpr.setPosition(mousePosWindow.x,mousePosWindow.y);
 
 			/*
 			std::cout<<"1"<<std::endl;
@@ -296,18 +334,20 @@ namespace mp
 			window.draw(redBox);
 			window.draw(blueBox);
 			window.draw(bulletVis);
-			window.draw(hudSpr);
             //-----------------------------------------
 
 			//------------UI Rendering phase-----------
 			window.setView(window.getDefaultView());
-			//window.draw(hudSpr);
+			window.draw(dotSpr);
+			window.draw(hudSpr);
 			window.draw(renderFpsTxt);
 			window.draw(logicFpsTxt);
 			//-----------------------------------------
 
             // Update the window
             window.display();
+
+			mousePosOld = mousePos;
 
         }
 	}
