@@ -29,7 +29,7 @@ namespace mp
         public:
 			WorldView( WorldData* worldData );
 			void exec();
-			sf::View* getView();
+			sf::View* getView(){return view1;};
             ~WorldView();
 			
 		protected:

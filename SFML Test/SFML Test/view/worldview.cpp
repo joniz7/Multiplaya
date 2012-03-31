@@ -18,28 +18,24 @@
 
 namespace mp
 {
+	const float WIDTH = ConfigHandler::getInstance().getInt("res_x");
+	const float HEIGHT = ConfigHandler::getInstance().getInt("res_y");
+
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldView::WorldView( WorldData* worldData )
-	{
-		this->worldData = worldData;
-	}
+    WorldView::WorldView(WorldData* worldData){this->worldData = worldData;}
 
-	sf::View* WorldView::getView() {
-		std::cout << "getView()" << std::endl;
-		return view1;
-	}
-
+	////////////////////////////////////////////////////////////
+	// Convert int to string. TODO: Should be moved to util file
+	// and included instead.
+	////////////////////////////////////////////////////////////
 	std::string convertInt(int number)
 	{
 	   std::stringstream ss;//create a stringstream
 	   ss << number;//add number to the stream
 	   return ss.str();//return a string with the contents of the stream
 	}
-
-	const float WIDTH = ConfigHandler::getInstance().getInt("res_x");
-	const float HEIGHT = ConfigHandler::getInstance().getInt("res_y");
 
 	////////////////////////////////////////////////////////////
 	// The graphics loop.
