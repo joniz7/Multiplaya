@@ -10,6 +10,8 @@
 
 #include "../global.h"
 
+#include "../services/confighandler.h"
+
 ////////////////////////////////////////////////////////////
 /// World class. Takes care of game physics and logic
 ////////////////////////////////////////////////////////////
@@ -36,15 +38,14 @@ namespace mp
 	   return ss.str();//return a string with the contents of the stream
 	}
 
-	const float WIDTH = 1280;
-	const float HEIGHT = 720;
+	const float WIDTH = ConfigHandler::getInstance().getInt("res_x");
+	const float HEIGHT = ConfigHandler::getInstance().getInt("res_y");
 
 	////////////////////////////////////////////////////////////
 	// The graphics loop.
 	// Fetches info, prints to screen, repeat.
 	////////////////////////////////////////////////////////////
 	void WorldView::exec() {
-
 		//------------Startup stuff------------
 		// Set up and initialize render window
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
@@ -56,16 +57,14 @@ namespace mp
 		// Clock for frame time counting
         sf::Clock clock;
 		// Set window data
-        window.setVerticalSyncEnabled(true);
-        window.setFramerateLimit(60);
+        window.setVerticalSyncEnabled(ConfigHandler::getInstance().getBool("vsync"));
+        window.setFramerateLimit(ConfigHandler::getInstance().getInt("fpslimit"));
 		// Background stuff
         sf::RectangleShape background( sf::Vector2f(WIDTH*2*pixelScale,HEIGHT*2*pixelScale) );
 		background.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
 		background.setPosition(0,0);
         background.setFillColor( sf::Color(75,75,75) );
         //-------------------------------------
-
-
 
 		//----Test stuff----
 		if(!hudTex.loadFromFile("resources/hud.png"))
@@ -115,14 +114,14 @@ namespace mp
 		ground4.setOrigin(2.5f*pixelScale,50*pixelScale);
 		ground4.setPosition(-50.0f*pixelScale,0);
 		
-		sf::RectangleShape redBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
-		redBox.setOrigin(1*pixelScale,1*pixelScale);
+		sf::RectangleShape redBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,4*pixelScale) );
+		redBox.setOrigin(1*pixelScale,2*pixelScale);
 		redBox.setFillColor(sf::Color(255,128,128));
 		redBox.setOutlineThickness(0.1f*pixelScale);
 		redBox.setOutlineColor(sf::Color::Black);
 		
-		sf::RectangleShape blueBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,2*pixelScale) );
-		blueBox.setOrigin(1*pixelScale,1*pixelScale);
+		sf::RectangleShape blueBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,4*pixelScale) );
+		blueBox.setOrigin(1*pixelScale,2*pixelScale);
 		blueBox.setFillColor(sf::Color(128,128,255));
 		blueBox.setOutlineThickness(0.1f*pixelScale);
 		blueBox.setOutlineColor(sf::Color::Black);
@@ -142,12 +141,12 @@ namespace mp
 		view1->setRotation(180);
 		// Zoom view
 		//view1->zoom( 3.75 );
-		view1->zoom( 1.75 );
+		view1->zoom( 1.5 );
 		// Set view
 		window.setView(*view1);
 		//------------------
 
-		std::cout << "Initialized render window" << std::endl;
+		std::cout<<"Render window initialized!"<<std::endl;
 
 		int counter = 0;
 
@@ -210,16 +209,9 @@ namespace mp
 			// Right mouse button is down
             if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
             {
-				if(released)
-				{
-					fixedRotToggle = !fixedRotToggle;
-					worldData->getBody(0)->SetFixedRotation(fixedRotToggle);
-					released = false;
-				}
-            }else
-			{
-				released = true;
-			}
+				
+            }
+
 			// Left mouse button is down
             if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
             {
@@ -250,7 +242,21 @@ namespace mp
 				if(worldData->getBody(0)->GetLinearVelocity().y > -10)
 					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,-5), worldData->getBody(0)->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-				worldData->getBody(0)->ApplyForce( b2Vec2(0,250), worldData->getBody(0)->GetPosition() );
+			{
+				if(released)
+				{
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,125), worldData->getBody(0)->GetPosition() );
+
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(75,0), worldData->getBody(0)->GetPosition() );
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)||sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-75,0), worldData->getBody(0)->GetPosition() );
+
+					released = false;
+				}
+			}
+			else
+				released = true;
 			
 
 			// Access world data

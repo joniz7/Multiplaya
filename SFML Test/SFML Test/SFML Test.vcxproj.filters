@@ -50,6 +50,12 @@
     <ClCompile Include="global.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="services\resourcehandler.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="services\confighandler.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -84,6 +90,12 @@
     </ClInclude>
     <ClInclude Include="global.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="services\resourcehandler.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="services\confighandler.h">
+      <Filter>src\services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

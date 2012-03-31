@@ -86,7 +86,9 @@
     <ClCompile Include="model\character.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
+    <ClCompile Include="services\confighandler.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
+    <ClCompile Include="services\resourcehandler.cpp" />
     <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +100,9 @@
     <ClInclude Include="model\character.h" />
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worlddata.h" />
+    <ClInclude Include="services\confighandler.h" />
     <ClInclude Include="services\networkhandler.h" />
+    <ClInclude Include="services\resourcehandler.h" />
     <ClInclude Include="sfml.h" />
     <ClInclude Include="view\worldview.h" />
   </ItemGroup>

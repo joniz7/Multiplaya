@@ -65,8 +65,8 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 		// Add two bodies to the world
-		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,1.0f) );
-		worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,1.0f) );
+		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,2.0f) );
+		worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,2.0f) );
 		// Add a bullet to the world
 		worldData->addBullet(BulletType::GENERIC_BULLET,0,world,b2Vec2(10,10),b2Vec2(-50,0));
 		// Unlock world data

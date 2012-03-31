@@ -11,6 +11,7 @@
 
 //Game specific headers
 #include "app.h"
+#include "services/confighandler.h"
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application
@@ -21,6 +22,8 @@
 
 int main()
 {
+	// Initialize config handler singleton
+	mp::ConfigHandler::getInstance();
 	const int WIDTH = 1280;
 	const int HEIGHT = 720;
     // Create the application
