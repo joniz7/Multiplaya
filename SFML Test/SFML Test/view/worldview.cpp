@@ -18,8 +18,8 @@
 
 namespace mp
 {
-	const float WIDTH = ConfigHandler::getInstance().getInt("res_x");
-	const float HEIGHT = ConfigHandler::getInstance().getInt("res_y");
+	const float WIDTH = ConfigHandler::instance().getInt("res_x");
+	const float HEIGHT = ConfigHandler::instance().getInt("res_y");
 
 	////////////////////////////////////////////////////////////
 	// Constructor
@@ -27,8 +27,8 @@ namespace mp
     WorldView::WorldView(WorldData* worldData){this->worldData = worldData;}
 
 	////////////////////////////////////////////////////////////
-	// Convert int to string. TODO: Should be moved to util file
-	// and included instead.
+	// Safely convert int to string. TODO: Should be moved to
+	// util class and included instead.
 	////////////////////////////////////////////////////////////
 	std::string convertInt(int number)
 	{
@@ -53,8 +53,8 @@ namespace mp
 		// Clock for frame time counting
         sf::Clock clock;
 		// Set window data
-        window.setVerticalSyncEnabled(ConfigHandler::getInstance().getBool("vsync"));
-        window.setFramerateLimit(ConfigHandler::getInstance().getInt("fpslimit"));
+        window.setVerticalSyncEnabled(ConfigHandler::instance().getBool("vsync"));
+        window.setFramerateLimit(ConfigHandler::instance().getInt("fpslimit"));
 		// Background stuff
         sf::RectangleShape background( sf::Vector2f(WIDTH*2*pixelScale,HEIGHT*2*pixelScale) );
 		background.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
@@ -132,14 +132,14 @@ namespace mp
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
-		view1 = new sf::View(center*pixelScale, halfSize*pixelScale);
+		worldView = new sf::View(center*pixelScale, halfSize*pixelScale);
 		// Rotate the view 180 degrees
-		view1->setRotation(180);
+		worldView->setRotation(180);
 		// Zoom view
-		//view1->zoom( 3.75 );
-		view1->zoom( 1.5 );
+		//worldView->zoom( 3.75 );
+		worldView->zoom( 1.5 );
 		// Set view
-		window.setView(*view1);
+		window.setView(*worldView);
 		//------------------
 
 		std::cout<<"Render window initialized!"<<std::endl;
@@ -157,7 +157,7 @@ namespace mp
 		bool running = true;
         while (running)
         {
-			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *view1 ) / pixelScale;
+			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *worldView ) / pixelScale;
 			mousePosWindow = sf::Mouse::getPosition(window);
 			mouseSpeed = (mousePos - mousePosOld)/pixelScale;
             // Get elapsed time since last frame
@@ -194,10 +194,10 @@ namespace mp
 				if ( Event.type == sf::Event::MouseWheelMoved )
 				{
 					if( Event.mouseWheel.delta > 0)
-						view1->zoom(0.9f);
+						worldView->zoom(0.9f);
 					else
-						view1->zoom(1.1f);
-					window.setView(*view1);
+						worldView->zoom(1.1f);
+					window.setView(*worldView);
 				}
             }
 			*/
@@ -217,11 +217,6 @@ namespace mp
 				worldData->getBody(1)->SetAwake(true);
 				worldData->getBody(1)->SetLinearVelocity(b2Vec2(mouseSpeed.x,mouseSpeed.y));
 				worldDataMutex.unlock();
-
-				/*
-				body2->SetTransform(b2Vec2(position.x,position.y),0);
-				body2->SetAwake(true);
-				*/
             }
 			
 			// Handle box movement. To be moved to Character class
@@ -262,22 +257,19 @@ namespace mp
 			
 			if(tv->size() > 0)
 			{
+				// Calculate camera position (somehwere between character and mouse)
 				b2Vec2 position = worldData->getBody(0)->GetPosition();
 				float32 angle = worldData->getBody(0)->GetAngle();
 				redBox.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
 
-				// Higher value means more focus on character
-				//int cameraBias = 10;
-
 				float x = (((position.x + mousePos.x)/2+position.x)/2+position.x)/2;
 				float y = (((position.y + mousePos.y)/2+position.y)/2+position.y)/2;
 
-				view1->setCenter(x*pixelScale,y*pixelScale);
-				window.setView(*view1);
+				worldView->setCenter(x*pixelScale,y*pixelScale);
+				window.setView(*worldView);
 
 			}
-
 			if(tv->size() > 1)
 			{
 				b2Vec2 position = worldData->getBody(1)->GetPosition();
@@ -294,36 +286,12 @@ namespace mp
 				bulletVis.setPosition(position.x*pixelScale,position.y*pixelScale);
 				bulletVis.setRotation( a * 180/-pi );
 			}
-
+			// Set sight position
 			dotSpr.setPosition(mousePosWindow.x,mousePosWindow.y);
-
-			/*
-			std::cout<<"1"<<std::endl;
-
-			// Get model data
-			b2Vec2 position = worldData->getBody(0)->GetPosition();
-			float32 angle = worldData->getBody(0)->GetAngle();
-			std::cout<<"2"<<std::endl;
-			// Set view data
-			redBox.setPosition(position.x*pixelScale,position.y*pixelScale);
-			redBox.setRotation( angle*180/pi );
-			// Get model data
-			position = worldData->getBody(1)->GetPosition();
-			angle = worldData->getBody(1)->GetAngle();
-			// Set view data
-			blueBox.setPosition(position.x*pixelScale,position.y*pixelScale);
-			blueBox.setRotation( angle*180/pi );
-
-			bulletVis.setPosition( sf::Vector2f(worldData->getBullet(0)->getBody()->GetPosition().x*pixelScale,worldData->getBullet(0)->getBody()->GetPosition().y*pixelScale) );
-
-			b2Vec2 v = worldData->getBullet(0)->getBody()->GetLinearVelocity();
-			float a = atan(v.x/v.y);
-			bulletVis.setRotation( a * 180/-pi );
-			*/
+			// Unlock world data mutex
 			worldDataMutex.unlock();
-
-			window.setView(*view1);
-
+			// Set world view so we can render the world in world coordinates
+			window.setView(*worldView);
             // Clear screen
             window.clear();
             window.draw(background);
@@ -337,20 +305,26 @@ namespace mp
 			window.draw(blueBox);
 			window.draw(bulletVis);
             //-----------------------------------------
-
 			//------------UI Rendering phase-----------
+			// Set default view so we can render the ui in window coordinates
 			window.setView(window.getDefaultView());
 			window.draw(dotSpr);
-			window.draw(hudSpr);
-			window.draw(renderFpsTxt);
-			window.draw(logicFpsTxt);
+			// Draw hud
+			if(ConfigHandler::instance().getBool("drawhud"))
+			{
+				window.draw(hudSpr);
+			}
+			// Draw debug stuff
+			if(ConfigHandler::instance().getBool("debugmode"))
+			{
+				window.draw(renderFpsTxt);
+				window.draw(logicFpsTxt);
+			}
 			//-----------------------------------------
-
             // Update the window
             window.display();
-
+			// Save mouse position for next frame
 			mousePosOld = mousePos;
-
         }
 	}
 

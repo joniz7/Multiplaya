@@ -28,7 +28,7 @@ namespace mp
     class ConfigHandler
     {
         public:
-			static ConfigHandler& getInstance();
+			static ConfigHandler& instance();
 			bool getBool(std::string s){return boolMap[s];};
 			int getInt(std::string s){return intMap[s];};
 			float getfloat(std::string s){return floatMap[s];};

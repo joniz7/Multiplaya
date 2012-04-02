@@ -23,7 +23,7 @@
 int main()
 {
 	// Initialize config handler singleton
-	mp::ConfigHandler::getInstance();
+	mp::ConfigHandler::instance();
 	const int WIDTH = 1280;
 	const int HEIGHT = 720;
     // Create the application

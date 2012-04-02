@@ -29,7 +29,7 @@ namespace mp
         public:
 			WorldView( WorldData* worldData );
 			void exec();
-			sf::View* getView(){return view1;};
+			sf::View* getView(){return worldView;};
             ~WorldView();
 			
 		protected:
@@ -38,7 +38,7 @@ namespace mp
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;
-			sf::View* view1;
+			sf::View* worldView;
     };
 }
 

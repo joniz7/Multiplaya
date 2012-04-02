@@ -19,7 +19,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Returns a pointer to the singleton
 	////////////////////////////////////////////////////////////
-    ConfigHandler& ConfigHandler::getInstance()
+    ConfigHandler& ConfigHandler::instance()
     {
 		static ConfigHandler instance;
 		return instance;
@@ -74,9 +74,6 @@ namespace mp
             }
 			std::cout<<"Config file read!"<<std::endl;
 		}
-
 		fileReader.close();
-
 	}
-
 }
