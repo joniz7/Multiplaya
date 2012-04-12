@@ -23,7 +23,7 @@ namespace mp
     {
 		this->worldData = worldData;
 		// Setup the world properties
-		b2Vec2 gravity(0,-9.8f);
+		b2Vec2 gravity(0, -9.8f);
 		// Create the world
 		world = new b2World(gravity);
     }
@@ -40,26 +40,31 @@ namespace mp
 
 		// Define a ground body
 		b2BodyDef groundBodyDef;
-		groundBodyDef.position.Set(0.0f, -50.0f);
 		// Call the body factory which allocates memory for the ground body
 		// from a pool and creates the ground redBox shape (also from a pool).
 		// The body is also added to the world.
-		b2Body* groundBody = world->CreateBody(&groundBodyDef);
-		groundBodyDef.position.Set(0.0f, 50.0f);
-		b2Body* groundBody2 = world->CreateBody(&groundBodyDef);
-		groundBodyDef.position.Set(50.0f, 0);
-		b2Body* groundBody3 = world->CreateBody(&groundBodyDef);
-		groundBodyDef.position.Set(-50.0f, 0);
-		b2Body* groundBody4 = world->CreateBody(&groundBodyDef);
+				
 		// Define the ground box shape, extents are the half-widths of the box.
 		b2PolygonShape groundBox;
 		groundBox.SetAsBox(50.0f, 2.5f);
+
+		groundBodyDef.position.Set(0.0f, -50.0f);
+		b2Body* groundBody = world->CreateBody(&groundBodyDef);
+		groundBody->CreateFixture(&groundBox, 0.0f);
+
+		groundBodyDef.position.Set(0.0f, 50.0f);
+		b2Body* groundBody2 = world->CreateBody(&groundBodyDef);
+		groundBody2->CreateFixture(&groundBox, 0.0f);
+
 		b2PolygonShape groundBox2;
 		groundBox2.SetAsBox(2.5f, 50.0f);
-		// Add the ground fixture to the ground body.
-		groundBody->CreateFixture(&groundBox, 0.0f);
-		groundBody2->CreateFixture(&groundBox, 0.0f);
+
+		groundBodyDef.position.Set(50.0f, 0);
+		b2Body* groundBody3 = world->CreateBody(&groundBodyDef);
 		groundBody3->CreateFixture(&groundBox2, 0.0f);
+
+		groundBodyDef.position.Set(-50.0f, 0);
+		b2Body* groundBody4 = world->CreateBody(&groundBodyDef);
 		groundBody4->CreateFixture(&groundBox2, 0.0f);
 
 		// Lock world data so only one thread can access world data at the same time
@@ -91,11 +96,11 @@ namespace mp
 				// Lock world data so only one thread can access world data at the same time
 				worldDataMutex.lock();
 				// Perform a physics step
-				world->Step(timeStep,velocityIterations,positionIterations);
+				world->Step(timeStep, velocityIterations, positionIterations);
 				// Clear physics forces in prep for next step
 				world->ClearForces();
 				// Save logic fps
-				worldData->setLogicFps((int)(1/sum));
+				worldData->setLogicFps((int)(1 / sum));
 				// Unlock world data
 				worldDataMutex.unlock();
 				sum = 0;

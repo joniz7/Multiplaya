@@ -49,32 +49,32 @@ namespace mp
 		// Don't display mouse cursor
 		window.setMouseCursorVisible(false);
 		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
-		float pixelScale = 1/10.0f;
+		float pixelScale = 1 / 10.0f;
 		// Clock for frame time counting
         sf::Clock clock;
 		// Set window data
         window.setVerticalSyncEnabled(ConfigHandler::instance().getBool("vsync"));
         window.setFramerateLimit(ConfigHandler::instance().getInt("fpslimit"));
 		// Background stuff
-        sf::RectangleShape background( sf::Vector2f(WIDTH*2*pixelScale,HEIGHT*2*pixelScale) );
-		background.setOrigin(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
+        sf::RectangleShape background( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
+		background.setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
 		background.setPosition(0,0);
-        background.setFillColor( sf::Color(75,75,75) );
+        background.setFillColor( sf::Color(75, 75, 75) );
         //-------------------------------------
 
 		//----Test stuff----
 		if(!hudTex.loadFromFile("resources/hud.png"))
-			std::cout<<"Failed to load texture: hud.png"<<std::endl;
+			std::cout << "Failed to load texture: hud.png" << std::endl;
 		hudSpr.setTexture(hudTex);
-		hudSpr.setScale(WIDTH/1920,HEIGHT/1080);
+		hudSpr.setScale(WIDTH / 1920, HEIGHT / 1080);
 
 		sf::Texture dotTex;
 		sf::Sprite dotSpr;
 		if(!dotTex.loadFromFile("resources/reddot.png"))
-			std::cout<<"Failed to load texture: reddot.png"<<std::endl;
+			std::cout << "Failed to load texture: reddot.png" << std::endl;
 		dotSpr.setTexture(dotTex);
-		dotSpr.setOrigin(32,32);
-		dotSpr.setScale(0.5,0.5);
+		dotSpr.setOrigin(32, 32);
+		dotSpr.setScale(0.5, 0.5);
 
 		sf::Font fontGothic;
 		fontGothic.loadFromFile("resources/gothic.ttf");
@@ -90,49 +90,49 @@ namespace mp
 		renderFpsTxt.setPosition(8, 0);
 		logicFpsTxt.setPosition(8, 30);
 
-		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
-		ground.setFillColor( sf::Color(25,25,25) );
-		ground.setOrigin(50*pixelScale,2.5f*pixelScale);
-		ground.setPosition(0,-50.0f*pixelScale);
+		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
+		ground.setFillColor( sf::Color(25, 25, 25) );
+		ground.setOrigin(50 * pixelScale, 2.5f * pixelScale);
+		ground.setPosition(0, -50.0f * pixelScale);
 
-		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100*pixelScale,5*pixelScale) );
-		ground2.setFillColor( sf::Color(25,25,25) );
-		ground2.setOrigin(50*pixelScale,2.5f*pixelScale);
-		ground2.setPosition(0,50.0f*pixelScale);
+		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
+		ground2.setFillColor( sf::Color(25, 25, 25) );
+		ground2.setOrigin(50 * pixelScale, 2.5f * pixelScale);
+		ground2.setPosition(0, 50.0f * pixelScale);
 		
-		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
+		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
 		ground3.setFillColor( sf::Color(25,25,25) );
-		ground3.setOrigin(2.5f*pixelScale,50*pixelScale);
-		ground3.setPosition(50.0f*pixelScale,0);
+		ground3.setOrigin(2.5f * pixelScale, 50 * pixelScale);
+		ground3.setPosition(50.0f * pixelScale, 0);
 
-		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5*pixelScale,100*pixelScale) );
+		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
 		ground4.setFillColor( sf::Color(25,25,25) );
-		ground4.setOrigin(2.5f*pixelScale,50*pixelScale);
-		ground4.setPosition(-50.0f*pixelScale,0);
+		ground4.setOrigin(2.5f * pixelScale, 50 * pixelScale);
+		ground4.setPosition(-50.0f * pixelScale, 0);
 		
-		sf::RectangleShape redBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,4*pixelScale) );
-		redBox.setOrigin(1*pixelScale,2*pixelScale);
-		redBox.setFillColor(sf::Color(255,128,128));
-		redBox.setOutlineThickness(0.1f*pixelScale);
+		sf::RectangleShape redBox = sf::RectangleShape( sf::Vector2f(2 * pixelScale, 4 * pixelScale) );
+		redBox.setOrigin( 1 * pixelScale, 2 * pixelScale);
+		redBox.setFillColor(sf::Color(255, 128, 128));
+		redBox.setOutlineThickness(0.1f * pixelScale);
 		redBox.setOutlineColor(sf::Color::Black);
 		
-		sf::RectangleShape blueBox = sf::RectangleShape( sf::Vector2f(2*pixelScale,4*pixelScale) );
-		blueBox.setOrigin(1*pixelScale,2*pixelScale);
-		blueBox.setFillColor(sf::Color(128,128,255));
-		blueBox.setOutlineThickness(0.1f*pixelScale);
+		sf::RectangleShape blueBox = sf::RectangleShape( sf::Vector2f( 2 * pixelScale, 4 * pixelScale) );
+		blueBox.setOrigin(1 * pixelScale, 2 * pixelScale);
+		blueBox.setFillColor(sf::Color(128, 128, 255));
+		blueBox.setOutlineThickness(0.1f * pixelScale);
 		blueBox.setOutlineColor(sf::Color::Black);
 
-		sf::RectangleShape bulletVis = sf::RectangleShape( sf::Vector2f(0.5f*pixelScale,1.5f*pixelScale) );
-		bulletVis.setOrigin(0.25f*pixelScale,0.75f*pixelScale);
-		bulletVis.setFillColor(sf::Color(255,255,255));
-		bulletVis.setOutlineThickness(0.1f*pixelScale);
+		sf::RectangleShape bulletVis = sf::RectangleShape( sf::Vector2f(0.5f * pixelScale, 1.5f * pixelScale) );
+		bulletVis.setOrigin(0.25f * pixelScale, 0.75f * pixelScale);
+		bulletVis.setFillColor(sf::Color(255, 255, 255));
+		bulletVis.setOutlineThickness(0.1f * pixelScale);
 		bulletVis.setOutlineColor(sf::Color::Black);
         //------------------
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(WIDTH/2*pixelScale,HEIGHT/2*pixelScale);
-		worldView = new sf::View(center*pixelScale, halfSize*pixelScale);
+		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
+		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
 		// Rotate the view 180 degrees
 		worldView->setRotation(180);
 		// Zoom view
@@ -142,7 +142,7 @@ namespace mp
 		window.setView(*worldView);
 		//------------------
 
-		std::cout<<"Render window initialized!"<<std::endl;
+		std::cout << "Render window initialized!" << std::endl;
 
 		int counter = 0;
 
@@ -159,22 +159,22 @@ namespace mp
         {
 			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *worldView ) / pixelScale;
 			mousePosWindow = sf::Mouse::getPosition(window);
-			mouseSpeed = (mousePos - mousePosOld)/pixelScale;
+			mouseSpeed = (mousePos - mousePosOld) / pixelScale;
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
 			// Only display fps every tenth frame (easier to read)
-			if(counter==10)
+			if(counter == 10)
 			{
-				int renderFps = (int)(1/elapsed);
+				int renderFps = (int)(1 / elapsed);
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
 				std::string a = convertInt(renderFps);
 				std::string b = convertInt(logicFps);
 				//renderFpsTxt.setString(elapsed);
-				renderFpsTxt.setString("Render fps: "+a);
-				logicFpsTxt.setString("Logic fps:  "+b);
+				renderFpsTxt.setString("Render fps: " + a);
+				logicFpsTxt.setString("Logic fps:  " + b);
 				worldDataMutex.unlock();
 				counter = 0;
 			}
@@ -213,9 +213,9 @@ namespace mp
             {
 				// Move box to mouse view coordinates
 				worldDataMutex.lock();
-				worldData->getBody(1)->SetTransform(b2Vec2(mousePos.x,mousePos.y),0);
+				worldData->getBody(1)->SetTransform(b2Vec2(mousePos.x, mousePos.y), 0);
 				worldData->getBody(1)->SetAwake(true);
-				worldData->getBody(1)->SetLinearVelocity(b2Vec2(mouseSpeed.x,mouseSpeed.y));
+				worldData->getBody(1)->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
 				worldDataMutex.unlock();
             }
 			
