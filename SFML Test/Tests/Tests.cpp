@@ -4,9 +4,9 @@
 #include "stdafx.h"
 #include "gtest/gtest.h"
 
-#include "../SFML Test/model/worlddata.h"
-#include "../SFML Test/global.h"
-#include "../SFML Test/sfml.h"
+#include "model/worlddata.h"
+#include "global.h"
+#include "sfml.h"
 
 TEST(sample_test_case, sample_test)
 {
@@ -16,6 +16,9 @@ TEST(sample_test_case, sample_test)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+
+	mp::WorldData* worldData = new mp::WorldData();
+
 	testing::InitGoogleTest(&argc, argv); 
     RUN_ALL_TESTS(); 
     std::getchar(); // keep console window open until Return keystroke
