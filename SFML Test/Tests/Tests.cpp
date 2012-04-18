@@ -6,7 +6,7 @@
 
 #include "../SFML Test/model/worlddata.h"
 #include "../SFML Test/global.h"
-#include "../SFML Test/includes/sfml.h"
+#include "../SFML Test/sfml.h"
 
 TEST(sample_test_case, sample_test)
 {

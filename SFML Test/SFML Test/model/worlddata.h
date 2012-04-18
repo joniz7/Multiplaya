@@ -22,7 +22,7 @@
 #include "../game.h"
 
 //Defines
-#include "defines.h"
+#include "../defines.h"
 
 namespace mp
 {

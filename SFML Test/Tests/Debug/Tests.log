@@ -1,14 +1,29 @@
-﻿Build started 2012-04-18 23:53:23.
-     1>Project "D:\Projects\Multiplaya\SFML Test\Tests\Tests.vcxproj" on node 2 (build target(s)).
+﻿Build started 4/19/2012 12:02:16 AM.
+     1>Project "J:\C++\Multiplaya\SFML Test\Tests\Tests.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\Tests.unsuccessfulbuild".
        ClCompile:
          All outputs are up-to-date.
-         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"D:\Projects\Multiplaya\SFML Test\\gtest-1.6.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Tests.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Tests.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"J:\C++\Multiplaya\SFML Test\\gtest-1.6.0\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Tests.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Tests.cpp
          Tests.cpp
-     1>d:\projects\multiplaya\sfml test\sfml test\sfml.h(9): fatal error C1083: Cannot open include file: 'SFML/System.hpp': No such file or directory
-     1>Done Building Project "D:\Projects\Multiplaya\SFML Test\Tests\Tests.vcxproj" (build target(s)) -- FAILED.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\C++\Multiplaya\SFML Test\Debug\Tests.exe" /INCREMENTAL /NOLOGO /LIBPATH:"J:\C++\Multiplaya\SFML Test\\gtest-1.6.0\msvc\gtest\Debug" Box2D.lib "sfml-system-d.lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" gtestd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Tests.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\C++\Multiplaya\SFML Test\Debug\Tests.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\C++\Multiplaya\SFML Test\Debug\Tests.lib" /MACHINE:X86 Debug\Tests.exe.embed.manifest.res
+         Debug\stdafx.obj
+         Debug\Tests.obj
+     1>gtestd.lib(gtest-all.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'gtestd.lib(gtest-all.obj)' or at 'J:\C++\Multiplaya\SFML Test\Debug\vc100.pdb'; linking object as if no debug info
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Tests.exe.embed.manifest" /manifest Debug\Tests.exe.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         Tests.vcxproj -> J:\C++\Multiplaya\SFML Test\Debug\Tests.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Tests.unsuccessfulbuild".
+         Touching "Debug\Tests.lastbuildstate".
+     1>Done Building Project "J:\C++\Multiplaya\SFML Test\Tests\Tests.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.76
+Time Elapsed 00:00:03.90
