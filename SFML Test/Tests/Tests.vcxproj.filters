@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="SFML Test">
+      <UniqueIdentifier>{df0214b2-82ea-4a52-ad7c-0030949edeb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -24,6 +27,18 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\SFML Test\model\bullet.h">
+      <Filter>SFML Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\model\character.h">
+      <Filter>SFML Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\model\world.h">
+      <Filter>SFML Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\model\worlddata.h">
+      <Filter>SFML Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -31,6 +46,18 @@
     </ClCompile>
     <ClCompile Include="Tests.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\bullet.cpp">
+      <Filter>SFML Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\character.cpp">
+      <Filter>SFML Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\world.cpp">
+      <Filter>SFML Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\worlddata.cpp">
+      <Filter>SFML Test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

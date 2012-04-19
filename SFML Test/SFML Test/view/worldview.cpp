@@ -181,7 +181,7 @@ namespace mp
 			else
 				counter++;
 
-			/*
+			
             // Handle events
             sf::Event Event;
             while (window.pollEvent(Event))
@@ -200,7 +200,7 @@ namespace mp
 					window.setView(*worldView);
 				}
             }
-			*/
+			
 
 			// Right mouse button is down
             if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )

@@ -4,9 +4,9 @@
 #include "stdafx.h"
 #include "gtest/gtest.h"
 
-#include "model/worlddata.h"
-#include "global.h"
-#include "sfml.h"
+#include <model/worlddata.h>
+#include <global.h>
+#include <sfml.h>
 
 TEST(sample_test_case, sample_test)
 {

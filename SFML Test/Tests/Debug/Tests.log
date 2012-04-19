@@ -1,23 +1,43 @@
-﻿Build started 4/19/2012 12:32:42 AM.
-     1>Project "J:\C++\Multiplaya\SFML Test\Tests\Tests.vcxproj" on node 2 (build target(s)).
+﻿Build started 4/19/2012 10:22:42 AM.
+     1>Project "D:\C++\Multiplaya\SFML Test\Tests\Tests.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\Tests.unsuccessfulbuild".
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"J:\C++\Multiplaya\SFML Test\\gtest-1.6.0\include" /I"J:\C++\Multiplaya\SFML Test\\SFML Test" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\Tests.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"D:\C++\Multiplaya\SFML Test\\gtest-1.6.0\include" /I"D:\C++\Multiplaya\SFML Test\\SFML Test" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\Tests.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
          stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"J:\C++\Multiplaya\SFML Test\\gtest-1.6.0\include" /I"J:\C++\Multiplaya\SFML Test\\SFML Test" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Tests.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Tests.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"D:\C++\Multiplaya\SFML Test\\gtest-1.6.0\include" /I"D:\C++\Multiplaya\SFML Test\\SFML Test" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\SFML Test\model\bullet.cpp" "..\SFML Test\model\character.cpp" "..\SFML Test\model\world.cpp" "..\SFML Test\model\worlddata.cpp" Tests.cpp
          Tests.cpp
+         worlddata.cpp
+     1>d:\c++\multiplaya\sfml test\sfml test\model\worlddata.cpp(46): warning C4482: nonstandard extension used: enum 'BulletType' used in qualified name
+         world.cpp
+     1>d:\c++\multiplaya\sfml test\sfml test\model\world.cpp(76): warning C4482: nonstandard extension used: enum 'BulletType' used in qualified name
+         character.cpp
+         bullet.cpp
+         Generating Code...
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\C++\Multiplaya\SFML Test\Debug\Tests.exe" /INCREMENTAL /NOLOGO /LIBPATH:"J:\C++\Multiplaya\SFML Test\\gtest-1.6.0\msvc\gtest\Debug" /LIBPATH:"J:\C++\Multiplaya\SFML Test\\SFML Test" Box2D.lib "sfml-system-d.lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" gtestd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Tests.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"J:\C++\Multiplaya\SFML Test\Debug\Tests.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\C++\Multiplaya\SFML Test\Debug\Tests.lib" /MACHINE:X86 Debug\Tests.exe.embed.manifest.res
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C++\Multiplaya\SFML Test\Debug\Tests.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\C++\Multiplaya\SFML Test\\gtest-1.6.0\msvc\gtest\Debug" /LIBPATH:"D:\C++\Multiplaya\SFML Test\\SFML Test" Box2D.lib "sfml-system-d.lib" "sfml-window-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" gtestd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Tests.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\C++\Multiplaya\SFML Test\Debug\Tests.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C++\Multiplaya\SFML Test\Debug\Tests.lib" /MACHINE:X86 Debug\Tests.exe.embed.manifest.res
+         Debug\bullet.obj
+         Debug\character.obj
+         Debug\world.obj
+         Debug\worlddata.obj
          Debug\stdafx.obj
          Debug\Tests.obj
-     1>Tests.obj : error LNK2019: unresolved external symbol "public: __thiscall mp::WorldData::WorldData(void)" (??0WorldData@mp@@QAE@XZ) referenced in function _wmain
-     1>J:\C++\Multiplaya\SFML Test\Debug\Tests.exe : fatal error LNK1120: 1 unresolved externals
-     1>Done Building Project "J:\C++\Multiplaya\SFML Test\Tests\Tests.vcxproj" (build target(s)) -- FAILED.
+     1>msvcprtd.lib(MSVCP100D.dll) : error LNK2005: "void __cdecl std::_Debug_message(wchar_t const *,wchar_t const *,unsigned int)" (?_Debug_message@std@@YAXPB_W0I@Z) already defined in libcpmtd.lib(stdthrow.obj)
+     1>MSVCRTD.lib(MSVCR100D.dll) : error LNK2005: _malloc already defined in LIBCMT.lib(malloc.obj)
+     1>MSVCRTD.lib(MSVCR100D.dll) : error LNK2005: _free already defined in LIBCMT.lib(free.obj)
+     1>MSVCRTD.lib(MSVCR100D.dll) : error LNK2005: _vprintf already defined in LIBCMT.lib(vprintf.obj)
+     1>MSVCRTD.lib(ti_inst.obj) : error LNK2005: "private: __thiscall type_info::type_info(class type_info const &)" (??0type_info@@AAE@ABV0@@Z) already defined in LIBCMT.lib(typinfo.obj)
+     1>MSVCRTD.lib(ti_inst.obj) : error LNK2005: "private: class type_info & __thiscall type_info::operator=(class type_info const &)" (??4type_info@@AAEAAV0@ABV0@@Z) already defined in LIBCMT.lib(typinfo.obj)
+     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>world.obj : error LNK2001: unresolved external symbol "class sf::Mutex worldDataMutex" (?worldDataMutex@@3VMutex@sf@@A)
+     1>D:\C++\Multiplaya\SFML Test\Debug\Tests.exe : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "D:\C++\Multiplaya\SFML Test\Tests\Tests.vcxproj" (build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:02.13
+Time Elapsed 00:00:08.08
