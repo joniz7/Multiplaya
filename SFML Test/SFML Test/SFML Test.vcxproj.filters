@@ -56,6 +56,9 @@
     <ClCompile Include="services\confighandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
+    <ClCompile Include="model\Observable.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -96,6 +99,12 @@
     </ClInclude>
     <ClInclude Include="services\confighandler.h">
       <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Observable.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Observer.h">
+      <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
