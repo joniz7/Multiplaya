@@ -59,7 +59,7 @@ namespace mp
         sf::RectangleShape background( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
 		background.setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
 		background.setPosition(0,0);
-        background.setFillColor( sf::Color(75, 75, 75) );
+        background.setFillColor( sf::Color(30, 30, 30) );
         //-------------------------------------
 
 		//----Test stuff----
@@ -67,6 +67,17 @@ namespace mp
 			std::cout << "Failed to load texture: hud.png" << std::endl;
 		hudSpr.setTexture(hudTex);
 		hudSpr.setScale(WIDTH / 1920, HEIGHT / 1080);
+
+
+		sf::Texture lightTex;
+		lightTex.loadFromFile("resources/light.png");
+		sf::Sprite lightSpr;
+		lightSpr.setTexture(lightTex);
+		lightSpr.setOrigin(256,256);
+		lightSpr.setScale(pixelScale*0.1,pixelScale*0.1);
+		lightSpr.setPosition(0,0);
+		lightSpr.setColor(sf::Color(255,150,125,75));
+
 
 		sf::Texture dotTex;
 		sf::Sprite dotSpr;
@@ -90,23 +101,25 @@ namespace mp
 		renderFpsTxt.setPosition(8, 0);
 		logicFpsTxt.setPosition(8, 30);
 
+		sf::Color c(10, 10, 10);
+
 		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
-		ground.setFillColor( sf::Color(25, 25, 25) );
+		ground.setFillColor( c );
 		ground.setOrigin(50 * pixelScale, 2.5f * pixelScale);
 		ground.setPosition(0, -50.0f * pixelScale);
 
 		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
-		ground2.setFillColor( sf::Color(25, 25, 25) );
+		ground2.setFillColor( c );
 		ground2.setOrigin(50 * pixelScale, 2.5f * pixelScale);
 		ground2.setPosition(0, 50.0f * pixelScale);
 		
 		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
-		ground3.setFillColor( sf::Color(25,25,25) );
+		ground3.setFillColor( c );
 		ground3.setOrigin(2.5f * pixelScale, 50 * pixelScale);
 		ground3.setPosition(50.0f * pixelScale, 0);
 
 		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
-		ground4.setFillColor( sf::Color(25,25,25) );
+		ground4.setFillColor( c );
 		ground4.setOrigin(2.5f * pixelScale, 50 * pixelScale);
 		ground4.setPosition(-50.0f * pixelScale, 0);
 		
@@ -286,6 +299,9 @@ namespace mp
 				bulletVis.setPosition(position.x*pixelScale,position.y*pixelScale);
 				bulletVis.setRotation( a * 180/-pi );
 			}
+
+			lightSpr.setPosition(mousePos.x*pixelScale, mousePos.y*pixelScale);
+
 			// Set sight position
 			dotSpr.setPosition(mousePosWindow.x,mousePosWindow.y);
 			// Unlock world data mutex
@@ -304,6 +320,7 @@ namespace mp
 			window.draw(redBox);
 			window.draw(blueBox);
 			window.draw(bulletVis);
+			window.draw(lightSpr,sf::BlendAdd);
             //-----------------------------------------
 			//------------UI Rendering phase-----------
 			// Set default view so we can render the ui in window coordinates
