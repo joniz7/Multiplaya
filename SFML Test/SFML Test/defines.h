@@ -1,6 +1,9 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+#include <vector>
+#include "sfml.h"
+
 // Math
 #define pi 3.14159265
 
@@ -12,6 +15,11 @@ struct BulletData
 {
 	float force;
 	short damage;
+};
+
+struct Animation{
+	int fps;
+	std::vector<sf::Vector2i> sequence;
 };
 
 #endif
