@@ -12,6 +12,8 @@
 
 #include "../services/confighandler.h"
 
+#include "animatedsprite.h"
+
 ////////////////////////////////////////////////////////////
 /// World class. Takes care of game physics and logic
 ////////////////////////////////////////////////////////////
@@ -78,6 +80,32 @@ namespace mp
 		lightSpr.setPosition(0,0);
 		lightSpr.setColor(sf::Color(255,150,125,75));
 
+		sf::Texture frameTexture;
+		frameTexture.loadFromFile("resources/test/testsprite.png");
+
+		AnimatedSprite testSpr(&frameTexture,sf::Vector2i(8,1));
+		std::vector<sf::Vector2i> sequence;
+
+		sequence.push_back(sf::Vector2i(2,1));
+		sequence.push_back(sf::Vector2i(3,1));
+		sequence.push_back(sf::Vector2i(4,1));
+		sequence.push_back(sf::Vector2i(5,1));
+		sequence.push_back(sf::Vector2i(6,1));
+		sequence.push_back(sf::Vector2i(7,1));
+
+		testSpr.addAnimation("walk",9,sequence);
+
+		sequence.clear();
+		sequence.push_back(sf::Vector2i(1,1));
+
+		bool facingRight = true;
+
+		testSpr.addAnimation("idle",9,sequence);
+
+		testSpr.rotate(180);
+		testSpr.setPosition(0,0);
+		testSpr.scale(0.0016,0.0016);
+		testSpr.playAnimation("idle");
 
 		sf::Texture dotTex;
 		sf::Sprite dotSpr;
@@ -231,14 +259,28 @@ namespace mp
 				worldData->getBody(1)->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
 				worldDataMutex.unlock();
             }
-			
 			// Handle box movement. To be moved to Character class
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				if(worldData->getBody(0)->GetLinearVelocity().x < 10)
+			{
+				if(worldData->getBody(0)->GetLinearVelocity().x < 7)
 				worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(5,0), worldData->getBody(0)->GetPosition() );
+
+				if(facingRight)
+				{
+					testSpr.scale(-1,1);
+					facingRight = false;
+				}
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)||sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				if(worldData->getBody(0)->GetLinearVelocity().x > -10)
+			{
+				if(worldData->getBody(0)->GetLinearVelocity().x > -7)
 					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-5,0), worldData->getBody(0)->GetPosition() );
+				if(!facingRight)
+				{
+					testSpr.scale(-1,1);
+					facingRight = true;
+				}
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)||sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				if(worldData->getBody(0)->GetLinearVelocity().y < 10)
 					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,5), worldData->getBody(0)->GetPosition() );
@@ -249,19 +291,23 @@ namespace mp
 			{
 				if(released)
 				{
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,125), worldData->getBody(0)->GetPosition() );
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,75), worldData->getBody(0)->GetPosition() );
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(75,0), worldData->getBody(0)->GetPosition() );
+						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(40,0), worldData->getBody(0)->GetPosition() );
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)||sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-75,0), worldData->getBody(0)->GetPosition() );
+						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-40,0), worldData->getBody(0)->GetPosition() );
 
 					released = false;
 				}
 			}
 			else
 				released = true;
-			
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+				testSpr.playAnimation("walk");
+			else
+				testSpr.playAnimation("idle");
 
 			// Access world data
 			worldDataMutex.lock();
@@ -273,7 +319,7 @@ namespace mp
 				// Calculate camera position (somehwere between character and mouse)
 				b2Vec2 position = worldData->getBody(0)->GetPosition();
 				float32 angle = worldData->getBody(0)->GetAngle();
-				redBox.setPosition(position.x*pixelScale,position.y*pixelScale);
+				testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
 
 				float x = (((position.x + mousePos.x)/2+position.x)/2+position.x)/2;
@@ -320,6 +366,8 @@ namespace mp
 			window.draw(redBox);
 			window.draw(blueBox);
 			window.draw(bulletVis);
+			testSpr.update(elapsed);
+			window.draw(testSpr);
 			window.draw(lightSpr,sf::BlendAdd);
             //-----------------------------------------
 			//------------UI Rendering phase-----------

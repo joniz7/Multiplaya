@@ -7,6 +7,7 @@
 
 // Other headers
 #include <string>
+#include <iostream>
 #include <cstdlib>
 #include <list>
 #include <cmath>
@@ -23,13 +24,13 @@
 
 namespace mp
 {
-    class AnimatedSprite : sf::Sprite
+    class AnimatedSprite : public sf::Sprite
     {
         public:
 			AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions);
             ~AnimatedSprite();
-			void addAnimation(std::string animationName, int fps, std::vector<sf::Vector2i> sequence);	// Adds an animation to the animation map.
-			void playAnimation(std::string animationName);	// Plays specified animation.
+			void addAnimation(const std::string & animationName, int fps, std::vector<sf::Vector2i> sequence);	// Adds an animation to the animation map.
+			void playAnimation(const std::string & animationName);	// Plays specified animation.
 			void setFrame(sf::Vector2i frame);	// Sets a specified frame.
 			void update(float elapsed);	// Updates the animated sprite.
         private:

@@ -18,7 +18,7 @@ struct BulletData
 };
 
 struct Animation{
-	int fps;
+	float fps;
 	std::vector<sf::Vector2i> sequence;
 };
 
