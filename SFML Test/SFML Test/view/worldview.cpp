@@ -18,8 +18,8 @@
 
 namespace mp
 {
-	const float WIDTH = ConfigHandler::instance().getInt("res_x");
-	const float HEIGHT = ConfigHandler::instance().getInt("res_y");
+	const float WIDTH = ConfigHandler::instance().getInt("r_width");
+	const float HEIGHT = ConfigHandler::instance().getInt("r_height");
 
 	////////////////////////////////////////////////////////////
 	// Constructor
@@ -53,8 +53,8 @@ namespace mp
 		// Clock for frame time counting
         sf::Clock clock;
 		// Set window data
-        window.setVerticalSyncEnabled(ConfigHandler::instance().getBool("vsync"));
-        window.setFramerateLimit(ConfigHandler::instance().getInt("fpslimit"));
+        window.setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
+        window.setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
 		// Background stuff
         sf::RectangleShape background( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
 		background.setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
@@ -310,12 +310,12 @@ namespace mp
 			window.setView(window.getDefaultView());
 			window.draw(dotSpr);
 			// Draw hud
-			if(ConfigHandler::instance().getBool("drawhud"))
+			if(ConfigHandler::instance().getBool("r_drawhud"))
 			{
 				window.draw(hudSpr);
 			}
 			// Draw debug stuff
-			if(ConfigHandler::instance().getBool("debugmode"))
+			if(ConfigHandler::instance().getBool("s_debugmode"))
 			{
 				window.draw(renderFpsTxt);
 				window.draw(logicFpsTxt);

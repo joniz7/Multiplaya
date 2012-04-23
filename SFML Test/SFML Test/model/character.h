@@ -13,9 +13,6 @@
 #include <list>
 #include <cmath>
 
-// SFML specific headers
-#include "../sfml.h"
-
 // Box2D specific headers
 #include <Box2D.h>
 
@@ -29,7 +26,15 @@ namespace mp
         public:
 			Character();
             ~Character();
+			void jump();
+			void crouch();
+			void primaryFire();
+			void secondaryFire();
+			void kill();
+			void setInvincible(float duration);
+			void setMovement(int direction);
         private:
+			bool facingRight;
 			
     };
 }

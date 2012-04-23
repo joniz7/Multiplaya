@@ -18,7 +18,7 @@ namespace mp
     ResourceHandler::ResourceHandler()
     {
 		// Set default values
-		doRtLoading = ConfigHandler::instance().getBool("realtimeloading");
+		doRtLoading = ConfigHandler::instance().getBool("s_realtimeloading");
 		sf::Texture temp;
 		// Load debug textures
 		if(temp.loadFromFile("resources/debug/missingtexture.png"))

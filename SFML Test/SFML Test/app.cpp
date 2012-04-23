@@ -35,12 +35,14 @@ namespace mp
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<<"Starting logic thread..."<<std::endl;
+		std::cout<<"Starting logic thread.";
 		// Cast to world data pointer
 		WorldData* worldData = static_cast<WorldData*>(UserData);
+		std::cout<<".";
 		// Initialize the model and pass the world data pointer as argument
 		World* model = new World(worldData);
-		std::cout<<"Logic thread up and running!"<<std::endl;
+		std::cout<<".";
+		std::cout<<std::endl<<"Logic thread up and running!"<<std::endl;
 		// Unlock world data
 		worldDataMutex.unlock();
 		model->exec();
@@ -54,12 +56,14 @@ namespace mp
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<<"Starting view thread..."<<std::endl;
+		std::cout<<"Starting view thread.";
 		// Cast to world data pointer
 		WorldData* worldData = static_cast<WorldData*>(UserData);
+		std::cout<<".";
 		// Initialize the view and pass the world data pointer as argument
 		WorldView* view = new WorldView(worldData);
-		std::cout<<"View thread up and running!"<<std::endl;
+		std::cout<<".";
+		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
 		// Unlock world data
 		worldDataMutex.unlock();
 		view->exec();

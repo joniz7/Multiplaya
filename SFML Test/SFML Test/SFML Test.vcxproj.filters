@@ -21,6 +21,9 @@
     <Filter Include="src\includes">
       <UniqueIdentifier>{a0f3e55c-4872-4e8a-af0d-ed9aea4db6e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\sound">
+      <UniqueIdentifier>{b54f8263-c9f0-479a-8d92-e256777c84a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="model\bullet.cpp">
@@ -58,6 +61,21 @@
     </ClCompile>
     <ClCompile Include="model\Observable.cpp">
       <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\sound.cpp">
+      <Filter>src\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\worldsound.cpp">
+      <Filter>src\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\uisound.cpp">
+      <Filter>src\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="services\keylookup.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="view\animatedsprite.cpp">
+      <Filter>src\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +123,21 @@
     </ClInclude>
     <ClInclude Include="model\Observer.h">
       <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\sound.h">
+      <Filter>src\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\worldsound.h">
+      <Filter>src\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\uisound.h">
+      <Filter>src\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="services\keylookup.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="view\animatedsprite.h">
+      <Filter>src\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

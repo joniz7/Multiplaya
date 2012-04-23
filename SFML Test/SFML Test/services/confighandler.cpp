@@ -16,6 +16,16 @@
 
 namespace mp	
 {
+
+	bool isNumber(const std::string& str)
+	{
+	   for (int i = 0; i < str.length(); i++)
+		   if (!isdigit(str[i])&&!str[i]=='.')
+			   return false;
+
+	   return true;
+	}
+
 	////////////////////////////////////////////////////////////
 	// Returns a pointer to the singleton
 	////////////////////////////////////////////////////////////
@@ -41,6 +51,7 @@ namespace mp
         }
 		else
 		{
+			std::cout<<"Reading config";
 			std::string line;
 			while(getline(fileReader,line))
             {
@@ -61,18 +72,25 @@ namespace mp
 					for(int i=0;i<data.length();++i)
 						data[i] = ::tolower(data[i]);
 
+					std::cout<<".";
+
 					// Determine which map to store the data in
 					if(data == "true")	// Bool
 						boolMap[setting] = true;
 					else if(data == "false")	// Bool
 						boolMap[setting] = false;
-					else if(data.find(".")!=std::string::npos)
-						floatMap[setting] = atof(data.c_str());	// Float
+					else if(isNumber(data))	// Numeric value
+					{
+						if(data.find(".")!=std::string::npos)
+							floatMap[setting] = atof(data.c_str());	// Float
+						else
+							intMap[setting] = atoi(data.c_str());	// Int
+					}
 					else
-						intMap[setting] = atoi(data.c_str());	// Int
+						stringMap[setting] = data;
 				}
             }
-			std::cout<<"Config file read!"<<std::endl;
+			std::cout<<std::endl<<"Config read!"<<std::endl;
 		}
 		fileReader.close();
 	}
