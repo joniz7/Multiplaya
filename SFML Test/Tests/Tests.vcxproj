@@ -81,6 +81,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\SFML Test\global.h" />
     <ClInclude Include="..\SFML Test\model\bullet.h" />
     <ClInclude Include="..\SFML Test\model\character.h" />
     <ClInclude Include="..\SFML Test\model\world.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\SFML Test\global.cpp" />
     <ClCompile Include="..\SFML Test\model\bullet.cpp" />
     <ClCompile Include="..\SFML Test\model\character.cpp" />
     <ClCompile Include="..\SFML Test\model\world.cpp" />

@@ -25,6 +25,26 @@ namespace mp
     WorldData::~WorldData(){}
 
 	////////////////////////////////////////////////////////////
+	// Adds the supplied bullet to the world.
+	//
+	// returns true upon success.
+	////////////////////////////////////////////////////////////
+    bool WorldData::addBullet( Bullet* bullet )
+	{
+		BulletType type = bullet->getType();
+		
+		switch(type)
+		{
+			case BulletType::GENERIC_BULLET:
+				bltVec.push_back(*bullet);
+				std::cout<<"Added a bullet. Total count: "<< bltVec.size() <<std::endl;
+				return true;
+				break;
+		}
+		return false;
+    }
+
+	////////////////////////////////////////////////////////////
 	// Adds a bullet to the world
 	//
 	// type		- Type of bullet. Defined in defines.h
@@ -44,9 +64,9 @@ namespace mp
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-			bltVec.push_back( Bullet(type,owner,world,position,force) );
-			return true;
-			break;
+				bltVec.push_back( Bullet(type,owner,world,position,force) );
+				return true;
+				break;
 		}
 		return false;
     }

@@ -12,8 +12,11 @@ SFML Test/ipch/
 SFML Test/Debug/
 SFML Test/Release/
 SFML Test/CodeAnalyst/
-SFML Test/SFML Test/Debug/
+
 SFML Test/SFML Test/Debug/
 SFML Test/SFML_Test.suo
 SFML Test/SFML Test/hud.jpg
 SFML Test/SFML Test/shit.jpg
+
+SFML Test/Tests/Debug/
+SFML Test/Tests/Debug/*
