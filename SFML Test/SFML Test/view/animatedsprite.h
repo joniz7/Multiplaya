@@ -29,7 +29,7 @@ namespace mp
         public:
 			AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions);
             ~AnimatedSprite();
-			void addAnimation(const std::string & animationName, int fps, std::vector<sf::Vector2i> sequence);	// Adds an animation to the animation map.
+			void addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector2i> sequence);	// Adds an animation to the animation map.
 			void playAnimation(const std::string & animationName);	// Plays specified animation.
 			void setFrame(sf::Vector2i frame);	// Sets a specified frame.
 			void update(float elapsed);	// Updates the animated sprite.

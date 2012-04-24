@@ -18,7 +18,11 @@ struct BulletData
 };
 
 struct Animation{
+	// Playback fps.
 	float fps;
+	// Should this animation loop?
+	bool loop;
+	// Sequence vector containing the frames in playback order.
 	std::vector<sf::Vector2i> sequence;
 };
 

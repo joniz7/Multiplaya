@@ -41,10 +41,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Adds an animation to the animation map.
 	////////////////////////////////////////////////////////////
-	void AnimatedSprite::addAnimation(const std::string & animationName, int fps, std::vector<sf::Vector2i> sequence)
+	void AnimatedSprite::addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector2i> sequence)
 	{
 		Animation temp;
 		temp.fps = fps;
+		temp.loop = loop;
 		temp.sequence = sequence;
 		animationMap[animationName] = temp;
 		p_anm = &animationMap[animationName];
@@ -60,7 +61,7 @@ namespace mp
 			return;
 		else
 		{
-			std::cout<<"New animation playing: "<<animationName<<std::endl;
+			// std::cout<<"New animation playing: "<<animationName<<std::endl;
 			p_anm = &animationMap[animationName];
 			frame = 0;
 			frameCounter = 0;
@@ -96,9 +97,12 @@ namespace mp
 			
 			setFrame(p_anm->sequence.at(frame));
 			
-			// Increment frame index unless we just displayed the last frame (in which case we simply reset the frame index).
+			// Increment frame index unless we just displayed the last frame (in which case we simply reset the frame index if we are looping).
 			if(frame >= p_anm->sequence.size()-1)
-				frame = 0;
+				if(p_anm->loop)
+					frame = 0;
+				else
+					return;
 			else
 				frame++;
 

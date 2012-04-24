@@ -93,14 +93,14 @@ namespace mp
 		sequence.push_back(sf::Vector2i(6,1));
 		sequence.push_back(sf::Vector2i(7,1));
 
-		testSpr.addAnimation("walk",9,sequence);
+		testSpr.addAnimation("walk",9,true,sequence);
 
 		sequence.clear();
 		sequence.push_back(sf::Vector2i(1,1));
 
 		bool facingRight = true;
 
-		testSpr.addAnimation("idle",9,sequence);
+		testSpr.addAnimation("idle",9,true,sequence);
 
 		testSpr.rotate(180);
 		testSpr.setPosition(0,0);
