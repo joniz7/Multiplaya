@@ -24,7 +24,7 @@ namespace mp
     class Character
     {
         public:
-			Character();
+			Character(b2Body* characterBody);
             ~Character();
 			void jump();
 			void crouch();
@@ -33,9 +33,13 @@ namespace mp
 			void kill();
 			void setInvincible(float duration);
 			void setMovement(int direction);
+			short getHitpoints();
+			void setHitpoints(short hitpoints);
+			b2Body* getBody() { return characterBody; };
         private:
 			bool facingRight;
-			
+			short hitpoints;
+			b2Body* characterBody;
     };
 }
 

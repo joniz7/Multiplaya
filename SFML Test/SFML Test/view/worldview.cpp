@@ -254,9 +254,9 @@ namespace mp
             {
 				// Move box to mouse view coordinates
 				worldDataMutex.lock();
-				worldData->getBody(1)->SetTransform(b2Vec2(mousePos.x, mousePos.y), 0);
-				worldData->getBody(1)->SetAwake(true);
-				worldData->getBody(1)->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
+				worldData->getCharacter(0)->getBody()->SetTransform(b2Vec2(mousePos.x, mousePos.y), 0);
+				worldData->getCharacter(0)->getBody()->SetAwake(true);
+				worldData->getCharacter(0)->getBody()->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
 				worldDataMutex.unlock();
             }
 			// Handle box movement. To be moved to Character class
@@ -329,10 +329,10 @@ namespace mp
 				window.setView(*worldView);
 
 			}
-			if(tv->size() > 1)
+			if(tv->size() > 0)
 			{
-				b2Vec2 position = worldData->getBody(1)->GetPosition();
-				float32 angle = worldData->getBody(1)->GetAngle();
+				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
+				float32 angle = worldData->getCharacter(0)->getBody()->GetAngle();
 				blueBox.setPosition(position.x*pixelScale,position.y*pixelScale);
 				blueBox.setRotation( angle*180/pi );
 			}

@@ -16,9 +16,9 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Character::Character()
+    Character::Character(b2Body* characterBody)
     {
-		
+		this->characterBody = characterBody;
     }
 
 	////////////////////////////////////////////////////////////
@@ -28,4 +28,14 @@ namespace mp
     {
 
     }
+
+	short Character::getHitpoints() {
+		return this->hitpoints;
+	}
+
+	void Character::setHitpoints(short hitpoints) {
+		this->hitpoints = hitpoints;
+	}
+
+
 }
