@@ -96,6 +96,7 @@
     <ClCompile Include="sound\uisound.cpp" />
     <ClCompile Include="sound\worldsound.cpp" />
     <ClCompile Include="view\animatedsprite.cpp" />
+    <ClCompile Include="view\CharacterView.cpp" />
     <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +119,7 @@
     <ClInclude Include="sound\uisound.h" />
     <ClInclude Include="sound\worldsound.h" />
     <ClInclude Include="view\animatedsprite.h" />
+    <ClInclude Include="view\CharacterView.h" />
     <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <ItemGroup>

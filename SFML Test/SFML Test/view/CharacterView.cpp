@@ -1,11 +1,14 @@
 #include "CharacterView.h"
 
-
-CharacterView::CharacterView()
+namespace mp
 {
-}
+	CharacterView::CharacterView(Character* model)
+	{
+		this->model = model;
+	}
 
 
-CharacterView::~CharacterView()
-{
+	CharacterView::~CharacterView()
+	{
+	}
 }
