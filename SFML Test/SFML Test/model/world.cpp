@@ -8,6 +8,7 @@
 #include <iostream>
 #include <dos.h>
 
+#include "ContactListener.h"
 #include "../global.h"
 
 ////////////////////////////////////////////////////////////
@@ -26,6 +27,7 @@ namespace mp
 		b2Vec2 gravity(0, -9.8f);
 		// Create the world
 		world = new b2World(gravity);
+		world->SetContactListener(new ContactListener(worldData));
     }
 
 	////////////////////////////////////////////////////////////
@@ -70,9 +72,10 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 		// Add two bodies to the world
-		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,2.0f) );
+		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
 		//worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,2.0f) );
-		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f,2.0f) );
+		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
+		worldData->addCharacter( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f) );
 		// Create a bullet, and add it to the world.
 		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(10, 10), b2Vec2(-200, 0));
 		worldData->addBullet(b);
@@ -90,10 +93,10 @@ namespace mp
 			float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
-			sum+=elapsed;
+			sum += elapsed;
 
 			//TODO: Hard coded fps limiter for Box2D as I couldn't get it to act normally. WARNING: SUPER INCORRECT AND SHOULD BE FIXED ASAP
-			if(sum > 1/240.0f)
+			if(sum > 1 / 240.0f)
 			{
 				// Lock world data so only one thread can access world data at the same time
 				worldDataMutex.lock();

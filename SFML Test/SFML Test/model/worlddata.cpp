@@ -77,6 +77,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addCharacter( b2World* world, b2Vec2 position, b2Vec2 size)
     {
+		std::cout << "Adding character" << std::endl;
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
@@ -86,6 +87,7 @@ namespace mp
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
 		dynamicBox.SetAsBox(size.x, size.y);
+		
 		// Define the dynamic body fixture.
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &dynamicBox;
@@ -95,9 +97,18 @@ namespace mp
 		fixtureDef.friction = 2.0f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
+		
 		// Add the shape to the body.
 		characterBody->CreateFixture(&fixtureDef);
 		characterBody->SetFixedRotation(true);
+
+
+		// Test code
+		//add foot sensor fixture
+		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		footSensorFixture->SetUserData( (void*)1 );
 
 		chrVec.push_back( Character(characterBody) );
 		return true;

@@ -80,6 +80,9 @@
     <ClCompile Include="view\CharacterView.cpp">
       <Filter>src\view</Filter>
     </ClCompile>
+    <ClCompile Include="model\ContactListener.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -144,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="view\CharacterView.h">
       <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="model\ContactListener.h">
+      <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

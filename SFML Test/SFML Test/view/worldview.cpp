@@ -262,8 +262,8 @@ namespace mp
 			// Handle box movement. To be moved to Character class
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				if(worldData->getBody(0)->GetLinearVelocity().x < 7)
-				worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(5, 0), worldData->getBody(0)->GetPosition() );
+				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().x < 7)
+				worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(5, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
 
 				if(facingRight)
 				{
@@ -273,8 +273,8 @@ namespace mp
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				if(worldData->getBody(0)->GetLinearVelocity().x > -7)
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-5, 0), worldData->getBody(0)->GetPosition() );
+				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().x > -7)
+					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(-5, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
 				if(!facingRight)
 				{
 					testSpr.scale(-1,1);
@@ -282,21 +282,21 @@ namespace mp
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				if(worldData->getBody(0)->GetLinearVelocity().y < 10)
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0, 5), worldData->getBody(0)->GetPosition() );
+				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().y < 10)
+					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(0, 5), worldData->getCharacter(1)->getBody()->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				if(worldData->getBody(0)->GetLinearVelocity().y > -10)
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0, -5), worldData->getBody(0)->GetPosition() );
+				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().y > -10)
+					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(0, -5), worldData->getCharacter(1)->getBody()->GetPosition() );
+			
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
 				if(released)
 				{
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0, 75), worldData->getBody(0)->GetPosition() );
-
+					worldData->getCharacter(1)->jump();
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(40, 0), worldData->getBody(0)->GetPosition() );
+						worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-40, 0), worldData->getBody(0)->GetPosition() );
+						worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(-40, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
 
 					released = false;
 				}
@@ -317,8 +317,8 @@ namespace mp
 			if(tv->size() > 0)
 			{
 				// Calculate camera position (somehwere between character and mouse)
-				b2Vec2 position = worldData->getBody(0)->GetPosition();
-				float32 angle = worldData->getBody(0)->GetAngle();
+				b2Vec2 position = worldData->getCharacter(1)->getBody()->GetPosition();
+				float32 angle = worldData->getCharacter(1)->getBody()->GetAngle();
 				testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
 

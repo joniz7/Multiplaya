@@ -19,6 +19,7 @@ namespace mp
     Character::Character(b2Body* characterBody)
     {
 		this->characterBody = characterBody;
+		this->isGrounded = true;
     }
 
 	////////////////////////////////////////////////////////////
@@ -28,5 +29,12 @@ namespace mp
     {
 
     }
+
+	void Character::jump()
+	{
+		if (isGrounded) {
+			characterBody->ApplyLinearImpulse( b2Vec2(0, 75), characterBody->GetPosition());
+		}
+	}
 
 }

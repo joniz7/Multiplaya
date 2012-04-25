@@ -34,11 +34,13 @@ namespace mp
 			void setInvincible(float duration);
 			void setMovement(int direction);
 			short getHealth() { return health; };
-			void setHealth(short health) { this->health = health; };
-			b2Body* getBody() { return characterBody; };
+			void setHealth(short health) { this->health = health; }
+			b2Body* getBody() { return characterBody; }
+			void setGrounded(bool choice) { isGrounded = choice; } 
         private:
 			bool facingRight;
 			short health;
+			bool isGrounded;
 			b2Body* characterBody;
     };
 }

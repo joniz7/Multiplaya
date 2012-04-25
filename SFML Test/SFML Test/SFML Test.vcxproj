@@ -85,6 +85,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
     <ClCompile Include="model\character.cpp" />
+    <ClCompile Include="model\ContactListener.cpp" />
     <ClCompile Include="model\Observable.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="model\bullet.h" />
     <ClInclude Include="model\character.h" />
+    <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\Observable.h" />
     <ClInclude Include="model\Observer.h" />
     <ClInclude Include="model\world.h" />
