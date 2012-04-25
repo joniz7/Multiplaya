@@ -43,6 +43,8 @@ In this section we specify all requirements
 2.2 Non-functional requirements
 
 2.2.1 Usability
+The game as intuitive and usable as possible. Users will therefore be offered possibilites to customize things like key bindings, resolution etc.
+Usability tests with persons who haven't been involved in developing the game will be performed.
 
 2.2.2 Reliability
 
