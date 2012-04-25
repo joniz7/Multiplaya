@@ -4,17 +4,23 @@ Table of Contents
 
 
 
-  Version: 
+  Version: 1
 
-  Date 
+  Date 2012-04-25
 
-  Author 
+  Author Niklas Andreasson, Niklas Logren, Jonathan Orrö, Felix Willebrand Westin
 
 This version overrides all previous versions.
 
 1 Introduction
 
 1.1 Design goals
+
+GUI Graphical User Interface
+
+Host 
+
+MVC
 
 1.2 Definitions, acronyms and abbreviations 
 
