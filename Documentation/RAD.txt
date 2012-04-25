@@ -58,7 +58,8 @@ There will be working Windows, Mac and Linux versions of the game.
 2.2.6 Packaging and installation
 
 2.2.7 Legal
-Thou shalt not download.
+There should not be any legal issues regarding rights or code.
+
 2.3 Application models
 
 2.3.1 Use case model
