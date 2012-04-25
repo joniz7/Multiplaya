@@ -33,12 +33,12 @@ namespace mp
 			void kill();
 			void setInvincible(float duration);
 			void setMovement(int direction);
-			short getHitpoints();
-			void setHitpoints(short hitpoints);
+			short getHealth() { return health; };
+			void setHealth(short health) { this->health = health; };
 			b2Body* getBody() { return characterBody; };
         private:
 			bool facingRight;
-			short hitpoints;
+			short health;
 			b2Body* characterBody;
     };
 }

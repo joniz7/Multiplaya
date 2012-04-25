@@ -60,7 +60,7 @@ namespace mp
 		// Background stuff
         sf::RectangleShape background( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
 		background.setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
-		background.setPosition(0,0);
+		background.setPosition(0, 0);
         background.setFillColor( sf::Color(30, 30, 30) );
         //-------------------------------------
 
@@ -75,32 +75,32 @@ namespace mp
 		lightTex.loadFromFile("resources/light.png");
 		sf::Sprite lightSpr;
 		lightSpr.setTexture(lightTex);
-		lightSpr.setOrigin(256,256);
-		lightSpr.setScale(pixelScale*0.1,pixelScale*0.1);
+		lightSpr.setOrigin(256, 256);
+		lightSpr.setScale(pixelScale * 0.1, pixelScale * 0.1);
 		lightSpr.setPosition(0,0);
-		lightSpr.setColor(sf::Color(255,150,125,75));
+		lightSpr.setColor(sf::Color(255, 150, 125, 75));
 
 		sf::Texture frameTexture;
 		frameTexture.loadFromFile("resources/test/testsprite.png");
 
-		AnimatedSprite testSpr(&frameTexture,sf::Vector2i(8,1));
+		AnimatedSprite testSpr(&frameTexture,sf::Vector2i(8, 1));
 		std::vector<sf::Vector2i> sequence;
 
-		sequence.push_back(sf::Vector2i(2,1));
-		sequence.push_back(sf::Vector2i(3,1));
-		sequence.push_back(sf::Vector2i(4,1));
-		sequence.push_back(sf::Vector2i(5,1));
-		sequence.push_back(sf::Vector2i(6,1));
-		sequence.push_back(sf::Vector2i(7,1));
+		sequence.push_back(sf::Vector2i(2, 1));
+		sequence.push_back(sf::Vector2i(3, 1));
+		sequence.push_back(sf::Vector2i(4, 1));
+		sequence.push_back(sf::Vector2i(5, 1));
+		sequence.push_back(sf::Vector2i(6, 1));
+		sequence.push_back(sf::Vector2i(7, 1));
 
-		testSpr.addAnimation("walk",9,true,sequence);
+		testSpr.addAnimation("walk", 9, true, sequence);
 
 		sequence.clear();
-		sequence.push_back(sf::Vector2i(1,1));
+		sequence.push_back(sf::Vector2i(1, 1));
 
 		bool facingRight = true;
 
-		testSpr.addAnimation("idle",9,true,sequence);
+		testSpr.addAnimation("idle", 9, true, sequence);
 
 		testSpr.rotate(180);
 		testSpr.setPosition(0,0);
@@ -198,7 +198,7 @@ namespace mp
 		bool running = true;
         while (running)
         {
-			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, *worldView ) / pixelScale;
+			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, *worldView ) / pixelScale;
 			mousePosWindow = sf::Mouse::getPosition(window);
 			mouseSpeed = (mousePos - mousePosOld) / pixelScale;
             // Get elapsed time since last frame
@@ -260,43 +260,43 @@ namespace mp
 				worldDataMutex.unlock();
             }
 			// Handle box movement. To be moved to Character class
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				if(worldData->getBody(0)->GetLinearVelocity().x < 7)
-				worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(5,0), worldData->getBody(0)->GetPosition() );
+				worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(5, 0), worldData->getBody(0)->GetPosition() );
 
 				if(facingRight)
 				{
-					testSpr.scale(-1,1);
+					testSpr.scale(-1, 1);
 					facingRight = false;
 				}
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)||sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				if(worldData->getBody(0)->GetLinearVelocity().x > -7)
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-5,0), worldData->getBody(0)->GetPosition() );
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-5, 0), worldData->getBody(0)->GetPosition() );
 				if(!facingRight)
 				{
 					testSpr.scale(-1,1);
 					facingRight = true;
 				}
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)||sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				if(worldData->getBody(0)->GetLinearVelocity().y < 10)
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,5), worldData->getBody(0)->GetPosition() );
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)||sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0, 5), worldData->getBody(0)->GetPosition() );
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 				if(worldData->getBody(0)->GetLinearVelocity().y > -10)
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,-5), worldData->getBody(0)->GetPosition() );
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0, -5), worldData->getBody(0)->GetPosition() );
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
 				if(released)
 				{
-					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0,75), worldData->getBody(0)->GetPosition() );
+					worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(0, 75), worldData->getBody(0)->GetPosition() );
 
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(40,0), worldData->getBody(0)->GetPosition() );
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)||sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-40,0), worldData->getBody(0)->GetPosition() );
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(40, 0), worldData->getBody(0)->GetPosition() );
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+						worldData->getBody(0)->ApplyLinearImpulse( b2Vec2(-40, 0), worldData->getBody(0)->GetPosition() );
 
 					released = false;
 				}
@@ -304,7 +304,7 @@ namespace mp
 			else
 				released = true;
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)||sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 				testSpr.playAnimation("walk");
 			else
 				testSpr.playAnimation("idle");
@@ -322,10 +322,10 @@ namespace mp
 				testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
 
-				float x = (((position.x + mousePos.x)/2+position.x)/2+position.x)/2;
-				float y = (((position.y + mousePos.y)/2+position.y)/2+position.y)/2;
+				float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
+				float y = (((position.y + mousePos.y) / 2 +position.y) / 2 + position.y) / 2;
 
-				worldView->setCenter(x*pixelScale,y*pixelScale);
+				worldView->setCenter(x * pixelScale, y * pixelScale);
 				window.setView(*worldView);
 
 			}
@@ -333,8 +333,8 @@ namespace mp
 			{
 				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
 				float32 angle = worldData->getCharacter(0)->getBody()->GetAngle();
-				blueBox.setPosition(position.x*pixelScale,position.y*pixelScale);
-				blueBox.setRotation( angle*180/pi );
+				blueBox.setPosition(position.x * pixelScale,position.y*pixelScale);
+				blueBox.setRotation( angle * 180 / pi );
 			}
 
 			if(tv->size() > 0)
@@ -342,11 +342,11 @@ namespace mp
 				b2Vec2 position = worldData->getBullet(0)->getBody()->GetPosition();
 				b2Vec2 v = worldData->getBullet(0)->getBody()->GetLinearVelocity();
 				float a = atan(v.x/v.y);
-				bulletVis.setPosition(position.x*pixelScale,position.y*pixelScale);
-				bulletVis.setRotation( a * 180/-pi );
+				bulletVis.setPosition(position.x * pixelScale,position.y*pixelScale);
+				bulletVis.setRotation( a * 180 / -pi );
 			}
 
-			lightSpr.setPosition(mousePos.x*pixelScale, mousePos.y*pixelScale);
+			lightSpr.setPosition(mousePos.x * pixelScale, mousePos.y * pixelScale);
 
 			// Set sight position
 			dotSpr.setPosition(mousePosWindow.x,mousePosWindow.y);

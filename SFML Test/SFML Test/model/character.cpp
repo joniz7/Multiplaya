@@ -29,13 +29,4 @@ namespace mp
 
     }
 
-	short Character::getHitpoints() {
-		return this->hitpoints;
-	}
-
-	void Character::setHitpoints(short hitpoints) {
-		this->hitpoints = hitpoints;
-	}
-
-
 }
