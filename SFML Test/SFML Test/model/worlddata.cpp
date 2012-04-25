@@ -113,7 +113,7 @@ namespace mp
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position.Set(position.x, position.y);
-		bodyVec.push_back( world->CreateBody(&bodyDef) );
+		b2Body* body = world->CreateBody(&bodyDef);
 
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -128,8 +128,15 @@ namespace mp
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
 		// Add the shape to the body.
-		bodyVec.back()->CreateFixture(&fixtureDef);
-		bodyVec.back()->SetFixedRotation(true);
+		body->CreateFixture(&fixtureDef);
+		body->SetFixedRotation(true);
+		addBody(body);
+		return true;
+    }
+
+	bool WorldData::addBody( b2Body* body  )
+    {
+		bodyVec.push_back( body );
 		return true;
     }
 }
