@@ -42,6 +42,9 @@
     <ClInclude Include="..\SFML Test\global.h">
       <Filter>SFML Test</Filter>
     </ClInclude>
+    <ClInclude Include="..\SFML Test\model\ContactListener.h">
+      <Filter>SFML Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +66,9 @@
       <Filter>SFML Test</Filter>
     </ClCompile>
     <ClCompile Include="..\SFML Test\global.cpp">
+      <Filter>SFML Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\ContactListener.cpp">
       <Filter>SFML Test</Filter>
     </ClCompile>
   </ItemGroup>
