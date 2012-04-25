@@ -43,6 +43,8 @@ In this section we specify all requirements
 2.2 Non-functional requirements
 
 2.2.1 Usability
+The game as intuitive and usable as possible. Users will therefore be offered possibilites to customize things like key bindings, resolution etc.
+Usability tests with persons who haven't been involved in developing the game will be performed.
 
 2.2.2 Reliability
 
@@ -56,7 +58,8 @@ There will be working Windows, Mac and Linux versions of the game.
 2.2.6 Packaging and installation
 
 2.2.7 Legal
-Thou shalt not download.
+There should not be any legal issues regarding rights or code.
+
 2.3 Application models
 
 2.3.1 Use case model
@@ -77,8 +80,7 @@ UML and a list of UC names (text for all in appendix)
 UML, possible some text.
 
 2.3.4 User interface
-
-Text to motivate a picture.
+Application will use a fixed GUI supporting different resolutions.
 
 2.4 References
 
