@@ -80,8 +80,7 @@ UML and a list of UC names (text for all in appendix)
 UML, possible some text.
 
 2.3.4 User interface
-
-Text to motivate a picture.
+Application will use a fixed GUI supporting different resolutions.
 
 2.4 References
 
