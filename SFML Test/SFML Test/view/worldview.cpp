@@ -311,7 +311,7 @@ namespace mp
 
 			// Access world data
 			worldDataMutex.lock();
-			std::vector<b2Body*>* tv = worldData->getBodyVec();
+			std::vector<Character>* tv = worldData->getChrVec();
 			std::vector<Bullet>* bv = worldData->getBltVec();
 			
 			if(tv->size() > 0)
