@@ -14,6 +14,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
 
 // Box2D specific headers
 #include <Box2D.h>
@@ -27,9 +28,12 @@ namespace mp
     {
         public:
 			NetworkHandler( );
+			void exec();
             ~NetworkHandler();
         private:
-			
+			sf::UdpSocket receiver;
+			sf::UdpSocket sender;
+			bool running;
     };
 }
 
