@@ -48,6 +48,7 @@ namespace mp
 		// Set up and initialize render window
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
 		sf::RenderWindow window(videoMode, "SFML Test Window");
+		fuck = new CharacterView();
 		// Don't display mouse cursor
 		window.setMouseCursorVisible(false);
 		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
@@ -320,6 +321,7 @@ namespace mp
 			testSpr.update(elapsed);
 			window.draw(testSpr);
 			window.draw(lightSpr,sf::BlendAdd);
+			window.draw(*fuck);
             //-----------------------------------------
 			//------------UI Rendering phase-----------
 			// Set default view so we can render the ui in window coordinates
