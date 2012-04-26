@@ -24,6 +24,8 @@
 //Defines
 #include "../defines.h"
 
+#include "Player.h"
+
 namespace mp
 {
 	//Forward declaration so WorldData can have a World pointer
@@ -41,6 +43,7 @@ namespace mp
 			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
+			void createPlayer() { player = new Player(getCharacter(1)); }
 			// Getters
 			// Get list of all characters
 			std::vector<Character>* getChrVec(){ return &chrVec; };
@@ -56,6 +59,7 @@ namespace mp
 			// Get a specific body
 			b2Body* getBody(int i){ return bodyVec.at(i); };
 
+			Player* getPlayer() { return player; }
 			// Get logic fps
 			int getLogicFps(){return logicFps;};
 
@@ -74,6 +78,7 @@ namespace mp
 			std::vector<b2Body*> bodyVec;
 			// Variable for keeping track of logic thread fps
 			int logicFps;
+			Player* player;
     };
 }
 

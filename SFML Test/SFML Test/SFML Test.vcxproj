@@ -87,6 +87,7 @@
     <ClCompile Include="model\character.cpp" />
     <ClCompile Include="model\ContactListener.cpp" />
     <ClCompile Include="model\Observable.cpp" />
+    <ClCompile Include="model\Player.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\confighandler.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\Observable.h" />
     <ClInclude Include="model\Observer.h" />
+    <ClInclude Include="model\Player.h" />
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\confighandler.h" />

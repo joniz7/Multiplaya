@@ -259,55 +259,6 @@ namespace mp
 				worldData->getCharacter(0)->getBody()->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
 				worldDataMutex.unlock();
             }
-			// Handle box movement. To be moved to Character class
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			{
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().x < 7)
-				worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(5, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-
-				if(facingRight)
-				{
-					testSpr.scale(-1, 1);
-					facingRight = false;
-				}
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			{
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().x > -7)
-					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(-5, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-				if(!facingRight)
-				{
-					testSpr.scale(-1,1);
-					facingRight = true;
-				}
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().y < 10)
-					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(0, 5), worldData->getCharacter(1)->getBody()->GetPosition() );
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().y > -10)
-					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(0, -5), worldData->getCharacter(1)->getBody()->GetPosition() );
-			
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				if(released)
-				{
-					worldData->getCharacter(1)->jump();
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-						worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-						worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(-40, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-
-					released = false;
-				}
-			}
-			else
-				released = true;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				testSpr.playAnimation("walk");
-			else
-				testSpr.playAnimation("idle");
 
 			// Access world data
 			worldDataMutex.lock();
