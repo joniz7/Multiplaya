@@ -38,11 +38,15 @@ namespace mp
 		protected:
     		
 		private:
+			void calculateCam();
 			CharacterView* charView;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;
 			sf::View* worldView;
+			sf::RenderWindow* window;
+			float pixelScale;
+			sf::Vector2f* mousePos;
 			
     };
 }
