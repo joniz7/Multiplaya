@@ -16,6 +16,7 @@ namespace mp {
 			Player(Character* character);
 			~Player();
 			void update();
+			Character* getCharacter() { return character; }
 		private:
 			Character* character;
 			bool released;

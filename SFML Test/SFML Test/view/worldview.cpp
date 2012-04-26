@@ -268,13 +268,13 @@ namespace mp
 			if(tv->size() > 0)
 			{
 				// Calculate camera position (somehwere between character and mouse)
-				b2Vec2 position = worldData->getCharacter(1)->getBody()->GetPosition();
-				float32 angle = worldData->getCharacter(1)->getBody()->GetAngle();
+				b2Vec2 position = worldData->getPlayer()->getCharacter()->getBody()->GetPosition();
+				float32 angle = worldData->getPlayer()->getCharacter()->getBody()->GetAngle();
 				testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
 
 				float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
-				float y = (((position.y + mousePos.y) / 2 +position.y) / 2 + position.y) / 2;
+				float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
 				worldView->setCenter(x * pixelScale, y * pixelScale);
 				window.setView(*worldView);
