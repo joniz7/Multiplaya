@@ -38,7 +38,7 @@ namespace mp
 		protected:
     		
 		private:
-			CharacterView* fuck;
+			CharacterView* charView;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;

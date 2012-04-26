@@ -18,12 +18,11 @@ namespace mp
 	class CharacterView : public sf::Drawable
 	{
 		public:
-			//CharacterView(Character* model);
-			CharacterView();
+			CharacterView(Character* model, sf::Sprite* sprite);
 			~CharacterView();
 		private:
 			Character* model;
-			sf::RectangleShape* bulletVis;
+			sf::Sprite* sprite;
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	};
 }

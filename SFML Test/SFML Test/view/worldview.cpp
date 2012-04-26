@@ -48,7 +48,7 @@ namespace mp
 		// Set up and initialize render window
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
 		sf::RenderWindow window(videoMode, "SFML Test Window");
-		fuck = new CharacterView();
+		
 		// Don't display mouse cursor
 		window.setMouseCursorVisible(false);
 		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
@@ -171,6 +171,8 @@ namespace mp
 		bulletVis.setOutlineColor(sf::Color::Black);
         //------------------
 
+		charView = new CharacterView(worldData->getPlayer()->getCharacter(), &testSpr);
+
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
@@ -271,7 +273,7 @@ namespace mp
 				// Calculate camera position (somehwere between character and mouse)
 				b2Vec2 position = worldData->getPlayer()->getCharacter()->getBody()->GetPosition();
 				float32 angle = worldData->getPlayer()->getCharacter()->getBody()->GetAngle();
-				testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
+				//testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
 				redBox.setRotation( angle*180/pi );
 
 				float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
@@ -319,9 +321,9 @@ namespace mp
 			window.draw(blueBox);
 			window.draw(bulletVis);
 			testSpr.update(elapsed);
-			window.draw(testSpr);
+			//window.draw(testSpr);
 			window.draw(lightSpr,sf::BlendAdd);
-			window.draw(*fuck);
+			window.draw(*charView);
             //-----------------------------------------
 			//------------UI Rendering phase-----------
 			// Set default view so we can render the ui in window coordinates
