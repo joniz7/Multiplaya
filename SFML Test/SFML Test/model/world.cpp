@@ -24,7 +24,7 @@ namespace mp
     {
 		this->worldData = worldData;
 		// Setup the world properties
-		b2Vec2 gravity(0, -9.8f);
+		b2Vec2 gravity(0, -20.8f);
 		// Create the world
 		world = new b2World(gravity);
 		world->SetContactListener(new ContactListener(worldData));
@@ -90,25 +90,27 @@ namespace mp
 		// Logic loop
 		bool running = true;
 		while(running){
-			float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
-			sum += elapsed;
+			//sum += elapsed;
 
-			//TODO: Hard coded fps limiter for Box2D as I couldn't get it to act normally. WARNING: SUPER INCORRECT AND SHOULD BE FIXED ASAP
-			if(sum > 1 / 240.0f)
+			// Lock world data so only one thread can access world data at the same time
+			worldDataMutex.lock();
+			// Perform a physics step
+			world->Step(timeStep, velocityIterations, positionIterations);
+			// Clear physics forces in prep for next step
+			world->ClearForces();
+			// Get frame time
+			float elapsed = clock.getElapsedTime().asSeconds();
+			// Save logic fps
+			worldData->setLogicFps((int)(1 / elapsed));
+			// Unlock world data
+			worldDataMutex.unlock();
+			sum = 0;
+
+			if(elapsed<(1 / 60.0f))
 			{
-				// Lock world data so only one thread can access world data at the same time
-				worldDataMutex.lock();
-				// Perform a physics step
-				world->Step(timeStep, velocityIterations, positionIterations);
-				// Clear physics forces in prep for next step
-				world->ClearForces();
-				// Save logic fps
-				worldData->setLogicFps((int)(1 / sum));
-				// Unlock world data
-				worldDataMutex.unlock();
-				sum = 0;
+				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
 			}
 		}
     }
