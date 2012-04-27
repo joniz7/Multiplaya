@@ -18,5 +18,7 @@ SFML Test/SFML_Test.suo
 SFML Test/SFML Test/hud.jpg
 SFML Test/SFML Test/shit.jpg
 
+SFML Test/gtest-1.6.0/msvc/gtest/Debug/
+
 SFML Test/Tests/Debug/
 SFML Test/Tests/Debug/*

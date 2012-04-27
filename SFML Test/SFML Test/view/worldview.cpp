@@ -26,7 +26,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldView::WorldView(WorldData* worldData){this->worldData = worldData;}
+    WorldView::WorldView(WorldData* worldData)
+	{
+		this->worldData = worldData;
+		this->pixelScale = 1 / 10.0f;
+	}
 
 	////////////////////////////////////////////////////////////
 	// Safely convert int to string. TODO: Should be moved to
@@ -47,16 +51,17 @@ namespace mp
 		//------------Startup stuff------------
 		// Set up and initialize render window
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
-		sf::RenderWindow window(videoMode, "SFML Test Window");
+		window = new sf::RenderWindow(videoMode, "SFML Test Window");
+		
 		// Don't display mouse cursor
-		window.setMouseCursorVisible(false);
+		window->setMouseCursorVisible(false);
 		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
-		float pixelScale = 1 / 10.0f;
+		
 		// Clock for frame time counting
         sf::Clock clock;
 		// Set window data
-        window.setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
-        window.setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
+        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
+        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
 		// Background stuff
         sf::RectangleShape background( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
 		background.setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
@@ -170,6 +175,8 @@ namespace mp
 		bulletVis.setOutlineColor(sf::Color::Black);
         //------------------
 
+		charView = new CharacterView(worldData->getPlayer()->getCharacter(), &testSpr);
+
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
@@ -180,14 +187,14 @@ namespace mp
 		//worldView->zoom( 3.75 );
 		worldView->zoom( 1.5 );
 		// Set view
-		window.setView(*worldView);
+		window->setView(*worldView);
 		//------------------
 
 		std::cout << "Render window initialized!" << std::endl;
 
 		int counter = 0;
 
-		sf::Vector2f mousePos(0,0);
+		mousePos = new sf::Vector2f(0,0);
 		sf::Vector2i mousePosWindow(0,0);
 		sf::Vector2f mousePosOld(0,0);
 		sf::Vector2f mouseSpeed(0,0);
@@ -198,9 +205,9 @@ namespace mp
 		bool running = true;
         while (running)
         {
-			mousePos = window.convertCoords( sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, *worldView ) / pixelScale;
-			mousePosWindow = sf::Mouse::getPosition(window);
-			mouseSpeed = (mousePos - mousePosOld) / pixelScale;
+			*mousePos = window->convertCoords( sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y, *worldView ) / pixelScale;
+			mousePosWindow = sf::Mouse::getPosition(*window);
+			mouseSpeed = (*mousePos - mousePosOld) / pixelScale;
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
@@ -225,11 +232,11 @@ namespace mp
 			
             // Handle events
             sf::Event Event;
-            while (window.pollEvent(Event))
+            while (window->pollEvent(Event))
             {
 				// Shut down application if user closes window or hits ESC key
                 if ( Event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )
-                    window.close();
+                    window->close();
 
 				// Handle zooming of viewport
 				if ( Event.type == sf::Event::MouseWheelMoved )
@@ -238,7 +245,7 @@ namespace mp
 						worldView->zoom(0.9f);
 					else
 						worldView->zoom(1.1f);
-					window.setView(*worldView);
+					window->setView(*worldView);
 				}
             }
 			
@@ -254,81 +261,23 @@ namespace mp
             {
 				// Move box to mouse view coordinates
 				worldDataMutex.lock();
-				worldData->getCharacter(0)->getBody()->SetTransform(b2Vec2(mousePos.x, mousePos.y), 0);
+				worldData->getCharacter(0)->getBody()->SetTransform(b2Vec2(mousePos->x, mousePos->y), 0);
 				worldData->getCharacter(0)->getBody()->SetAwake(true);
 				worldData->getCharacter(0)->getBody()->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
 				worldDataMutex.unlock();
             }
-			// Handle box movement. To be moved to Character class
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			{
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().x < 7)
-				worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(5, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-
-				if(facingRight)
-				{
-					testSpr.scale(-1, 1);
-					facingRight = false;
-				}
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			{
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().x > -7)
-					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(-5, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-				if(!facingRight)
-				{
-					testSpr.scale(-1,1);
-					facingRight = true;
-				}
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().y < 10)
-					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(0, 5), worldData->getCharacter(1)->getBody()->GetPosition() );
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				if(worldData->getCharacter(1)->getBody()->GetLinearVelocity().y > -10)
-					worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(0, -5), worldData->getCharacter(1)->getBody()->GetPosition() );
-			
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				if(released)
-				{
-					worldData->getCharacter(1)->jump();
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-						worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-						worldData->getCharacter(1)->getBody()->ApplyLinearImpulse( b2Vec2(-40, 0), worldData->getCharacter(1)->getBody()->GetPosition() );
-
-					released = false;
-				}
-			}
-			else
-				released = true;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				testSpr.playAnimation("walk");
-			else
-				testSpr.playAnimation("idle");
 
 			// Access world data
 			worldDataMutex.lock();
-			std::vector<b2Body*>* tv = worldData->getBodyVec();
+			std::vector<Character>* tv = worldData->getChrVec();
 			std::vector<Bullet>* bv = worldData->getBltVec();
 			
 			if(tv->size() > 0)
 			{
-				// Calculate camera position (somehwere between character and mouse)
-				b2Vec2 position = worldData->getCharacter(1)->getBody()->GetPosition();
-				float32 angle = worldData->getCharacter(1)->getBody()->GetAngle();
-				testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
-				redBox.setRotation( angle*180/pi );
-
-				float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
-				float y = (((position.y + mousePos.y) / 2 +position.y) / 2 + position.y) / 2;
-
-				worldView->setCenter(x * pixelScale, y * pixelScale);
-				window.setView(*worldView);
-
+				calculateCam();
 			}
+
+			
 			if(tv->size() > 0)
 			{
 				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
@@ -346,51 +295,67 @@ namespace mp
 				bulletVis.setRotation( a * 180 / -pi );
 			}
 
-			lightSpr.setPosition(mousePos.x * pixelScale, mousePos.y * pixelScale);
+			lightSpr.setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
 
 			// Set sight position
-			dotSpr.setPosition(mousePosWindow.x,mousePosWindow.y);
+			dotSpr.setPosition(mousePosWindow.x, mousePosWindow.y);
 			// Unlock world data mutex
 			worldDataMutex.unlock();
 			// Set world view so we can render the world in world coordinates
-			window.setView(*worldView);
+			window->setView(*worldView);
             // Clear screen
-            window.clear();
-            window.draw(background);
+            window->clear();
+            window->draw(background);
 
             //----------World Rendering phase----------
-			window.draw(ground);
-			window.draw(ground2);
-			window.draw(ground3);
-			window.draw(ground4);
-			window.draw(redBox);
-			window.draw(blueBox);
-			window.draw(bulletVis);
+			window->draw(ground);
+			window->draw(ground2);
+			window->draw(ground3);
+			window->draw(ground4);
+			window->draw(redBox);
+			window->draw(blueBox);
+			window->draw(bulletVis);
 			testSpr.update(elapsed);
-			window.draw(testSpr);
-			window.draw(lightSpr,sf::BlendAdd);
+			//window->draw(testSpr);
+			window->draw(lightSpr,sf::BlendAdd);
+			window->draw(*charView);
             //-----------------------------------------
 			//------------UI Rendering phase-----------
 			// Set default view so we can render the ui in window coordinates
-			window.setView(window.getDefaultView());
-			window.draw(dotSpr);
+			window->setView(window->getDefaultView());
+			window->draw(dotSpr);
 			// Draw hud
 			if(ConfigHandler::instance().getBool("r_drawhud"))
 			{
-				window.draw(hudSpr);
+				window->draw(hudSpr);
 			}
 			// Draw debug stuff
 			if(ConfigHandler::instance().getBool("s_debugmode"))
 			{
-				window.draw(renderFpsTxt);
-				window.draw(logicFpsTxt);
+				window->draw(renderFpsTxt);
+				window->draw(logicFpsTxt);
 			}
 			//-----------------------------------------
             // Update the window
-            window.display();
+            window->display();
 			// Save mouse position for next frame
-			mousePosOld = mousePos;
+			mousePosOld = *mousePos;
         }
+	}
+
+	void WorldView::calculateCam() 
+	{
+		// Calculate camera position (somehwere between character and mouse)
+		b2Vec2 position = worldData->getPlayer()->getCharacter()->getBody()->GetPosition();
+		float32 angle = worldData->getPlayer()->getCharacter()->getBody()->GetAngle();
+		//testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
+		
+		//redBox.setRotation( angle*180/pi );
+		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
+		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
+
+		worldView->setCenter(x * pixelScale, y * pixelScale);
+		window->setView(*worldView);
 	}
 
 	////////////////////////////////////////////////////////////

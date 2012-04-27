@@ -83,6 +83,9 @@
     <ClCompile Include="model\ContactListener.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
+    <ClCompile Include="model\Player.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -149,6 +152,9 @@
       <Filter>src\view</Filter>
     </ClInclude>
     <ClInclude Include="model\ContactListener.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Player.h">
       <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>

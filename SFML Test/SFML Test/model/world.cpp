@@ -72,10 +72,11 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 		// Add two bodies to the world
-		worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
+		//worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
 		//worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,2.0f) );
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
 		worldData->addCharacter( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f) );
+		worldData->createPlayer();
 		// Create a bullet, and add it to the world.
 		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(10, 10), b2Vec2(-200, 0));
 		worldData->addBullet(b);
@@ -110,7 +111,23 @@ namespace mp
 
 			if(elapsed<(1 / 60.0f))
 			{
+<<<<<<< HEAD
 				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
+=======
+				// Lock world data so only one thread can access world data at the same time
+				worldDataMutex.lock();
+				// Perform a physics step
+				world->Step(timeStep, velocityIterations, positionIterations);
+				// Clear physics forces in prep for next step
+				world->ClearForces();
+				// Save logic fps
+				worldData->setLogicFps((int)(1 / sum));
+				worldData->getPlayer()->update();
+				// Unlock world data
+				worldDataMutex.unlock();
+				sum = 0;
+				
+>>>>>>> 1fd163a0f3e82f8c620cf302cae0ef7b90bec826
 			}
 		}
     }

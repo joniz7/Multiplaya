@@ -97,10 +97,12 @@ namespace mp
 
         // Main loop. Do other things here I guess
         bool running = true;
-        while (running)
+        /*
+		while (running)
         {
 			// I'm lonely :(
         }
+		*/
         return EXIT_SUCCESS;
     }
 }
