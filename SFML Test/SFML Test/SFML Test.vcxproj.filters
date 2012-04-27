@@ -24,6 +24,9 @@
     <Filter Include="src\sound">
       <UniqueIdentifier>{b54f8263-c9f0-479a-8d92-e256777c84a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{b593ab11-e4b5-4f62-853e-111571edbd0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="model\bullet.cpp">
@@ -59,9 +62,6 @@
     <ClCompile Include="services\confighandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
-    <ClCompile Include="model\Observable.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
     <ClCompile Include="sound\sound.cpp">
       <Filter>src\sound</Filter>
     </ClCompile>
@@ -85,6 +85,12 @@
     </ClCompile>
     <ClCompile Include="model\Player.cpp">
       <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="util\Observable.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="view\BulletView.cpp">
+      <Filter>src\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,12 +133,6 @@
     <ClInclude Include="services\confighandler.h">
       <Filter>src\services</Filter>
     </ClInclude>
-    <ClInclude Include="model\Observable.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\Observer.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
     <ClInclude Include="sound\sound.h">
       <Filter>src\sound</Filter>
     </ClInclude>
@@ -156,6 +156,15 @@
     </ClInclude>
     <ClInclude Include="model\Player.h">
       <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Observable.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Observer.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="view\BulletView.h">
+      <Filter>src\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
