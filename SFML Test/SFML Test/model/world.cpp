@@ -111,9 +111,9 @@ namespace mp
 
 			if(elapsed<(1 / 60.0f))
 			{
-<<<<<<< HEAD
+
 				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
-=======
+
 				// Lock world data so only one thread can access world data at the same time
 				worldDataMutex.lock();
 				// Perform a physics step
@@ -127,7 +127,6 @@ namespace mp
 				worldDataMutex.unlock();
 				sum = 0;
 				
->>>>>>> 1fd163a0f3e82f8c620cf302cae0ef7b90bec826
 			}
 		}
     }
