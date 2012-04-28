@@ -5,7 +5,6 @@
 #include "worldview.h"
 #include "../model/worlddata.h"
 
-
 #include "../global.h"
 
 #include "../services/confighandler.h"
@@ -312,7 +311,6 @@ namespace mp
 			}
 			
 			testSpr.update(elapsed);
-			//window->draw(testSpr);
 			window->draw(lightSpr,sf::BlendAdd);
 			window->draw(*charView);
             //-----------------------------------------

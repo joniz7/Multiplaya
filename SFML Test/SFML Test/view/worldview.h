@@ -47,7 +47,6 @@ namespace mp
 					std::cout << "Yittaahh!" << std::endl;
 					Bullet* b = ( Bullet* )object;
 					bullets.push_back( BulletView( b ) );
-
 				}
 			}
 			
@@ -55,16 +54,15 @@ namespace mp
     		
 		private:
 			void calculateCam();
+			float pixelScale;
+			sf::RenderWindow* window;
+			sf::Vector2f* mousePos;
+			std::vector<BulletView> bullets;
 			CharacterView* charView;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;
 			sf::View* worldView;
-			sf::RenderWindow* window;
-			float pixelScale;
-			sf::Vector2f* mousePos;
-			std::vector<BulletView> bullets;
-			
     };
 }
 

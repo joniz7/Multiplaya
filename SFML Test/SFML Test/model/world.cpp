@@ -72,8 +72,6 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 		// Add two bodies to the world
-		//worldData->addBody( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
-		//worldData->addBody( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f,2.0f) );
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
 		worldData->addCharacter( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f) );
 		worldData->createPlayer();
@@ -94,9 +92,6 @@ namespace mp
 		bool running = true;
 		while(running){
             clock.restart();
-
-			//sum += elapsed;
-
 			// Lock world data so only one thread can access world data at the same time
 			worldDataMutex.lock();
 			// Perform a physics step

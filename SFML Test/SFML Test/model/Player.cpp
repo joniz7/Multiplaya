@@ -13,7 +13,6 @@ namespace mp {
 
 	void Player::update() 
 	{
-		// Handle box movement. To be moved to Character class
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				if(character->getBody()->GetLinearVelocity().x < 7)

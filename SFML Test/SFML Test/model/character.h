@@ -38,10 +38,11 @@ namespace mp
 			b2Body* getBody() { return characterBody; }
 			void setGrounded(bool choice) { isGrounded = choice; } 
         private:
+			b2Body* characterBody;
 			bool facingRight;
 			short health;
 			bool isGrounded;
-			b2Body* characterBody;
+			
     };
 }
 

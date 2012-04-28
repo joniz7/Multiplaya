@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////
-/// CharacterView class. Graphical representation of Character
+/// BulletView class. Graphical representation of a bullet
 //////////////////////////////////////////////////////////////
 #ifndef BULLET_VIEW_H
 #define BULLET_VIEW_H
@@ -17,9 +17,9 @@ namespace mp
 		BulletView(Bullet* model);
 		~BulletView();
 	private:
+		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		Bullet* model;
 		sf::RectangleShape* bulletVis;
-		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	};
 }
 #endif

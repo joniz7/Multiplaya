@@ -21,9 +21,10 @@ namespace mp
 			CharacterView(Character* model, sf::Sprite* sprite);
 			~CharacterView();
 		private:
+			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			Character* model;
 			sf::Sprite* sprite;
-			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 	};
 }
 
