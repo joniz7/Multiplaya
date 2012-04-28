@@ -172,11 +172,7 @@ namespace mp
 		blueBox.setOutlineThickness(0.1f * pixelScale);
 		blueBox.setOutlineColor(sf::Color::Black);
 
-		sf::RectangleShape bulletVis = sf::RectangleShape( sf::Vector2f(0.5f * pixelScale, 1.5f * pixelScale) );
-		bulletVis.setOrigin(0.25f * pixelScale, 0.75f * pixelScale);
-		bulletVis.setFillColor(sf::Color(255, 255, 255));
-		bulletVis.setOutlineThickness(0.1f * pixelScale);
-		bulletVis.setOutlineColor(sf::Color::Black);
+
         //------------------
 
 		charView = new CharacterView(worldData->getPlayer()->getCharacter(), &testSpr);
@@ -290,15 +286,6 @@ namespace mp
 				blueBox.setRotation( angle * 180 / pi );
 			}
 
-			if(tv->size() > 0)
-			{
-				b2Vec2 position = worldData->getBullet(0)->getBody()->GetPosition();
-				b2Vec2 v = worldData->getBullet(0)->getBody()->GetLinearVelocity();
-				float a = atan(v.x/v.y);
-				bulletVis.setPosition(position.x * pixelScale,position.y*pixelScale);
-				bulletVis.setRotation( a * 180 / -pi );
-			}
-
 			lightSpr.setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
 
 			// Set sight position
@@ -318,7 +305,12 @@ namespace mp
 			window->draw(ground4);
 			window->draw(redBox);
 			window->draw(blueBox);
-			window->draw(bulletVis);
+			if ( bullets.size() > 0 ) {
+				std::vector<BulletView>::iterator it;
+				for ( it = bullets.begin() ; it < bullets.end(); it++ )
+					window->draw(*it);
+			}
+			
 			testSpr.update(elapsed);
 			//window->draw(testSpr);
 			window->draw(lightSpr,sf::BlendAdd);

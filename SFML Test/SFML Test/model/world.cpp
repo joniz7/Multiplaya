@@ -80,6 +80,8 @@ namespace mp
 		// Create a bullet, and add it to the world.
 		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(10, 10), b2Vec2(-200, 0));
 		worldData->addBullet(b);
+		Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
+		worldData->addBullet(ba);
 		// Unlock world data
 		worldDataMutex.unlock();
 		

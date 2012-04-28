@@ -22,6 +22,7 @@
 
 // Game specific headers
 #include "../game.h"
+#include "BulletView.h"
 
 #include "../util/Observer.h"
 
@@ -30,6 +31,7 @@ namespace mp
 	//Forward declaration so WorldView can have a WorldData pointer
 	class WorldData;
 	class CharacterView;
+	class BulletView;
     
 	class WorldView : public Observer
     {
@@ -38,7 +40,16 @@ namespace mp
 			void exec();
 			sf::View* getView(){return worldView;}
             ~WorldView();
-			virtual void notify(std::string e, void* object) { std::cout << "aa" << std::endl;}
+			virtual void notify(std::string e, void* object) 
+			{ 
+				if (e == "bulletAdded") 
+				{
+					std::cout << "Yittaahh!" << std::endl;
+					Bullet* b = ( Bullet* )object;
+					bullets.push_back( BulletView( b ) );
+
+				}
+			}
 			
 		protected:
     		
@@ -52,6 +63,7 @@ namespace mp
 			sf::RenderWindow* window;
 			float pixelScale;
 			sf::Vector2f* mousePos;
+			std::vector<BulletView> bullets;
 			
     };
 }

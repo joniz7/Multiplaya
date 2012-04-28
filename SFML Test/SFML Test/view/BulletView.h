@@ -18,6 +18,7 @@ namespace mp
 		~BulletView();
 	private:
 		Bullet* model;
+		sf::RectangleShape* bulletVis;
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	};
 }
