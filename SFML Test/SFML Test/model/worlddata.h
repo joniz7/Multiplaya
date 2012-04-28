@@ -26,12 +26,14 @@
 
 #include "Player.h"
 
+#include "../util/Observable.h"
+
 namespace mp
 {
 	//Forward declaration so WorldData can have a World pointer
 	//class World;
 
-    class WorldData
+    class WorldData : public Observable
     {
         public:
 			WorldData();

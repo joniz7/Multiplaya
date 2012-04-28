@@ -34,11 +34,11 @@ namespace mp
 	//
 	// observer		- Class implementing Observer interface
 	////////////////////////////////////////////////////////////
-	void Observable::notify() {
+	void Observable::notify(std::string e, void* object) {
 		std::set<Observer*>::iterator it = observers.begin();
 		// Call notify method for every observer
 		for (it = observers.begin(); it != observers.end(); it++) {
-			(*it)->notify();
+			(*it)->notify(e, object);
 		}
 	}
 }

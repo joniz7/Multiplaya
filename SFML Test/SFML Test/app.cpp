@@ -62,6 +62,7 @@ namespace mp
 		std::cout<<".";
 		// Initialize the view and pass the world data pointer as argument
 		WorldView* view = new WorldView(worldData);
+		worldData->addObserver(view);
 		std::cout<<".";
 		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
 		// Unlock world data

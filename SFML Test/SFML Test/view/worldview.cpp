@@ -5,8 +5,6 @@
 #include "worldview.h"
 #include "../model/worlddata.h"
 
-#include <iostream>
-#include <sstream>
 
 #include "../global.h"
 
@@ -41,6 +39,12 @@ namespace mp
 	   std::stringstream ss;//create a stringstream
 	   ss << number;//add number to the stream
 	   return ss.str();//return a string with the contents of the stream
+	}
+	
+	void notify(std::string e, void* object)
+	{
+		if (e == "bulletAdded")
+			std::cout << "tja" << std::endl;
 	}
 
 	////////////////////////////////////////////////////////////

@@ -40,6 +40,7 @@ namespace mp
 		{
 			case BulletType::GENERIC_BULLET:
 				bltVec.push_back(*bullet);
+				notify("bulletAdded", bullet);
 				std::cout<<"Added a bullet. Total count: "<< bltVec.size() <<std::endl;
 				return true;
 				break;

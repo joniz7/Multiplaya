@@ -7,6 +7,7 @@
 
 // Other headers
 #include <set>
+#include <string>
 
 // Observer interface
 #include "Observer.h"
@@ -18,7 +19,7 @@ namespace mp
 		public:
 			void addObserver(Observer* observer);
 			void removeObserver(Observer* observer);
-			void notify();
+			void notify(std::string e, void* object);
 		protected:
 			Observable() {};
 			virtual ~Observable() {};
