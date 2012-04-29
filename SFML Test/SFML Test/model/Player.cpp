@@ -67,57 +67,34 @@ namespace mp {
 
 	bool Player::pressingKeyForJumping()
 	{
-		if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Space) )
-		{
-			return true;
-		}
-		return false;
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 	}
 
 	bool Player::pressingKeyForPrimaryFire()
 	{
-		if ( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
-		{
-			return true;
-		}
-		return false;
+		return sf::Mouse::isButtonPressed( sf::Mouse::Right );
 	}
 
 	bool Player::pressingKeyForMovingDown()
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			return true;
-		}
-		return false;
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+	
 	}
 
 	bool Player::pressingKeyForMovingUp()
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			return true;
-		}
-		return false;
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
 	}
 
 	bool Player::pressingKeyForMovingLeft()
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			return true;
-		}
-		return false;
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left);	
 	}
 
 
 	bool Player::pressingKeyForMovingRight()
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			return true;
-		}
-		return false;
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 	}
 
 	void Player::moveLeft()
