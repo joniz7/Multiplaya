@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <list>
 #include <cmath>
+#include <vector>
 
 // SFML specific headers
 #include "../sfml.h"
@@ -38,31 +39,23 @@ namespace mp
         public:
 			WorldView( WorldData* worldData );
 			void exec();
-			sf::View* getView(){return worldView;}
+			sf::View* getView() { return worldView; }
             ~WorldView();
-			virtual void notify(std::string e, void* object) 
-			{ 
-				if (e == "bulletAdded") 
-				{
-					std::cout << "Yittaahh!" << std::endl;
-					Bullet* b = ( Bullet* )object;
-					bullets.push_back( BulletView( b ) );
-				}
-			}
+			virtual void notify(std::string e, void* object);
 			
 		protected:
     		
 		private:
 			void calculateCam();
 			float pixelScale;
-			sf::RenderWindow* window;
-			sf::Vector2f* mousePos;
-			std::vector<BulletView> bullets;
 			CharacterView* charView;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;
 			sf::View* worldView;
+			sf::RenderWindow* window;
+			sf::Vector2f* mousePos;
+			std::vector<BulletView> bullets;
     };
 }
 
