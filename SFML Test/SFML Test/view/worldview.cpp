@@ -253,12 +253,6 @@ namespace mp
             }
 			
 
-			// Right mouse button is down
-            if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
-            {
-				
-            }
-
 			// Left mouse button is down
             if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
             {

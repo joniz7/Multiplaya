@@ -9,18 +9,23 @@
 
 #include "../game.h"
 
+#include "worlddata.h"
+
 namespace mp {
+
 	class Player
 	{
 		public:
-			Player(Character* character);
+			Player(WorldData* worldData, b2World* world);
 			~Player();
 			void update();
+			void setCharacter(Character* character);
 			Character* getCharacter() { return character; }
 		private:
 			Character* character;
 			bool released;
-
+			WorldData* worldData;
+			b2World* world;
 	};
 }
 

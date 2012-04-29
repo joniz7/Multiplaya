@@ -154,4 +154,10 @@ namespace mp
 		bodyVec.push_back( body );
 		return true;
     }
+
+	void WorldData::createPlayer(b2World* world) 
+	{
+		player = new Player(this, world);
+		player->setCharacter(getCharacter(1));
+	}
 }
