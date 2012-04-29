@@ -26,6 +26,15 @@ namespace mp {
 			bool released;
 			WorldData* worldData;
 			b2World* world;
+			bool pressingKeysForMovingRight();
+			bool pressingKeysForMovingLeft();
+			bool pressingKeysForMovingUp();
+			bool pressingKeysForMovingDown();
+			void moveLeft();
+			void moveRight();
+			void moveUp();
+			void moveDown();
+
 	};
 }
 
