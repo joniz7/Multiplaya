@@ -18,32 +18,37 @@ namespace mp {
 
 	void Player::update() 
 	{
-		if ( pressingKeysForMovingLeft() )
+		checkUserInput();
+	}
+
+	void Player::checkUserInput()
+	{
+		if ( pressingKeyForMovingLeft() )
 		{
 			moveLeft();
 		}
-		if ( pressingKeysForMovingRight() )
+		if ( pressingKeyForMovingRight() )
 		{
 			moveRight();
 		}
-		if ( pressingKeysForMovingUp() ) 
+		if ( pressingKeyForMovingUp() ) 
 		{
 			moveUp();
 		}
-		if ( pressingKeysForMovingDown() ) 
+		if ( pressingKeyForMovingDown() ) 
 		{
 			moveDown();
 		}
-	
-		// Right mouse button is down
-        if( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
+		if( pressingKeyForPrimaryFire() )
         {
-				Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
-				worldData->addBullet(ba);
+			//Fire, ugly code for testing shooting bullets, will be moved to method in character class
+			Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
+			worldData->addBullet(ba);
         }
 			
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		if ( pressingKeyForJumping() )
 		{
+			//same as above will be moved to character class
 			if(released)
 			{
 				character->jump();
@@ -60,7 +65,25 @@ namespace mp {
 				
 	}
 
-	bool Player::pressingKeysForMovingDown()
+	bool Player::pressingKeyForJumping()
+	{
+		if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Space) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool Player::pressingKeyForPrimaryFire()
+	{
+		if ( sf::Mouse::isButtonPressed( sf::Mouse::Right ) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool Player::pressingKeyForMovingDown()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
@@ -69,7 +92,7 @@ namespace mp {
 		return false;
 	}
 
-	bool Player::pressingKeysForMovingUp()
+	bool Player::pressingKeyForMovingUp()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
@@ -78,7 +101,7 @@ namespace mp {
 		return false;
 	}
 
-	bool Player::pressingKeysForMovingLeft()
+	bool Player::pressingKeyForMovingLeft()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
@@ -88,7 +111,7 @@ namespace mp {
 	}
 
 
-	bool Player::pressingKeysForMovingRight()
+	bool Player::pressingKeyForMovingRight()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
