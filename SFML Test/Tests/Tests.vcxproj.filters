@@ -16,6 +16,15 @@
     <Filter Include="SFML Test">
       <UniqueIdentifier>{df0214b2-82ea-4a52-ad7c-0030949edeb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SFML Test\model">
+      <UniqueIdentifier>{da3200c2-1837-43b5-8b26-6d80a82d9874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SFML Test\services">
+      <UniqueIdentifier>{3af3297e-2477-42e5-94a0-7d3b5dee1dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SFML Test\util">
+      <UniqueIdentifier>{66fae738-55e2-42f5-a677-1c320f17550f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -28,22 +37,43 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\SFML Test\model\bullet.h">
-      <Filter>SFML Test</Filter>
+      <Filter>SFML Test\model</Filter>
     </ClInclude>
     <ClInclude Include="..\SFML Test\model\character.h">
-      <Filter>SFML Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SFML Test\model\world.h">
-      <Filter>SFML Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SFML Test\model\worlddata.h">
-      <Filter>SFML Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SFML Test\global.h">
-      <Filter>SFML Test</Filter>
+      <Filter>SFML Test\model</Filter>
     </ClInclude>
     <ClInclude Include="..\SFML Test\model\ContactListener.h">
-      <Filter>SFML Test</Filter>
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\global.h">
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\model\Player.h">
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\model\world.h">
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\model\worlddata.h">
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\services\confighandler.h">
+      <Filter>SFML Test\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\services\keylookup.h">
+      <Filter>SFML Test\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\services\networkhandler.h">
+      <Filter>SFML Test\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\services\resourcehandler.h">
+      <Filter>SFML Test\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\util\Observable.h">
+      <Filter>SFML Test\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SFML Test\util\Observer.h">
+      <Filter>SFML Test\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -53,23 +83,44 @@
     <ClCompile Include="Tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BulletTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\SFML Test\model\bullet.cpp">
-      <Filter>SFML Test</Filter>
+      <Filter>SFML Test\model</Filter>
     </ClCompile>
     <ClCompile Include="..\SFML Test\model\character.cpp">
-      <Filter>SFML Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SFML Test\model\world.cpp">
-      <Filter>SFML Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SFML Test\model\worlddata.cpp">
-      <Filter>SFML Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SFML Test\global.cpp">
-      <Filter>SFML Test</Filter>
+      <Filter>SFML Test\model</Filter>
     </ClCompile>
     <ClCompile Include="..\SFML Test\model\ContactListener.cpp">
-      <Filter>SFML Test</Filter>
+      <Filter>SFML Test\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\global.cpp">
+      <Filter>SFML Test\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\Player.cpp">
+      <Filter>SFML Test\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\world.cpp">
+      <Filter>SFML Test\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\worlddata.cpp">
+      <Filter>SFML Test\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\services\confighandler.cpp">
+      <Filter>SFML Test\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\services\keylookup.cpp">
+      <Filter>SFML Test\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\services\networkhandler.cpp">
+      <Filter>SFML Test\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\services\resourcehandler.cpp">
+      <Filter>SFML Test\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\util\Observable.cpp">
+      <Filter>SFML Test\util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
