@@ -16,15 +16,19 @@
 // Box2D specific headers
 #include <Box2D.h>
 
+#include "worlddata.h"
+
 //Defines
 #include "defines.h"
 
 namespace mp
 {
+	class WorldData;
+
     class Character
     {
         public:
-			Character(b2Body* characterBody);
+			Character(WorldData* worldData, b2World* world, b2Body* characterBody);
             ~Character();
 			void jump();
 			void crouch();
@@ -39,6 +43,8 @@ namespace mp
 			void setGrounded(bool choice) { isGrounded = choice; } 
         private:
 			b2Body* characterBody;
+			WorldData* worldData;
+			b2World* world;
 			bool facingRight;
 			short health;
 			bool isGrounded;

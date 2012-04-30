@@ -16,8 +16,10 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Character::Character(b2Body* characterBody)
+    Character::Character(WorldData* worldData, b2World* world, b2Body* characterBody)
     {
+		this->worldData = worldData;
+		this->world = world;
 		this->characterBody = characterBody;
 		this->isGrounded = true;
     }
@@ -37,4 +39,10 @@ namespace mp
 		}
 	}
 
+	void Character::primaryFire()
+	{
+		//Fire, ugly code for testing shooting bullets, will be moved to method in character class
+		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
+		worldData->addBullet(bullet);
+	}
 }

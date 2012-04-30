@@ -1,10 +1,8 @@
 #include "Player.h"
 
 namespace mp {
-	Player::Player(WorldData* worldData, b2World* world)
+	Player::Player()
 	{
-		this->worldData = worldData;
-		this->world = world;
 	}
 
 	void Player::setCharacter(Character* character)
@@ -41,9 +39,7 @@ namespace mp {
 		}
 		if( pressingKeyForPrimaryFire() )
         {
-			//Fire, ugly code for testing shooting bullets, will be moved to method in character class
-			Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
-			worldData->addBullet(ba);
+			character->primaryFire();
         }
 			
 		if ( pressingKeyForJumping() )

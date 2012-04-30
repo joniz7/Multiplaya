@@ -15,6 +15,8 @@
 
 namespace mp
 {
+	class Character;
+
 	class CharacterView : public sf::Drawable
 	{
 		public:

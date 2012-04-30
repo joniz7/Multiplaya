@@ -11,12 +11,15 @@
 
 #include "worlddata.h"
 
-namespace mp {
+namespace mp 
+{
+	class Character;
+	class WorldData;
 
 	class Player
 	{
 		public:
-			Player(WorldData* worldData, b2World* world);
+			Player();
 			~Player();
 			void update();
 			void setCharacter(Character* character);

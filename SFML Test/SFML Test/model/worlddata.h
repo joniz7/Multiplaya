@@ -33,6 +33,8 @@ namespace mp
 	//Forward declaration so WorldData can have a World pointer
 	//class World;
 	class Player;
+	class Bullet;
+	class Character;
 
     class WorldData : public Observable
     {
@@ -46,7 +48,7 @@ namespace mp
 			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
-			void createPlayer(b2World* world);
+			void createPlayer();
 			// Getters
 			// Get list of all characters
 			std::vector<Character>* getChrVec(){ return &chrVec; };
@@ -61,6 +63,8 @@ namespace mp
 			Bullet* getBullet(int i){ return &bltVec.at(i); };
 			// Get a specific body
 			b2Body* getBody(int i){ return bodyVec.at(i); };
+
+			//b2World* getb2World();
 
 			Player* getPlayer() { return player; }
 			// Get logic fps

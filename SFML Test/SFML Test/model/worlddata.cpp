@@ -114,7 +114,7 @@ namespace mp
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( (void*)1 );
 
-		chrVec.push_back( Character(characterBody) );
+		chrVec.push_back( Character(this, world, characterBody) );
 		return true;
     }
 
@@ -155,9 +155,9 @@ namespace mp
 		return true;
     }
 
-	void WorldData::createPlayer(b2World* world) 
+	void WorldData::createPlayer() 
 	{
-		player = new Player(this, world);
+		player = new Player();
 		player->setCharacter(getCharacter(1));
 	}
 }
