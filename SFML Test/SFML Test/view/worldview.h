@@ -42,19 +42,21 @@ namespace mp
 			sf::View* getView() { return worldView; }
             ~WorldView();
 			virtual void notify(std::string e, void* object);
+			CharacterView* getCharacter(int i){ return &characters.at(i); };
 			
 		protected:
     		
 		private:
 			void calculateCam();
 			float pixelScale;
-			CharacterView* charView;
+			//CharacterView* charView;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;
 			sf::View* worldView;
 			sf::RenderWindow* window;
 			sf::Vector2f* mousePos;
+			std::vector<CharacterView> characters;
 			std::vector<BulletView> bullets;
     };
 }

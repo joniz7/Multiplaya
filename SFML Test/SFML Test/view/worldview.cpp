@@ -178,7 +178,7 @@ namespace mp
 
         //------------------
 
-		charView = new CharacterView(worldData->getPlayer()->getCharacter(), &testSpr);
+		characters.push_back(CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
@@ -310,7 +310,11 @@ namespace mp
 			
 			testSpr.update(elapsed);
 			window->draw(lightSpr,sf::BlendAdd);
-			window->draw(*charView);
+			if ( characters.size() > 0 ) {
+				std::vector<CharacterView>::iterator it;
+				for ( it = characters.begin() ; it < characters.end(); it++ )
+					window->draw(*it);
+			}
             //-----------------------------------------
 			//------------UI Rendering phase-----------
 			// Set default view so we can render the ui in window coordinates
