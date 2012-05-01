@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////
+/// Player class.  Checks user input and such.
+////////////////////////////////////////////////////////////
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
@@ -31,12 +34,14 @@ namespace mp
 			b2World* world;
 
 			void checkUserInput();
+
 			bool pressingKeyForMovingRight();
 			bool pressingKeyForMovingLeft();
 			bool pressingKeyForMovingUp();
 			bool pressingKeyForMovingDown();
 			bool pressingKeyForPrimaryFire();
 			bool pressingKeyForJumping();
+
 			void moveLeft();
 			void moveRight();
 			void moveUp();

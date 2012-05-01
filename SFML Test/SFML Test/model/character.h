@@ -21,11 +21,13 @@
 //Defines
 #include "defines.h"
 
+#include "../util/Observable.h"
+
 namespace mp
 {
 	class WorldData;
 
-    class Character
+    class Character : public Observable
     {
         public:
 			Character(WorldData* worldData, b2World* world, b2Body* characterBody);

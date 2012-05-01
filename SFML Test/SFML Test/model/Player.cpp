@@ -24,11 +24,19 @@ namespace mp {
 		if ( pressingKeyForMovingLeft() )
 		{
 			moveLeft();
+			character->notify("walking", 0);
 		}
+		else
+			character->notify("idle", 0);
+
 		if ( pressingKeyForMovingRight() )
 		{
 			moveRight();
+			character->notify("walking", 0);
 		}
+		else
+			character->notify("idle", 0);
+
 		if ( pressingKeyForMovingUp() ) 
 		{
 			moveUp();

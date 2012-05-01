@@ -12,20 +12,25 @@
 
 // Game specific headers
 #include "../game.h"
+#include "animatedsprite.h"
+#include "../util/Observer.h"
 
 namespace mp
 {
 	class Character;
 
-	class CharacterView : public sf::Drawable
+	class CharacterView : public sf::Drawable, public Observer
 	{
 		public:
-			CharacterView(Character* model, sf::Sprite* sprite);
+			//CharacterView(Character* model, sf::Sprite* sprite);
+			CharacterView(Character* model, AnimatedSprite* sprite);
 			~CharacterView();
+			virtual void notify(std::string e, void* object);
 		private:
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			Character* model;
-			sf::Sprite* sprite;
+			//sf::Sprite* sprite;
+			AnimatedSprite* sprite;
 
 	};
 }
