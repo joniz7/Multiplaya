@@ -35,14 +35,14 @@ namespace mp
 	void Character::jump()
 	{
 		if (isGrounded) {
-			characterBody->ApplyLinearImpulse( b2Vec2(0, 75), characterBody->GetPosition());
+			characterBody->ApplyLinearImpulse( b2Vec2(0, 125), characterBody->GetPosition());
 		}
 	}
 
 	void Character::primaryFire()
 	{
-		//Fire, ugly code for testing shooting bullets, will be moved to method in character class
-		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
+		// TODO: calculate force, by using mouse position and character position.
+		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, characterBody->GetPosition(), b2Vec2(-200, 0));
 		worldData->addBullet(bullet);
 	}
 }
