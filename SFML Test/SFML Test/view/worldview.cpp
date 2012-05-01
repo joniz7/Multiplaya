@@ -221,11 +221,11 @@ namespace mp
 				int renderFps = (int)(1 / elapsed);
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
-				std::string a = convertInt(renderFps);
-				std::string b = convertInt(logicFps);
+				std::string renderFpsString = convertInt(renderFps);
+				std::string logicFpsString = convertInt(logicFps);
 				//renderFpsTxt.setString(elapsed);
-				renderFpsTxt.setString("Render fps: " + a);
-				logicFpsTxt.setString("Logic fps:  " + b);
+				renderFpsTxt.setString("Render fps: " + renderFpsString);
+				logicFpsTxt.setString("Logic fps:  " + logicFpsString);
 				worldDataMutex.unlock();
 				counter = 0;
 			}
@@ -287,6 +287,7 @@ namespace mp
 
 			// Set sight position
 			dotSpr.setPosition(mousePosWindow.x, mousePosWindow.y);
+			//updatePositions();
 			// Unlock world data mutex
 			worldDataMutex.unlock();
 			// Set world view so we can render the world in world coordinates
@@ -296,6 +297,7 @@ namespace mp
             window->draw(background);
 
             //----------World Rendering phase----------
+			//drawGraphics();
 			window->draw(ground);
 			window->draw(ground2);
 			window->draw(ground3);
@@ -337,6 +339,13 @@ namespace mp
 			// Save mouse position for next frame
 			mousePosOld = *mousePos;
         }
+	}
+
+	void WorldView::drawGraphics()
+	{
+		//drawEnviroment();
+		//drawCharacters()
+		//drawBullets();
 	}
 
 	void WorldView::calculateCam() 

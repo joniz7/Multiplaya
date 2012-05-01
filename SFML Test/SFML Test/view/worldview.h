@@ -48,6 +48,7 @@ namespace mp
     		
 		private:
 			void calculateCam();
+			void drawGraphics();
 			float pixelScale;
 			//CharacterView* charView;
 			sf::Texture hudTex;
