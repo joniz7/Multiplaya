@@ -60,22 +60,23 @@ TEST_F(BulletTest, bullet_addition)
 	// Add our 4 bullets to the world.
 
 	/* TODO: addBullet() results in "unknown file: error: SEH exception". whyyy?
+	*/
 	worldData->addBullet(testBullet01);
 	worldData->addBullet(testBullet02);
 	worldData->addBullet(testBullet11);
 	worldData->addBullet(testBullet12);
-	*/
+	
 
 	// TODO: Compare previously created bullet with the one returned from getBullet().
 	// EXPECT_EQ((&testBullet0_1), &(worldData->getBullet(0)));
 	// Repeat for all 4 bullets.
 
 
-	/*
+	
 	// We have added 4 bullets, so size should be 4.
 	int size = worldData->getBltVec()->size();
 	ASSERT_EQ(4, size);
-	*/
+	
 }
 
 

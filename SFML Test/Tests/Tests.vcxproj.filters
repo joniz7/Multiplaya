@@ -122,5 +122,8 @@
     <ClCompile Include="..\SFML Test\util\Observable.cpp">
       <Filter>SFML Test\util</Filter>
     </ClCompile>
+    <ClCompile Include="BodyTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -110,6 +110,7 @@
     <ClCompile Include="..\SFML Test\services\networkhandler.cpp" />
     <ClCompile Include="..\SFML Test\services\resourcehandler.cpp" />
     <ClCompile Include="..\SFML Test\util\Observable.cpp" />
+    <ClCompile Include="BodyTest.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
