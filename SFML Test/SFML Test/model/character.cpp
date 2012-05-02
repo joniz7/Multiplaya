@@ -18,6 +18,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Character::Character(WorldData* worldData, b2World* world, b2Body* characterBody)
     {
+		this->objectType = character;
 		this->worldData = worldData;
 		this->world = world;
 		this->characterBody = characterBody;
@@ -32,6 +33,11 @@ namespace mp
     {
 
     }
+
+	void Character::onCollision(GameObject* crashedWith)
+	{
+
+	}
 
 	void Character::jump()
 	{

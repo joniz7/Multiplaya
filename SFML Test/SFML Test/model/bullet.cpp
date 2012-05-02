@@ -25,6 +25,9 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
+		//test
+		this->objectType = bullet;
+
 		// Save bullet data
 		this->type = type;
 		this->owner = owner;
@@ -48,10 +51,16 @@ namespace mp
 		// Set restitution
 		fixtureDef.restitution = 1.0f;
 		// Add the shape to the body.
-		body->CreateFixture(&fixtureDef);
+		b2Fixture* testFixture = body->CreateFixture(&fixtureDef);
+		testFixture->SetUserData(this);
 		// Send the bullet flying
 		body->ApplyForce( force, body->GetPosition() );
     }
+
+	void Bullet::onCollision(GameObject* crashedWith)
+	{
+		std::cout << "Bullet" << std::endl;
+	}
 
 	////////////////////////////////////////////////////////////
 	// Destructor

@@ -6,6 +6,7 @@
 
 #include "worlddata.h"
 #include <iostream>
+#include "GameObject.h"
 
 namespace mp {
 	class ContactListener : public b2ContactListener

@@ -45,7 +45,7 @@ namespace mp
 		if (e == "bulletAdded") 
 		{
 			Bullet* bullet = ( Bullet* )object;
-			bullets.push_back( BulletView( bullet ) );
+			bullets.push_back( new BulletView( bullet ) );
 		}
 		else if (e == "bulletDeleted")
 		{
@@ -214,7 +214,7 @@ namespace mp
 			// Access world data
 			worldDataMutex.lock();
 			std::vector<Character>* tv = worldData->getChrVec();
-			std::vector<Bullet>* bv = worldData->getBltVec();
+			std::vector<Bullet*>* bv = worldData->getBltVec();
 					
 			if(tv->size() > 0)
 			{
@@ -341,9 +341,9 @@ namespace mp
 	void WorldView::updateBulletsPos()
 	{
 		if ( bullets.size() > 0 ) {
-			std::vector<BulletView>::iterator it;
+			std::vector<BulletView*>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				it->updatePosition();
+				(*it)->updatePosition();
 		}
 	}
 
@@ -378,9 +378,9 @@ namespace mp
 	{
 		// TODO make more generic
 		if ( bullets.size() > 0 ) {
-			std::vector<BulletView>::iterator it;
+			std::vector<BulletView*>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				window->draw(*it);
+				window->draw(**it);
 		}
 		//drawVector(bullets);
 	}

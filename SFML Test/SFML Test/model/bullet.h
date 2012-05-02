@@ -19,10 +19,12 @@
 
 //Defines
 #include "defines.h"
+#include "GameObject.h"
 
 namespace mp
 {
-    class Bullet
+
+    class Bullet : public GameObject
     {
         public:
 			Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force  );
@@ -32,6 +34,7 @@ namespace mp
 			b2Body* getBody(){return body;};
 			BulletType getType(){return type;};
 			int getOwner(){return owner;};
+			virtual void onCollision(GameObject* crashedWith);
         private:
 			BulletType type;
 			int owner;

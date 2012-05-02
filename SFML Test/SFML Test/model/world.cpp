@@ -39,38 +39,19 @@ namespace mp
 		const float32 timeStep = 1.0f / 60.0f;
 		const int32 velocityIterations = 6;
 		const int32 positionIterations = 2;
-
-		// Define a ground body
-		b2BodyDef groundBodyDef;
+		
+		// Lock world data so only one thread can access world data at the same time
+		worldDataMutex.lock();
+	
 		// Call the body factory which allocates memory for the ground body
 		// from a pool and creates the ground redBox shape (also from a pool).
 		// The body is also added to the world.
-				
 		// Define the ground box shape, extents are the half-widths of the box.
-		b2PolygonShape groundBox;
-		groundBox.SetAsBox(50.0f, 2.5f);
+		worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
+		worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
+		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
+		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
 
-		groundBodyDef.position.Set(0.0f, -50.0f);
-		b2Body* groundBody = world->CreateBody(&groundBodyDef);
-		groundBody->CreateFixture(&groundBox, 0.0f);
-
-		groundBodyDef.position.Set(0.0f, 50.0f);
-		b2Body* groundBody2 = world->CreateBody(&groundBodyDef);
-		groundBody2->CreateFixture(&groundBox, 0.0f);
-
-		b2PolygonShape groundBox2;
-		groundBox2.SetAsBox(2.5f, 50.0f);
-
-		groundBodyDef.position.Set(50.0f, 0);
-		b2Body* groundBody3 = world->CreateBody(&groundBodyDef);
-		groundBody3->CreateFixture(&groundBox2, 0.0f);
-
-		groundBodyDef.position.Set(-50.0f, 0);
-		b2Body* groundBody4 = world->CreateBody(&groundBodyDef);
-		groundBody4->CreateFixture(&groundBox2, 0.0f);
-
-		// Lock world data so only one thread can access world data at the same time
-		worldDataMutex.lock();
 		// Add two bodies to the world
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
 		worldData->addCharacter( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f) );

@@ -23,11 +23,13 @@
 
 #include "../util/Observable.h"
 
+#include "GameObject.h"
+
 namespace mp
 {
 	class WorldData;
 
-    class Character
+    class Character : public GameObject
     {
         public:
 			Character(WorldData* worldData, b2World* world, b2Body* characterBody);
@@ -51,6 +53,8 @@ namespace mp
 
 			void setIsFacingRight(bool choice) { facingRight = choice; }
 			bool isFacingRight() { return facingRight; }
+
+			virtual void onCollision(GameObject* crashedWith);
         private:
 			b2Body* characterBody;
 			WorldData* worldData;

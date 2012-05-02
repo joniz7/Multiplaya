@@ -39,7 +39,7 @@ namespace mp
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-				bltVec.push_back(*bullet);
+				bltVec.push_back(bullet);
 				notify("bulletAdded", bullet);
 				std::cout<< "Added a bullet. Total count: " << bltVec.size() <<std::endl;
 				return true;
@@ -65,11 +65,12 @@ namespace mp
     bool WorldData::addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
 		std::cout << "Added a bullet" << std::endl;
+		
 		// Do different things depending on the type of bullet
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-				bltVec.push_back( Bullet(type,owner,world,position,force) );
+				bltVec.push_back( new Bullet(type, owner, world, position, force) );
 				return true;
 
 				break;
@@ -111,10 +112,10 @@ namespace mp
 
 		// Test code
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
+	/*	dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( (void*)1 );
+		footSensorFixture->SetUserData( (void*)1 );*/
 
 		chrVec.push_back( Character(this, world, characterBody) );
 		return true;
@@ -145,12 +146,20 @@ namespace mp
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
 		// Add the shape to the body.
+		fixtureDef.isSensor = false;
+
 		body->CreateFixture(&fixtureDef);
 		body->SetFixedRotation(true);
 		addBody(body);
 
 		return true;
     }
+
+	void WorldData::addWall( b2World* world, float xPos, float yPos, float width, float height)
+	{
+		walls.push_back(new Wall(world, xPos, yPos, width, height));
+		//walls.push_back( new Wall(world, xPos, yPos, width, height) );
+	}
 
 	bool WorldData::addBody( b2Body* body  )
     {
