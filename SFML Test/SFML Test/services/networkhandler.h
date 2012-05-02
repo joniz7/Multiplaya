@@ -20,20 +20,23 @@
 #include <Box2D.h>
 
 // Game specific headers
-//#include "game.h"
+#include "game.h"
 
 namespace mp
 {
-    class NetworkHandler
+    class NetworkHandler : public Observer
     {
         public:
-			NetworkHandler( );
+			NetworkHandler(WorldData* worldData);
 			void exec();
             ~NetworkHandler();
+			void sendMessage();
+			virtual void notify(std::string e, void* object);
         private:
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;
+			WorldData* worldData;
     };
 }
 

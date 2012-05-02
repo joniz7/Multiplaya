@@ -74,6 +74,36 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
+	// Initializes the network thread which handles sending and receiving data.
+	// Must have a pointer to WorldData instance as argument
+	////////////////////////////////////////////////////////////
+	void createNetworkThread(void* UserData)
+	{
+		// Lock world data so only one thread can access world data at the same time
+		worldDataMutex.lock();
+		std::cout<<"Starting network thread.";
+		
+		
+		// Cast to world data pointer
+		WorldData* worldData = static_cast<WorldData*>(UserData);
+		std::cout<<".";
+		
+		
+		// Initialize the view and pass the world data pointer as argument
+		NetworkHandler* network = new NetworkHandler(worldData);
+		
+		worldData->addObserver(network);
+
+		std::cout<<".";
+		std::cout<<std::endl<<"Network thread up and running!"<<std::endl;
+		// Unlock world data
+		worldDataMutex.unlock();
+
+		network->exec();
+
+	}
+
+	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
     App::App(sf::VideoMode mode){videoMode = mode;}
@@ -98,6 +128,9 @@ namespace mp
 		// Create and launch the view thread
 		sf::Thread viewThread(&createViewThread, worldData);
 		viewThread.launch();
+		//Create and launch the network thread
+		sf::Thread networkThread(&createNetworkThread, worldData);
+		networkThread.launch();
 
         // Main loop. Do other things here I guess
         bool running = true;

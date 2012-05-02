@@ -9,5 +9,6 @@
 #include "model/character.h"
 #include "model/bullet.h"
 #include "view/worldview.h"
+#include "services/networkhandler.h"
 
 #endif
