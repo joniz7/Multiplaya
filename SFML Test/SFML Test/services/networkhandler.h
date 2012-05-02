@@ -22,7 +22,7 @@
 // Game specific headers
 #include "game.h"
 
-#include "textmessage.h"
+//#include "textmessage.h"
 
 namespace mp
 {
