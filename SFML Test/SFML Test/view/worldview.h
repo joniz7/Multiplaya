@@ -65,12 +65,20 @@ namespace mp
 			sf::RectangleShape* ground4;
 			sf::RectangleShape* blueBox;
 			sf::Sprite* lightSpr;
+			sf::Sprite* dotSpr;
+			
+			sf::Vector2i* mousePosWindow;
+			sf::Vector2f* mouseSpeed;
+
+			void handleEvents();
+
+			void constructMapGraphics();
 
 			void calculateCam();
 			
 			void updatePositions();
-			void updateBulletsPosition();
-			void updateCharactersPosition();
+			void updateBulletsPos();
+			void updateCharactersPos();
 			//void updateVectorPosition();
 
 			void drawGraphics();

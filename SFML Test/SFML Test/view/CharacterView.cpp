@@ -7,6 +7,7 @@ namespace mp
 	{
 		this->character = character;
 		this->sprite = sprite;
+		this->facedRightLastUpdate = false;
 	}
 
 	void CharacterView::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -24,6 +25,10 @@ namespace mp
 			sprite->playAnimation("walk");
 		else
 			sprite->playAnimation("idle");
+
+		if (character->isFacingRight() != facedRightLastUpdate)
+			sprite->scale(-1, 1);
+		facedRightLastUpdate = character->isFacingRight();
 	}
 
 	CharacterView::~CharacterView()

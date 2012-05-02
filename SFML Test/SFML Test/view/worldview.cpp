@@ -125,27 +125,178 @@ namespace mp
 		testSpr.playAnimation("idle");
 
 		sf::Texture dotTex;
-		sf::Sprite dotSpr;
+		dotSpr = new sf::Sprite();
 		if(!dotTex.loadFromFile("resources/reddot.png"))
 			std::cout << "Failed to load texture: reddot.png" << std::endl;
-		dotSpr.setTexture(dotTex);
-		dotSpr.setOrigin(32, 32);
-		dotSpr.setScale(0.5, 0.5);
+		dotSpr->setTexture(dotTex);
+		dotSpr->setOrigin(32, 32);
+		dotSpr->setScale(0.5, 0.5);
 
 		sf::Font fontGothic;
 		fontGothic.loadFromFile("resources/gothic.ttf");
 
 		sf::Text renderFpsTxt("Render fps: 00");
-		sf::Text logicFpsTxt("Logic fps:  00");
 		renderFpsTxt.setFont(fontGothic);
-		logicFpsTxt.setFont(fontGothic);
 		renderFpsTxt.setCharacterSize(25);
-		logicFpsTxt.setCharacterSize(25);
 		renderFpsTxt.setStyle(sf::Text::Regular);
-		logicFpsTxt.setStyle(sf::Text::Regular);
 		renderFpsTxt.setPosition(8, 0);
+		
+		sf::Text logicFpsTxt("Logic fps:  00");
+		logicFpsTxt.setFont(fontGothic);
+		logicFpsTxt.setCharacterSize(25);
+		logicFpsTxt.setStyle(sf::Text::Regular);
 		logicFpsTxt.setPosition(8, 30);
 
+		
+		//instantiate map graphics
+		constructMapGraphics();
+
+        //------------------
+
+		characters.push_back(CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
+		//----SFML stuff----
+		sf::Vector2f center(0,0);
+		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
+		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
+		// Rotate the view 180 degrees
+		worldView->setRotation(180);
+		// Zoom view
+		//worldView->zoom( 3.75 );
+		worldView->zoom( 1.5 );
+		// Set view
+		window->setView(*worldView);
+		//------------------
+
+		std::cout << "Render window initialized!" << std::endl;
+
+		int counter = 0;
+
+		mousePos = new sf::Vector2f(0,0);
+		mousePosWindow = new sf::Vector2i(0,0);
+		sf::Vector2f mousePosOld(0,0);
+		mouseSpeed = new sf::Vector2f(0,0);
+
+		bool fixedRotToggle = false;
+		bool released = true;
+
+		bool running = true;
+        while (running)
+        {
+			*mousePos = window->convertCoords( sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y, *worldView ) / pixelScale;
+			*mousePosWindow = sf::Mouse::getPosition(*window);
+			*mouseSpeed = (*mousePos - mousePosOld) / pixelScale;
+            // Get elapsed time since last frame
+            float elapsed = clock.getElapsedTime().asSeconds();
+            clock.restart();
+
+			// Only display fps every tenth frame (easier to read)
+			if(counter == 10)
+			{
+				int renderFps = (int)(1 / elapsed);
+				worldDataMutex.lock();
+				int logicFps = worldData->getLogicFps();
+				std::string renderFpsString = convertInt(renderFps);
+				std::string logicFpsString = convertInt(logicFps);
+				//renderFpsTxt.setString(elapsed);
+				renderFpsTxt.setString("Render fps: " + renderFpsString);
+				logicFpsTxt.setString("Logic fps:  " + logicFpsString);
+				worldDataMutex.unlock();
+				counter = 0;
+			}
+			else
+				counter++;
+
+			
+            // Handle events
+			handleEvents();
+
+			// Access world data
+			worldDataMutex.lock();
+			std::vector<Character>* tv = worldData->getChrVec();
+			std::vector<Bullet>* bv = worldData->getBltVec();
+					
+			if(tv->size() > 0)
+			{
+				calculateCam();
+
+				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
+				float32 angle = worldData->getCharacter(0)->getBody()->GetAngle();
+				blueBox->setPosition(position.x * pixelScale,position.y*pixelScale);
+				blueBox->setRotation( angle * 180 / pi );
+			}
+
+			testSpr.update(elapsed);
+
+			updatePositions();
+
+			// Unlock world data mutex
+			worldDataMutex.unlock();
+			// Set world view so we can render the world in world coordinates
+			window->setView(*worldView);
+            // Clear screen
+            window->clear();
+            
+            //----------World Rendering phase----------
+			drawGraphics();
+
+            //-----------------------------------------
+			//------------UI Rendering phase-----------
+			// Set default view so we can render the ui in window coordinates
+			window->setView(window->getDefaultView());
+			window->draw(*dotSpr);
+			// Draw hud
+			if(ConfigHandler::instance().getBool("r_drawhud"))
+			{
+				window->draw(hudSpr);
+			}
+			// Draw debug stuff
+			if(ConfigHandler::instance().getBool("s_debugmode"))
+			{
+				window->draw(renderFpsTxt);
+				window->draw(logicFpsTxt);
+			}
+			//-----------------------------------------
+            // Update the window
+            window->display();
+			// Save mouse position for next frame
+			mousePosOld = *mousePos;
+        }
+	}
+
+	void WorldView::handleEvents()
+	{
+		sf::Event Event;
+        while (window->pollEvent(Event))
+        {
+			// Shut down application if user closes window or hits ESC key
+            if ( Event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )
+                window->close();
+
+			// Handle zooming of viewport
+			if ( Event.type == sf::Event::MouseWheelMoved )
+			{
+				if( Event.mouseWheel.delta > 0)
+					worldView->zoom(0.9f);
+				else
+					worldView->zoom(1.1f);
+				window->setView(*worldView);
+			}
+        }
+			
+		// Left mouse button is down
+		if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+		{
+			// Move box to mouse view coordinates
+			worldDataMutex.lock();
+			worldData->getCharacter(0)->getBody()->SetTransform(b2Vec2(mousePos->x, mousePos->y), 0);
+			worldData->getCharacter(0)->getBody()->SetAwake(true);
+			worldData->getCharacter(0)->getBody()->SetLinearVelocity(b2Vec2(mouseSpeed->x, mouseSpeed->y));
+			worldDataMutex.unlock();
+		}
+	}
+
+	void WorldView::constructMapGraphics()
+	{
 		sf::Color c(10, 10, 10);
 
 		ground = new sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
@@ -173,161 +324,20 @@ namespace mp
 		blueBox->setFillColor(sf::Color(128, 128, 255));
 		blueBox->setOutlineThickness(0.1f * pixelScale);
 		blueBox->setOutlineColor(sf::Color::Black);
-
-
-        //------------------
-
-		characters.push_back(CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
-		//----SFML stuff----
-		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
-		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
-		// Rotate the view 180 degrees
-		worldView->setRotation(180);
-		// Zoom view
-		//worldView->zoom( 3.75 );
-		worldView->zoom( 1.5 );
-		// Set view
-		window->setView(*worldView);
-		//------------------
-
-		std::cout << "Render window initialized!" << std::endl;
-
-		int counter = 0;
-
-		mousePos = new sf::Vector2f(0,0);
-		sf::Vector2i mousePosWindow(0,0);
-		sf::Vector2f mousePosOld(0,0);
-		sf::Vector2f mouseSpeed(0,0);
-
-		bool fixedRotToggle = false;
-		bool released = true;
-
-		bool running = true;
-        while (running)
-        {
-			*mousePos = window->convertCoords( sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y, *worldView ) / pixelScale;
-			mousePosWindow = sf::Mouse::getPosition(*window);
-			mouseSpeed = (*mousePos - mousePosOld) / pixelScale;
-            // Get elapsed time since last frame
-            float elapsed = clock.getElapsedTime().asSeconds();
-            clock.restart();
-
-			// Only display fps every tenth frame (easier to read)
-			if(counter == 10)
-			{
-				int renderFps = (int)(1 / elapsed);
-				worldDataMutex.lock();
-				int logicFps = worldData->getLogicFps();
-				std::string renderFpsString = convertInt(renderFps);
-				std::string logicFpsString = convertInt(logicFps);
-				//renderFpsTxt.setString(elapsed);
-				renderFpsTxt.setString("Render fps: " + renderFpsString);
-				logicFpsTxt.setString("Logic fps:  " + logicFpsString);
-				worldDataMutex.unlock();
-				counter = 0;
-			}
-			else
-				counter++;
-
-			
-            // Handle events
-            sf::Event Event;
-            while (window->pollEvent(Event))
-            {
-				// Shut down application if user closes window or hits ESC key
-                if ( Event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) )
-                    window->close();
-
-				// Handle zooming of viewport
-				if ( Event.type == sf::Event::MouseWheelMoved )
-				{
-					if( Event.mouseWheel.delta > 0)
-						worldView->zoom(0.9f);
-					else
-						worldView->zoom(1.1f);
-					window->setView(*worldView);
-				}
-            }
-			
-
-			// Left mouse button is down
-            if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
-            {
-				// Move box to mouse view coordinates
-				worldDataMutex.lock();
-				worldData->getCharacter(0)->getBody()->SetTransform(b2Vec2(mousePos->x, mousePos->y), 0);
-				worldData->getCharacter(0)->getBody()->SetAwake(true);
-				worldData->getCharacter(0)->getBody()->SetLinearVelocity(b2Vec2(mouseSpeed.x, mouseSpeed.y));
-				worldDataMutex.unlock();
-            }
-
-			// Access world data
-			worldDataMutex.lock();
-			std::vector<Character>* tv = worldData->getChrVec();
-			std::vector<Bullet>* bv = worldData->getBltVec();
-					
-			if(tv->size() > 0)
-			{
-				calculateCam();
-
-				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
-				float32 angle = worldData->getCharacter(0)->getBody()->GetAngle();
-				blueBox->setPosition(position.x * pixelScale,position.y*pixelScale);
-				blueBox->setRotation( angle * 180 / pi );
-			}
-
-			lightSpr->setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
-
-			// Set sight position
-			dotSpr.setPosition(mousePosWindow.x, mousePosWindow.y);
-			testSpr.update(elapsed);
-
-			updatePositions();
-
-			// Unlock world data mutex
-			worldDataMutex.unlock();
-			// Set world view so we can render the world in world coordinates
-			window->setView(*worldView);
-            // Clear screen
-            window->clear();
-            
-
-            //----------World Rendering phase----------
-			drawGraphics();
-
-            //-----------------------------------------
-			//------------UI Rendering phase-----------
-			// Set default view so we can render the ui in window coordinates
-			window->setView(window->getDefaultView());
-			window->draw(dotSpr);
-			// Draw hud
-			if(ConfigHandler::instance().getBool("r_drawhud"))
-			{
-				window->draw(hudSpr);
-			}
-			// Draw debug stuff
-			if(ConfigHandler::instance().getBool("s_debugmode"))
-			{
-				window->draw(renderFpsTxt);
-				window->draw(logicFpsTxt);
-			}
-			//-----------------------------------------
-            // Update the window
-            window->display();
-			// Save mouse position for next frame
-			mousePosOld = *mousePos;
-        }
 	}
 
 	void WorldView::updatePositions()
 	{
-		updateBulletsPosition();
-		updateCharactersPosition();
+		// Set sight position
+		dotSpr->setPosition(mousePosWindow->x, mousePosWindow->y);
+		lightSpr->setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
+
+		updateBulletsPos();
+		updateCharactersPos();
 
 	}
 
-	void WorldView::updateBulletsPosition()
+	void WorldView::updateBulletsPos()
 	{
 		if ( bullets.size() > 0 ) {
 			std::vector<BulletView>::iterator it;
@@ -336,7 +346,7 @@ namespace mp
 		}
 	}
 
-	void WorldView::updateCharactersPosition()
+	void WorldView::updateCharactersPos()
 	{
 		if ( characters.size() > 0 ) {
 			std::vector<CharacterView>::iterator it;

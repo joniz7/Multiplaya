@@ -24,11 +24,13 @@ namespace mp {
 		if ( pressingKeyForMovingLeft() )
 		{
 			moveLeft();
+			character->setIsFacingRight(false);
 		}
 	
 		if ( pressingKeyForMovingRight() )
 		{
 			moveRight();
+			character->setIsFacingRight(true);
 		}
 
 		if (pressingKeyForMovingLeft() || pressingKeyForMovingRight())

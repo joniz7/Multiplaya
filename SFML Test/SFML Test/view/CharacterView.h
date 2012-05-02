@@ -32,6 +32,8 @@ namespace mp
 			//sf::Sprite* sprite;
 			AnimatedSprite* sprite;
 
+			bool facedRightLastUpdate;
+
 	};
 }
 

@@ -39,12 +39,18 @@ namespace mp
 			void kill();
 			void setInvincible(float duration);
 			void setMovement(int direction);
+			
 			short getHealth() { return health; };
 			void setHealth(short health) { this->health = health; }
+
 			b2Body* getBody() { return characterBody; }
 			void setGrounded(bool choice) { isGrounded = choice; } 
+			
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
+
+			void setIsFacingRight(bool choice) { facingRight = choice; }
+			bool isFacingRight() { return facingRight; }
         private:
 			b2Body* characterBody;
 			WorldData* worldData;
