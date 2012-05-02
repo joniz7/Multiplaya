@@ -7,7 +7,7 @@ namespace mp
 	{
 		this->character = character;
 		this->sprite = sprite;
-		this->facedRightLastUpdate = false;
+		this->facedRightLastUpdate = character->isFacingRight();
 	}
 
 	void CharacterView::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -26,6 +26,7 @@ namespace mp
 		else
 			sprite->playAnimation("idle");
 
+		// kinda ugly solution, "to be continued.."
 		if (character->isFacingRight() != facedRightLastUpdate)
 			sprite->scale(-1, 1);
 		facedRightLastUpdate = character->isFacingRight();

@@ -41,8 +41,9 @@ namespace mp
 			case BulletType::GENERIC_BULLET:
 				bltVec.push_back(*bullet);
 				notify("bulletAdded", bullet);
-				std::cout<<"Added a bullet. Total count: "<< bltVec.size() <<std::endl;
+				std::cout<< "Added a bullet. Total count: " << bltVec.size() <<std::endl;
 				return true;
+
 				break;
 		}
 		return false;
@@ -63,13 +64,14 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
-		std::cout<<"Added a bullet"<<std::endl;
+		std::cout << "Added a bullet" << std::endl;
 		// Do different things depending on the type of bullet
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
 				bltVec.push_back( Bullet(type,owner,world,position,force) );
 				return true;
+
 				break;
 		}
 		return false;
@@ -146,6 +148,7 @@ namespace mp
 		body->CreateFixture(&fixtureDef);
 		body->SetFixedRotation(true);
 		addBody(body);
+
 		return true;
     }
 

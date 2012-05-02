@@ -44,9 +44,8 @@ namespace mp
 	{
 		if (e == "bulletAdded") 
 		{
-			std::cout << "Yittaahh!" << std::endl;
-			Bullet* b = ( Bullet* )object;
-			bullets.push_back( BulletView( b ) );
+			Bullet* bullet = ( Bullet* )object;
+			bullets.push_back( BulletView( bullet ) );
 		}
 		else if (e == "bulletDeleted")
 		{
@@ -195,11 +194,13 @@ namespace mp
 				int renderFps = (int)(1 / elapsed);
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
+				
 				std::string renderFpsString = convertInt(renderFps);
-				std::string logicFpsString = convertInt(logicFps);
-				//renderFpsTxt.setString(elapsed);
 				renderFpsTxt.setString("Render fps: " + renderFpsString);
+				
+				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt.setString("Logic fps:  " + logicFpsString);
+
 				worldDataMutex.unlock();
 				counter = 0;
 			}
