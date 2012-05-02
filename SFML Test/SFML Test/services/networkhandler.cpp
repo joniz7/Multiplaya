@@ -75,20 +75,19 @@ namespace mp
 
     }
 
-	void NetworkHandler::sendMessage()
+	void NetworkHandler::sendMessage(std::string message)
 	{
-		sf::Packet message;
-		std::string mess = "Bullet fired";
-		sf::Int8 ms = 1;
-		message << ms << mess;
+		sf::Packet packet;
+		sf::Int8 messageType = 1;
+		packet << messageType << message;
 
-		sender.send(message, "85.226.173.155", 55001);
+		sender.send(packet, "85.226.173.155", 55001);
 	}
 
 	void NetworkHandler::notify(std::string e, void* object)
 	{
 		if(e == "bulletAdded")
-			sendMessage();
+			sendMessage(e);
 	}
 
 }

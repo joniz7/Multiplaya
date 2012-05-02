@@ -30,7 +30,7 @@ namespace mp
 			NetworkHandler(WorldData* worldData);
 			void exec();
             ~NetworkHandler();
-			void sendMessage();
+			void sendMessage(std::string message);
 			virtual void notify(std::string e, void* object);
         private:
 			sf::UdpSocket receiver;
