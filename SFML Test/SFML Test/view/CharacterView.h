@@ -19,17 +19,16 @@ namespace mp
 {
 	class Character;
 
-	class CharacterView : public sf::Drawable, public Observer
+	class CharacterView : public sf::Drawable
 	{
 		public:
 			//CharacterView(Character* model, sf::Sprite* sprite);
-			CharacterView(Character* model, AnimatedSprite* sprite);
+			CharacterView(Character* character, AnimatedSprite* sprite);
 			~CharacterView();
-			virtual void notify(std::string e, void* object);
 			void updatePosition();
 		private:
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-			Character* model;
+			Character* character;
 			//sf::Sprite* sprite;
 			AnimatedSprite* sprite;
 

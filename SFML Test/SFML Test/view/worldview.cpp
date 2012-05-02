@@ -178,7 +178,6 @@ namespace mp
         //------------------
 
 		characters.push_back(CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
-
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);

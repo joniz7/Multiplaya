@@ -27,7 +27,7 @@ namespace mp
 {
 	class WorldData;
 
-    class Character : public Observable
+    class Character
     {
         public:
 			Character(WorldData* worldData, b2World* world, b2Body* characterBody);
@@ -43,6 +43,8 @@ namespace mp
 			void setHealth(short health) { this->health = health; }
 			b2Body* getBody() { return characterBody; }
 			void setGrounded(bool choice) { isGrounded = choice; } 
+			void setWalking(bool choice) { walking = choice; }
+			bool isWalking() { return walking; }
         private:
 			b2Body* characterBody;
 			WorldData* worldData;
@@ -50,6 +52,7 @@ namespace mp
 			bool facingRight;
 			short health;
 			bool isGrounded;
+			bool walking;
 			
     };
 }

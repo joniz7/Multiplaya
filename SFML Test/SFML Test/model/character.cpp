@@ -22,6 +22,7 @@ namespace mp
 		this->world = world;
 		this->characterBody = characterBody;
 		this->isGrounded = true;
+		this->walking = false;
     }
 
 	////////////////////////////////////////////////////////////
