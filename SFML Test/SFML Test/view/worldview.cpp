@@ -70,10 +70,10 @@ namespace mp
         window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
         window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
 		// Background stuff
-        sf::RectangleShape background( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
-		background.setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
-		background.setPosition(0, 0);
-        background.setFillColor( sf::Color(30, 30, 30) );
+		background = new sf::RectangleShape( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
+		background->setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
+		background->setPosition(0, 0);
+        background->setFillColor( sf::Color(30, 30, 30) );
         //-------------------------------------
 
 		//----Test stuff----
@@ -85,12 +85,12 @@ namespace mp
 
 		sf::Texture lightTex;
 		lightTex.loadFromFile("resources/light.png");
-		sf::Sprite lightSpr;
-		lightSpr.setTexture(lightTex);
-		lightSpr.setOrigin(256, 256);
-		lightSpr.setScale(pixelScale * 0.1, pixelScale * 0.1);
-		lightSpr.setPosition(0,0);
-		lightSpr.setColor(sf::Color(255, 150, 125, 75));
+		lightSpr = new sf::Sprite();
+		lightSpr->setTexture(lightTex);
+		lightSpr->setOrigin(256, 256);
+		lightSpr->setScale(pixelScale * 0.1, pixelScale * 0.1);
+		lightSpr->setPosition(0,0);
+		lightSpr->setColor(sf::Color(255, 150, 125, 75));
 
 		sf::Texture frameTexture;
 		frameTexture.loadFromFile("resources/test/testsprite.png");
@@ -143,37 +143,31 @@ namespace mp
 
 		sf::Color c(10, 10, 10);
 
-		sf::RectangleShape ground = sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
-		ground.setFillColor( c );
-		ground.setOrigin(50 * pixelScale, 2.5f * pixelScale);
-		ground.setPosition(0, -50.0f * pixelScale);
+		ground = new sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
+		ground->setFillColor( c );
+		ground->setOrigin(50 * pixelScale, 2.5f * pixelScale);
+		ground->setPosition(0, -50.0f * pixelScale);
 
-		sf::RectangleShape ground2 = sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
-		ground2.setFillColor( c );
-		ground2.setOrigin(50 * pixelScale, 2.5f * pixelScale);
-		ground2.setPosition(0, 50.0f * pixelScale);
+		ground2 = new sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
+		ground2->setFillColor( c );
+		ground2->setOrigin(50 * pixelScale, 2.5f * pixelScale);
+		ground2->setPosition(0, 50.0f * pixelScale);
 		
-		sf::RectangleShape ground3 = sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
-		ground3.setFillColor( c );
-		ground3.setOrigin(2.5f * pixelScale, 50 * pixelScale);
-		ground3.setPosition(50.0f * pixelScale, 0);
+		ground3 = new sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
+		ground3->setFillColor( c );
+		ground3->setOrigin(2.5f * pixelScale, 50 * pixelScale);
+		ground3->setPosition(50.0f * pixelScale, 0);
 
-		sf::RectangleShape ground4 = sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
-		ground4.setFillColor( c );
-		ground4.setOrigin(2.5f * pixelScale, 50 * pixelScale);
-		ground4.setPosition(-50.0f * pixelScale, 0);
+		ground4 = new sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
+		ground4->setFillColor( c );
+		ground4->setOrigin(2.5f * pixelScale, 50 * pixelScale);
+		ground4->setPosition(-50.0f * pixelScale, 0);
 		
-		sf::RectangleShape redBox = sf::RectangleShape( sf::Vector2f(2 * pixelScale, 4 * pixelScale) );
-		redBox.setOrigin( 1 * pixelScale, 2 * pixelScale);
-		redBox.setFillColor(sf::Color(255, 128, 128));
-		redBox.setOutlineThickness(0.1f * pixelScale);
-		redBox.setOutlineColor(sf::Color::Black);
-		
-		sf::RectangleShape blueBox = sf::RectangleShape( sf::Vector2f( 2 * pixelScale, 4 * pixelScale) );
-		blueBox.setOrigin(1 * pixelScale, 2 * pixelScale);
-		blueBox.setFillColor(sf::Color(128, 128, 255));
-		blueBox.setOutlineThickness(0.1f * pixelScale);
-		blueBox.setOutlineColor(sf::Color::Black);
+		blueBox = new sf::RectangleShape( sf::Vector2f( 2 * pixelScale, 4 * pixelScale) );
+		blueBox->setOrigin(1 * pixelScale, 2 * pixelScale);
+		blueBox->setFillColor(sf::Color(128, 128, 255));
+		blueBox->setOutlineThickness(0.1f * pixelScale);
+		blueBox->setOutlineColor(sf::Color::Black);
 
 
         //------------------
@@ -268,55 +262,36 @@ namespace mp
 			worldDataMutex.lock();
 			std::vector<Character>* tv = worldData->getChrVec();
 			std::vector<Bullet>* bv = worldData->getBltVec();
-			
+					
 			if(tv->size() > 0)
 			{
 				calculateCam();
-			}
 
-			
-			if(tv->size() > 0)
-			{
 				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
 				float32 angle = worldData->getCharacter(0)->getBody()->GetAngle();
-				blueBox.setPosition(position.x * pixelScale,position.y*pixelScale);
-				blueBox.setRotation( angle * 180 / pi );
+				blueBox->setPosition(position.x * pixelScale,position.y*pixelScale);
+				blueBox->setRotation( angle * 180 / pi );
 			}
 
-			lightSpr.setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
+			lightSpr->setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
 
 			// Set sight position
 			dotSpr.setPosition(mousePosWindow.x, mousePosWindow.y);
-			//updatePositions();
+			testSpr.update(elapsed);
+
+			updatePositions();
+
 			// Unlock world data mutex
 			worldDataMutex.unlock();
 			// Set world view so we can render the world in world coordinates
 			window->setView(*worldView);
             // Clear screen
             window->clear();
-            window->draw(background);
+            
 
             //----------World Rendering phase----------
-			//drawGraphics();
-			window->draw(ground);
-			window->draw(ground2);
-			window->draw(ground3);
-			window->draw(ground4);
-			window->draw(redBox);
-			window->draw(blueBox);
-			if ( bullets.size() > 0 ) {
-				std::vector<BulletView>::iterator it;
-				for ( it = bullets.begin() ; it < bullets.end(); it++ )
-					window->draw(*it);
-			}
-			
-			testSpr.update(elapsed);
-			window->draw(lightSpr,sf::BlendAdd);
-			if ( characters.size() > 0 ) {
-				std::vector<CharacterView>::iterator it;
-				for ( it = characters.begin() ; it < characters.end(); it++ )
-					window->draw(*it);
-			}
+			drawGraphics();
+
             //-----------------------------------------
 			//------------UI Rendering phase-----------
 			// Set default view so we can render the ui in window coordinates
@@ -341,11 +316,76 @@ namespace mp
         }
 	}
 
+	void WorldView::updatePositions()
+	{
+		updateBulletsPosition();
+		updateCharactersPosition();
+
+	}
+
+	void WorldView::updateBulletsPosition()
+	{
+		if ( bullets.size() > 0 ) {
+			std::vector<BulletView>::iterator it;
+			for ( it = bullets.begin() ; it < bullets.end(); it++ )
+				it->updatePosition();
+		}
+	}
+
+	void WorldView::updateCharactersPosition()
+	{
+		if ( characters.size() > 0 ) {
+			std::vector<CharacterView>::iterator it;
+			for ( it = characters.begin() ; it < characters.end(); it++ )
+				it->updatePosition();
+		}
+	}
+
 	void WorldView::drawGraphics()
 	{
-		//drawEnviroment();
-		//drawCharacters()
-		//drawBullets();
+		drawEnvironment();
+		drawCharacters();
+		drawBullets();
+			
+		window->draw(*lightSpr, sf::BlendAdd);
+	}
+
+	void WorldView::drawEnvironment()
+	{
+		window->draw(*background);
+		window->draw(*ground);
+		window->draw(*ground2);
+		window->draw(*ground3);
+		window->draw(*ground4);
+	}
+
+	void WorldView::drawBullets()
+	{
+		if ( characters.size() > 0 ) {
+			std::vector<BulletView>::iterator it;
+			for ( it = bullets.begin() ; it < bullets.end(); it++ )
+				window->draw(*it);
+		}
+	}
+
+/*	void WorldView::drawVector(std::vector<sf::Drawable>& vector)
+	{
+		if ( vector.size() > 0 ) {
+			std::vector<sf::Drawable>::iterator it;
+			for ( it = vector.begin() ; it < vector.end(); it++ )
+				window->draw(*it);
+		}
+	}
+	*/
+	void WorldView::drawCharacters()
+	{
+		window->draw(*blueBox);
+
+		if ( characters.size() > 0 ) {
+			std::vector<CharacterView>::iterator it;
+			for ( it = characters.begin() ; it < characters.end(); it++ )
+				window->draw(*it);
+		}
 	}
 
 	void WorldView::calculateCam() 

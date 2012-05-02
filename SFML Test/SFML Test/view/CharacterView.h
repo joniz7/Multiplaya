@@ -26,6 +26,7 @@ namespace mp
 			CharacterView(Character* model, AnimatedSprite* sprite);
 			~CharacterView();
 			virtual void notify(std::string e, void* object);
+			void updatePosition();
 		private:
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			Character* model;

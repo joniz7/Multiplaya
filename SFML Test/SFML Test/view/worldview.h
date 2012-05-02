@@ -47,8 +47,6 @@ namespace mp
 		protected:
     		
 		private:
-			void calculateCam();
-			void drawGraphics();
 			float pixelScale;
 			//CharacterView* charView;
 			sf::Texture hudTex;
@@ -59,6 +57,28 @@ namespace mp
 			sf::Vector2f* mousePos;
 			std::vector<CharacterView> characters;
 			std::vector<BulletView> bullets;
+
+			sf::RectangleShape* background;
+			sf::RectangleShape* ground;
+			sf::RectangleShape* ground2;
+			sf::RectangleShape* ground3;
+			sf::RectangleShape* ground4;
+			sf::RectangleShape* blueBox;
+			sf::Sprite* lightSpr;
+
+			void calculateCam();
+			
+			void updatePositions();
+			void updateBulletsPosition();
+			void updateCharactersPosition();
+			//void updateVectorPosition();
+
+			void drawGraphics();
+			void drawEnvironment();
+			void drawBullets();
+			void drawCharacters();
+			//void drawVector(std::vector<sf::Drawable>& vector);
+
     };
 }
 

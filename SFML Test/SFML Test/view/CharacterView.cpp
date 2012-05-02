@@ -10,9 +10,6 @@ namespace mp
 	}
 
 	void CharacterView::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-		b2Vec2 position = model->getBody()->GetPosition();
-		float32 angle = model->getBody()->GetAngle();
-		sprite->setPosition(position.x * 1 / 10.0f, position.y * 1 / 10.0f);
 		target.draw(*sprite, states);
 	}
 
@@ -27,6 +24,14 @@ namespace mp
 		{
 			sprite->playAnimation("idle");
 		}
+	}
+
+	void CharacterView::updatePosition()
+	{
+		b2Vec2 position = model->getBody()->GetPosition();
+		float32 angle = model->getBody()->GetAngle();
+		//todo define pixelscale globaly
+		sprite->setPosition(position.x * 1 / 10.0f, position.y * 1 / 10.0f);
 	}
 
 	CharacterView::~CharacterView()
