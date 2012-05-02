@@ -34,7 +34,6 @@ namespace mp
 			WorldData* worldData;
 			WorldView * view;
 			World * model;
-
     };
 }
 

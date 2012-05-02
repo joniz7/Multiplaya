@@ -35,7 +35,7 @@ namespace mp
 		sf::IpAddress senderIP;
 		unsigned short senderPort;
 
-		sf::Int8 packetType;
+		sf::Int8 type;
 		std::string message;
 
 		running = true;
@@ -50,14 +50,13 @@ namespace mp
 			receiver.receive(receivedData, senderIP, senderPort);
 
 
-			if(!(receivedData >> packetType))
+			if(!(receivedData >> type))
 				std::cout<<"Error reading data from packet"<<std::endl;
 			else 
 			{
-				switch(packetType)
+				switch(type)
 				{
 					case 1:
-					
 						receivedData >> message;
 						std::cout<<"Message received: "<<message<<std::endl;
 						break;
@@ -75,20 +74,20 @@ namespace mp
 
     }
 
-	void NetworkHandler::sendMessage()
+	void NetworkHandler::sendMessage(std::string message)
 	{
-		sf::Packet message;
-		std::string mess = "Bullet fired";
-		sf::Int8 ms = 1;
-		message << ms << mess;
+		sf::Packet packet;
 
-		sender.send(message, "85.226.173.155", 55001);
+		sf::Int8 type = 1;
+		packet << type << message;
+
+		sender.send(packet, "85.226.173.155", 55001);
 	}
 
 	void NetworkHandler::notify(std::string e, void* object)
 	{
 		if(e == "bulletAdded")
-			sendMessage();
+			sendMessage(e);
 	}
-
 }
+
