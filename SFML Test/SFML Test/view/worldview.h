@@ -77,7 +77,7 @@ namespace mp
 			void drawEnvironment();
 			void drawBullets();
 			void drawCharacters();
-			//void drawVector(std::vector<sf::Drawable>& vector);
+			//void drawVector(std::vector<sf::Drawable*>& vector);
 
     };
 }

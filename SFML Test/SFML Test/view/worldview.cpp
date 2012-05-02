@@ -48,6 +48,11 @@ namespace mp
 			Bullet* b = ( Bullet* )object;
 			bullets.push_back( BulletView( b ) );
 		}
+		else if (e == "bulletDeleted")
+		{
+			int i = ( int )object;
+			bullets.erase(bullets.begin() + i );
+		}
 	}
 
 	////////////////////////////////////////////////////////////
@@ -116,7 +121,7 @@ namespace mp
 
 		testSpr.rotate(180);
 		testSpr.setPosition(0,0);
-		testSpr.scale(0.0016,0.0016);
+		testSpr.scale(0.0016f, 0.0016f);
 		testSpr.playAnimation("idle");
 
 		sf::Texture dotTex;
@@ -361,22 +366,24 @@ namespace mp
 
 	void WorldView::drawBullets()
 	{
-		if ( characters.size() > 0 ) {
+		// TODO make more generic
+		if ( bullets.size() > 0 ) {
 			std::vector<BulletView>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
 				window->draw(*it);
 		}
+		//drawVector(bullets);
 	}
 
-/*	void WorldView::drawVector(std::vector<sf::Drawable>& vector)
+	/*void WorldView::drawVector(std::vector<sf::Drawable*>& vector)
 	{
 		if ( vector.size() > 0 ) {
-			std::vector<sf::Drawable>::iterator it;
+			std::vector<sf::Drawable*>::iterator it;
 			for ( it = vector.begin() ; it < vector.end(); it++ )
-				window->draw(*it);
+				window->draw(**it);
 		}
-	}
-	*/
+	}*/
+	
 	void WorldView::drawCharacters()
 	{
 		window->draw(*blueBox);
