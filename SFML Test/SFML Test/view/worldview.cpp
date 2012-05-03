@@ -53,7 +53,11 @@ namespace mp
 		else if (e == "bulletDeleted")
 		{
 			int i = ( int )object;
+			std::cout << "Number: " << i << std::endl;
+			
+			worldViewMutex.lock();
 			bullets.erase(bullets.begin() + i );
+			worldViewMutex.unlock();
 		}
 	}
 

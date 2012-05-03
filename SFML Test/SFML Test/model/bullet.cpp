@@ -64,7 +64,6 @@ namespace mp
 			// call worldData and notify deletebullet
 			// delete bullet
 			// delete body in box2d
-			std::cout << "say hello to my little friend" << std::endl;
 			worldData->removeBullet(this);
 		}
 	}

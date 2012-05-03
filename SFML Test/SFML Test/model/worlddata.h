@@ -55,14 +55,14 @@ namespace mp
 			// Get list of all characters
 			std::vector<Character>* getChrVec(){ return &chrVec; };
 			// Get list of all bullets
-			std::vector<Bullet>* getBltVec(){ return &bltVec; };
+			std::vector<Bullet*>* getBltVec(){ return &bltVec; };
 			// Get list of all bodies
 			std::vector<b2Body*>* getBodyVec(){ return &bodyVec; };
 
 			// Get a specific character
 			Character* getCharacter(int i){ return &chrVec.at(i); };
 			// Get a specific bullet
-			Bullet* getBullet(int i){ return &bltVec.at(i); };
+			Bullet* getBullet(int i){ return bltVec.at(i); };
 			// Get a specific body
 			b2Body* getBody(int i){ return bodyVec.at(i); };
 
@@ -82,7 +82,7 @@ namespace mp
 			// Pointer to corresponding world object
 			//World* world;
 			// Vector containing bullets
-			std::vector<Bullet> bltVec;
+			std::vector<Bullet*> bltVec;
 			// Vector containing characters
 			std::vector<Character> chrVec;
 			std::vector<Wall*> walls;

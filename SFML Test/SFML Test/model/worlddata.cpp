@@ -39,7 +39,7 @@ namespace mp
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-				bltVec.push_back(*bullet);
+				bltVec.push_back(bullet);
 				notify("bulletAdded", bullet);
 				std::cout<< "Added a bullet. Total count: " << bltVec.size() <<std::endl;
 				return true;
@@ -70,7 +70,7 @@ namespace mp
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-				bltVec.push_back( Bullet(type, owner, world, position, force, this) );
+				bltVec.push_back( new Bullet(type, owner, world, position, force, this) );
 				return true;
 
 				break;
@@ -175,9 +175,13 @@ namespace mp
 
 	void WorldData::removeBullet(Bullet* bullet)
 	{
-		std::vector<Bullet>::iterator it;		
-		it = find(bltVec.begin(), bltVec.end(), bullet);
-		int pos = (it - bltVec.begin());
-		std::cout << "match found at " << pos << std::endl;
+		if (bltVec.size() > 0) {
+			std::vector<Bullet*>::iterator it = find(bltVec.begin(), bltVec.end(), bullet);
+			
+			int i = (it - bltVec.begin());
+			notify("bulletDeleted", (void*) i);
+			bltVec.erase(bltVec.begin() + i);
+			//delete pointer to bullet
+		}
 	}
 }
