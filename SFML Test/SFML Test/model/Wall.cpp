@@ -21,7 +21,9 @@ namespace mp
 
 	void Wall::onCollision(GameObject* crashedWith)
 	{
-		std::cout << "wall" << std::endl;
+		if (crashedWith->objectType != wall) {
+			std::cout << "Collision: wall <-> ?" << std::endl;
+		}
 	}
 
 	Wall::~Wall()

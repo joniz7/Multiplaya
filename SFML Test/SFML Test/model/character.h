@@ -16,6 +16,7 @@
 // Box2D specific headers
 #include <Box2D.h>
 
+#include "model/bullet.h"
 #include "worlddata.h"
 
 //Defines
@@ -27,6 +28,8 @@
 
 namespace mp
 {
+	// Forward class declarations.
+	class Bullet;
 	class WorldData;
 
     class Character : public GameObject
@@ -38,12 +41,13 @@ namespace mp
 			void crouch();
 			void primaryFire();
 			void secondaryFire();
+			void inflictDamage(Bullet* b);
 			void kill();
 			void setInvincible(float duration);
 			void setMovement(int direction);
 			
 			short getHealth() { return health; };
-			void setHealth(short health) { this->health = health; }
+			void setHealth(short health);
 
 			b2Body* getBody() { return characterBody; }
 			void setGrounded(bool choice) { isGrounded = choice; } 

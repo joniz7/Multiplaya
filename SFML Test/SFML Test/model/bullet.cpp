@@ -60,19 +60,49 @@ namespace mp
 
 	void Bullet::onCollision(GameObject* crashedWith)
 	{
-		if (crashedWith->objectType == wall || crashedWith->objectType == bullet) {
-			// call worldData and notify deletebullet
-			// delete bullet
-			// delete body in box2d
-			worldData->removeBullet(this);
+		// If we collide with wall, explode.
+		if (crashedWith->objectType == wall) {
+			std::cout << "Collision: bullet <-> wall" << std::endl;
+			this->explode();
 		}
+
+		// If we collide with bullet... do nothing?
+		else if (crashedWith->objectType == bullet) {
+			std::cout << "Collision: bullet <-> bullet" << std::endl;
+		}
+		
+		// If we collide with character, explode (we handle the dmg elsewhere).
+		else if (crashedWith->objectType == character) {
+			std::cout << "Collision: bullet <-> character" << std::endl;
+			this->explode();
+		}
+	}
+
+	///////////////////////////
+	// Destroy the bullet.
+	///////////////////////////
+	void Bullet::explode() {
+		// TODO: Use destructor in some clever way here?
+
+		// Remove bullet from worldData (-> from the view).
+		worldData->removeBullet(this);
+			
+		// delete body in box2d
+		//world->DestroyBody(body);
+
+		// Voltorb uses Selfdestruct!
+		//delete this;
+
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
         return bullet == this; 
     }
+
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////
-    Bullet::~Bullet(){}
+    Bullet::~Bullet() {
+		std::cout << "I'm a dead bullet. FML" << std::endl;
+	}
 }
