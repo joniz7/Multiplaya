@@ -71,7 +71,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
     NetworkHandler::~NetworkHandler()
     {
-
     }
 
 	void NetworkHandler::sendMessage(std::string message)
@@ -81,13 +80,35 @@ namespace mp
 		sf::Int8 type = 1;
 		packet << type << message;
 
-		sender.send(packet, "85.226.173.155", 55001);
+		sender.send(packet, "85.226.173.140", 55001);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Puts the character in a packet and sends it.
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendCharacterPos(int index)
+	{
+		Character* character = worldData->getCharacter(index);
+
+		b2Vec2 vector = character->getBody()->GetPosition();
+
+		float32 x = vector.x;
+		float32 y = vector.y;
+		std::string s;
+		std::stringstream out;
+		out << x << y;
+		s = out.str();
+
+		sendMessage(s);
 	}
 
 	void NetworkHandler::notify(std::string e, void* object)
 	{
 		if(e == "bulletAdded")
+		{
+			sendCharacterPos(0);
 			sendMessage(e);
+		}
 	}
 }
 
