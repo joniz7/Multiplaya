@@ -60,7 +60,7 @@ namespace mp
 			sf::RenderWindow* window;
 			sf::Vector2f* mousePos;
 			std::vector<CharacterView> characters;
-			std::vector<BulletView*> bullets;
+			std::vector<BulletView> bullets;
 
 			sf::RectangleShape* background;
 			sf::RectangleShape* ground;

@@ -23,10 +23,11 @@ namespace mp
 	//
 	// returns true upon success
 	////////////////////////////////////////////////////////////
-    Bullet::Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
+    Bullet::Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
     {
 		//test
 		this->objectType = bullet;
+		this->worldData = worldData;
 
 		// Save bullet data
 		this->type = type;
@@ -59,9 +60,18 @@ namespace mp
 
 	void Bullet::onCollision(GameObject* crashedWith)
 	{
-		std::cout << "Bullet" << std::endl;
+		if (crashedWith->objectType == wall) {
+			// call worldData and notify deletebullet
+			// delete bullet
+			// delete body in box2d
+			std::cout << "say hello to my little friend" << std::endl;
+			worldData->removeBullet(this);
+		}
 	}
 
+	bool Bullet::operator==(const Bullet* bullet) {
+        return bullet == this; 
+    }
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////

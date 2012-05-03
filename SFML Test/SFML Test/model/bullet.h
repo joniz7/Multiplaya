@@ -20,14 +20,16 @@
 //Defines
 #include "defines.h"
 #include "GameObject.h"
+#include "worlddata.h"
 
 namespace mp
 {
+	class WorldData;
 
     class Bullet : public GameObject
     {
         public:
-			Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force  );
+			Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData  );
             ~Bullet();
 			b2Vec2 getPosition(){return body->GetPosition();};
 			b2BodyDef* getBodyDef(){return &bodyDef;};
@@ -35,12 +37,13 @@ namespace mp
 			BulletType getType(){return type;};
 			int getOwner(){return owner;};
 			virtual void onCollision(GameObject* crashedWith);
+			bool operator == (const Bullet* bullet);
         private:
 			BulletType type;
 			int owner;
 			b2BodyDef bodyDef;
 			b2Body* body;
-
+			WorldData* worldData;
 			
     };
 }

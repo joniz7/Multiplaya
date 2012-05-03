@@ -11,6 +11,8 @@
 
 namespace mp
 {
+	class Bullet;
+
 	class BulletView : public sf::Drawable
 	{
 	public:

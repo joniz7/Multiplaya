@@ -49,7 +49,7 @@ namespace mp
 	void Character::primaryFire()
 	{
 		// TODO: calculate force, by using mouse position and character position.
-		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, characterBody->GetPosition(), b2Vec2(-200, 0));
+		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, characterBody->GetPosition(), b2Vec2(-200, 0), worldData);
 		worldData->addBullet(bullet);
 	}
 }

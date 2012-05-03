@@ -40,6 +40,12 @@ namespace mp
 		const int32 velocityIterations = 6;
 		const int32 positionIterations = 2;
 		
+		// if inside lock, bullets doesn't show. whyy??
+		worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
+		worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
+		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
+		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
+
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 	
@@ -47,23 +53,20 @@ namespace mp
 		// from a pool and creates the ground redBox shape (also from a pool).
 		// The body is also added to the world.
 		// Define the ground box shape, extents are the half-widths of the box.
-		worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
-		worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
-		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
-		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
-
+		// Create a bullet, and add it to the world.
+		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(10, 10), b2Vec2(-200, 0), worldData);
+		worldData->addBullet(b);
+		Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0), worldData);
+		worldData->addBullet(ba);
 		// Add two bodies to the world
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
 		worldData->addCharacter( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f) );
 		worldData->createPlayer();
-		// Create a bullet, and add it to the world.
-		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(10, 10), b2Vec2(-200, 0));
-		worldData->addBullet(b);
-		Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0));
-		worldData->addBullet(ba);
+	
 		// Unlock world data
 		worldDataMutex.unlock();
 		
+
 		// Keep track of time. Shouldn't have to do this, really. Read comment down below.
 		sf::Clock clock;
 		int counter = 0;

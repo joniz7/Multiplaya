@@ -44,9 +44,10 @@ namespace mp
 	{
 		if (e == "bulletAdded") 
 		{
-			worldViewMutex.lock();
 			Bullet* bullet = ( Bullet* )object;
-			bullets.push_back( new BulletView( bullet ) );
+
+			worldViewMutex.lock();
+			bullets.push_back(  BulletView( bullet ) );
 			worldViewMutex.unlock();
 		}
 		else if (e == "bulletDeleted")
@@ -216,7 +217,6 @@ namespace mp
 			// Access world data
 			worldDataMutex.lock();
 			std::vector<Character>* tv = worldData->getChrVec();
-			std::vector<Bullet*>* bv = worldData->getBltVec();
 					
 			if(tv->size() > 0)
 			{
@@ -344,9 +344,9 @@ namespace mp
 	{
 		worldViewMutex.lock();
 		if ( bullets.size() > 0 ) {
-			std::vector<BulletView*>::iterator it;
+			std::vector<BulletView>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				(*it)->updatePosition();
+				it->updatePosition();
 		}
 		worldViewMutex.unlock();
 	}
@@ -383,9 +383,9 @@ namespace mp
 		// TODO make more generic
 		worldViewMutex.lock();
 		if ( bullets.size() > 0 ) {
-			std::vector<BulletView*>::iterator it;
+			std::vector<BulletView>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				window->draw(**it);
+				window->draw(*it);
 		}
 		worldViewMutex.unlock();
 		//drawVector(bullets);
