@@ -75,6 +75,9 @@
     <ClInclude Include="..\SFML Test\util\Observer.h">
       <Filter>SFML Test\util</Filter>
     </ClInclude>
+    <ClInclude Include="..\SFML Test\model\Wall.h">
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="BodyTest.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\Wall.cpp">
+      <Filter>SFML Test\model</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

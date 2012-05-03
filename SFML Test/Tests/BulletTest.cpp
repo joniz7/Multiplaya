@@ -30,6 +30,13 @@ class BulletTest : public ::testing::Test {
 	physicsWorld = new b2World(gravity);
 	// Create world data.
 	worldData = new mp::WorldData();
+
+	// Create generic bullets, owner ID 0.
+	testBullet01 = new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0), worldData);
+	testBullet02 = new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0), worldData);
+	// Create generic bullets, owner ID 1.
+	testBullet11 = new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(20,20),b2Vec2(-40,0), worldData);
+	testBullet12 = new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(30,30),b2Vec2(40,0), worldData);
   }
 
   virtual ~BulletTest() {
@@ -39,15 +46,8 @@ class BulletTest : public ::testing::Test {
 };
 
 
-TEST_F(BulletTest, bullet_creation)
-{
-	// Create generic bullets, owner ID 0.
-	testBullet01 = new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0));
-	testBullet02 = new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0));
-	// Create generic bullets, owner ID 1.
-	testBullet11 = new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(20,20),b2Vec2(-40,0));
-	testBullet12 = new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(30,30),b2Vec2(40,0));
-	
+TEST_F(BulletTest, bullet_comparisons)
+{	
 	// A bullet should be equal itself.
 	ASSERT_EQ(&testBullet01, &testBullet01);
 	// Two bullets should differ, even though they share all attributes.
