@@ -61,6 +61,12 @@ namespace mp
 			sf::Vector2f* mousePos;
 			std::vector<CharacterView> characters;
 			std::vector<BulletView> bullets;
+			// Clock for frame time counting
+			sf::Clock clock;
+
+			sf::Text* renderFpsTxt;
+			sf::Text* logicFpsTxt;
+
 
 			sf::RectangleShape* background;
 			sf::RectangleShape* ground;
@@ -85,10 +91,12 @@ namespace mp
 			void updateCharactersPos();
 			//void updateVectorPosition();
 
-			void drawGraphics();
+			void initialize();
+			void drawWorld();
 			void drawEnvironment();
 			void drawBullets();
 			void drawCharacters();
+			void drawUI();
 			//void drawVector(std::vector<sf::Drawable*>& vector);
 
     };

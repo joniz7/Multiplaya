@@ -66,33 +66,15 @@ namespace mp
 	// Fetches info, prints to screen, repeat.
 	////////////////////////////////////////////////////////////
 	void WorldView::exec() {
-		//------------Startup stuff------------
-		// Set up and initialize render window
-		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
-		window = new sf::RenderWindow(videoMode, "SFML Test Window");
-		
-		// Don't display mouse cursor
-		window->setMouseCursorVisible(false);
-		// Pixel to meter scale. A value of 10 = 10 pixels equals one meter
-		
-		// Clock for frame time counting
-        sf::Clock clock;
-		// Set window data
-        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
-        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
-		// Background stuff
-		background = new sf::RectangleShape( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
-		background->setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
-		background->setPosition(0, 0);
-        background->setFillColor( sf::Color(30, 30, 30) );
-        //-------------------------------------
+
+		// Initialize the window.
+		initialize();
 
 		//----Test stuff----
 		if(!hudTex.loadFromFile("resources/hud.png"))
 			std::cout << "Failed to load texture: hud.png" << std::endl;
 		hudSpr.setTexture(hudTex);
 		hudSpr.setScale(WIDTH / 1920, HEIGHT / 1080);
-
 
 		sf::Texture lightTex;
 		lightTex.loadFromFile("resources/light.png");
@@ -138,22 +120,7 @@ namespace mp
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5, 0.5);
 
-		sf::Font fontGothic;
-		fontGothic.loadFromFile("resources/gothic.ttf");
 
-		sf::Text renderFpsTxt("Render fps: 00");
-		renderFpsTxt.setFont(fontGothic);
-		renderFpsTxt.setCharacterSize(25);
-		renderFpsTxt.setStyle(sf::Text::Regular);
-		renderFpsTxt.setPosition(8, 0);
-		
-		sf::Text logicFpsTxt("Logic fps:  00");
-		logicFpsTxt.setFont(fontGothic);
-		logicFpsTxt.setCharacterSize(25);
-		logicFpsTxt.setStyle(sf::Text::Regular);
-		logicFpsTxt.setPosition(8, 30);
-
-		
 		//instantiate map graphics
 		constructMapGraphics();
 
@@ -175,8 +142,6 @@ namespace mp
 
 		std::cout << "Render window initialized!" << std::endl;
 
-		int counter = 0;
-
 		mousePos = new sf::Vector2f(0,0);
 		mousePosWindow = new sf::Vector2i(0,0);
 		sf::Vector2f mousePosOld(0,0);
@@ -195,7 +160,9 @@ namespace mp
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
+
 			// Only display fps every tenth frame (easier to read)
+			int counter = 0;
 			if(counter == 10)
 			{
 				int renderFps = (int)(1 / elapsed);
@@ -203,16 +170,18 @@ namespace mp
 				int logicFps = worldData->getLogicFps();
 				
 				std::string renderFpsString = convertInt(renderFps);
-				renderFpsTxt.setString("Render fps: " + renderFpsString);
+				renderFpsTxt->setString("Render fps: " + renderFpsString);
 				
 				std::string logicFpsString = convertInt(logicFps);
-				logicFpsTxt.setString("Logic fps:  " + logicFpsString);
+				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
 				worldDataMutex.unlock();
 				counter = 0;
 			}
 			else
+			{
 				counter++;
+			}
 
 			
             // Handle events
@@ -243,31 +212,58 @@ namespace mp
             // Clear screen
             window->clear();
             
-            //----------World Rendering phase----------
-			drawGraphics();
+            // Render World.
+			drawWorld();
 
-            //-----------------------------------------
-			//------------UI Rendering phase-----------
-			// Set default view so we can render the ui in window coordinates
-			window->setView(window->getDefaultView());
-			window->draw(*dotSpr);
-			// Draw hud
-			if(ConfigHandler::instance().getBool("r_drawhud"))
-			{
-				window->draw(hudSpr);
-			}
-			// Draw debug stuff
-			if(ConfigHandler::instance().getBool("s_debugmode"))
-			{
-				window->draw(renderFpsTxt);
-				window->draw(logicFpsTxt);
-			}
-			//-----------------------------------------
+			// Render UI.
+			drawUI();
+
             // Update the window
             window->display();
 			// Save mouse position for next frame
 			mousePosOld = *mousePos;
         }
+	}
+
+	//////////////////////////////
+	// Initialize everything.
+	// Change SFML settings, etc.
+	//////////////////////////////
+	void WorldView::initialize() {
+		// Set up and initialize render window
+		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
+		window = new sf::RenderWindow(videoMode, "SFML Test Window");
+		
+		// Don't display mouse cursor
+		window->setMouseCursorVisible(false);
+		
+		// Set window data
+        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
+        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
+		
+		// Background stuff
+		background = new sf::RectangleShape( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
+		background->setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
+		background->setPosition(0, 0);
+        background->setFillColor( sf::Color(30, 30, 30) );
+
+		// Load font file.
+		sf::Font fontGothic;
+		fontGothic.loadFromFile("resources/gothic.ttf");
+		
+		// Setup fps labels.
+		renderFpsTxt = new sf::Text("Render fps: 00");
+		logicFpsTxt = new sf::Text("Logic fps: 00");
+
+		renderFpsTxt->setFont(fontGothic);
+		renderFpsTxt->setCharacterSize(25);
+		renderFpsTxt->setStyle(sf::Text::Regular);
+		renderFpsTxt->setPosition(8, 0);
+
+		logicFpsTxt->setFont(fontGothic);
+		logicFpsTxt->setCharacterSize(25);
+		logicFpsTxt->setStyle(sf::Text::Regular);
+		logicFpsTxt->setPosition(8, 30);
 	}
 
 	void WorldView::handleEvents()
@@ -364,12 +360,12 @@ namespace mp
 		}
 	}
 
-	void WorldView::drawGraphics()
+	void WorldView::drawWorld()
 	{
 		drawEnvironment();
 		drawCharacters();
 		drawBullets();
-			
+		// Draw light.
 		window->draw(*lightSpr, sf::BlendAdd);
 	}
 
@@ -412,6 +408,25 @@ namespace mp
 			std::vector<CharacterView>::iterator it;
 			for ( it = characters.begin() ; it < characters.end(); it++ )
 				window->draw(*it);
+		}
+	}
+
+	void WorldView::drawUI()
+	{
+		// Set default view so we can render the ui in window coordinates
+		window->setView(window->getDefaultView());
+		window->draw(*dotSpr);
+		// Draw hud
+		if(ConfigHandler::instance().getBool("r_drawhud"))
+		{
+			window->draw(hudSpr);
+		}
+		// Draw debug labels
+		if(ConfigHandler::instance().getBool("s_debugmode"))
+		{
+			// TODO Access violation. They're initialized in initialize(), what's the deal?
+			// window->draw(*renderFpsTxt);
+			// window->draw(*logicFpsTxt);
 		}
 	}
 
