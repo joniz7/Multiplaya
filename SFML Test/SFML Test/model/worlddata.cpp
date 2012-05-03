@@ -177,11 +177,13 @@ namespace mp
 	{
 		if (bltVec.size() > 0) {
 			std::vector<Bullet*>::iterator it = find(bltVec.begin(), bltVec.end(), bullet);
-			
-			int i = (it - bltVec.begin());
-			notify("bulletDeleted", (void*) i);
-			bltVec.erase(bltVec.begin() + i);
-			//delete pointer to bullet
+			if ( it != bltVec.end())
+			{
+				int i = (it - bltVec.begin());
+				notify("bulletDeleted", (void*) i);
+				bltVec.erase(bltVec.begin() + i);
+				//delete pointer to bullet
+			}
 		}
 	}
 }

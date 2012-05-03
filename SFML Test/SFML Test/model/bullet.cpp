@@ -60,7 +60,7 @@ namespace mp
 
 	void Bullet::onCollision(GameObject* crashedWith)
 	{
-		if (crashedWith->objectType == wall) {
+		if (crashedWith->objectType == wall || crashedWith->objectType == bullet) {
 			// call worldData and notify deletebullet
 			// delete bullet
 			// delete body in box2d
