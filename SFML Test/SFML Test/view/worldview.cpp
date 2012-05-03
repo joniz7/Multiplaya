@@ -44,8 +44,10 @@ namespace mp
 	{
 		if (e == "bulletAdded") 
 		{
+			worldViewMutex.lock();
 			Bullet* bullet = ( Bullet* )object;
 			bullets.push_back( new BulletView( bullet ) );
+			worldViewMutex.unlock();
 		}
 		else if (e == "bulletDeleted")
 		{
@@ -340,11 +342,13 @@ namespace mp
 
 	void WorldView::updateBulletsPos()
 	{
+		worldViewMutex.lock();
 		if ( bullets.size() > 0 ) {
 			std::vector<BulletView*>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
 				(*it)->updatePosition();
 		}
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::updateCharactersPos()
@@ -377,11 +381,13 @@ namespace mp
 	void WorldView::drawBullets()
 	{
 		// TODO make more generic
+		worldViewMutex.lock();
 		if ( bullets.size() > 0 ) {
 			std::vector<BulletView*>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
 				window->draw(**it);
 		}
+		worldViewMutex.unlock();
 		//drawVector(bullets);
 	}
 
