@@ -27,6 +27,10 @@
 
 #include "../util/Observer.h"
 
+
+// Not sure if worldViewMutex should be defined here..
+#include "../global.h"
+
 namespace mp
 {
 	//Forward declaration so WorldView can have a WorldData pointer
