@@ -151,6 +151,7 @@ namespace mp
 		bool released = true;
 
 		bool running = true;
+		int counter = 0;
         while (running)
         {
 			*mousePos = window->convertCoords( sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y, *worldView ) / pixelScale;
@@ -162,7 +163,7 @@ namespace mp
 
 
 			// Only display fps every tenth frame (easier to read)
-			int counter = 0;
+			
 			if(counter == 10)
 			{
 				int renderFps = (int)(1 / elapsed);
@@ -248,19 +249,19 @@ namespace mp
         background->setFillColor( sf::Color(30, 30, 30) );
 
 		// Load font file.
-		sf::Font fontGothic;
-		fontGothic.loadFromFile("resources/gothic.ttf");
+		fontGothic = new sf::Font();
+		fontGothic->loadFromFile("resources/gothic.ttf");
 		
 		// Setup fps labels.
 		renderFpsTxt = new sf::Text("Render fps: 00");
 		logicFpsTxt = new sf::Text("Logic fps: 00");
 
-		renderFpsTxt->setFont(fontGothic);
+		renderFpsTxt->setFont(*fontGothic);
 		renderFpsTxt->setCharacterSize(25);
 		renderFpsTxt->setStyle(sf::Text::Regular);
 		renderFpsTxt->setPosition(8, 0);
 
-		logicFpsTxt->setFont(fontGothic);
+		logicFpsTxt->setFont(*fontGothic);
 		logicFpsTxt->setCharacterSize(25);
 		logicFpsTxt->setStyle(sf::Text::Regular);
 		logicFpsTxt->setPosition(8, 30);
@@ -425,8 +426,8 @@ namespace mp
 		if(ConfigHandler::instance().getBool("s_debugmode"))
 		{
 			// TODO Access violation. They're initialized in initialize(), what's the deal?
-			// window->draw(*renderFpsTxt);
-			// window->draw(*logicFpsTxt);
+			window->draw(*renderFpsTxt);
+			window->draw(*logicFpsTxt);
 		}
 	}
 

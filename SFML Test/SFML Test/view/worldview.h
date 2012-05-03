@@ -63,6 +63,8 @@ namespace mp
 			std::vector<BulletView> bullets;
 			// Clock for frame time counting
 			sf::Clock clock;
+			sf::Font* fontGothic;
+
 
 			sf::Text* renderFpsTxt;
 			sf::Text* logicFpsTxt;
