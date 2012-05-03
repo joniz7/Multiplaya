@@ -17,7 +17,7 @@ namespace mp
 	{
 	public:
 		BulletView(Bullet* model);
-		~BulletView();
+		virtual ~BulletView();
 		void updatePosition();
 	private:
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

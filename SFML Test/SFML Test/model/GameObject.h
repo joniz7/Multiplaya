@@ -11,9 +11,10 @@ namespace mp
 		public:
 			enum ObjectType { character, bullet, wall } objectType;
 			virtual void onCollision( GameObject* crashedWith ) = 0;
+			virtual ~GameObject() {};
 		protected:
 			GameObject() {};
-			virtual ~GameObject() {};
+			
 	};
 }
 

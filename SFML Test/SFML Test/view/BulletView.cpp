@@ -16,6 +16,8 @@ namespace mp
 
 	BulletView::~BulletView()
 	{
+		delete bulletVis;
+		std::cout << "byebye woody" << std::endl;
 	}
 
 	void BulletView::draw(sf::RenderTarget& target, sf::RenderStates states) const {

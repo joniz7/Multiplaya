@@ -23,6 +23,7 @@ namespace mp
 	{
 		if (crashedWith->objectType != wall) {
 			std::cout << "Collision: wall <-> ?" << std::endl;
+			
 		}
 	}
 

@@ -45,22 +45,34 @@ namespace mp
 		if (e == "bulletAdded") 
 		{
 			Bullet* bullet = ( Bullet* )object;
-
-			worldViewMutex.lock();
-			bullets.push_back(  BulletView( bullet ) );
-			worldViewMutex.unlock();
+			addBullet(bullet);
 		}
 		else if (e == "bulletDeleted")
 		{
 			int i = ( int )object;
-			std::cout << "Number: " << i << std::endl;
-			
-			worldViewMutex.lock();
-			bullets.erase(bullets.begin() + i );
-			worldViewMutex.unlock();
+			deleteBullet(i);
 		}
 	}
 
+	void WorldView::addBullet(Bullet* bullet)
+	{
+		worldViewMutex.lock();
+		bullets.push_back(  new BulletView( bullet ) );
+		worldViewMutex.unlock();
+	}
+	
+	// delete bullet at index i 
+	void WorldView::deleteBullet(int i)
+	{
+		worldViewMutex.lock();
+
+		BulletView* bullet = bullets.at(i);
+		bullets.erase(bullets.begin() + i );
+		delete bullet;
+
+		worldViewMutex.unlock();
+	}
+	
 	////////////////////////////////////////////////////////////
 	// The graphics loop.
 	// Fetches info, prints to screen, repeat.
@@ -345,9 +357,9 @@ namespace mp
 	{
 		worldViewMutex.lock();
 		if ( bullets.size() > 0 ) {
-			std::vector<BulletView>::iterator it;
+			std::vector<BulletView*>::iterator it;
 			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				it->updatePosition();
+				(*it)->updatePosition();
 		}
 		worldViewMutex.unlock();
 	}
@@ -383,33 +395,29 @@ namespace mp
 	{
 		// TODO make more generic
 		worldViewMutex.lock();
-		if ( bullets.size() > 0 ) {
-			std::vector<BulletView>::iterator it;
-			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				window->draw(*it);
-		}
-		worldViewMutex.unlock();
+		std::vector<BulletView*>::iterator it;
+		for ( it = bullets.begin() ; it < bullets.end(); it++ )
+			window->draw(**it);
+		
 		//drawVector(bullets);
+		worldViewMutex.unlock();
+		//
 	}
 
-	/*void WorldView::drawVector(std::vector<sf::Drawable*>& vector)
+	void WorldView::drawVector(std::vector<sf::Drawable*> vector)
 	{
-		if ( vector.size() > 0 ) {
-			std::vector<sf::Drawable*>::iterator it;
-			for ( it = vector.begin() ; it < vector.end(); it++ )
-				window->draw(**it);
-		}
-	}*/
+		std::vector<sf::Drawable*>::iterator it;
+		for ( it = vector.begin() ; it < vector.end(); it++ )
+			window->draw(**it);
+	}
 	
 	void WorldView::drawCharacters()
 	{
 		window->draw(*blueBox);
 
-		if ( characters.size() > 0 ) {
-			std::vector<CharacterView>::iterator it;
-			for ( it = characters.begin() ; it < characters.end(); it++ )
-				window->draw(*it);
-		}
+		std::vector<CharacterView>::iterator it;
+		for ( it = characters.begin() ; it < characters.end(); it++ )
+			window->draw(*it);
 	}
 
 	void WorldView::drawUI()

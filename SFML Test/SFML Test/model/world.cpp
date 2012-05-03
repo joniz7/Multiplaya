@@ -54,7 +54,7 @@ namespace mp
 		// The body is also added to the world.
 		// Define the ground box shape, extents are the half-widths of the box.
 		// Create a bullet, and add it to the world.
-		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(10, 10), b2Vec2(-200, 0), worldData);
+		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 , world, b2Vec2(10, 10), b2Vec2(-200, 0), worldData);
 		worldData->addBullet(b);
 		Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0), worldData);
 		worldData->addBullet(ba);

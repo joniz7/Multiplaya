@@ -30,7 +30,7 @@ namespace mp
     {
         public:
 			Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData  );
-            ~Bullet();
+            virtual ~Bullet();
 
 			void explode();
 

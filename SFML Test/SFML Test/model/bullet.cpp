@@ -89,6 +89,7 @@ namespace mp
 			
 		// delete body in box2d
 		//world->DestroyBody(body);
+		// test code, better naming..
 
 		// Voltorb uses Selfdestruct!
 		//delete this;
@@ -104,5 +105,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
 		std::cout << "I'm a dead bullet. FML" << std::endl;
+		//world->DestroyBody(this->body);
 	}
 }
