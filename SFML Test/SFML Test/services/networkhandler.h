@@ -22,8 +22,6 @@
 // Game specific headers
 #include "game.h"
 
-//#include "textmessage.h"
-
 namespace mp
 {
     class NetworkHandler : public Observer
@@ -33,17 +31,14 @@ namespace mp
 			void exec();
             ~NetworkHandler();
 			void sendMessage(std::string message);
+			void sendCharacterPos(int index);
 			virtual void notify(std::string e, void* object);
         private:
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;
-			WorldData* worldData;
-			
+			WorldData* worldData;	
     };
-
-
-
 }
 
 #endif
