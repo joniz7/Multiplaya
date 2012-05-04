@@ -34,7 +34,7 @@ namespace mp
 			void exec();
             ~World();
 			b2World* getWorld(){return world;};
-			WorldData* getWorldData();
+			WorldData* getWorldData() {return worldData;};
 			void deleteBullets();
         private:
 			WorldData* worldData;

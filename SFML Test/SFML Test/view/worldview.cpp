@@ -202,7 +202,7 @@ namespace mp
 
 			// Access world data
 			worldDataMutex.lock();
-			std::vector<Character>* tv = worldData->getChrVec();
+			std::vector<Character>* tv = worldData->getCharacters();
 					
 			if(tv->size() > 0)
 			{

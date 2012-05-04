@@ -39,9 +39,9 @@ namespace mp
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-				bltVec.push_back(bullet);
+				bullets.push_back(bullet);
 				notify("bulletAdded", bullet);
-				std::cout<< "Added a bullet. Total count: " << bltVec.size() <<std::endl;
+				std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 				return true;
 
 				break;
@@ -70,7 +70,7 @@ namespace mp
 		switch(type)
 		{
 			case BulletType::GENERIC_BULLET:
-				bltVec.push_back( new Bullet(type, owner, world, position, force, this) );
+				bullets.push_back( new Bullet(type, owner, world, position, force, this) );
 				return true;
 
 				break;
@@ -117,7 +117,7 @@ namespace mp
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( (void*)1 );*/
 
-		chrVec.push_back( Character(this, world, characterBody) );
+		characters.push_back( Character(this, world, characterBody) );
 		return true;
     }
 
@@ -158,12 +158,11 @@ namespace mp
 	void WorldData::addWall( b2World* world, float xPos, float yPos, float width, float height)
 	{
 		walls.push_back(new Wall(world, xPos, yPos, width, height));
-		//walls.push_back( new Wall(world, xPos, yPos, width, height) );
 	}
 
 	bool WorldData::addBody( b2Body* body  )
     {
-		bodyVec.push_back( body );
+		bodies.push_back( body );
 		return true;
     }
 
@@ -175,14 +174,14 @@ namespace mp
 
 	void WorldData::removeBullet(Bullet* bullet)
 	{
-		if (bltVec.size() > 0) {
-			std::vector<Bullet*>::iterator it = find(bltVec.begin(), bltVec.end(), bullet);
-			if ( it != bltVec.end())
+		if (bullets.size() > 0) {
+			std::vector<Bullet*>::iterator it = find(bullets.begin(), bullets.end(), bullet);
+			if ( it != bullets.end())
 			{
-				int i = (it - bltVec.begin());
+				int i = (it - bullets.begin());
 				notify("bulletDeleted", (void*) i);
-				bltVec.erase(bltVec.begin() + i);
-				//delete pointer to bullet
+				bullets.erase(bullets.begin() + i);
+				//Schedule bullet object for deletion our next logic iteration.
 				bulletsToRemove.push_back(bullet);
 			}
 		}

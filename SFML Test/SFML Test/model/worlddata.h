@@ -53,19 +53,19 @@ namespace mp
 			void createPlayer();
 			// Getters
 			// Get list of all characters
-			std::vector<Character>* getChrVec(){ return &chrVec; };
+			std::vector<Character>* getCharacters(){ return &characters; };
 			// Get list of all bullets
-			std::vector<Bullet*>* getBltVec(){ return &bltVec; };
+			std::vector<Bullet*>* getBullets(){ return &bullets; };
 			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
 			// Get list of all bodies
-			std::vector<b2Body*>* getBodyVec(){ return &bodyVec; };
+			std::vector<b2Body*>* getBodies(){ return &bodies; };
 
 			// Get a specific character
-			Character* getCharacter(int i){ return &chrVec.at(i); };
+			Character* getCharacter(int i){ return &characters.at(i); };
 			// Get a specific bullet
-			Bullet* getBullet(int i){ return bltVec.at(i); };
+			Bullet* getBullet(int i){ return bullets.at(i); };
 			// Get a specific body
-			b2Body* getBody(int i){ return bodyVec.at(i); };
+			b2Body* getBody(int i){ return bodies.at(i); };
 
 			//b2World* getb2World();
 
@@ -83,13 +83,14 @@ namespace mp
 			// Pointer to corresponding world object
 			//World* world;
 			// Vector containing bullets
-			std::vector<Bullet*> bltVec;
+			std::vector<Bullet*> bullets;
+			// A queue, containing all bullets scheduled for deletion.
 			std::vector<Bullet*> bulletsToRemove;
 			// Vector containing characters
-			std::vector<Character> chrVec;
+			std::vector<Character> characters;
 			std::vector<Wall*> walls;
 			// Vector containing generic Box2D bodies
-			std::vector<b2Body*> bodyVec;
+			std::vector<b2Body*> bodies;
 			// Variable for keeping track of logic thread fps
 			int logicFps;
 			Player* player;

@@ -69,8 +69,6 @@ namespace mp
 
 		// Keep track of time. Shouldn't have to do this, really. Read comment down below.
 		sf::Clock clock;
-		int counter = 0;
-		float sum = 0;
 
 		// Logic loop
 		bool running = true;
@@ -82,38 +80,22 @@ namespace mp
 			world->Step(timeStep, velocityIterations, positionIterations);
 			// Clear physics forces in prep for next step
 			world->ClearForces();
-
-			// remove bullets from vector
-
+			// Delete bullets, now that we're finished with physics.
+			deleteBullets();
 			// Get frame time
 			float elapsed = clock.getElapsedTime().asSeconds();
 			// Save logic fps
 			worldData->setLogicFps((int)(1 / elapsed));
+			// Get player input.
+			worldData->getPlayer()->update();
+			
 			// Unlock world data
 			worldDataMutex.unlock();
-			sum = 0;
 
+			// Have we finished faster than expected?
 			if(elapsed<(1 / 60.0f))
-			{
-
-				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
-
-				// Lock world data so only one thread can access world data at the same time
-				worldDataMutex.lock();
-				// Perform a physics step
-				world->Step(timeStep, velocityIterations, positionIterations);
-				// Clear physics forces in prep for next step
-				world->ClearForces();
-				// get vector from worlddata and delete all contents
-				deleteBullets();
-				
-				// Save logic fps
-				worldData->setLogicFps((int)(1 / sum));
-				worldData->getPlayer()->update();
-				// Unlock world data
-				worldDataMutex.unlock();
-				sum = 0;
-				
+			{	// Leave the arena now and rest - you've earned it.
+				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );	
 			}
 		}
     }
@@ -121,13 +103,18 @@ namespace mp
 	void World::deleteBullets()
 	{
 		std::vector<Bullet*>* vec = worldData->getBulletsToRemove();
-		std::vector<Bullet*>::iterator it;
-		for ( it = vec->begin() ; it < vec->end(); it++ ) {
-			Bullet* aa = (*it);
-			delete aa;
-
+		// Check if we have bullets to remove.
+		if (vec->size() > 0) {
+			std::vector<Bullet*>::iterator it;
+			for ( it = vec->begin() ; it < vec->end(); it++ ) {
+				
+				Bullet* aa = (*it);
+				// TODO: Uncomment below line and fix bullet deletion.
+				//delete aa;
+				// Not reacahble. Above delete statement is the cause of our error.
+			}
+			worldData->getBulletsToRemove()->clear();
 		}
-		worldData->getBulletsToRemove()->clear();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -135,17 +122,4 @@ namespace mp
 	////////////////////////////////////////////////////////////
     World::~World(){}
 
-	////////////////////////////////////////////////////////////
-	// Get world data pointer
-	////////////////////////////////////////////////////////////
-	WorldData* World::getWorldData()
-	{
-		// Lock world data
-		worldDataMutex.lock();
-		// Save the pointer in a temporary variable since we need to unlock the world data before returning
-		WorldData* temp = worldData;
-		// Unlock world data
-		worldDataMutex.unlock();
-		return temp;
-	}
 }

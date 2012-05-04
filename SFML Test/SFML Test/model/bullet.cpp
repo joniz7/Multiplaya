@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 // Class header
@@ -82,19 +82,9 @@ namespace mp
 	// Destroy the bullet.
 	///////////////////////////
 	void Bullet::explode() {
-		// TODO: Use destructor in some clever way here?
-		std::cout << "abc" << std::endl;
+		std::cout << "explode()" << std::endl;
 		// Remove bullet from worldData (-> from the view).
 		worldData->removeBullet(this);
-			
-		// delete body in box2d
-		//world->DestroyBody(body);
-		// test code, better naming..
-		// add this object to list scheduled for deleting in worldData
-		// when done calculating physics call deleteobject
-		// Voltorb uses Selfdestruct!
-		//delete this;
-
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
@@ -105,7 +95,8 @@ namespace mp
 	// Destructor
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
-		std::cout << "I'm a dead bullet. FML" << std::endl;
+		std::cout << "Bullet destructor." << std::endl;
 		world->DestroyBody(this->body);
+		// Not reachable. Error is produced in DestroyBody()..?
 	}
 }
