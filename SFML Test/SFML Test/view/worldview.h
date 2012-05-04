@@ -102,7 +102,7 @@ namespace mp
 			void drawBullets();
 			void drawCharacters();
 			void drawUI();
-			void drawVector(const std::vector<sf::Drawable*> vector);
+			//void drawVector(const std::vector<sf::Drawable*>& vector);
 
     };
 }

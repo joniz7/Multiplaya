@@ -183,6 +183,7 @@ namespace mp
 				notify("bulletDeleted", (void*) i);
 				bltVec.erase(bltVec.begin() + i);
 				//delete pointer to bullet
+				bulletsToRemove.push_back(bullet);
 			}
 		}
 	}

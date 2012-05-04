@@ -401,15 +401,14 @@ namespace mp
 		
 		//drawVector(bullets);
 		worldViewMutex.unlock();
-		//
 	}
 
-	void WorldView::drawVector(std::vector<sf::Drawable*> vector)
+	/*void WorldView::drawVector(const std::vector<sf::Drawable*>& vector)
 	{
 		std::vector<sf::Drawable*>::iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ )
 			window->draw(**it);
-	}
+	}*/
 	
 	void WorldView::drawCharacters()
 	{

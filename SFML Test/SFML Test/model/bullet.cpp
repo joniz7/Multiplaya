@@ -83,14 +83,15 @@ namespace mp
 	///////////////////////////
 	void Bullet::explode() {
 		// TODO: Use destructor in some clever way here?
-
+		std::cout << "abc" << std::endl;
 		// Remove bullet from worldData (-> from the view).
 		worldData->removeBullet(this);
 			
 		// delete body in box2d
 		//world->DestroyBody(body);
 		// test code, better naming..
-
+		// add this object to list scheduled for deleting in worldData
+		// when done calculating physics call deleteobject
 		// Voltorb uses Selfdestruct!
 		//delete this;
 
@@ -105,6 +106,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
 		std::cout << "I'm a dead bullet. FML" << std::endl;
-		//world->DestroyBody(this->body);
+		world->DestroyBody(this->body);
 	}
 }

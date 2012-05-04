@@ -56,6 +56,7 @@ namespace mp
 			std::vector<Character>* getChrVec(){ return &chrVec; };
 			// Get list of all bullets
 			std::vector<Bullet*>* getBltVec(){ return &bltVec; };
+			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
 			// Get list of all bodies
 			std::vector<b2Body*>* getBodyVec(){ return &bodyVec; };
 
@@ -83,6 +84,7 @@ namespace mp
 			//World* world;
 			// Vector containing bullets
 			std::vector<Bullet*> bltVec;
+			std::vector<Bullet*> bulletsToRemove;
 			// Vector containing characters
 			std::vector<Character> chrVec;
 			std::vector<Wall*> walls;

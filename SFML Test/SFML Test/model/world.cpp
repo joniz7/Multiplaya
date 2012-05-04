@@ -82,6 +82,9 @@ namespace mp
 			world->Step(timeStep, velocityIterations, positionIterations);
 			// Clear physics forces in prep for next step
 			world->ClearForces();
+
+			// remove bullets from vector
+
 			// Get frame time
 			float elapsed = clock.getElapsedTime().asSeconds();
 			// Save logic fps
@@ -101,6 +104,9 @@ namespace mp
 				world->Step(timeStep, velocityIterations, positionIterations);
 				// Clear physics forces in prep for next step
 				world->ClearForces();
+				// get vector from worlddata and delete all contents
+				deleteBullets();
+				
 				// Save logic fps
 				worldData->setLogicFps((int)(1 / sum));
 				worldData->getPlayer()->update();
@@ -111,6 +117,18 @@ namespace mp
 			}
 		}
     }
+
+	void World::deleteBullets()
+	{
+		std::vector<Bullet*>* vec = worldData->getBulletsToRemove();
+		std::vector<Bullet*>::iterator it;
+		for ( it = vec->begin() ; it < vec->end(); it++ ) {
+			Bullet* aa = (*it);
+			delete aa;
+
+		}
+		worldData->getBulletsToRemove()->clear();
+	}
 
 	////////////////////////////////////////////////////////////
 	// Destructor
