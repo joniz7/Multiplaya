@@ -66,7 +66,7 @@ namespace mp
 	{
 		worldViewMutex.lock();
 
-		BulletView* bullet = bullets.at(i);
+		BulletView* bullet = (BulletView*) bullets.at(i);
 		bullets.erase(bullets.begin() + i );
 		delete bullet;
 
@@ -138,7 +138,7 @@ namespace mp
 
         //------------------
 
-		characters.push_back(CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
+		characters.push_back( new CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
@@ -356,21 +356,23 @@ namespace mp
 	void WorldView::updateBulletsPos()
 	{
 		worldViewMutex.lock();
-		if ( bullets.size() > 0 ) {
-			std::vector<BulletView*>::iterator it;
-			for ( it = bullets.begin() ; it < bullets.end(); it++ )
-				(*it)->updatePosition();
-		}
+		updateVectorPos(bullets);
 		worldViewMutex.unlock();
 	}
 
 	void WorldView::updateCharactersPos()
 	{
-		if ( characters.size() > 0 ) {
-			std::vector<CharacterView>::iterator it;
-			for ( it = characters.begin() ; it < characters.end(); it++ )
-				it->updatePosition();
-		}
+		worldViewMutex.lock();
+		updateVectorPos(characters);
+		worldViewMutex.unlock();
+	}
+
+	// better name
+	void WorldView::drawVector(std::vector<GameObjectView*>& vector)
+	{
+		std::vector<GameObjectView*>::iterator it;
+		for ( it = vector.begin() ; it < vector.end(); it++ )
+			window->draw(**it);
 	}
 
 	void WorldView::drawWorld()
@@ -381,6 +383,7 @@ namespace mp
 		// Draw light.
 		window->draw(*lightSpr, sf::BlendAdd);
 	}
+
 
 	void WorldView::drawEnvironment()
 	{
@@ -393,30 +396,25 @@ namespace mp
 
 	void WorldView::drawBullets()
 	{
-		// TODO make more generic
-		worldViewMutex.lock();
-		std::vector<BulletView*>::iterator it;
-		for ( it = bullets.begin() ; it < bullets.end(); it++ )
-			window->draw(**it);
-		
-		//drawVector(bullets);
+		worldViewMutex.lock();		
+		drawVector(bullets);
 		worldViewMutex.unlock();
 	}
-
-	/*void WorldView::drawVector(const std::vector<sf::Drawable*>& vector)
-	{
-		std::vector<sf::Drawable*>::iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ )
-			window->draw(**it);
-	}*/
 	
 	void WorldView::drawCharacters()
 	{
 		window->draw(*blueBox);
 
-		std::vector<CharacterView>::iterator it;
-		for ( it = characters.begin() ; it < characters.end(); it++ )
-			window->draw(*it);
+		drawVector(characters);
+
+	}
+
+			// better name maybe
+	void WorldView::updateVectorPos(std::vector<GameObjectView*>& vector)
+	{
+		std::vector<GameObjectView*>::iterator it;
+		for ( it = vector.begin() ; it < vector.end(); it++ )
+			(*it)->updatePosition();
 	}
 
 	void WorldView::drawUI()
@@ -462,3 +460,5 @@ namespace mp
     }
 
 }
+
+

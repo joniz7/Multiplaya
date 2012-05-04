@@ -14,12 +14,13 @@
 #include "../game.h"
 #include "animatedsprite.h"
 #include "../util/Observer.h"
+#include "GameObjectView.h"
 
 namespace mp
 {
 	class Character;
 
-	class CharacterView : public sf::Drawable
+	class CharacterView : public GameObjectView
 	{
 		public:
 			//CharacterView(Character* model, sf::Sprite* sprite);

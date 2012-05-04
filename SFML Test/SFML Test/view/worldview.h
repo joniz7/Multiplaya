@@ -26,7 +26,7 @@
 #include "BulletView.h"
 
 #include "../util/Observer.h"
-
+#include "GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
 #include "../global.h"
@@ -37,6 +37,7 @@ namespace mp
 	class WorldData;
 	class CharacterView;
 	class BulletView;
+	class GameObjectView;
     
 	class WorldView : public Observer
     {
@@ -46,7 +47,7 @@ namespace mp
 			sf::View* getView() { return worldView; }
             ~WorldView();
 			virtual void notify(std::string e, void* object);
-			CharacterView* getCharacter(int i) { return &characters.at(i); }
+			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			
 		protected:
     		
@@ -59,8 +60,8 @@ namespace mp
 			sf::View* worldView;
 			sf::RenderWindow* window;
 			sf::Vector2f* mousePos;
-			std::vector<CharacterView> characters;
-			std::vector<BulletView*> bullets;
+			std::vector<GameObjectView*> characters;
+			std::vector<GameObjectView*> bullets;
 			// Clock for frame time counting
 			sf::Clock clock;
 			sf::Font* fontGothic;
@@ -102,7 +103,8 @@ namespace mp
 			void drawBullets();
 			void drawCharacters();
 			void drawUI();
-			//void drawVector(const std::vector<sf::Drawable*>& vector);
+			void drawVector(std::vector<GameObjectView*>& vector);
+			void updateVectorPos(std::vector<GameObjectView*>& vector);
 
     };
 }

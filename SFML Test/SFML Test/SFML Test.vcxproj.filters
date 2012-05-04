@@ -175,6 +175,9 @@
     <ClInclude Include="model\Wall.h">
       <Filter>src\model</Filter>
     </ClInclude>
+    <ClInclude Include="view\GameObjectView.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

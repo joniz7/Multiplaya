@@ -8,12 +8,13 @@
 #include "../sfml.h"
 
 #include "../game.h"
+#include "GameObjectView.h"
 
 namespace mp
 {
 	class Bullet;
 
-	class BulletView : public sf::Drawable
+	class BulletView : public GameObjectView
 	{
 	public:
 		BulletView(Bullet* model);

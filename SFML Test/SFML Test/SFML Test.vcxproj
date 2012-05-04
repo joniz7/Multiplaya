@@ -129,6 +129,7 @@
     <ClInclude Include="view\animatedsprite.h" />
     <ClInclude Include="view\BulletView.h" />
     <ClInclude Include="view\CharacterView.h" />
+    <ClInclude Include="view\GameObjectView.h" />
     <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <ItemGroup>
