@@ -22,9 +22,10 @@ namespace mp
 		this->worldData = worldData;
 		this->world = world;
 		this->grounded = true;
-		this->shooting = false;
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
+		this->cooldown = 100; // milliseconds in between shots.
+		this->shootingTimer = new sf::Clock();
 
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
@@ -111,10 +112,18 @@ namespace mp
 		}
 	}
 
+	void Character::setShooting() {
+		shootingTimer->restart();
+	}
+	bool Character::isShooting() {
+		return (shootingTimer->getElapsedTime().asMilliseconds() < cooldown);
+	}
+
 	void Character::primaryFire()
 	{
-		if (shooting) { return; }
-		else {shooting = true;}
+		if (isShooting()) { return; }
+		else { setShooting(); }
+
 		
 		int speed = 800;
 		b2Vec2 charPos = characterBody->GetPosition();
@@ -139,8 +148,6 @@ namespace mp
 		// Create bullet, and add to world.
 		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);
 		worldData->addBullet(bullet);
-
-		shooting = false;
 	}
 
 	/////////////////////////////////////////////////

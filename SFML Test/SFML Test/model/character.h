@@ -65,7 +65,8 @@ namespace mp
 			void setGrounded(bool choice) { grounded = choice; } 
 			bool isGrounded() { return grounded; } 
 
-			bool isShooting() { return shooting; }
+			bool isShooting();
+			void setShooting();
 
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
@@ -78,12 +79,13 @@ namespace mp
 			b2Body* characterBody;
 			WorldData* worldData;
 			b2World* world;
+			sf::Clock* shootingTimer;
 
 			short health;
+			short cooldown;
 
 			bool facingRight;
 			bool grounded;
-			bool shooting;
 			bool walking;
 			
     };
