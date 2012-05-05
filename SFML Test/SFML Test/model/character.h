@@ -34,8 +34,20 @@ namespace mp
 
     class Character : public GameObject
     {
+		friend class CharacterFootSensor;
+		class CharacterFootSensor : public GameObject
+		{
+			public:
+				CharacterFootSensor(Character* character);
+				~CharacterFootSensor();
+				virtual void onCollision(GameObject* crashedWith);
+			
+			private:
+				Character* character;			
+		};
+
         public:
-			Character(WorldData* worldData, b2World* world, b2Body* characterBody);
+			Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size);
             ~Character();
 			void jump();
 			void crouch();

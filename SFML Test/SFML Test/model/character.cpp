@@ -16,16 +16,70 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Character::Character(WorldData* worldData, b2World* world, b2Body* characterBody)
+    Character::Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size)
     {
 		this->objectType = character;
 		this->worldData = worldData;
 		this->world = world;
-		this->characterBody = characterBody;
+		//this->characterBody = characterBody;
 		this->isGrounded = true;
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
+
+		// Duplicated code, should probably use code in addBody or something..
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position.Set(position.x, position.y);
+		this->characterBody = world->CreateBody(&bodyDef);
+
+		// Define a box shape for our dynamic body.
+		b2PolygonShape dynamicBox;
+		dynamicBox.SetAsBox(size.x, size.y);
+		
+		// Define the dynamic body fixture.
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &dynamicBox;
+		// Set the box density to be non-zero, so it will be dynamic.
+		fixtureDef.density = 1.0f;
+		// Override the default friction.
+		fixtureDef.friction = 2.0f;
+		// Set restitution
+		fixtureDef.restitution = 0.0f;
+		
+		// Add the shape to the body.
+		characterBody->CreateFixture(&fixtureDef);
+		characterBody->SetFixedRotation(true);
+
+
+		// Test code
+		//add foot sensor fixture
+		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		footSensorFixture->SetUserData( new CharacterFootSensor(this) );
+
+
     }
+
+	Character::CharacterFootSensor::CharacterFootSensor(Character* character)
+	{
+		this->character = character;
+		this->objectType = characterFootSensor;
+	}
+
+	Character::CharacterFootSensor::~CharacterFootSensor()
+	{
+
+	}
+
+	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith)
+	{
+		if ( crashedWith->objectType == wall)
+		{
+			std::cout << "wall" << std::endl;
+			character->isGrounded = true;
+		}
+	}
 
 	////////////////////////////////////////////////////////////
 	// Destructor
@@ -51,8 +105,9 @@ namespace mp
 
 	void Character::jump()
 	{
-		if (isGrounded) {
+		if ( isGrounded ) {
 			characterBody->ApplyLinearImpulse( b2Vec2(0, 125), characterBody->GetPosition());
+			setGrounded(false);
 		}
 	}
 

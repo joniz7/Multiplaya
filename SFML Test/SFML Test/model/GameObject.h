@@ -9,7 +9,8 @@ namespace mp
 	class GameObject
 	{
 		public:
-			enum ObjectType { character, bullet, wall } objectType;
+			// probably don't even need specific characterFootSensor maybe to avoid double collision or something, will investigate!
+			enum ObjectType { character, bullet, wall, characterFootSensor, characterRightSensor, characterLeftSensor } objectType;
 			virtual void onCollision( GameObject* crashedWith ) = 0;
 			virtual ~GameObject() {};
 		protected:

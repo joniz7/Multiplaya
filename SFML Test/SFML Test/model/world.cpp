@@ -108,9 +108,9 @@ namespace mp
 			std::vector<Bullet*>::iterator it;
 			for ( it = vec->begin() ; it < vec->end(); it++ ) {
 				
-				Bullet* aa = (*it);
+				Bullet* bullet = (*it);
 				// TODO: Uncomment below line and fix bullet deletion.
-				//delete aa;
+				//delete bullet;
 				// Not reacahble. Above delete statement is the cause of our error.
 			}
 			worldData->getBulletsToRemove()->clear();
