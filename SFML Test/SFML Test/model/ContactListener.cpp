@@ -18,10 +18,10 @@ namespace mp {
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();
 		// read more in box2d manual, look for better way
 		if (fixtureAUserData && fixtureBUserData) {
-			GameObject* a = static_cast<GameObject*>( fixtureAUserData );
-			GameObject* b = static_cast<GameObject*>( fixtureBUserData );
-			b->onCollision(a);
-			a->onCollision(b);
+			GameObject* gameObjectA = static_cast<GameObject*>( fixtureAUserData );
+			GameObject* gameObjectB = static_cast<GameObject*>( fixtureBUserData );
+			gameObjectB->onCollision(gameObjectA);
+			gameObjectA->onCollision(gameObjectB);
 		}
 			
 

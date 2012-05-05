@@ -34,7 +34,7 @@ namespace mp
 
     class Character : public GameObject
     {
-		friend class CharacterFootSensor;
+//		friend class Character::CharacterFootSensor;
 		class CharacterFootSensor : public GameObject
 		{
 			public:

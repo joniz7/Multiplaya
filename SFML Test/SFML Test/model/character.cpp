@@ -57,7 +57,7 @@ namespace mp
 		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( new CharacterFootSensor(this) );
+		footSensorFixture->SetUserData( new CharacterFootSensor( this ) );
 
 
     }
@@ -78,7 +78,7 @@ namespace mp
 		if ( crashedWith->objectType == wall)
 		{
 			std::cout << "wall" << std::endl;
-			character->grounded = true;
+			character->setGrounded(true);
 		}
 	}
 
@@ -106,10 +106,12 @@ namespace mp
 
 	void Character::jump()
 	{
+		std::cout << "Trying to jump" << std::endl;
 		if (grounded) {
 			characterBody->ApplyLinearImpulse( b2Vec2(0, 125), characterBody->GetPosition());
 			setGrounded(false);
-		}
+		} else
+			std::cout << "Failed to jump WHY?!" << std::endl;
 	}
 
 	void Character::setShooting() {
