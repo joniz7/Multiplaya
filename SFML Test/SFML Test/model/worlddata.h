@@ -13,7 +13,7 @@
 #include <cmath>
 #include <algorithm>
 // SFML specific headers
-#include "../sfml.h"
+#include <sfml.h>
 
 // Box2D specific headers
 #include <Box2D.h>
@@ -59,7 +59,7 @@ namespace mp
 			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
 			// Get list of all bodies
 			std::vector<b2Body*>* getBodies(){ return &bodies; };
-
+			b2Vec2 getMousePosition() {return *mousePosition;}
 			// Get a specific character
 			Character* getCharacter(int i){ return &characters.at(i); };
 			// Get a specific bullet
@@ -73,11 +73,14 @@ namespace mp
 			// Get logic fps
 			int getLogicFps(){return logicFps;};
 
+			void scheduleBulletForDeletion(Bullet* bullet);
 			void removeBullet(Bullet* bullet);
 
 			// Setters
 			// Set logic fps
 			void setLogicFps(int fps){logicFps = fps;};
+
+			void setMousePosition(sf::Vector2f* pos);	
 
 		private:
 			// Pointer to corresponding world object
@@ -91,6 +94,8 @@ namespace mp
 			std::vector<Wall*> walls;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodies;
+			// The mouse position (in world coordinates)
+			b2Vec2* mousePosition;
 			// Variable for keeping track of logic thread fps
 			int logicFps;
 			Player* player;

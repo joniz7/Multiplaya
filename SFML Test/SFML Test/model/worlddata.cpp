@@ -20,6 +20,7 @@ namespace mp
     WorldData::WorldData() 
 	{
 		logicFps = 0;
+		mousePosition = new b2Vec2();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -172,6 +173,11 @@ namespace mp
 		player->setCharacter(getCharacter(1));
 	}
 
+	//Schedule bullet object for deletion our next logic iteration.
+	void WorldData::scheduleBulletForDeletion(Bullet* bullet) {
+		bulletsToRemove.push_back(bullet);
+	}
+
 	void WorldData::removeBullet(Bullet* bullet)
 	{
 		if (bullets.size() > 0) {
@@ -181,10 +187,15 @@ namespace mp
 				int i = (it - bullets.begin());
 				notify("bulletDeleted", (void*) i);
 				bullets.erase(bullets.begin() + i);
-				//Schedule bullet object for deletion our next logic iteration.
-				bulletsToRemove.push_back(bullet);
 			}
 		}
+	}
+
+	void WorldData::setMousePosition(sf::Vector2f* pos) {
+		float32 x = pos->x;
+		float32 y = pos->y;
+
+		mousePosition->Set(x,y);
 	}
 
 }

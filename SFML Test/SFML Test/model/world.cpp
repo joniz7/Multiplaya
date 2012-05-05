@@ -109,11 +109,12 @@ namespace mp
 			for ( it = vec->begin() ; it < vec->end(); it++ ) {
 				
 				Bullet* aa = (*it);
+				
 				// TODO: Uncomment below line and fix bullet deletion.
 				//delete aa;
 				// Not reacahble. Above delete statement is the cause of our error.
 			}
-			worldData->getBulletsToRemove()->clear();
+			vec->clear();
 		}
 	}
 

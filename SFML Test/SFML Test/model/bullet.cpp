@@ -62,13 +62,13 @@ namespace mp
 	{
 		// If we collide with wall, explode.
 		if (crashedWith->objectType == wall) {
-			std::cout << "Collision: bullet <-> wall" << std::endl;
+			//std::cout << "Collision: bullet <-> wall" << std::endl;
 			this->explode();
 		}
 
 		// If we collide with bullet... do nothing?
 		else if (crashedWith->objectType == bullet) {
-			std::cout << "Collision: bullet <-> bullet" << std::endl;
+			//std::cout << "Collision: bullet <-> bullet" << std::endl;
 		}
 		
 		// If we collide with character, explode (we handle the dmg elsewhere).
@@ -82,9 +82,8 @@ namespace mp
 	// Destroy the bullet.
 	///////////////////////////
 	void Bullet::explode() {
-		std::cout << "explode()" << std::endl;
-		// Remove bullet from worldData (-> from the view).
-		worldData->removeBullet(this);
+		//std::cout << "explode()" << std::endl;
+		worldData->scheduleBulletForDeletion(this);
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
@@ -95,8 +94,12 @@ namespace mp
 	// Destructor
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
-		std::cout << "Bullet destructor." << std::endl;
+		std::cout << "Bullet destructor 1." << std::endl;
+		// Remove bullet from worldData (-> from the view).
+		worldData->removeBullet(this);
+		std::cout << "Bullet destructor 2." << std::endl;
 		world->DestroyBody(this->body);
 		// Not reachable. Error is produced in DestroyBody()..?
+		std::cout << "Bullet destructor 3!" << std::endl;
 	}
 }

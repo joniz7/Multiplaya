@@ -188,6 +188,8 @@ namespace mp
 				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
+				worldData->setMousePosition(mousePos);
+
 				worldDataMutex.unlock();
 				counter = 0;
 			}
@@ -202,6 +204,7 @@ namespace mp
 
 			// Access world data
 			worldDataMutex.lock();
+
 			std::vector<Character>* tv = worldData->getCharacters();
 					
 			if(tv->size() > 0)

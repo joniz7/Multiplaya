@@ -22,7 +22,8 @@ namespace mp
 		this->worldData = worldData;
 		this->world = world;
 		this->characterBody = characterBody;
-		this->isGrounded = true;
+		this->grounded = true;
+		this->shooting = false;
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
     }
@@ -51,16 +52,41 @@ namespace mp
 
 	void Character::jump()
 	{
-		if (isGrounded) {
+		if (grounded) {
 			characterBody->ApplyLinearImpulse( b2Vec2(0, 125), characterBody->GetPosition());
 		}
 	}
 
 	void Character::primaryFire()
 	{
-		// TODO: calculate force, by using mouse position and character position.
-		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, characterBody->GetPosition(), b2Vec2(-200, 0), worldData);
+		if (shooting) { return; }
+		else {shooting = true;}
+		
+		int speed = 800;
+		b2Vec2 charPos = characterBody->GetPosition();
+		b2Vec2 charSpeed = characterBody->GetLinearVelocity();
+		b2Vec2 mousePos = worldData->getMousePosition();
+		
+		// We're just about to calculate these two vectors.
+		b2Vec2 gunPosition; // Where the bullet should be placed.
+		b2Vec2 force;		// The initial force of the bullet.
+		
+		// Direction the bullet should fly in.
+		force = charPos - mousePos;
+		force.Normalize();
+		gunPosition = force;
+		// Apply speed factor and characer's speed to our force vector.
+		force.Set((force.x * speed)+charSpeed.x, -((force.y * speed)+charSpeed.y)); 
+		// Bullet spawning point should be relative to char.
+		gunPosition.Set(charPos.x-gunPosition.x, gunPosition.y + charPos.y);
+		
+		// TODO: bullet spawning point is not perfect.
+
+		// Create bullet, and add to world.
+		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);
 		worldData->addBullet(bullet);
+
+		shooting = false;
 	}
 
 	/////////////////////////////////////////////////

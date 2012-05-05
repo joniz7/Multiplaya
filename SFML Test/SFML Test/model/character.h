@@ -50,8 +50,11 @@ namespace mp
 			void setHealth(short health);
 
 			b2Body* getBody() { return characterBody; }
-			void setGrounded(bool choice) { isGrounded = choice; } 
-			
+			void setGrounded(bool choice) { grounded = choice; } 
+			bool isGrounded() { return grounded; } 
+
+			bool isShooting() { return shooting; }
+
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
 
@@ -63,9 +66,12 @@ namespace mp
 			b2Body* characterBody;
 			WorldData* worldData;
 			b2World* world;
-			bool facingRight;
+
 			short health;
-			bool isGrounded;
+
+			bool facingRight;
+			bool grounded;
+			bool shooting;
 			bool walking;
 			
     };
