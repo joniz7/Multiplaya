@@ -95,12 +95,9 @@ namespace mp
 	// Destructor
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
-		std::cout << "Bullet destructor 1." << std::endl;
 		// Remove bullet from worldData (-> from the view).
 		worldData->removeBullet(this);
-		std::cout << "Bullet destructor 2." << std::endl;
+		// remove body from box2d
 		world->DestroyBody(this->body);
-		// Not reachable. Error is produced in DestroyBody()..?
-		std::cout << "Bullet destructor 3!" << std::endl;
 	}
 }

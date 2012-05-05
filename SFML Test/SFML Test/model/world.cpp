@@ -102,17 +102,17 @@ namespace mp
 
 	void World::deleteBullets()
 	{
-		std::vector<Bullet*>* vec = worldData->getBulletsToRemove();
+		std::vector<Bullet*>* bulletsToRemove = worldData->getBulletsToRemove();
 		// Check if we have bullets to remove.
-		if (vec->size() > 0) {
+		if (bulletsToRemove->size() > 0) {
 			std::vector<Bullet*>::iterator it;
-			for ( it = vec->begin() ; it < vec->end(); it++ ) {
+			for ( it = bulletsToRemove->begin() ; it < bulletsToRemove->end(); it++ ) {
 				Bullet* bullet = (*it);
 				// TODO: Uncomment below line and fix bullet deletion.
 				delete bullet;
 				// Not reacahble. Above delete statement is the cause of our error.
 			}
-			vec->clear();
+			bulletsToRemove->clear();
 		}
 	}
 
