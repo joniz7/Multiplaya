@@ -56,7 +56,8 @@ namespace mp
 		testFixture->SetUserData(this);
 		// Send the bullet flying
 		body->ApplyForce( force, body->GetPosition() );
-    }
+
+	}
 
 	void Bullet::onCollision(GameObject* crashedWith)
 	{

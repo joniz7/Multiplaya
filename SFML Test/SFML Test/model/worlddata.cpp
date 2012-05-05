@@ -86,39 +86,8 @@ namespace mp
     bool WorldData::addCharacter( b2World* world, b2Vec2 position, b2Vec2 size)
     {
 		std::cout << "Adding character" << std::endl;
-		// Duplicated code, should probably use code in addBody or something..
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
-		bodyDef.position.Set(position.x, position.y);
-		b2Body* characterBody = world->CreateBody(&bodyDef);
 
-		// Define a box shape for our dynamic body.
-		b2PolygonShape dynamicBox;
-		dynamicBox.SetAsBox(size.x, size.y);
-		
-		// Define the dynamic body fixture.
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &dynamicBox;
-		// Set the box density to be non-zero, so it will be dynamic.
-		fixtureDef.density = 1.0f;
-		// Override the default friction.
-		fixtureDef.friction = 2.0f;
-		// Set restitution
-		fixtureDef.restitution = 0.0f;
-		
-		// Add the shape to the body.
-		characterBody->CreateFixture(&fixtureDef);
-		characterBody->SetFixedRotation(true);
-
-
-		// Test code
-		//add foot sensor fixture
-	/*	dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
-		fixtureDef.isSensor = true;
-		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( (void*)1 );*/
-
-		characters.push_back( Character(this, world, characterBody) );
+		characters.push_back( Character(this, world, position, size) );
 		return true;
     }
 
@@ -191,10 +160,12 @@ namespace mp
 		}
 	}
 
+	// Sets the current mouse position.
+	// (Using world coordinates)
 	void WorldData::setMousePosition(sf::Vector2f* pos) {
+		// Convert from sf::Vector2f to b2Vec2.
 		float32 x = pos->x;
 		float32 y = pos->y;
-
 		mousePosition->Set(x,y);
 	}
 
