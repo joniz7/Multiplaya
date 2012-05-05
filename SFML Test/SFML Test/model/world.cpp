@@ -109,7 +109,7 @@ namespace mp
 			for ( it = vec->begin() ; it < vec->end(); it++ ) {
 				Bullet* bullet = (*it);
 				// TODO: Uncomment below line and fix bullet deletion.
-				//delete bullet;
+				delete bullet;
 				// Not reacahble. Above delete statement is the cause of our error.
 			}
 			vec->clear();

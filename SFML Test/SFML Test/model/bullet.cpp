@@ -28,7 +28,7 @@ namespace mp
 		//test
 		this->objectType = bullet;
 		this->worldData = worldData;
-
+		this->world = world;
 		// Save bullet data
 		this->type = type;
 		this->owner = owner;
@@ -63,7 +63,7 @@ namespace mp
 	{
 		// If we collide with wall, explode.
 		if (crashedWith->objectType == wall) {
-			//std::cout << "Collision: bullet <-> wall" << std::endl;
+			//td::cout << "Collision: bullet <-> wall" << std::endl;
 			this->explode();
 		}
 
