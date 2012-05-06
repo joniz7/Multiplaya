@@ -87,7 +87,7 @@ namespace mp
     {
 		std::cout << "Adding character" << std::endl;
 
-		characters.push_back( Character(this, world, position, size) );
+		characters.push_back( new Character(this, world, position, size) );
 		return true;
     }
 

@@ -53,7 +53,7 @@ namespace mp
 			void createPlayer();
 			// Getters
 			// Get list of all characters
-			std::vector<Character>* getCharacters(){ return &characters; };
+			std::vector<Character*>* getCharacters(){ return &characters; };
 			// Get list of all bullets
 			std::vector<Bullet*>* getBullets(){ return &bullets; };
 			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
@@ -61,7 +61,7 @@ namespace mp
 			std::vector<b2Body*>* getBodies(){ return &bodies; };
 			b2Vec2 getMousePosition() {return *mousePosition;}
 			// Get a specific character
-			Character* getCharacter(int i){ return &characters.at(i); };
+			Character* getCharacter(int i){ return characters.at(i); };
 			// Get a specific bullet
 			Bullet* getBullet(int i){ return bullets.at(i); };
 			// Get a specific body
@@ -90,7 +90,7 @@ namespace mp
 			// A queue, containing all bullets scheduled for deletion.
 			std::vector<Bullet*> bulletsToRemove;
 			// Vector containing characters
-			std::vector<Character> characters;
+			std::vector<Character*> characters;
 			std::vector<Wall*> walls;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodies;

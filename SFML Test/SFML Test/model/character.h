@@ -43,7 +43,7 @@ namespace mp
 				virtual void onCollision(GameObject* crashedWith);
 			
 			private:
-				Character* character;			
+				Character* characterObject;			
 		};
 
         public:

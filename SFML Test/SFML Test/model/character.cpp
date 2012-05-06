@@ -62,9 +62,10 @@ namespace mp
 
     }
 
-	Character::CharacterFootSensor::CharacterFootSensor(Character* character)
+	Character::CharacterFootSensor::CharacterFootSensor(Character* characterObject)
 	{
-		this->character = character;
+		// maybe just send a reference to the grounded boolean?
+		this->characterObject = characterObject;
 		this->objectType = characterFootSensor;
 	}
 
@@ -78,7 +79,7 @@ namespace mp
 		if ( crashedWith->objectType == wall)
 		{
 			std::cout << "wall" << std::endl;
-			character->setGrounded(true);
+			characterObject->setGrounded(true);
 		}
 	}
 
