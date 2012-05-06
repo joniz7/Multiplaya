@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <list>
 #include <cmath>
+#include <map>
+#include <iostream>
 
 // SFML specific headers
 #include <SFML/Window.hpp>
@@ -21,6 +23,7 @@
 
 // Game specific headers
 #include "game.h"
+#include "client.h"
 
 namespace mp
 {
@@ -37,7 +40,9 @@ namespace mp
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;
-			WorldData* worldData;	
+			WorldData* worldData;
+			std::map<int,Client> clientMap;
+			int currentClientID;
     };
 }
 

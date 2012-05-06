@@ -89,17 +89,17 @@ namespace mp
 		std::cout<<".";
 		
 		
-		// Initialize the view and pass the world data pointer as argument
-		//NetworkHandler* network = new NetworkHandler(worldData);
+		// Initialize the network hanlder and pass the world data pointer as argument
+		NetworkHandler* network = new NetworkHandler(worldData);
 		
-		//worldData->addObserver(network);
+		worldData->addObserver(network);
 
 		std::cout<<".";
 		std::cout<<std::endl<<"Network thread up and running!"<<std::endl;
-		// Unlock world data
+		//Unlock world data
 		worldDataMutex.unlock();
 
-		//network->exec();
+		network->exec();
 
 	}
 
