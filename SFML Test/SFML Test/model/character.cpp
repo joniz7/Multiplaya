@@ -22,6 +22,8 @@ namespace mp
 		this->worldData = worldData;
 		this->world = world;
 		this->grounded = true;
+		this->leftSideTouchWall = false;
+		this->rightSideTouchWall = false;
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
@@ -57,31 +59,23 @@ namespace mp
 		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( new CharacterFootSensor( this ) );
+		footSensorFixture->SetUserData( new CharacterFootSensor( grounded ) );
+
+		//add left sensor fixture
+		dynamicBox.SetAsBox(0.1, 1, b2Vec2(1, 0), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* leftSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
+
+
+		//add right sensor fixture
+		/*dynamicBox.SetAsBox(0.1, 1, b2Vec2(-1.2, 0), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		footSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );*/
 
 
     }
-
-	Character::CharacterFootSensor::CharacterFootSensor(Character* characterObject)
-	{
-		// maybe just send a reference to the grounded boolean?
-		this->characterObject = characterObject;
-		this->objectType = characterFootSensor;
-	}
-
-	Character::CharacterFootSensor::~CharacterFootSensor()
-	{
-
-	}
-
-	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith)
-	{
-		if ( crashedWith->objectType == wall)
-		{
-			std::cout << "wall" << std::endl;
-			characterObject->setGrounded(true);
-		}
-	}
 
 	////////////////////////////////////////////////////////////
 	// Destructor
@@ -108,11 +102,16 @@ namespace mp
 	void Character::jump()
 	{
 		std::cout << "Trying to jump" << std::endl;
-		if (grounded) {
-			characterBody->ApplyLinearImpulse( b2Vec2(0, 125), characterBody->GetPosition());
+		if ( grounded ) {
+			characterBody->ApplyLinearImpulse( b2Vec2(0, 200), characterBody->GetPosition());
 			setGrounded(false);
-		} else
-			std::cout << "Failed to jump WHY?!" << std::endl;
+		} 
+		else if ( leftSideTouchWall )
+		{
+			std::cout << "Jumping to tha side" << std::endl;
+			characterBody->ApplyLinearImpulse( b2Vec2( -250, 300), characterBody->GetPosition());
+			leftSideTouchWall = false;
+		}
 	}
 
 	void Character::setShooting() {
@@ -185,4 +184,52 @@ namespace mp
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
+
+
+	//Foot sensor
+	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded) : grounded(grounded)
+	{
+		this->objectType = characterFootSensor;
+	}
+
+	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith)
+	{
+		if ( crashedWith->objectType == wall)
+		{
+			grounded = true;
+		}
+	}
+
+
+	// Leftside 
+	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)
+	{
+		this->objectType = characterLeftSensor;
+	}
+
+	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith)
+	{
+		if ( crashedWith->objectType == wall)
+		{
+			std::cout << "Left side touching wall!" << std::endl;
+			leftSideTouchWall = true;
+		}
+	}
+
+
+	// Rightside
+	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall)
+	{
+		this->objectType = characterRightSensor;
+	}
+
+	void Character::CharacterRightSensor::onCollision(GameObject* crashedWith)
+	{
+		if ( crashedWith->objectType == wall)
+		{
+			std::cout << "Right side touching wall!" << std::endl;
+			rightSideTouchWall = true;
+		}
+	}
+
 }

@@ -34,21 +34,9 @@ namespace mp
 
     class Character : public GameObject
     {
-//		friend class Character::CharacterFootSensor;
-		class CharacterFootSensor : public GameObject
-		{
-			public:
-				CharacterFootSensor(Character* character);
-				~CharacterFootSensor();
-				virtual void onCollision(GameObject* crashedWith);
-			
-			private:
-				Character* characterObject;			
-		};
-
         public:
 			Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size);
-            ~Character();
+            virtual ~Character();
 			void jump();
 			void crouch();
 			void primaryFire();
@@ -86,7 +74,51 @@ namespace mp
 
 			bool facingRight;
 			bool grounded;
+			bool leftSideTouchWall;
+			bool rightSideTouchWall;
 			bool walking;
+
+
+		class CharacterFootSensor : public GameObject
+		{
+			public:
+				//CharacterFootSensor(Character* character);
+				CharacterFootSensor(bool& grounded);
+				virtual ~CharacterFootSensor() {};
+				virtual void onCollision(GameObject* crashedWith);
+			
+			private:
+				//Character* characterObject;	
+				bool& grounded;
+		};
+
+		class CharacterLeftSensor : public GameObject
+		{
+			public:
+				//CharacterFootSensor(Character* character);
+				CharacterLeftSensor(bool& leftSideTouchWall);
+				virtual ~CharacterLeftSensor() {};
+				virtual void onCollision(GameObject* crashedWith);
+			
+			private:
+				//Character* characterObject;	
+				bool& leftSideTouchWall;
+		};
+
+		class CharacterRightSensor : public GameObject
+		{
+			public:
+				//CharacterFootSensor(Character* character);
+				CharacterRightSensor(bool& rightSideTouchWall);
+				virtual ~CharacterRightSensor() {};
+				virtual void onCollision(GameObject* crashedWith);
+			
+			private:
+				//Character* characterObject;	
+				bool& rightSideTouchWall;
+		};
+
+
 			
     };
 }
