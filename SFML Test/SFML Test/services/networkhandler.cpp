@@ -19,9 +19,9 @@ namespace mp
 
 		currentClientID = 1;
 
-		unsigned short port = 55001;
+		receivePort = 55001;
 		//Binds the receiving socket to a port
-		if(!receiver.bind(port))
+		if(!receiver.bind(receivePort))
 		{
 			std::cout<<"Error binding to port "<<port<<std::endl;
 		}
@@ -97,18 +97,14 @@ namespace mp
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 
-						type = 4;
-
+						//If the clientMap is empty there are no clients to send to
 						if(!clientMap.empty())
 						{
+							//Loops through the clientMap and sends the message to everyone
 							for(sf::Int8 i = 1; i <= clientMap.size(); i++)
 							{
-								packet.clear();
 								client = clientMap[i];
-
-								packet<<type<<message;
-								sender.send(packet, client.IP, 55001);
-
+								sendMessage(message, client.IP);
 								std::cout<<"Message sent to "<<client.IP<<std::endl;
 							}
 						}
@@ -132,19 +128,34 @@ namespace mp
     {
     }
 
-	////////////////////////////////////////////////////////////
-	// Sends a message over the internet
-	////////////////////////////////////////////////////////////
-	void NetworkHandler::sendMessage(std::string message)
+	void NetworkHandler::sendMessage(std::string message, sf::IpAddress IP)
 	{
 		sf::Packet packet;
 
 		sf::Int8 type = 4;
 		packet << type << message;
 
-		sender.send(packet, myIP, 55001);
+		sender.send(packet, IP, receivePort);
 	}
 
+	////////////////////////////////////////////////////////////
+	// Sends a message over the internet to the server
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendMessageToServer(std::string message)
+	{
+		sf::Packet packet;
+
+		sf::Int8 type = 4;
+		packet << type << message;
+
+		sender.send(packet, myIP, receivePort);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Sends a message over the internet to the server
+	// which will then send the same message to all clients
+	// attached to it.
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendMessageToEveryone(std::string message)
 	{
 		sf::Packet packet;
@@ -176,6 +187,9 @@ namespace mp
 		*/
 	}
 
+	////////////////////////////////////////////////////////////
+	// Connects a client to the server
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::connectToServer(std::string name)
 	{
 		sf::Int8 type = 1;
@@ -187,6 +201,14 @@ namespace mp
 
 	}
 
+	////////////////////////////////////////////////////////////
+	// If the notification is connectToServer the client will try
+	// to connect to the server.
+	//
+	// If it is a message not related to the network handler it will
+	// be sent to the the server as a text message and from the server
+	// sent to every client.
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::notify(std::string e, void* object)
 	{
 		if(e == "connectToServer")
