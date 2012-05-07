@@ -44,13 +44,13 @@ namespace mp
             ~WorldData();
 
 			//Adders
-			bool addCharacter(b2World* world, b2Vec2 position, b2Vec2 size);
+			bool addCharacter(Character* c);
 			bool addBullet( Bullet* bullet );
 			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
-			void createPlayer();
+			void createPlayer(int characterId);
 			// Getters
 			// Get list of all characters
 			std::vector<Character*>* getCharacters(){ return &characters; };

@@ -53,21 +53,17 @@ namespace mp
 		// from a pool and creates the ground redBox shape (also from a pool).
 		// The body is also added to the world.
 		// Define the ground box shape, extents are the half-widths of the box.
-		// Create a bullet, and add it to the world.
-		Bullet* b = new Bullet(BulletType::GENERIC_BULLET, 0 , world, b2Vec2(10, 10), b2Vec2(-200, 0), worldData);
-		worldData->addBullet(b);
-		Bullet* ba = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, b2Vec2(20, 30), b2Vec2(-200, 0), worldData);
-		worldData->addBullet(ba);
-		// Add two bodies to the world
-		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f) );
-		worldData->addCharacter( world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f) );
-		worldData->createPlayer();
+		
+		// Add two test characters to the world.
+		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f)) );
+		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f)) );
+		// Create player (which controls char 1).
+		worldData->createPlayer(1);
 	
 		// Unlock world data
 		worldDataMutex.unlock();
-		
 
-		// Keep track of time. Shouldn't have to do this, really. Read comment down below.
+		// Keep track of time.
 		sf::Clock clock;
 
 		// Logic loop
@@ -108,9 +104,7 @@ namespace mp
 			std::vector<Bullet*>::iterator it;
 			for ( it = bulletsToRemove->begin() ; it < bulletsToRemove->end(); it++ ) {
 				Bullet* bullet = (*it);
-				// TODO: Uncomment below line and fix bullet deletion.
-				delete bullet;
-				// Not reacahble. Above delete statement is the cause of our error.
+ 				delete bullet;
 			}
 			bulletsToRemove->clear();
 		}

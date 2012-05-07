@@ -83,11 +83,11 @@ namespace mp
 	// Adds a character to the world
 	// returns true upon success
 	////////////////////////////////////////////////////////////
-    bool WorldData::addCharacter( b2World* world, b2Vec2 position, b2Vec2 size)
+    bool WorldData::addCharacter(Character* c)
     {
 		std::cout << "Adding character" << std::endl;
 
-		characters.push_back( new Character(this, world, position, size) );
+		characters.push_back(c);
 		return true;
     }
 
@@ -136,10 +136,16 @@ namespace mp
 		return true;
     }
 
-	void WorldData::createPlayer() 
+	///////////////////////////////////
+	// Create the local Player.
+	//
+	// characterId - the character which
+	//				 belongs to the local player.
+	///////////////////////////////////
+	void WorldData::createPlayer(int characterId) 
 	{
 		player = new Player();
-		player->setCharacter(getCharacter(1));
+		player->setCharacter(getCharacter(characterId));
 	}
 
 	//Schedule bullet object for deletion our next logic iteration.
