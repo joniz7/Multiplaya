@@ -41,7 +41,7 @@ namespace mp
 			sf::UdpSocket sender;
 			bool running;
 			WorldData* worldData;
-			std::map<int,Client> clientMap;
+			std::map<sf::Int8,Client> clientMap;
 			int currentClientID;
     };
 }

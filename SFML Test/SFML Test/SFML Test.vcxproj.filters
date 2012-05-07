@@ -178,6 +178,9 @@
     <ClInclude Include="view\GameObjectView.h">
       <Filter>src\view</Filter>
     </ClInclude>
+    <ClInclude Include="client.h">
+      <Filter>src\includes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

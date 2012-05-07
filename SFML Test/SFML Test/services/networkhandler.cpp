@@ -41,6 +41,12 @@ namespace mp
 
 		Client client;
 		std::string name;
+
+		sf::Int8 clientID;
+
+		std::string message;
+
+		sf::Packet packet;
 		////////////////////////////////////////////////////////////
 		// Main loop of network handler.
 		// Constantly checks if there are any incoming data packets
@@ -61,7 +67,6 @@ namespace mp
 					//Client trying to connect
 					case 1:
 						//Creates a client from the data
-
 						receivedData >> name;
 	
 						client.IP = senderIP;
@@ -71,14 +76,46 @@ namespace mp
 						//adds that client to the clientmap
 						clientMap[1] = client;
 
-						break;
-					//Receive a text message
-					case 2:
+						std::cout<<name<<" has connected with IP: "<<senderIP<<std::endl;
 
-						std::string message;
+						break;
+					//Client trying to disconnect
+					case 2:
+						receivedData >> clientID;
+
+						client = clientMap[clientID];
+
+						std::cout<<name<<" has disconnected"<<std::endl;
+
+						clientMap.erase(clientID);
+						break;
+
+					//Receive a text message and send it to all clients
+					case 3:
+						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 
+						type = 4;
+
+						if(!clientMap.empty())
+						{
+							for(sf::Int8 i = 1; i != clientMap.size(); i++)
+							{
+								packet.clear();
+								client = clientMap[i];
+
+								packet<<type<<message;
+								sender.send(packet, client.IP, client.port);
+							}
+						}
+
+						break;
+					//Receive a text message
+					case 4:
+						message.clear();
+						receivedData >> message;
+						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
 				}
 			}
@@ -99,10 +136,10 @@ namespace mp
 	{
 		sf::Packet packet;
 
-		sf::Int8 type = 2;
+		sf::Int8 type = 3;
 		packet << type << message;
 
-		sender.send(packet, "85.226.173.163", 55001);
+		sender.send(packet, "85.226.173.176", 55001);
 	}
 
 	////////////////////////////////////////////////////////////

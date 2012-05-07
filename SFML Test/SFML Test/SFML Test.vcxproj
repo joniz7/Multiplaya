@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
+    <ClInclude Include="client.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="global.h" />
