@@ -23,7 +23,7 @@ namespace mp
 		//Binds the receiving socket to a port
 		if(!receiver.bind(receivePort))
 		{
-			std::cout<<"Error binding to port "<<port<<std::endl;
+			std::cout<<"Error binding to port "<<receivePort<<std::endl;
 		}
 
 		myIP = "85.226.173.176";
