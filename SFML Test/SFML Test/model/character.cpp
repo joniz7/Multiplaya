@@ -70,10 +70,10 @@ namespace mp
 
 
 		//add right sensor fixture
-		/*dynamicBox.SetAsBox(0.1, 1, b2Vec2(-1.2, 0), 0);
+		dynamicBox.SetAsBox(0.1, 1, b2Vec2(-1.2, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );*/
+		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
 
 
     }
@@ -110,6 +110,11 @@ namespace mp
 		{
 			characterBody->ApplyLinearImpulse( b2Vec2( -250, 300), characterBody->GetPosition());
 			leftSideTouchWall = false;
+		} 
+		else if ( rightSideTouchWall )
+		{
+			characterBody->ApplyLinearImpulse( b2Vec2( 250, 300), characterBody->GetPosition());
+			rightSideTouchWall = false;
 		}
 	}
 
