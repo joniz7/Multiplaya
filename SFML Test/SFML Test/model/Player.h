@@ -41,6 +41,7 @@ namespace mp
 			bool pressingKeyForMovingDown();
 			bool pressingKeyForPrimaryFire();
 			bool pressingKeyForJumping();
+			bool pressingKeyForConnecting();
 
 			void moveLeft();
 			void moveRight();

@@ -34,7 +34,11 @@ namespace mp
 			void exec();
             ~NetworkHandler();
 			void sendMessage(std::string message);
+			void sendMessageToEveryone(std::string message);
 			void sendCharacterPos(int index);
+
+			void connectToServer(std::string name);
+
 			virtual void notify(std::string e, void* object);
         private:
 			sf::UdpSocket receiver;
@@ -43,6 +47,8 @@ namespace mp
 			WorldData* worldData;
 			std::map<sf::Int8,Client> clientMap;
 			int currentClientID;
+
+			sf::IpAddress myIP;
     };
 }
 

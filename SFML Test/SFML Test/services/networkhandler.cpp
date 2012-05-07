@@ -25,6 +25,8 @@ namespace mp
 		{
 			std::cout<<"Error binding to port "<<port<<std::endl;
 		}
+
+		myIP = "85.226.173.176";
     }
 
 	void NetworkHandler::exec() 
@@ -136,12 +138,21 @@ namespace mp
 	{
 		sf::Packet packet;
 
+		sf::Int8 type = 4;
+		packet << type << message;
+
+		sender.send(packet, myIP, 55001);
+	}
+
+	void NetworkHandler::sendMessageToEveryone(std::string message)
+	{
+		sf::Packet packet;
+
 		sf::Int8 type = 3;
 		packet << type << message;
 
-		sender.send(packet, "85.226.173.176", 55001);
+		sender.send(packet, myIP, 55001);
 	}
-
 	////////////////////////////////////////////////////////////
 	// Puts the character in a packet and sends it.
 	////////////////////////////////////////////////////////////
@@ -164,9 +175,25 @@ namespace mp
 		*/
 	}
 
+	void NetworkHandler::connectToServer(std::string name)
+	{
+		sf::Int8 type = 1;
+		sf::Packet packet;
+
+		packet << type << name;
+
+		sender.send(packet, myIP, 55001);
+
+	}
+
 	void NetworkHandler::notify(std::string e, void* object)
 	{
-			sendMessage(e);
+		if(e == "connectToServer")
+		{
+			connectToServer("testClient");
+		} else {
+			sendMessageToEveryone(e);
+		}
 	}
 }
 

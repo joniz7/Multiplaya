@@ -72,6 +72,11 @@ namespace mp {
 		{
 			released = true;
 		}
+
+		if ( pressingKeyForConnecting() )
+		{
+			character->connectToServer();
+		}
 				
 	}
 
@@ -105,6 +110,11 @@ namespace mp {
 	bool Player::pressingKeyForMovingRight()
 	{
 		return sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+	}
+
+	bool Player::pressingKeyForConnecting()
+	{
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::C);
 	}
 
 	void Player::moveLeft()

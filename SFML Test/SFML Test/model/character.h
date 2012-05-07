@@ -63,6 +63,8 @@ namespace mp
 			bool isFacingRight() { return facingRight; }
 
 			virtual void onCollision(GameObject* crashedWith);
+
+			void connectToServer();
         private:
 			b2Body* characterBody;
 			WorldData* worldData;
@@ -77,6 +79,8 @@ namespace mp
 			bool leftSideTouchWall;
 			bool rightSideTouchWall;
 			bool walking;
+
+			bool hasConnected;
 
 
 		class CharacterFootSensor : public GameObject
