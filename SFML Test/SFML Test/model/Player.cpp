@@ -59,7 +59,6 @@ namespace mp {
 			//same as above will be moved to character class
 			if(released)
 			{
-				std::cout << "Released!!" << std::endl;
 				character->jump();
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					character->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), character->getBody()->GetPosition() );

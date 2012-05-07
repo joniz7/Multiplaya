@@ -101,14 +101,12 @@ namespace mp
 
 	void Character::jump()
 	{
-		std::cout << "Trying to jump" << std::endl;
 		if ( grounded ) {
 			characterBody->ApplyLinearImpulse( b2Vec2(0, 200), characterBody->GetPosition());
 			setGrounded(false);
 		} 
 		else if ( leftSideTouchWall )
 		{
-			std::cout << "Jumping to tha side" << std::endl;
 			characterBody->ApplyLinearImpulse( b2Vec2( -250, 300), characterBody->GetPosition());
 			leftSideTouchWall = false;
 		}
@@ -211,7 +209,6 @@ namespace mp
 	{
 		if ( crashedWith->objectType == wall)
 		{
-			std::cout << "Left side touching wall!" << std::endl;
 			leftSideTouchWall = true;
 		}
 	}
@@ -227,7 +224,6 @@ namespace mp
 	{
 		if ( crashedWith->objectType == wall)
 		{
-			std::cout << "Right side touching wall!" << std::endl;
 			rightSideTouchWall = true;
 		}
 	}

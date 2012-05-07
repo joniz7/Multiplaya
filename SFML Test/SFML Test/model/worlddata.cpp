@@ -39,10 +39,10 @@ namespace mp
 		
 		switch(type)
 		{
-			case BulletType::GENERIC_BULLET:
+			case GENERIC_BULLET:
 				bullets.push_back(bullet);
 				notify("bulletAdded", bullet);
-				std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
+				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 				return true;
 
 				break;
@@ -65,12 +65,12 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
-		std::cout << "Added a bullet" << std::endl;
+		//std::cout << "Added a bullet" << std::endl;
 		
 		// Do different things depending on the type of bullet
 		switch(type)
 		{
-			case BulletType::GENERIC_BULLET:
+			case GENERIC_BULLET:
 				bullets.push_back( new Bullet(type, owner, world, position, force, this) );
 				return true;
 
