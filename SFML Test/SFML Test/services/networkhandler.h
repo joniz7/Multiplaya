@@ -33,7 +33,8 @@ namespace mp
 			NetworkHandler(WorldData* worldData);
 			void exec();
             ~NetworkHandler();
-			void sendMessage(std::string message);
+			void sendMessage(std::string messages, sf::IpAddress IP);
+			void sendMessageToServer(std::string message);
 			void sendMessageToEveryone(std::string message);
 			void sendCharacterPos(int index);
 
@@ -47,8 +48,8 @@ namespace mp
 			WorldData* worldData;
 			std::map<sf::Int8,Client> clientMap;
 			int currentClientID;
-
 			sf::IpAddress myIP;
+			unsigned short receivePort;
     };
 }
 

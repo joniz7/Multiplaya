@@ -8,7 +8,6 @@
 struct Client{
 	sf::IpAddress IP;
 	std::string name;
-	unsigned short port;
 };
 
 #endif
