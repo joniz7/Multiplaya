@@ -72,13 +72,12 @@ namespace mp
 						receivedData >> name;
 	
 						client.IP = senderIP;
-						client.port = senderPort;
 						client.name = name;
 
 						//adds that client to the clientmap
-						clientMap[1] = client;
-
-						std::cout<<name<<" has connected with IP: "<<senderIP<<std::endl;
+						clientMap[currentClientID] = client;
+						currentClientID++;
+						std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
 
 						break;
 					//Client trying to disconnect
@@ -102,13 +101,15 @@ namespace mp
 
 						if(!clientMap.empty())
 						{
-							for(sf::Int8 i = 1; i != clientMap.size(); i++)
+							for(sf::Int8 i = 1; i <= clientMap.size(); i++)
 							{
 								packet.clear();
 								client = clientMap[i];
 
 								packet<<type<<message;
-								sender.send(packet, client.IP, client.port);
+								sender.send(packet, client.IP, 55001);
+
+								std::cout<<"Message sent to "<<client.IP<<std::endl;
 							}
 						}
 
