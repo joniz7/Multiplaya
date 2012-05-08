@@ -51,35 +51,6 @@ namespace mp
     }
 
 	////////////////////////////////////////////////////////////
-	// Adds a bullet to the world
-	//
-	// type		- Type of bullet. Defined in defines.h
-	// owner	- Local server player id
-	// world	- Pointer to Box2D world
-	// position - Position to spawn bullet
-	// force	- Force to add to bullet force defined in BulletType,
-	//			  usually this is the force vector of the player
-	//			  who fired the bullet.
-	//
-	// returns true upon success
-	////////////////////////////////////////////////////////////
-    bool WorldData::addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force )
-    {
-		//std::cout << "Added a bullet" << std::endl;
-		
-		// Do different things depending on the type of bullet
-		switch(type)
-		{
-			case GENERIC_BULLET:
-				bullets.push_back( new Bullet(type, owner, world, position, force, this) );
-				return true;
-
-				break;
-		}
-		return false;
-    }
-
-	////////////////////////////////////////////////////////////
 	// Adds a character to the world
 	// returns true upon success
 	////////////////////////////////////////////////////////////

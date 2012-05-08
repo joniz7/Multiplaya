@@ -59,28 +59,28 @@ namespace mp
 			WorldData* worldData;
 			sf::View* worldView;
 			sf::RenderWindow* window;
-			sf::Vector2f* mousePos;
+			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
 			// Clock for frame time counting
 			sf::Clock clock;
 			sf::Font* fontGothic;
 
-
 			sf::Text* renderFpsTxt;
 			sf::Text* logicFpsTxt;
-
 
 			sf::RectangleShape* background;
 			sf::RectangleShape* ground;
 			sf::RectangleShape* ground2;
 			sf::RectangleShape* ground3;
 			sf::RectangleShape* ground4;
-			sf::RectangleShape* blueBox;
+
 			sf::Sprite* lightSpr;
 			sf::Sprite* dotSpr;
 			
+			sf::Vector2f* mousePos;
 			sf::Vector2i* mousePosWindow;
+			sf::Vector2f* mousePosOld;
 			sf::Vector2f* mouseSpeed;
 
 			void addBullet(Bullet* bullet);
@@ -92,12 +92,13 @@ namespace mp
 
 			void calculateCam();
 			
-			void updatePositions();
-			void updateBulletsPos();
-			void updateCharactersPos();
+			void updateObjects(int elapsed);
+			void updateBullets();
+			void updateCharacters(int elapsed);
 			//void updateVectorPosition();
 
 			void initialize();
+			void createCharacterViews();
 			void drawWorld();
 			void drawEnvironment();
 			void drawBullets();

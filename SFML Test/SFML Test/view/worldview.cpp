@@ -79,15 +79,12 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void WorldView::exec() {
 
-		// Initialize the window.
-		initialize();
-
-		//----Test stuff----
+		// ---- Test HUD ----
 		if(!hudTex.loadFromFile("resources/hud.png"))
 			std::cout << "Failed to load texture: hud.png" << std::endl;
 		hudSpr.setTexture(hudTex);
 		hudSpr.setScale(WIDTH / 1920, HEIGHT / 1080);
-
+		// ---- Cursor light ----
 		sf::Texture lightTex;
 		lightTex.loadFromFile("resources/light.png");
 		lightSpr = new sf::Sprite();
@@ -96,34 +93,7 @@ namespace mp
 		lightSpr->setScale(pixelScale * 0.1, pixelScale * 0.1);
 		lightSpr->setPosition(0,0);
 		lightSpr->setColor(sf::Color(255, 150, 125, 75));
-
-		sf::Texture frameTexture;
-		frameTexture.loadFromFile("resources/test/testsprite.png");
-
-		AnimatedSprite testSpr(&frameTexture,sf::Vector2i(8, 1));
-		std::vector<sf::Vector2i> sequence;
-
-		sequence.push_back(sf::Vector2i(2, 1));
-		sequence.push_back(sf::Vector2i(3, 1));
-		sequence.push_back(sf::Vector2i(4, 1));
-		sequence.push_back(sf::Vector2i(5, 1));
-		sequence.push_back(sf::Vector2i(6, 1));
-		sequence.push_back(sf::Vector2i(7, 1));
-
-		testSpr.addAnimation("walk", 9, true, sequence);
-
-		sequence.clear();
-		sequence.push_back(sf::Vector2i(1, 1));
-
-		bool facingRight = true;
-
-		testSpr.addAnimation("idle", 9, true, sequence);
-
-		testSpr.rotate(180);
-		testSpr.setPosition(0,0);
-		testSpr.scale(0.0016f, 0.0016f);
-		testSpr.playAnimation("idle");
-
+		// ---- Dot? ----
 		sf::Texture dotTex;
 		dotSpr = new sf::Sprite();
 		if(!dotTex.loadFromFile("resources/reddot.png"))
@@ -132,52 +102,30 @@ namespace mp
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5, 0.5);
 
+		// Initialize the window.
+		initialize();
 
 		//instantiate map graphics
 		constructMapGraphics();
 
-        //------------------
-
-		characters.push_back( new CharacterView(worldData->getPlayer()->getCharacter(), &testSpr));
-		//----SFML stuff----
-		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
-		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
-		// Rotate the view 180 degrees
-		worldView->setRotation(180);
-		// Zoom view
-		//worldView->zoom( 3.75 );
-		worldView->zoom( 1.5 );
-		// Set view
-		window->setView(*worldView);
-		//------------------
-
-		std::cout << "Render window initialized!" << std::endl;
-
-		mousePos = new sf::Vector2f(0,0);
-		mousePosWindow = new sf::Vector2i(0,0);
-		sf::Vector2f mousePosOld(0,0);
-		mouseSpeed = new sf::Vector2f(0,0);
-
-		bool fixedRotToggle = false;
-		bool released = true;
+		// Create a CharacterView for each character model present.
+		createCharacterViews();
 
 		bool running = true;
-		int counter = 0;
+		int counter = 0; // Counts frames.
         while (running)
         {
 			*mousePos = window->convertCoords( sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y, *worldView ) / pixelScale;
 			*mousePosWindow = sf::Mouse::getPosition(*window);
-			*mouseSpeed = (*mousePos - mousePosOld) / pixelScale;
+			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
+			// Every tenth frame:
+			if(counter == 10) {
 
-			// Only display fps every tenth frame (easier to read)
-			
-			if(counter == 10)
-			{
+				// --- Update the FPS counters. ---
 				int renderFps = (int)(1 / elapsed);
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
@@ -188,38 +136,34 @@ namespace mp
 				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
+				// And give the model access to the mouse position.
 				worldData->setMousePosition(mousePos);
 
 				worldDataMutex.unlock();
 				counter = 0;
 			}
-			else
-			{
+			else {
 				counter++;
 			}
 
-			
             // Handle events
 			handleEvents();
 
-			// Access world data
+			// We're accessing the world data
 			worldDataMutex.lock();
 
-			std::vector<Character*>* tv = worldData->getCharacters();
-					
-			if(tv->size() > 0)
-			{
-				calculateCam();
-
-				b2Vec2 position = worldData->getCharacter(0)->getBody()->GetPosition();
-				float32 angle = worldData->getCharacter(0)->getBody()->GetAngle();
-				blueBox->setPosition(position.x * pixelScale,position.y*pixelScale);
-				blueBox->setRotation( angle * 180 / pi );
+			// If the amount of character models has changed, re-create all our CharacterViews.
+			std::vector<Character*>* characterModels = worldData->getCharacters();
+			if (characterModels->size() != characters.size()) {
+				createCharacterViews();
 			}
+			
+			// Calculate the camera-thingys.
+			calculateCam();
 
-			testSpr.update(elapsed);
-
-			updatePositions();
+			// Update all characters' and bullets' views.
+			// (both the position and sprite animation)
+			updateObjects(elapsed);
 
 			// Unlock world data mutex
 			worldDataMutex.unlock();
@@ -230,14 +174,13 @@ namespace mp
             
             // Render World.
 			drawWorld();
-
 			// Render UI.
 			drawUI();
 
             // Update the window
             window->display();
 			// Save mouse position for next frame
-			mousePosOld = *mousePos;
+			*mousePosOld = *mousePos;
         }
 	}
 
@@ -263,11 +206,11 @@ namespace mp
 		background->setPosition(0, 0);
         background->setFillColor( sf::Color(30, 30, 30) );
 
+		// -- Setup fps labels. --
 		// Load font file.
 		fontGothic = new sf::Font();
 		fontGothic->loadFromFile("resources/gothic.ttf");
 		
-		// Setup fps labels.
 		renderFpsTxt = new sf::Text("Render fps: 00");
 		logicFpsTxt = new sf::Text("Logic fps: 00");
 
@@ -280,6 +223,49 @@ namespace mp
 		logicFpsTxt->setCharacterSize(25);
 		logicFpsTxt->setStyle(sf::Text::Regular);
 		logicFpsTxt->setPosition(8, 30);
+		// -----------------------
+		
+		//----SFML stuff----
+		sf::Vector2f center(0,0);
+		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
+		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
+		// Rotate the view 180 degrees
+		worldView->setRotation(180);
+		// Zoom view
+		worldView->zoom( 1.5 );
+		// Set view
+		window->setView(*worldView);
+		//------------------
+
+		// -- Initialise mouse variables. --
+		mousePos = new sf::Vector2f(0,0);
+		mousePosWindow = new sf::Vector2i(0,0);
+		mousePosOld = new sf::Vector2f(0,0);
+		mouseSpeed = new sf::Vector2f(0,0);
+		// ---------------------------------
+
+		std::cout << "Render window initialized!" << std::endl;
+	}
+
+	void WorldView::createCharacterViews() {
+		
+		std::cout << "createCharacterViews()" << std::endl;
+
+		// Remove all existing CharacterViews.
+		std::vector<GameObjectView*>::iterator it;
+		for ( it = characters.begin() ; it < characters.end(); it++ ) {
+			// TODO is this needed?
+			delete (*it);
+			characters.clear();
+		}
+
+		// Fetch all character models.
+		std::vector<Character*>* characterModels = worldData->getCharacters();
+		// Create a characterView for each of them.
+		for (int i=0; i<characterModels->size(); i++) {
+			characters.push_back( new CharacterView((*characterModels)[i]) );
+		}
+		
 	}
 
 	void WorldView::handleEvents()
@@ -337,36 +323,38 @@ namespace mp
 		ground4->setFillColor( c );
 		ground4->setOrigin(2.5f * pixelScale, 50 * pixelScale);
 		ground4->setPosition(-50.0f * pixelScale, 0);
-		
-		blueBox = new sf::RectangleShape( sf::Vector2f( 2 * pixelScale, 4 * pixelScale) );
-		blueBox->setOrigin(1 * pixelScale, 2 * pixelScale);
-		blueBox->setFillColor(sf::Color(128, 128, 255));
-		blueBox->setOutlineThickness(0.1f * pixelScale);
-		blueBox->setOutlineColor(sf::Color::Black);
+
 	}
 
-	void WorldView::updatePositions()
+	void WorldView::updateObjects(int elapsed)
 	{
 		// Set sight position
 		dotSpr->setPosition(mousePosWindow->x, mousePosWindow->y);
 		lightSpr->setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
 
-		updateBulletsPos();
-		updateCharactersPos();
+		updateBullets();
+		updateCharacters(elapsed);
 
 	}
 
-	void WorldView::updateBulletsPos()
+	void WorldView::updateBullets()
 	{
 		worldViewMutex.lock();
 		updateVectorPos(bullets);
 		worldViewMutex.unlock();
 	}
 
-	void WorldView::updateCharactersPos()
+	void WorldView::updateCharacters(int elapsed)
 	{
 		worldViewMutex.lock();
+		
+		// Update the sprite of all chars.
+		for (int i=0; i<characters.size(); i++) {
+			CharacterView* c = dynamic_cast<CharacterView*>(characters[i]);
+			c->updateSprite(elapsed);
+		}
 		updateVectorPos(characters);
+
 		worldViewMutex.unlock();
 	}
 
@@ -374,8 +362,9 @@ namespace mp
 	void WorldView::drawVector(std::vector<GameObjectView*>& vector)
 	{
 		std::vector<GameObjectView*>::iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ )
+		for ( it = vector.begin() ; it < vector.end(); it++ ) {
 			window->draw(**it);
+		}
 	}
 
 	void WorldView::drawWorld()
@@ -406,18 +395,18 @@ namespace mp
 	
 	void WorldView::drawCharacters()
 	{
-		window->draw(*blueBox);
-
+		worldViewMutex.lock();
 		drawVector(characters);
-
+		worldViewMutex.unlock();
 	}
 
-			// better name maybe
+	// better name maybe
 	void WorldView::updateVectorPos(std::vector<GameObjectView*>& vector)
 	{
 		std::vector<GameObjectView*>::iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ )
+		for ( it = vector.begin() ; it < vector.end(); it++ ) {
 			(*it)->updatePosition();
+		}
 	}
 
 	void WorldView::drawUI()
@@ -433,7 +422,6 @@ namespace mp
 		// Draw debug labels
 		if(ConfigHandler::instance().getBool("s_debugmode"))
 		{
-			// TODO Access violation. They're initialized in initialize(), what's the deal?
 			window->draw(*renderFpsTxt);
 			window->draw(*logicFpsTxt);
 		}
@@ -459,7 +447,32 @@ namespace mp
 	////////////////////////////////////////////////////////////
     WorldView::~WorldView()
     {
+		for (int i=0;characters.size();i++) {
+			delete characters[i];
+		}
+		for (int i=0;bullets.size();i++) {
+			delete bullets[i];
+		}
 
+		delete fontGothic;
+
+		delete renderFpsTxt;
+		delete logicFpsTxt;
+
+		// TODO: These should be destroyed (and created) dynamically.
+		delete background;
+		delete ground;
+		delete ground2;
+		delete ground3;
+		delete ground4;
+
+		delete lightSpr;
+		delete dotSpr;
+			
+		delete mousePos;
+		delete mousePosWindow;
+		delete mousePosOld;
+		delete mouseSpeed;
     }
 
 }
