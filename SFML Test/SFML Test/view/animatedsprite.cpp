@@ -14,11 +14,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-	AnimatedSprite::AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions) : sf::Sprite(*spriteSheet,sf::IntRect(0,0,spriteSheet->getWidth()/sheetDimensions.x,spriteSheet->getHeight() / sheetDimensions.y))
+	AnimatedSprite::AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions) : sf::Sprite(*spriteSheet,sf::IntRect(0,0,spriteSheet->getSize().x/sheetDimensions.x,spriteSheet->getSize().y / sheetDimensions.y))
     {
 		// Calculate sprite size
-		spriteSize.x = spriteSheet->getWidth() / sheetDimensions.x;
-		spriteSize.y = spriteSheet->getHeight() / sheetDimensions.y;
+		spriteSize.x = spriteSheet->getSize().x / sheetDimensions.x;
+		spriteSize.y = spriteSheet->getSize().y / sheetDimensions.y;
 		// Center origins
 		setOrigin(spriteSize.x/2,spriteSize.y/2);
 		// Save sheet dimensions

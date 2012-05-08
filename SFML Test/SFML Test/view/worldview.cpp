@@ -115,7 +115,7 @@ namespace mp
 		int counter = 0; // Counts frames.
         while (running)
         {
-			*mousePos = window->convertCoords( sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y, *worldView ) / pixelScale;
+			*mousePos = window->convertCoords( sf::Vector2i(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y), *worldView ) / pixelScale;
 			*mousePosWindow = sf::Mouse::getPosition(*window);
 			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
