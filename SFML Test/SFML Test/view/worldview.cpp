@@ -49,7 +49,7 @@ namespace mp
 		}
 		else if (e == "bulletDeleted")
 		{
-			int i = ( int )object;
+			int i = ( intptr_t )object;
 			deleteBullet(i);
 		}
 	}
@@ -263,7 +263,7 @@ namespace mp
 		std::vector<Character*>* characterModels = worldData->getCharacters();
 		// Create a characterView for each of them.
 		for (int i=0; i<characterModels->size(); i++) {
-			characters.push_back( new CharacterView((*characterModels)[i]) );
+			characters.push_back( new CharacterView(characterModels->at(i) ));
 		}
 		
 	}
