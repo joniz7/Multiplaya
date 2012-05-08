@@ -23,179 +23,179 @@ namespace mp
     {
 		// Letters
 		if(keyName=="kb_a")
-			return sf::Keyboard::Key::A;
+			return sf::Keyboard::A;
 		else if(keyName=="kb_b")
-			return sf::Keyboard::Key::B;
+			return sf::Keyboard::B;
 		else if(keyName=="kb_c")
-			return sf::Keyboard::Key::C;
+			return sf::Keyboard::C;
 		else if(keyName=="kb_d")
-			return sf::Keyboard::Key::D;
+			return sf::Keyboard::D;
 		else if(keyName=="kb_e")
-			return sf::Keyboard::Key::E;
+			return sf::Keyboard::E;
 		else if(keyName=="kb_f")
-			return sf::Keyboard::Key::F;
+			return sf::Keyboard::F;
 		else if(keyName=="kb_g")
-			return sf::Keyboard::Key::G;
+			return sf::Keyboard::G;
 		else if(keyName=="kb_h")
-			return sf::Keyboard::Key::H;
+			return sf::Keyboard::H;
 		else if(keyName=="kb_i")
-			return sf::Keyboard::Key::I;
+			return sf::Keyboard::I;
 		else if(keyName=="kb_j")
-			return sf::Keyboard::Key::J;
+			return sf::Keyboard::J;
 		else if(keyName=="kb_k")
-			return sf::Keyboard::Key::K;
+			return sf::Keyboard::K;
 		else if(keyName=="kb_l")
-			return sf::Keyboard::Key::L;
+			return sf::Keyboard::L;
 		else if(keyName=="kb_m")
-			return sf::Keyboard::Key::M;
+			return sf::Keyboard::M;
 		else if(keyName=="kb_n")
-			return sf::Keyboard::Key::N;
+			return sf::Keyboard::N;
 		else if(keyName=="kb_o")
-			return sf::Keyboard::Key::O;
+			return sf::Keyboard::O;
 		else if(keyName=="kb_p")
-			return sf::Keyboard::Key::P;
+			return sf::Keyboard::P;
 		else if(keyName=="kb_q")
-			return sf::Keyboard::Key::Q;
+			return sf::Keyboard::Q;
 		else if(keyName=="kb_r")
-			return sf::Keyboard::Key::R;
+			return sf::Keyboard::R;
 		else if(keyName=="kb_s")
-			return sf::Keyboard::Key::S;
+			return sf::Keyboard::S;
 		else if(keyName=="kb_t")
-			return sf::Keyboard::Key::T;
+			return sf::Keyboard::T;
 		else if(keyName=="kb_u")
-			return sf::Keyboard::Key::U;
+			return sf::Keyboard::U;
 		else if(keyName=="kb_v")
-			return sf::Keyboard::Key::V;
+			return sf::Keyboard::V;
 		else if(keyName=="kb_x")
-			return sf::Keyboard::Key::X;
+			return sf::Keyboard::X;
 		else if(keyName=="kb_y")
-			return sf::Keyboard::Key::Y;
+			return sf::Keyboard::Y;
 		else if(keyName=="kb_z")
-			return sf::Keyboard::Key::Z;
+			return sf::Keyboard::Z;
 
 		// Numbers
 		else if(keyName=="kb_0")
-			return sf::Keyboard::Key::Num0;
+			return sf::Keyboard::Num0;
 		else if(keyName=="kb_1")
-			return sf::Keyboard::Key::Num1;
+			return sf::Keyboard::Num1;
 		else if(keyName=="kb_2")
-			return sf::Keyboard::Key::Num2;
+			return sf::Keyboard::Num2;
 		else if(keyName=="kb_3")
-			return sf::Keyboard::Key::Num3;
+			return sf::Keyboard::Num3;
 		else if(keyName=="kb_4")
-			return sf::Keyboard::Key::Num4;
+			return sf::Keyboard::Num4;
 		else if(keyName=="kb_5")
-			return sf::Keyboard::Key::Num5;
+			return sf::Keyboard::Num5;
 		else if(keyName=="kb_6")
-			return sf::Keyboard::Key::Num6;
+			return sf::Keyboard::Num6;
 		else if(keyName=="kb_7")
-			return sf::Keyboard::Key::Num7;
+			return sf::Keyboard::Num7;
 		else if(keyName=="kb_8")
-			return sf::Keyboard::Key::Num8;
+			return sf::Keyboard::Num8;
 		else if(keyName=="kb_9")
-			return sf::Keyboard::Key::Num9;
+			return sf::Keyboard::Num9;
 
 		// Numpad
 		else if(keyName=="kb_kp0")
-			return sf::Keyboard::Key::Numpad0;
+			return sf::Keyboard::Numpad0;
 		else if(keyName=="kb_kp1")
-			return sf::Keyboard::Key::Numpad1;
+			return sf::Keyboard::Numpad1;
 		else if(keyName=="kb_kp2")
-			return sf::Keyboard::Key::Numpad2;
+			return sf::Keyboard::Numpad2;
 		else if(keyName=="kb_kp3")
-			return sf::Keyboard::Key::Numpad3;
+			return sf::Keyboard::Numpad3;
 		else if(keyName=="kb_kp4")
-			return sf::Keyboard::Key::Numpad4;
+			return sf::Keyboard::Numpad4;
 		else if(keyName=="kb_kp5")
-			return sf::Keyboard::Key::Numpad5;
+			return sf::Keyboard::Numpad5;
 		else if(keyName=="kb_kp6")
-			return sf::Keyboard::Key::Numpad6;
+			return sf::Keyboard::Numpad6;
 		else if(keyName=="kb_kp7")
-			return sf::Keyboard::Key::Numpad7;
+			return sf::Keyboard::Numpad7;
 		else if(keyName=="kb_kp8")
-			return sf::Keyboard::Key::Numpad8;
+			return sf::Keyboard::Numpad8;
 		else if(keyName=="kb_kp9")
-			return sf::Keyboard::Key::Numpad9;
+			return sf::Keyboard::Numpad9;
 
 		// Arrows
 		else if(keyName=="kb_left")
-			return sf::Keyboard::Key::Left;
+			return sf::Keyboard::Left;
 		else if(keyName=="kb_right")
-			return sf::Keyboard::Key::Right;
+			return sf::Keyboard::Right;
 		else if(keyName=="kb_up")
-			return sf::Keyboard::Key::Up;
+			return sf::Keyboard::Up;
 		else if(keyName=="kb_down")
-			return sf::Keyboard::Key::Down;
+			return sf::Keyboard::Down;
 
 		// Function keys
 		else if(keyName=="kb_f1")
-			return sf::Keyboard::Key::F1;
+			return sf::Keyboard::F1;
 		else if(keyName=="kb_f2")
-			return sf::Keyboard::Key::F2;
+			return sf::Keyboard::F2;
 		else if(keyName=="kb_f3")
-			return sf::Keyboard::Key::F3;
+			return sf::Keyboard::F3;
 		else if(keyName=="kb_f4")
-			return sf::Keyboard::Key::F4;
+			return sf::Keyboard::F4;
 		else if(keyName=="kb_f5")
-			return sf::Keyboard::Key::F5;
+			return sf::Keyboard::F5;
 		else if(keyName=="kb_f6")
-			return sf::Keyboard::Key::F6;
+			return sf::Keyboard::F6;
 		else if(keyName=="kb_f7")
-			return sf::Keyboard::Key::F7;
+			return sf::Keyboard::F7;
 		else if(keyName=="kb_f8")
-			return sf::Keyboard::Key::F8;
+			return sf::Keyboard::F8;
 		else if(keyName=="kb_f9")
-			return sf::Keyboard::Key::F9;
+			return sf::Keyboard::F9;
 		else if(keyName=="kb_f10")
-			return sf::Keyboard::Key::F10;
+			return sf::Keyboard::F10;
 		else if(keyName=="kb_f11")
-			return sf::Keyboard::Key::F11;
+			return sf::Keyboard::F11;
 		else if(keyName=="kb_f12")
-			return sf::Keyboard::Key::F12;
+			return sf::Keyboard::F12;
 		else if(keyName=="kb_f13")
-			return sf::Keyboard::Key::F13;
+			return sf::Keyboard::F13;
 		else if(keyName=="kb_f14")
-			return sf::Keyboard::Key::F14;
+			return sf::Keyboard::F14;
 		else if(keyName=="kb_f15")
-			return sf::Keyboard::Key::F15;
+			return sf::Keyboard::F15;
 		
 		// Other
 		else if(keyName=="kb_esc")
-			return sf::Keyboard::Key::Escape;
+			return sf::Keyboard::Escape;
 		else if(keyName=="kb_lctrl")
-			return sf::Keyboard::Key::LControl;
+			return sf::Keyboard::LControl;
 		else if(keyName=="kb_lshift")
-			return sf::Keyboard::Key::LShift;
+			return sf::Keyboard::LShift;
 		else if(keyName=="kb_lalt")
-			return sf::Keyboard::Key::LAlt;
+			return sf::Keyboard::LAlt;
 		else if(keyName=="kb_rctrl")
-			return sf::Keyboard::Key::RControl;
+			return sf::Keyboard::RControl;
 		else if(keyName=="kb_rshift")
-			return sf::Keyboard::Key::RShift;
+			return sf::Keyboard::RShift;
 		else if(keyName=="kb_ralt")
-			return sf::Keyboard::Key::RAlt;
+			return sf::Keyboard::RAlt;
 		else if(keyName=="kb_space")
-			return sf::Keyboard::Key::Space;
+			return sf::Keyboard::Space;
 		else if(keyName=="kb_return")
-			return sf::Keyboard::Key::Return;
+			return sf::Keyboard::Return;
 		else if(keyName=="kb_back")
-			return sf::Keyboard::Key::Back;
+			return sf::Keyboard::Back;
 		else if(keyName=="kb_tab")
-			return sf::Keyboard::Key::Tab;
+			return sf::Keyboard::Tab;
 		else if(keyName=="kb_pgup")
-			return sf::Keyboard::Key::PageUp;
+			return sf::Keyboard::PageUp;
 		else if(keyName=="kb_pgdn")
-			return sf::Keyboard::Key::PageDown;
+			return sf::Keyboard::PageDown;
 		else if(keyName=="kb_end")
-			return sf::Keyboard::Key::End;
+			return sf::Keyboard::End;
 		else if(keyName=="kb_home")
-			return sf::Keyboard::Key::Home;
+			return sf::Keyboard::Home;
 		else if(keyName=="kb_insert")
-			return sf::Keyboard::Key::Insert;
+			return sf::Keyboard::Insert;
 		else if(keyName=="kb_delete")
-			return sf::Keyboard::Key::Delete;
+			return sf::Keyboard::Delete;
 		else if(keyName=="kb_pause")
-			return sf::Keyboard::Key::Pause;
+			return sf::Keyboard::Pause;
     }
 
 	////////////////////////////////////////////////////////////
