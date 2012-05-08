@@ -14,7 +14,7 @@
 /// mouse buttons.
 ////////////////////////////////////////////////////////////
 
-namespace mp	
+namespace mp
 {
 	////////////////////////////////////////////////////////////
 	// Returns an SFML key.
@@ -158,7 +158,7 @@ namespace mp
 			return sf::Keyboard::F14;
 		else if(keyName=="kb_f15")
 			return sf::Keyboard::F15;
-		
+
 		// Other
 		else if(keyName=="kb_esc")
 			return sf::Keyboard::Escape;
@@ -204,14 +204,14 @@ namespace mp
     sf::Mouse::Button KeyLookup::getMouseButton(std::string keyName)
     {
 		if(keyName=="mouse1")
-			return sf::Mouse::Button::Left;
+			return sf::Mouse::Left;
 		else if(keyName=="mouse2")
-			return sf::Mouse::Button::Right;
+			return sf::Mouse::Right;
 		else if(keyName=="mouse3")
-			return sf::Mouse::Button::Middle;
+			return sf::Mouse::Middle;
 		else if(keyName=="mouse4")
-			return sf::Mouse::Button::XButton1;
+			return sf::Mouse::XButton1;
 		else if(keyName=="mouse5")
-			return sf::Mouse::Button::XButton2;
+			return sf::Mouse::XButton2;
 	}
 }

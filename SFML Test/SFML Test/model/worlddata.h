@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-/// World data class. Holds all data used by world class for 
+/// World data class. Holds all data used by world class for
 /// easy access from view and network handler.
 ////////////////////////////////////////////////////////////
 #ifndef WORLDDATA_H_INCLUDED
@@ -13,7 +13,7 @@
 #include <cmath>
 #include <algorithm>
 // SFML specific headers
-#include <sfml.h>
+#include "../sfml.h"
 
 // Box2D specific headers
 #include <Box2D.h>
@@ -80,7 +80,7 @@ namespace mp
 			// Set logic fps
 			void setLogicFps(int fps){logicFps = fps;};
 
-			void setMousePosition(sf::Vector2f* pos);	
+			void setMousePosition(sf::Vector2f* pos);
 
 		private:
 			// Pointer to corresponding world object

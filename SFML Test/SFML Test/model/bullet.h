@@ -18,7 +18,7 @@
 #include <Box2D.h>
 
 //Defines
-#include "defines.h"
+#include "../defines.h"
 #include "GameObject.h"
 #include "worlddata.h"
 
@@ -46,7 +46,7 @@ namespace mp
 			int owner;
 			b2BodyDef bodyDef;
 			b2Body* body;
-			
+
 			WorldData* worldData;
 			b2World* world;
     };

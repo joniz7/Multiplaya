@@ -39,10 +39,10 @@ namespace mp
 	   ss << number;//add number to the stream
 	   return ss.str();//return a string with the contents of the stream
 	}
-	
+
 	void WorldView::notify(std::string e, void* object)
 	{
-		if (e == "bulletAdded") 
+		if (e == "bulletAdded")
 		{
 			Bullet* bullet = ( Bullet* )object;
 			addBullet(bullet);
@@ -60,8 +60,8 @@ namespace mp
 		bullets.push_back(  new BulletView( bullet ) );
 		worldViewMutex.unlock();
 	}
-	
-	// delete bullet at index i 
+
+	// delete bullet at index i
 	void WorldView::deleteBullet(int i)
 	{
 		worldViewMutex.lock();
@@ -72,7 +72,7 @@ namespace mp
 
 		worldViewMutex.unlock();
 	}
-	
+
 	////////////////////////////////////////////////////////////
 	// The graphics loop.
 	// Fetches info, prints to screen, repeat.
@@ -129,10 +129,10 @@ namespace mp
 				int renderFps = (int)(1 / elapsed);
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
-				
+
 				std::string renderFpsString = convertInt(renderFps);
 				renderFpsTxt->setString("Render fps: " + renderFpsString);
-				
+
 				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
@@ -157,7 +157,7 @@ namespace mp
 			if (characterModels->size() != characters.size()) {
 				createCharacterViews();
 			}
-			
+
 			// Calculate the camera-thingys.
 			calculateCam();
 
@@ -171,7 +171,7 @@ namespace mp
 			window->setView(*worldView);
             // Clear screen
             window->clear();
-            
+
             // Render World.
 			drawWorld();
 			// Render UI.
@@ -192,14 +192,14 @@ namespace mp
 		// Set up and initialize render window
 		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
 		window = new sf::RenderWindow(videoMode, "SFML Test Window");
-		
+
 		// Don't display mouse cursor
 		window->setMouseCursorVisible(false);
-		
+
 		// Set window data
         window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
         window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
-		
+
 		// Background stuff
 		background = new sf::RectangleShape( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
 		background->setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
@@ -210,7 +210,7 @@ namespace mp
 		// Load font file.
 		fontGothic = new sf::Font();
 		fontGothic->loadFromFile("resources/gothic.ttf");
-		
+
 		renderFpsTxt = new sf::Text("Render fps: 00");
 		logicFpsTxt = new sf::Text("Logic fps: 00");
 
@@ -224,7 +224,7 @@ namespace mp
 		logicFpsTxt->setStyle(sf::Text::Regular);
 		logicFpsTxt->setPosition(8, 30);
 		// -----------------------
-		
+
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
@@ -248,7 +248,7 @@ namespace mp
 	}
 
 	void WorldView::createCharacterViews() {
-		
+
 		std::cout << "createCharacterViews()" << std::endl;
 
 		// Remove all existing CharacterViews.
@@ -265,7 +265,7 @@ namespace mp
 		for (int i=0; i<characterModels->size(); i++) {
 			characters.push_back( new CharacterView(characterModels->at(i) ));
 		}
-		
+
 	}
 
 	void WorldView::handleEvents()
@@ -287,7 +287,7 @@ namespace mp
 				window->setView(*worldView);
 			}
         }
-			
+
 		// Left mouse button is down
 		if( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
 		{
@@ -313,7 +313,7 @@ namespace mp
 		ground2->setFillColor( c );
 		ground2->setOrigin(50 * pixelScale, 2.5f * pixelScale);
 		ground2->setPosition(0, 50.0f * pixelScale);
-		
+
 		ground3 = new sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
 		ground3->setFillColor( c );
 		ground3->setOrigin(2.5f * pixelScale, 50 * pixelScale);
@@ -347,7 +347,7 @@ namespace mp
 	void WorldView::updateCharacters(int elapsed)
 	{
 		worldViewMutex.lock();
-		
+
 		// Update the sprite of all chars.
 		for (int i=0; i<characters.size(); i++) {
 			CharacterView* c = dynamic_cast<CharacterView*>(characters[i]);
@@ -388,11 +388,11 @@ namespace mp
 
 	void WorldView::drawBullets()
 	{
-		worldViewMutex.lock();		
+		worldViewMutex.lock();
 		drawVector(bullets);
 		worldViewMutex.unlock();
 	}
-	
+
 	void WorldView::drawCharacters()
 	{
 		worldViewMutex.lock();
@@ -427,13 +427,13 @@ namespace mp
 		}
 	}
 
-	void WorldView::calculateCam() 
+	void WorldView::calculateCam()
 	{
 		// Calculate camera position (somehwere between character and mouse)
 		b2Vec2 position = worldData->getPlayer()->getCharacter()->getBody()->GetPosition();
 		float32 angle = worldData->getPlayer()->getCharacter()->getBody()->GetAngle();
 		//testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
-		
+
 		//redBox.setRotation( angle*180/pi );
 		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
 		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
@@ -468,7 +468,7 @@ namespace mp
 
 		delete lightSpr;
 		delete dotSpr;
-			
+
 		delete mousePos;
 		delete mousePosWindow;
 		delete mousePosOld;

@@ -8,13 +8,13 @@
 #include <Box2D.h>
 
 //Defines
-#include "defines.h"
+#include "../defines.h"
 
 #include "../game.h"
 
 #include "worlddata.h"
 
-namespace mp 
+namespace mp
 {
 	class Character;
 	class WorldData;

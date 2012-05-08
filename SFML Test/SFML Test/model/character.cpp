@@ -11,7 +11,7 @@
 /// that kind of stuff
 ////////////////////////////////////////////////////////////
 
-namespace mp	
+namespace mp
 {
 	////////////////////////////////////////////////////////////
 	// Constructor
@@ -39,7 +39,7 @@ namespace mp
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
 		dynamicBox.SetAsBox(size.x, size.y);
-		
+
 		// Define the dynamic body fixture.
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &dynamicBox;
@@ -49,7 +49,7 @@ namespace mp
 		fixtureDef.friction = 2.0f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
-		
+
 		// Add the shape to the body.
 		characterBody->CreateFixture(&fixtureDef);
 		characterBody->SetFixedRotation(true);
@@ -97,7 +97,7 @@ namespace mp
 			Bullet* b = static_cast<Bullet*>( crashedWith );
 			inflictDamage(b);
 		}
-		// No other checks neccessary?	
+		// No other checks neccessary?
 	}
 
 	void Character::jump()
@@ -105,12 +105,12 @@ namespace mp
 		if ( grounded ) {
 			characterBody->ApplyLinearImpulse( b2Vec2(0, 200), characterBody->GetPosition());
 			setGrounded(false);
-		} 
+		}
 		else if ( leftSideTouchWall )
 		{
 			characterBody->ApplyLinearImpulse( b2Vec2( -250, 300), characterBody->GetPosition());
 			leftSideTouchWall = false;
-		} 
+		}
 		else if ( rightSideTouchWall )
 		{
 			characterBody->ApplyLinearImpulse( b2Vec2( 250, 300), characterBody->GetPosition());
@@ -130,29 +130,29 @@ namespace mp
 		if (isShooting()) { return; }
 		else { setShooting(); }
 
-		
+
 		int speed = 800;
 		b2Vec2 charPos = characterBody->GetPosition();
 		b2Vec2 charSpeed = characterBody->GetLinearVelocity();
 		b2Vec2 mousePos = worldData->getMousePosition();
-		
+
 		// We're just about to calculate these two vectors.
 		b2Vec2 gunPosition; // Where the bullet should be placed.
 		b2Vec2 force;		// The initial force of the bullet.
-		
+
 		// Direction the bullet should fly in.
 		force = charPos - mousePos;
 		force.Normalize();
 		gunPosition = force;
 		// Apply speed factor and characer's speed to our force vector.
-		force.Set((force.x * speed)+charSpeed.x, -((force.y * speed)+charSpeed.y)); 
+		force.Set((force.x * speed)+charSpeed.x, -((force.y * speed)+charSpeed.y));
 		// Bullet spawning point should be relative to char.
 		gunPosition.Set(charPos.x-gunPosition.x, gunPosition.y + charPos.y);
-		
+
 		// TODO: bullet spawning point is not perfect.
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet(BulletType::GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);
+		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);
 		worldData->addBullet(bullet);
 	}
 
@@ -183,7 +183,7 @@ namespace mp
 		}
 		std::cout << "health: " << this->health << std::endl;
 	}
-	
+
 	void Character::kill()
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
@@ -205,7 +205,7 @@ namespace mp
 	}
 
 
-	// Leftside 
+	// Leftside
 	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)
 	{
 		this->objectType = characterLeftSensor;

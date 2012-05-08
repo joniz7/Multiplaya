@@ -22,8 +22,8 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "game.h"
-#include "client.h"
+#include "../game.h"
+#include "../client.h"
 
 namespace mp
 {

@@ -1,6 +1,6 @@
 #include "Wall.h"
 
-namespace mp 
+namespace mp
 {
 	Wall::Wall(b2World* world, float xPos, float yPos, float width, float height)
 	{
@@ -11,10 +11,10 @@ namespace mp
 
 		b2PolygonShape groundBox;
 		groundBox.SetAsBox(width, height);
-		
+
 		b2Fixture* testFixture = groundBody->CreateFixture(&groundBox, 0.0f);
 		testFixture->SetUserData(this);
-		
+
 		this->wallBody = wallBody;
 		this->objectType = wall;
 	}

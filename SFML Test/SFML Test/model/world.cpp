@@ -6,7 +6,6 @@
 #include "worlddata.h"
 
 #include <iostream>
-#include <dos.h>
 
 #include "ContactListener.h"
 #include "../global.h"
@@ -39,7 +38,7 @@ namespace mp
 		const float32 timeStep = 1.0f / 60.0f;
 		const int32 velocityIterations = 6;
 		const int32 positionIterations = 2;
-		
+
 		// if inside lock, bullets doesn't show. whyy??
 		worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
 		worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
@@ -48,18 +47,18 @@ namespace mp
 
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-	
+
 		// Call the body factory which allocates memory for the ground body
 		// from a pool and creates the ground redBox shape (also from a pool).
 		// The body is also added to the world.
 		// Define the ground box shape, extents are the half-widths of the box.
-		
+
 		// Add two test characters to the world.
 		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f)) );
 		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f)) );
 		// Create player (which controls char 1).
 		worldData->createPlayer(1);
-	
+
 		// Unlock world data
 		worldDataMutex.unlock();
 
@@ -84,14 +83,14 @@ namespace mp
 			worldData->setLogicFps((int)(1 / elapsed));
 			// Get player input.
 			worldData->getPlayer()->update();
-			
+
 			// Unlock world data
 			worldDataMutex.unlock();
 
 			// Have we finished faster than expected?
 			if(elapsed<(1 / 60.0f))
 			{	// Leave the arena now and rest - you've earned it.
-				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );	
+				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
 			}
 		}
     }

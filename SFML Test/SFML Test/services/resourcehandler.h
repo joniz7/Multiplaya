@@ -13,16 +13,16 @@
 #include <map>
 
 // SFML specific headers
-#include "sfml.h"
+#include "../sfml.h"
 
 // Box2D specific headers
 #include <Box2D.h>
 
 // Game specific headers
-#include "game.h"
+#include "../game.h"
 
 //Defines
-#include "defines.h"
+#include "../defines.h"
 
 namespace mp
 {

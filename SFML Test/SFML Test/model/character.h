@@ -16,11 +16,11 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-#include "model/bullet.h"
+#include "bullet.h"
 #include "worlddata.h"
 
 //Defines
-#include "defines.h"
+#include "../defines.h"
 
 #include "../util/Observable.h"
 
@@ -45,13 +45,13 @@ namespace mp
 			void kill();
 			void setInvincible(float duration);
 			void setMovement(int direction);
-			
+
 			short getHealth() { return health; };
 			void setHealth(short health);
 
 			b2Body* getBody() { return characterBody; }
-			void setGrounded(bool choice) { grounded = choice; } 
-			bool isGrounded() { return grounded; } 
+			void setGrounded(bool choice) { grounded = choice; }
+			bool isGrounded() { return grounded; }
 
 			bool isShooting();
 			void setShooting();
@@ -90,9 +90,9 @@ namespace mp
 				CharacterFootSensor(bool& grounded);
 				virtual ~CharacterFootSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
-			
+
 			private:
-				//Character* characterObject;	
+				//Character* characterObject;
 				bool& grounded;
 		};
 
@@ -103,9 +103,9 @@ namespace mp
 				CharacterLeftSensor(bool& leftSideTouchWall);
 				virtual ~CharacterLeftSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
-			
+
 			private:
-				//Character* characterObject;	
+				//Character* characterObject;
 				bool& leftSideTouchWall;
 		};
 
@@ -116,14 +116,14 @@ namespace mp
 				CharacterRightSensor(bool& rightSideTouchWall);
 				virtual ~CharacterRightSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
-			
+
 			private:
-				//Character* characterObject;	
+				//Character* characterObject;
 				bool& rightSideTouchWall;
 		};
 
 
-			
+
     };
 }
 
