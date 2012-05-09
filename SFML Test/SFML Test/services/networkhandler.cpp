@@ -209,13 +209,13 @@ namespace mp
 	// be sent to the the server as a text message and from the server
 	// sent to every client.
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::notify(std::string e, void* object)
+	void NetworkHandler::notify(Event e, void* object)
 	{
-		if(e == "connectToServer")
+		if(e == CONNECT_SERVER)
 		{
 			connectToServer("testClient");
 		} else {
-			sendMessageToEveryone(e);
+			sendMessageToEveryone("ConnectToServer");
 		}
 	}
 }

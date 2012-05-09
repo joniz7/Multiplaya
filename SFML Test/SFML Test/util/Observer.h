@@ -6,13 +6,14 @@
 #define OBSERVER_H
 
 #include <string>
+#include "../defines.h"
 
 namespace mp
 {
 	class Observer
 	{
 		public:
-			virtual void notify(std::string e, void* object) = 0;
+			virtual void notify(Event e, void* object) = 0;
 	};
 }
 #endif // OBSERVER_H

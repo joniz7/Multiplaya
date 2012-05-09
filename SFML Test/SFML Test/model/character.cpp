@@ -239,7 +239,7 @@ namespace mp
 		if(!hasConnected)
 		{
 			hasConnected = true;
-			worldData->notify("connectToServer", 0);
+			worldData->notify(CONNECT_SERVER , 0);
 		}
 	}
 }

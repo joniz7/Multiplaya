@@ -19,7 +19,7 @@ namespace mp
 		public:
 			void addObserver(Observer* observer);
 			void removeObserver(Observer* observer);
-			void notify(std::string e, void* object);
+			void notify(Event e, void* object);
 		protected:
 			Observable() {};
 			virtual ~Observable() {};

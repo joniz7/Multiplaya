@@ -41,7 +41,7 @@ namespace mp
 		{
 			case GENERIC_BULLET:
 				bullets.push_back(bullet);
-				notify("bulletAdded", bullet);
+				notify(BULLET_ADDED, bullet);
 				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 				return true;
 
@@ -131,7 +131,7 @@ namespace mp
 			if ( it != bullets.end())
 			{
 				int i = (it - bullets.begin());
-				notify("bulletDeleted", (void*) i);
+				notify(BULLET_DELETED, (void*) i);
 				bullets.erase(bullets.begin() + i);
 			}
 		}

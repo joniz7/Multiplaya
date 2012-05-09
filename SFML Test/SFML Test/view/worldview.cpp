@@ -40,14 +40,15 @@ namespace mp
 	   return ss.str();//return a string with the contents of the stream
 	}
 
-	void WorldView::notify(std::string e, void* object)
+	void WorldView::notify(Event e, void* object)
 	{
-		if (e == "bulletAdded")
+		// could change to switch case
+		if (e == BULLET_ADDED)
 		{
 			Bullet* bullet = ( Bullet* )object;
 			addBullet(bullet);
 		}
-		else if (e == "bulletDeleted")
+		else if (e == BULLET_DELETED)
 		{
 			int i = ( intptr_t )object;
 			deleteBullet(i);
