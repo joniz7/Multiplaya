@@ -152,7 +152,6 @@ namespace mp
 				counter++;
 			}
 
-			
             // Handle events
 			handleEvents();
 
