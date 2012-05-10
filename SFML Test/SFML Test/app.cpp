@@ -17,8 +17,9 @@
 #include "game.h"
 // Defines
 #include "defines.h"
-
 #include "global.h"
+
+#include "controller/Controller.h"
 
 ////////////////////////////////////////////////////////////
 /// Application class. Manages the program. The controller,
@@ -31,7 +32,7 @@ namespace mp
 	// Initializes the model thread which runs the game logic.
 	// Must have a pointer to WorldData instance as argument
 	////////////////////////////////////////////////////////////
-	void createModelThread(void* UserData)
+	void createControllerThread(void* UserData)
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
@@ -41,11 +42,11 @@ namespace mp
 		std::cout<<".";
 		// Initialize the model and pass the world data pointer as argument
 		World* model = new World(worldData);
-		std::cout<<".";
-		std::cout<<std::endl<<"Logic thread up and running!"<<std::endl;
-		// Unlock world data
+		Controller* controller = new Controller(model);
+		
 		worldDataMutex.unlock();
-		model->exec();
+		controller->exec();
+		
 	}
 
 	////////////////////////////////////////////////////////////
@@ -83,11 +84,9 @@ namespace mp
 		worldDataMutex.lock();
 		std::cout<<"Starting network thread.";
 		
-		
 		// Cast to world data pointer
 		WorldData* worldData = static_cast<WorldData*>(UserData);
 		std::cout<<".";
-		
 		
 		// Initialize the network hanlder and pass the world data pointer as argument
 		NetworkHandler* network = new NetworkHandler(worldData);
@@ -123,7 +122,7 @@ namespace mp
 		// Initialize world data instance
 		worldData = new WorldData();
 		// Create and launch the logic thread
-		sf::Thread logicThread(&createModelThread, worldData);
+		sf::Thread logicThread(&createControllerThread, worldData);
 		logicThread.launch();
 		// Create and launch the view thread
 		sf::Thread viewThread(&createViewThread, worldData);
@@ -132,14 +131,6 @@ namespace mp
 		sf::Thread networkThread(&createNetworkThread, worldData);
 		networkThread.launch();
 
-        // Main loop. Do other things here I guess
-        bool running = true;
-        /*
-		while (running)
-        {
-			// I'm lonely :(
-        }
-		*/
         return EXIT_SUCCESS;
     }
 }

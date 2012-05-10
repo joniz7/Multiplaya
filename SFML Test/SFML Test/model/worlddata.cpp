@@ -21,6 +21,8 @@ namespace mp
 	{
 		logicFps = 0;
 		mousePosition = new b2Vec2();
+		// TODO hardcoded. not good !1!
+		currentCharacterId = 0;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -106,18 +108,6 @@ namespace mp
 		bodies.push_back( body );
 		return true;
     }
-
-	///////////////////////////////////
-	// Create the local Player.
-	//
-	// characterId - the character which
-	//				 belongs to the local player.
-	///////////////////////////////////
-	void WorldData::createPlayer(int characterId) 
-	{
-		player = new Player();
-		player->setCharacter(getCharacter(characterId));
-	}
 
 	//Schedule bullet object for deletion our next logic iteration.
 	void WorldData::scheduleBulletForDeletion(Bullet* bullet) {

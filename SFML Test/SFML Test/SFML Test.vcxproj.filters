@@ -27,6 +27,9 @@
     <Filter Include="src\util">
       <UniqueIdentifier>{b593ab11-e4b5-4f62-853e-111571edbd0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\controller">
+      <UniqueIdentifier>{f3a75e3f-769f-4f7b-aa63-0170847a4b36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="model\bullet.cpp">
@@ -83,9 +86,6 @@
     <ClCompile Include="model\ContactListener.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
-    <ClCompile Include="model\Player.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
     <ClCompile Include="util\Observable.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
@@ -94,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="model\Wall.cpp">
       <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\Controller.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\Player.cpp">
+      <Filter>src\controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,9 +163,6 @@
     <ClInclude Include="model\ContactListener.h">
       <Filter>src\model</Filter>
     </ClInclude>
-    <ClInclude Include="model\Player.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
     <ClInclude Include="util\Observable.h">
       <Filter>src\util</Filter>
     </ClInclude>
@@ -180,6 +183,12 @@
     </ClInclude>
     <ClInclude Include="client.h">
       <Filter>src\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\Controller.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\Player.h">
+      <Filter>src\controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

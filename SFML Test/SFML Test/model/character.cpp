@@ -129,7 +129,6 @@ namespace mp
 		if (isShooting()) { return; }
 		else { setShooting(); }
 
-
 		int speed = 800;
 		b2Vec2 charPos = characterBody->GetPosition();
 		b2Vec2 charSpeed = characterBody->GetLinearVelocity();

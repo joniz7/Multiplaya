@@ -17,6 +17,7 @@
 #include "game.h"
 #include "model/world.h"
 #include "model/worlddata.h"
+#include "controller/Controller.h"
 
 typedef std::list<sf::Drawable*> RenderList;
 
@@ -34,6 +35,7 @@ namespace mp
 			WorldData* worldData;
 			WorldView * view;
 			World * model;
+			Controller* controller;
     };
 }
 

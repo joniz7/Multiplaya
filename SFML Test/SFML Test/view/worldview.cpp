@@ -431,8 +431,8 @@ namespace mp
 	void WorldView::calculateCam()
 	{
 		// Calculate camera position (somehwere between character and mouse)
-		b2Vec2 position = worldData->getPlayer()->getCharacter()->getBody()->GetPosition();
-		float32 angle = worldData->getPlayer()->getCharacter()->getBody()->GetAngle();
+		b2Vec2 position = worldData->getCurrentCharacter()->getBody()->GetPosition();
+		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
 		//testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
 
 		//redBox.setRotation( angle*180/pi );

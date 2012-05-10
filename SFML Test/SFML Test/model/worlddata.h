@@ -24,7 +24,6 @@
 //Defines
 #include "../defines.h"
 
-#include "Player.h"
 #include "Wall.h"
 
 #include "../util/Observable.h"
@@ -33,7 +32,6 @@ namespace mp
 {
 	//Forward declaration so WorldData can have a World pointer
 	//class World;
-	class Player;
 	class Bullet;
 	class Character;
 
@@ -50,7 +48,7 @@ namespace mp
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
-			void createPlayer(int characterId);
+
 			// Getters
 			// Get list of all characters
 			std::vector<Character*>* getCharacters(){ return &characters; };
@@ -69,7 +67,6 @@ namespace mp
 
 			//b2World* getb2World();
 
-			Player* getPlayer() { return player; }
 			// Get logic fps
 			int getLogicFps(){return logicFps;};
 
@@ -82,7 +79,13 @@ namespace mp
 
 			void setMousePosition(sf::Vector2f* pos);
 
+			void setCurrentCharacterId(int id) {currentCharacterId = id;}
+			int getCurrentCharacterId() {return currentCharacterId;}
+
+			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
+
 		private:
+			int currentCharacterId;
 			// Pointer to corresponding world object
 			//World* world;
 			// Vector containing bullets
@@ -98,7 +101,6 @@ namespace mp
 			b2Vec2* mousePosition;
 			// Variable for keeping track of logic thread fps
 			int logicFps;
-			Player* player;
     };
 }
 
