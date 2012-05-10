@@ -40,7 +40,7 @@ namespace mp
 
 			void connectToServer(std::string name);
 
-			virtual void notify(std::string e, void* object);
+			virtual void notify(Event e, void* object);
         private:
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;

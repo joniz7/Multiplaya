@@ -26,6 +26,8 @@
 #include "BulletView.h"
 
 #include "../util/Observer.h"
+
+
 #include "GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
@@ -46,7 +48,7 @@ namespace mp
 			void exec();
 			sf::View* getView() { return worldView; }
             ~WorldView();
-			virtual void notify(std::string e, void* object);
+			virtual void notify(Event e, void* object);
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			
 		protected:
