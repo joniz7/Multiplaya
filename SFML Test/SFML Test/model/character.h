@@ -80,8 +80,6 @@ namespace mp
 			bool rightSideTouchWall;
 			bool walking;
 
-			bool hasConnected;
-
 
 		class CharacterFootSensor : public GameObject
 		{

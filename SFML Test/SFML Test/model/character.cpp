@@ -28,7 +28,6 @@ namespace mp
 		this->setHealth(100); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
 		this->shootingTimer = new sf::Clock();
-		this->hasConnected = false;
 
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
@@ -236,10 +235,6 @@ namespace mp
 
 	void Character::connectToServer()
 	{
-		if(!hasConnected)
-		{
-			hasConnected = true;
 			worldData->notify(CONNECT_SERVER , 0);
-		}
 	}
 }

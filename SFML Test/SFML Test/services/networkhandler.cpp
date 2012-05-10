@@ -19,6 +19,8 @@ namespace mp
 
 		currentClientID = 1;
 
+		hasConnected == false;
+
 		receivePort = 55001;
 		//Binds the receiving socket to a port
 		if(!receiver.bind(receivePort))
@@ -170,27 +172,6 @@ namespace mp
 
 		sender.send(packet, myIP, 55001);
 	}
-	////////////////////////////////////////////////////////////
-	// Puts the character in a packet and sends it.
-	////////////////////////////////////////////////////////////
-	void NetworkHandler::sendCharacterPos(int index)
-	{
-		/*
-		Character* character = worldData->getCharacter(index);
-
-		b2Vec2 vector = character->getBody()->GetPosition();
-
-		float32 x = vector.x;
-		float32 y = vector.y;
-
-		std::string s;
-		std::stringstream out;
-		out << "hej";
-		s = out.str();
-
-		sendMessage(s);
-		*/
-	}
 
 	////////////////////////////////////////////////////////////
 	// Connects a client to the server
@@ -199,6 +180,13 @@ namespace mp
 	{
 		sf::Int8 type = 1;
 		sf::Packet packet;
+
+		Character* tempChar = worldData->getCharacter(1);
+
+		b2Body* body = tempChar->getBody();
+
+		b2Vec2 pos = body->GetPosition();
+		b2Vec2 size(1.0f, 2.0f);
 
 		packet << type << name;
 
@@ -218,9 +206,23 @@ namespace mp
 	{
 		if(e == CONNECT_SERVER)
 		{
-			connectToServer("testClient");
-		} else {
-			sendMessageToEveryone("ConnectToServer");
+			if(!hasConnected)
+			{
+				hasConnected = true;
+				connectToServer("testClient");
+			}
+		} else if(e == BULLET_ADDED) 
+		{
+			sendMessageToEveryone("Bullet added");
+		} else if(e == BULLET_DELETED) 
+		{
+			sendMessageToEveryone("Bullet deleted");
+		} else if(e == CHARACTER_ADDED)
+		{
+			sendMessageToEveryone("Character deleted");
+		} else if(e == CHARACTER_DELETED)
+		{
+			sendMessageToEveryone("Bullet deleted");
 		}
 	}
 }

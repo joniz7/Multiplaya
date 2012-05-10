@@ -50,6 +50,8 @@ namespace mp
 			int currentClientID;
 			sf::IpAddress myIP;
 			unsigned short receivePort;
+
+			bool hasConnected;
     };
 }
 
