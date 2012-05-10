@@ -64,6 +64,8 @@ namespace mp
 				std::cout<<"Error reading data from packet"<<std::endl;
 			else 
 			{
+				//Checks what type of packet has been sent and does
+				//The appropriate thing with it
 				switch(type)
 				{
 					//Client trying to connect
@@ -80,6 +82,7 @@ namespace mp
 						std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
 
 						break;
+
 					//Client trying to disconnect
 					case 2:
 						receivedData >> clientID;
@@ -127,7 +130,9 @@ namespace mp
     NetworkHandler::~NetworkHandler()
     {
     }
-
+	////////////////////////////////////////////////////////////
+	// Sends a message to selected IP-address
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendMessage(std::string message, sf::IpAddress IP)
 	{
 		sf::Packet packet;

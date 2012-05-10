@@ -7,6 +7,7 @@
 
 struct Client{
 	sf::IpAddress IP;
+	//std::string IP;
 	std::string name;
 };
 
