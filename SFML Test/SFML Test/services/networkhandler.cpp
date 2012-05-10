@@ -28,7 +28,7 @@ namespace mp
 			std::cout<<"Error binding to port "<<receivePort<<std::endl;
 		}
 
-		myIP = "85.226.173.176";
+		myIP = "129.16.181.210";
     }
 
 	void NetworkHandler::exec() 
@@ -51,6 +51,8 @@ namespace mp
 		std::string message;
 
 		sf::Packet packet;
+
+		float32 hej;
 		////////////////////////////////////////////////////////////
 		// Main loop of network handler.
 		// Constantly checks if there are any incoming data packets
@@ -121,6 +123,10 @@ namespace mp
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
+
+					case 5:
+						receivedData >> hej;
+						std::cout<<"Number received: "<<hej<<std::endl;
 				}
 			}
 		}
@@ -143,6 +149,17 @@ namespace mp
 		packet << type << message;
 
 		sender.send(packet, IP, receivePort);
+	}
+
+	void NetworkHandler::sendNumber()
+	{
+		float32 hej = 1274;
+
+		sf::Packet packet;
+		sf::Int8 type = 5;
+		packet << type << hej;
+
+		sender.send(packet, myIP, receivePort);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -181,13 +198,6 @@ namespace mp
 		sf::Int8 type = 1;
 		sf::Packet packet;
 
-		Character* tempChar = worldData->getCharacter(1);
-
-		b2Body* body = tempChar->getBody();
-
-		b2Vec2 pos = body->GetPosition();
-		b2Vec2 size(1.0f, 2.0f);
-
 		packet << type << name;
 
 		sender.send(packet, myIP, 55001);
@@ -214,6 +224,7 @@ namespace mp
 		} else if(e == BULLET_ADDED) 
 		{
 			sendMessageToEveryone("Bullet added");
+			sendNumber();
 		} else if(e == BULLET_DELETED) 
 		{
 			sendMessageToEveryone("Bullet deleted");

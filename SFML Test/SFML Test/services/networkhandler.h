@@ -36,7 +36,7 @@ namespace mp
 			void sendMessage(std::string messages, sf::IpAddress IP);
 			void sendMessageToServer(std::string message);
 			void sendMessageToEveryone(std::string message);
-			void sendCharacterPos(int index);
+			void sendNumber();
 
 			void connectToServer(std::string name);
 
