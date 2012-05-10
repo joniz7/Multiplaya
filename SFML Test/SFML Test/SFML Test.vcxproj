@@ -81,12 +81,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="controller\Controller.cpp" />
+    <ClCompile Include="controller\Player.cpp" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
     <ClCompile Include="model\character.cpp" />
     <ClCompile Include="model\ContactListener.cpp" />
-    <ClCompile Include="model\Player.cpp" />
     <ClCompile Include="model\Wall.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
@@ -106,6 +107,8 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="client.h" />
+    <ClInclude Include="controller\Controller.h" />
+    <ClInclude Include="controller\Player.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="global.h" />
@@ -113,7 +116,6 @@
     <ClInclude Include="model\character.h" />
     <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\GameObject.h" />
-    <ClInclude Include="model\Player.h" />
     <ClInclude Include="model\Wall.h" />
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worlddata.h" />

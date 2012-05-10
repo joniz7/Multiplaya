@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////
 /// World class. Takes care of game physics and logic
 ////////////////////////////////////////////////////////////
-#ifndef WORLD_H_INCLUDED
-#define WORLD_H_INCLUDED
+#ifndef CONTROLLER_H_INCLUDED
+#define CONTROLLER_H_INCLUDED
 
 // Other headers
 #include <string>
@@ -21,30 +21,23 @@
 
 // Defines
 #include "../defines.h"
+#include "../controller/Player.h"
 
 namespace mp
 {
 	//Forward declaration so World can have a WorldData pointer
-	class WorldData;
+	class World;
 
-    class World
+    class Controller
     {
         public:
-			World(WorldData* worldData);
+			Controller(World* model);
 			void exec();
-            ~World();
-			b2World* getWorld(){return world;};
-			WorldData* getWorldData() {return worldData;};
-			void deleteBullets();
-        private:
-			WorldData* worldData;
-			b2World* world;
-			// World step properties
-			float32 timeStep;
-			int32 velocityIterations;
-			int32 positionIterations;
-			sf::Clock* clock;
+            ~Controller();
 
+        private:
+			World* model;
+			Player* currentPlayer;
     };
 }
 
