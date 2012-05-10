@@ -151,16 +151,6 @@ namespace mp
 		sender.send(packet, IP, receivePort);
 	}
 
-	void NetworkHandler::sendNumber()
-	{
-		float32 hej = 1274;
-
-		sf::Packet packet;
-		sf::Int8 type = 5;
-		packet << type << hej;
-
-		sender.send(packet, myIP, receivePort);
-	}
 
 	////////////////////////////////////////////////////////////
 	// Sends a message over the internet to the server
@@ -224,7 +214,6 @@ namespace mp
 		} else if(e == BULLET_ADDED) 
 		{
 			sendMessageToEveryone("Bullet added");
-			sendNumber();
 		} else if(e == BULLET_DELETED) 
 		{
 			sendMessageToEveryone("Bullet deleted");
