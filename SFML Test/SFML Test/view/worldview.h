@@ -26,8 +26,6 @@
 #include "BulletView.h"
 
 #include "../util/Observer.h"
-
-
 #include "GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
@@ -40,6 +38,7 @@ namespace mp
 	class CharacterView;
 	class BulletView;
 	class GameObjectView;
+	class AnimatedSprite; // TODO remove, after sprites has been fully moved to CharacterView.
     
 	class WorldView : public Observer
     {
@@ -55,7 +54,6 @@ namespace mp
     		
 		private:
 			float pixelScale;
-			//CharacterView* charView;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
 			WorldData* worldData;
@@ -77,12 +75,17 @@ namespace mp
 			sf::RectangleShape* ground3;
 			sf::RectangleShape* ground4;
 
+			sf::Texture* lightTex;
 			sf::Sprite* lightSpr;
+			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
-			
+			// TODO remove, after sprites has been fully moved to CharacterView.
+			mp::AnimatedSprite* characterSprite;
+			sf::Texture* characterTexture;
+
+			sf::Vector2f* mousePosOld;
 			sf::Vector2f* mousePos;
 			sf::Vector2i* mousePosWindow;
-			sf::Vector2f* mousePosOld;
 			sf::Vector2f* mouseSpeed;
 
 			void addBullet(Bullet* bullet);
@@ -94,13 +97,13 @@ namespace mp
 
 			void calculateCam();
 			
-			void updateObjects(int elapsed);
-			void updateBullets();
-			void updateCharacters(int elapsed);
-			//void updateVectorPosition();
+			void updatePositions();
+			void updateBulletsPos();
+			void updateCharactersPos();
+			
+			void createCharacterViews();
 
 			void initialize();
-			void createCharacterViews();
 			void drawWorld();
 			void drawEnvironment();
 			void drawBullets();

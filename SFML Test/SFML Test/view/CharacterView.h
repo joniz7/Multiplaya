@@ -23,21 +23,19 @@ namespace mp
 	class CharacterView : public GameObjectView
 	{
 		public:
-			CharacterView(Character* character);
+			//CharacterView(Character* model, sf::Sprite* sprite);
+			CharacterView(Character* character, AnimatedSprite* sprite);
 			~CharacterView();
+			void updateAnimation(int elapsed);
 			void updatePosition();
-			void updateSprite(int elapsed);
-
 		private:
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-			void createAnimatedSprite();
 			Character* character;
 			//sf::Sprite* sprite;
-
-			sf::Texture* frameTexture;
 			AnimatedSprite* sprite;
 
 			bool facedRightLastUpdate;
+
 	};
 }
 
