@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Menyer" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="GUIElements\;View\;Controller\;" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\Menyer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\Menyer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Button.cpp">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="Button.h">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="Controller.cpp">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="Controller.h">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="GameState.h" />
+		<Unit filename="HostGameController.cpp">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="HostGameController.h">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="IController.h">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="InputDialog.cpp">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="InputDialog.h">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="JoinGameController.cpp">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="JoinGameController.h">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="JoinGameScreen.cpp">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="JoinGameScreen.h">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="MainScreen.cpp">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="MainScreen.h">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="MainScreenController.cpp">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="MainScreenController.h">
+			<Option virtualFolder="Controller\" />
+		</Unit>
+		<Unit filename="RectangleButton.cpp">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="RectangleButton.h">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="Screen.h">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="SettingsScreen.cpp">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="SettingsScreen.h">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="TextField.cpp">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="TextField.h">
+			<Option virtualFolder="GUIElements\" />
+		</Unit>
+		<Unit filename="Window.cpp">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="Window.h">
+			<Option virtualFolder="View\" />
+		</Unit>
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
