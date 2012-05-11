@@ -123,8 +123,9 @@ namespace mp
 		while (running)
         {
 			// Fetch mouse-related things.
-			*mousePos = window->convertCoords( sf::Vector2i(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y), *worldView ) / pixelScale;
 			*mousePosWindow = sf::Mouse::getPosition(*window);
+			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *worldView ) / pixelScale;
+			
 			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
             float elapsed = clock.getElapsedTime().asSeconds();

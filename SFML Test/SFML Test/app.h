@@ -33,8 +33,8 @@ namespace mp
 			sf::VideoMode videoMode;
             RenderList rListObjects;
 			WorldData* worldData;
-			WorldView * view;
-			World * model;
+			WorldView* view;
+			World* model;
 			Controller* controller;
     };
 }

@@ -32,8 +32,9 @@ namespace mp
     {
         public:
 			Controller(World* model);
+			~Controller();
 			void exec();
-            ~Controller();
+            
 
         private:
 			World* model;
