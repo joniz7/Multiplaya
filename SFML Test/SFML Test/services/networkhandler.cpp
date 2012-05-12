@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-// Headers
+/// Headers
 ////////////////////////////////////////////////////////////
 // Class header
 #include "networkhandler.h"
@@ -11,7 +11,7 @@
 namespace mp	
 {
 	////////////////////////////////////////////////////////////
-	// Constructor
+	/// Constructor
 	////////////////////////////////////////////////////////////
     NetworkHandler::NetworkHandler(WorldData* worldData)
     {
@@ -23,7 +23,7 @@ namespace mp
 
 		receivePort = 55001;
 		//Binds the receiving socket to a port
-		if(!receiver.bind(receivePort))
+		if(receiver.bind(receivePort) == sf::Socket::Status::Error)
 		{
 			std::cout<<"Error binding to port "<<receivePort<<std::endl;
 		}
@@ -54,8 +54,8 @@ namespace mp
 
 		float32 hej;
 		////////////////////////////////////////////////////////////
-		// Main loop of network handler.
-		// Constantly checks if there are any incoming data packets
+		/// Main loop of network handler.
+		/// Constantly checks if there are any incoming data packets
 		////////////////////////////////////////////////////////////
 		while(running) 
 		{
@@ -124,22 +124,19 @@ namespace mp
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
 
-					case 5:
-						receivedData >> hej;
-						std::cout<<"Number received: "<<hej<<std::endl;
 				}
 			}
 		}
 	}
 
 	////////////////////////////////////////////////////////////
-	// Destructor
+	/// Destructor
 	////////////////////////////////////////////////////////////
     NetworkHandler::~NetworkHandler()
     {
     }
 	////////////////////////////////////////////////////////////
-	// Sends a message to selected IP-address
+	/// Sends a message to selected IP-address
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendMessage(std::string message, sf::IpAddress IP)
 	{
@@ -153,7 +150,7 @@ namespace mp
 
 
 	////////////////////////////////////////////////////////////
-	// Sends a message over the internet to the server
+	/// Sends a message over the internet to the server
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendMessageToServer(std::string message)
 	{
@@ -166,9 +163,9 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	// Sends a message over the internet to the server
-	// which will then send the same message to all clients
-	// attached to it.
+	/// Sends a message over the internet to the server
+	/// which will then send the same message to all clients
+	/// attached to it.
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendMessageToEveryone(std::string message)
 	{
@@ -181,26 +178,30 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	// Connects a client to the server
+	/// Connects a client to the server
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::connectToServer(std::string name)
 	{
 		sf::Int8 type = 1;
 		sf::Packet packet;
 
-		packet << type << name;
+		Character* character = worldData->getCurrentCharacter();
+		float32 x = character->getBody()->GetPosition().x;
+		float32 y = character->getBody()->GetPosition().y;
+
+		packet << type << name << x << y;
 
 		sender.send(packet, myIP, 55001);
 
 	}
 
 	////////////////////////////////////////////////////////////
-	// If the notification is connectToServer the client will try
-	// to connect to the server.
-	//
-	// If it is a message not related to the network handler it will
-	// be sent to the the server as a text message and from the server
-	// sent to every client.
+	/// If the notification is connectToServer the client will try
+	/// to connect to the server.
+	///
+	/// If it is a message not related to the network handler it will
+	/// be sent to the the server as a text message and from the server
+	/// sent to every client.
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::notify(Event e, void* object)
 	{
