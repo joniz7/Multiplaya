@@ -24,13 +24,17 @@
 // Game specific headers
 #include "../game.h"
 #include "../client.h"
+#include "../model/world.h"
 
 namespace mp
 {
+	class World;
     class NetworkHandler : public Observer
     {
+		
+
         public:
-			NetworkHandler(WorldData* worldData);
+			NetworkHandler(WorldData* worldData, World* model);
 			void exec();
             ~NetworkHandler();
 			void sendMessage(std::string messages, sf::IpAddress IP);
@@ -45,6 +49,7 @@ namespace mp
 			sf::UdpSocket sender;
 			bool running;
 			WorldData* worldData;
+			World* model;
 			std::map<sf::Int8,Client> clientMap;
 			int currentClientID;
 			sf::IpAddress myIP;

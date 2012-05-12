@@ -35,6 +35,7 @@ namespace mp
             ~World();
 			b2World* getWorld(){return world;};
 			WorldData* getWorldData() {return worldData;};
+			void createCharacter(b2Vec2 positions, b2Vec2 size);
 			void deleteBullets();
         private:
 			WorldData* worldData;

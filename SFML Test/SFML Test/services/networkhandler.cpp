@@ -13,13 +13,13 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	/// Constructor
 	////////////////////////////////////////////////////////////
-    NetworkHandler::NetworkHandler(WorldData* worldData)
+    NetworkHandler::NetworkHandler(WorldData* worldData, World* model)
     {
 		this->worldData = worldData;
-
+		this->model = model;
 		currentClientID = 1;
 
-		hasConnected == false;
+		hasConnected = false;
 
 		receivePort = 55001;
 		//Binds the receiving socket to a port
@@ -28,7 +28,7 @@ namespace mp
 			std::cout<<"Error binding to port "<<receivePort<<std::endl;
 		}
 
-		myIP = "129.16.181.210";
+		myIP = "192.168.1.41";
     }
 
 	void NetworkHandler::exec() 
@@ -52,7 +52,10 @@ namespace mp
 
 		sf::Packet packet;
 
-		float32 hej;
+		b2Vec2 position;
+		float32 x,y;
+		b2Vec2 size;
+
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
 		/// Constantly checks if there are any incoming data packets
@@ -75,7 +78,7 @@ namespace mp
 					//Client trying to connect
 					case 1:
 						//Creates a client from the data
-						receivedData >> name;
+						receivedData >> name >> x >> y;
 	
 						client.IP = senderIP;
 						client.name = name;
@@ -85,6 +88,12 @@ namespace mp
 						currentClientID++;
 						std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
 
+						position.x = x;
+						position.y = y;
+						size.x = 1.0f;
+						size.y = 2.0f;
+
+						model->createCharacter(position, size);
 						break;
 
 					//Client trying to disconnect
@@ -117,13 +126,13 @@ namespace mp
 						}
 
 						break;
+
 					//Receive a text message
 					case 4:
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
-
 				}
 			}
 		}
@@ -192,7 +201,7 @@ namespace mp
 		packet << type << name << x << y;
 
 		sender.send(packet, myIP, 55001);
-
+		std::cout<<"Hej"<<std::endl;
 	}
 
 	////////////////////////////////////////////////////////////

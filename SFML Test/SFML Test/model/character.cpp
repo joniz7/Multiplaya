@@ -18,6 +18,8 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Character::Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size)
     {
+		std::cout<<"character: 1"<<std::endl;
+
 		this->objectType = character;
 		this->worldData = worldData;
 		this->world = world;
@@ -27,13 +29,25 @@ namespace mp
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
+
+		std::cout<<"character: 2"<<std::endl;
+
 		this->shootingTimer = new sf::Clock();
+
+		std::cout<<"character: 3"<<std::endl;
 
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
+
+		std::cout<<"character: 4"<<std::endl;
+
 		bodyDef.position.Set(position.x, position.y);
+		std::cout<<"innan create body"<<std::endl;
 		this->characterBody = world->CreateBody(&bodyDef);
+		std::cout<<"efter create body"<<std::endl;
+
+		std::cout<<"character: 5"<<std::endl;
 
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -234,6 +248,6 @@ namespace mp
 
 	void Character::connectToServer()
 	{
-			worldData->notify(CONNECT_SERVER , 0);
+		worldData->notify(CONNECT_SERVER , 0);
 	}
 }

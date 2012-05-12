@@ -92,7 +92,7 @@ namespace mp
 		// Cast to world data pointer
 		Container* data = static_cast<Container*>(UserData);
 		std::cout<<".";
-		data->network = new NetworkHandler(data->worldData);
+		data->network = new NetworkHandler(data->worldData, data->model);
 		// We want to observe worldData.
 		data->worldData->addObserver(data->network);
 		std::cout<<std::endl<<"Network thread up and running!"<<std::endl;

@@ -64,11 +64,6 @@ namespace mp
 		return true;
     }
 
-	Character* WorldData::characterFactory(float32 x, float32 y)
-	{
-		//Character character = new Character(this,  , , ,);
-	}
-
 	////////////////////////////////////////////////////////////
 	// Adds a generic body to the world
 	// returns true upon success

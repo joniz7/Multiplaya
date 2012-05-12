@@ -83,9 +83,6 @@ namespace mp
 			int getCurrentCharacterId() {return currentCharacterId;}
 
 			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
-
-			Character* characterFactory(float32 x, float32 y);
-
 		private:
 			int currentCharacterId;
 			// Pointer to corresponding world object

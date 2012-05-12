@@ -56,9 +56,7 @@ namespace mp
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
     void World::exec() {
-		std::cout<<"World::exec() 1" << std::endl;
         clock->restart();
-		std::cout<<"World::exec() 2" << std::endl;
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 		// Perform a physics step
@@ -95,6 +93,19 @@ namespace mp
 			}
 			bulletsToRemove->clear();
 		}
+	}
+
+	void World::createCharacter(b2Vec2 position, b2Vec2 size)
+	{
+		std::cout<<"createCharacter: 1"<<std::endl;
+		Character* character = new Character(worldData, world, position, size);
+		std::cout<<"createCharacter: 2"<<std::endl;
+		worldDataMutex.lock();
+		std::cout<<"createCharacter: 3"<<std::endl;
+		worldData->addCharacter(character);
+		std::cout<<"createCharacter: 4"<<std::endl;
+		worldDataMutex.unlock();
+		std::cout<<"createCharacter: 5"<<std::endl;
 	}
 
 	////////////////////////////////////////////////////////////
