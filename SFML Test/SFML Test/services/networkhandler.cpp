@@ -57,6 +57,8 @@ namespace mp
 		float32 x,y;
 		b2Vec2 size;
 
+		std::vector<Character*>* characters;
+
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
 		/// Constantly checks if there are any incoming data packets
@@ -130,8 +132,21 @@ namespace mp
 						}
 
 						break;
+					//Receives the position of a clients character and updates it
 					case 4:
 						receivedData >> clientID >> x >> y;
+
+						position.Set(x,y);
+
+						characters = worldData->getCharacters();
+
+						for(int i = 0; i < characters->size(); i++)
+						{
+							if(characters->at(i)->getClientID() == clientID)
+							{
+								characters->at(i)->setPosition(position);
+							}
+						}
 						break;
 					//Recieve your ID from the server
 					case 11:

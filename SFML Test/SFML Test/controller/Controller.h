@@ -31,7 +31,7 @@ namespace mp
     class Controller
     {
         public:
-			Controller(World* model, WorldView* view);
+			Controller(World* model, WorldView* view, NetworkHandler* network);
 			~Controller();
 			void exec();
             
@@ -40,6 +40,7 @@ namespace mp
 			World* model;
 			WorldView* view;
 			Player* currentPlayer;
+			NetworkHandler* network;
     };
 }
 
