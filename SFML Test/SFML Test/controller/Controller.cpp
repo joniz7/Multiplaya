@@ -18,9 +18,10 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor. Initializes the world.
 	////////////////////////////////////////////////////////////
-    Controller::Controller(World* model)
+    Controller::Controller(World* model, WorldView* view)
     {
 		this->model = model;
+		this->view = view;
 		this->currentPlayer = new Player();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
     }

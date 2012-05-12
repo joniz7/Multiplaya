@@ -56,8 +56,9 @@ namespace mp
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
     void World::exec() {
-
+		std::cout<<"World::exec() 1" << std::endl;
         clock->restart();
+		std::cout<<"World::exec() 2" << std::endl;
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 		// Perform a physics step
