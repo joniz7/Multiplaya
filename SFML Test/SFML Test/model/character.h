@@ -63,6 +63,7 @@ namespace mp
 			bool isFacingRight() { return facingRight; }
 
 			virtual void onCollision(GameObject* crashedWith);
+			virtual void onNoCollision(GameObject* crashedWith) {};
 
 			void connectToServer();
         private:
@@ -88,6 +89,7 @@ namespace mp
 				CharacterFootSensor(bool& grounded);
 				virtual ~CharacterFootSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
+				virtual void onNoCollision(GameObject* crashedWith) {};
 
 			private:
 				//Character* characterObject;
@@ -101,6 +103,7 @@ namespace mp
 				CharacterLeftSensor(bool& leftSideTouchWall);
 				virtual ~CharacterLeftSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
+				virtual void onNoCollision(GameObject* crashedWith);
 
 			private:
 				//Character* characterObject;
@@ -114,6 +117,7 @@ namespace mp
 				CharacterRightSensor(bool& rightSideTouchWall);
 				virtual ~CharacterRightSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
+				virtual void onNoCollision(GameObject* crashedWith);
 
 			private:
 				//Character* characterObject;

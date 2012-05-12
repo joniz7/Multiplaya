@@ -40,6 +40,7 @@ namespace mp
 			BulletType getType(){return type;};
 			int getOwner(){return owner;};
 			virtual void onCollision(GameObject* crashedWith);
+			virtual void onNoCollision(GameObject* crashedWith) {};
 			bool operator == (const Bullet* bullet);
         private:
 			BulletType type;

@@ -113,6 +113,7 @@ namespace mp
 		// No other checks neccessary?
 	}
 
+
 	void Character::jump()
 	{
 		if ( grounded ) {
@@ -196,58 +197,48 @@ namespace mp
 		std::cout << "health: " << this->health << std::endl;
 	}
 
-	void Character::kill()
-	{
+	void Character::kill() {
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
 
-
-	//Foot sensor
-	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded) : grounded(grounded)
-	{
-		this->objectType = characterFootSensor;
+	void Character::connectToServer() {
+		worldData->notify(CONNECT_SERVER , 0);
 	}
 
-	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith)
-	{
-		if ( crashedWith->objectType == wall)
-		{
+	//Foot sensor
+	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded) : grounded(grounded) {
+		this->objectType = characterFootSensor;
+	}
+	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
+		if ( crashedWith->objectType == wall) {
 			grounded = true;
 		}
 	}
 
-
 	// Leftside
-	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)
-	{
+	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	{
 		this->objectType = characterLeftSensor;
 	}
-
-	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith)
-	{
-		if ( crashedWith->objectType == wall)
-		{
+	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
+		if ( crashedWith->objectType == wall){
 			leftSideTouchWall = true;
 		}
 	}
-
-
-	// Rightside
-	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall)
-	{
-		this->objectType = characterRightSensor;
+	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
+		leftSideTouchWall = false;
 	}
 
-	void Character::CharacterRightSensor::onCollision(GameObject* crashedWith)
-	{
-		if ( crashedWith->objectType == wall)
-		{
+	// Rightside
+	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall) {
+		this->objectType = characterRightSensor;
+	}
+	void Character::CharacterRightSensor::onCollision(GameObject* crashedWith) {
+		if ( crashedWith->objectType == wall) {
 			rightSideTouchWall = true;
 		}
 	}
-
-	void Character::connectToServer()
-	{
-		worldData->notify(CONNECT_SERVER , 0);
+	void Character::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
+		rightSideTouchWall = false;
 	}
+
 }

@@ -98,7 +98,7 @@ namespace mp
 		sequence.push_back(sf::Vector2i(7, 1));
 		characterSprite->addAnimation("walk", 9, true, sequence);
 		sequence.clear();
-		
+
 		sequence.push_back(sf::Vector2i(1, 1));
 		characterSprite->addAnimation("idle", 9, true, sequence);
 		sequence.clear();
@@ -113,6 +113,7 @@ namespace mp
 		constructMapGraphics();
 
 		createCharacterViews();
+		//CharacterView* player = new CharacterView(worldData->getCurrentCharacter());
 		CharacterView* player = new CharacterView(worldData->getCurrentCharacter(), characterSprite);
 		characters.push_back( player );
 

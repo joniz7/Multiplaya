@@ -25,6 +25,7 @@ namespace mp
 		public:
 			//CharacterView(Character* model, sf::Sprite* sprite);
 			CharacterView(Character* character, AnimatedSprite* sprite);
+			CharacterView(Character* character);
 			~CharacterView();
 			void updateAnimation(int elapsed);
 			void updatePosition();
@@ -33,6 +34,7 @@ namespace mp
 			Character* character;
 			//sf::Sprite* sprite;
 			AnimatedSprite* sprite;
+			sf::Texture* texture;
 
 			bool facedRightLastUpdate;
 

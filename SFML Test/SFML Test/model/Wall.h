@@ -13,6 +13,7 @@ namespace mp
 			Wall(b2World* world, float xPos, float yPos, float width, float height);
 			~Wall();
 			virtual void onCollision(GameObject* crashedWith);
+			virtual void onNoCollision(GameObject* crashedWith) {};
 		private:
 			b2Body* wallBody;
 	};
