@@ -16,7 +16,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Character::Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size)
+    Character::Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
     {
 		std::cout<<"character: 1"<<std::endl;
 
@@ -29,6 +29,7 @@ namespace mp
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
+		this->clientID = clientID;
 
 		std::cout<<"character: 2"<<std::endl;
 
@@ -239,6 +240,12 @@ namespace mp
 	}
 	void Character::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
 		rightSideTouchWall = false;
+	}
+
+
+	void Character::setPosition(b2Vec2 position)
+	{
+		
 	}
 
 }

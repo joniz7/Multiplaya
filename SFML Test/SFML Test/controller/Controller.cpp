@@ -18,12 +18,13 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor. Initializes the world.
 	////////////////////////////////////////////////////////////
-    Controller::Controller(World* model, WorldView* view)
+    Controller::Controller(World* model, WorldView* view, NetworkHandler* network)
     {
 		this->model = model;
 		this->view = view;
 		this->currentPlayer = new Player();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
+		this->network = network;
     }
 
 	////////////////////////////////////////////////////////////
@@ -35,6 +36,9 @@ namespace mp
 		while(running) {
 			model->exec();
 			currentPlayer->update();
+			if(network->isConnectedToServer()){
+				network->sendCharacterPosToServer();
+			}
 		}
 
     }

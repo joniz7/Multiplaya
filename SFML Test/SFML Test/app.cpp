@@ -52,7 +52,7 @@ namespace mp
 		// Instantiate model and controller.
 		// (Expects worldData and view to already exist)
 		data->model = new World(data->worldData);
-		data->controller = new Controller(data->model, data->view);
+		data->controller = new Controller(data->model, data->view, data->network);
 
 		worldDataMutex.unlock();
 		data->controller->exec();

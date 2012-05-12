@@ -35,7 +35,7 @@ namespace mp
     class Character : public GameObject
     {
         public:
-			Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size);
+			Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size, sf::Int8 clientID);
             virtual ~Character();
 			void jump();
 			void crouch();
@@ -62,6 +62,10 @@ namespace mp
 			void setIsFacingRight(bool choice) { facingRight = choice; }
 			bool isFacingRight() { return facingRight; }
 
+			void setPosition(b2Vec2 position);
+
+			sf::Int8 getClientID(){return clientID;};
+
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {};
 
@@ -80,6 +84,8 @@ namespace mp
 			bool leftSideTouchWall;
 			bool rightSideTouchWall;
 			bool walking;
+
+			sf::Int8 clientID;
 
 
 		class CharacterFootSensor : public GameObject

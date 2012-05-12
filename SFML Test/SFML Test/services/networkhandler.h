@@ -40,8 +40,10 @@ namespace mp
 			void sendMessage(std::string messages, sf::IpAddress IP);
 			void sendMessageToServer(std::string message);
 			void sendMessageToEveryone(std::string message);
-
+			void sendClientID(sf::Int8 ID);
 			void connectToServer(std::string name);
+			bool isConnectedToServer(){return hasConnected;};
+			void sendCharacterPosToServer();
 
 			virtual void notify(Event e, void* object);
         private:
@@ -51,10 +53,10 @@ namespace mp
 			WorldData* worldData;
 			World* model;
 			std::map<sf::Int8,Client> clientMap;
-			int currentClientID;
+			sf::Int8 currentClientID;
 			sf::IpAddress myIP;
 			unsigned short receivePort;
-
+			sf::Int8 myID;
 			bool hasConnected;
     };
 }
