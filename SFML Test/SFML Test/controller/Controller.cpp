@@ -36,7 +36,9 @@ namespace mp
 		while(running) {
 			model->exec();
 			currentPlayer->update();
-			network->sendCharacterPosToServer();
+			if(network->isConnectedToServer()){
+				network->sendCharacterPosToServer();
+			}
 		}
 
     }

@@ -151,6 +151,7 @@ namespace mp
 					//Recieve your ID from the server
 					case 11:
 						receivedData >> myID;
+						hasConnected = true;
 						break;
 					//Receive a text message
 					case 12:
@@ -272,7 +273,6 @@ namespace mp
 		{
 			if(!hasConnected)
 			{
-				hasConnected = true;
 				connectToServer("testClient");
 			}
 		} else if(e == BULLET_ADDED) 
