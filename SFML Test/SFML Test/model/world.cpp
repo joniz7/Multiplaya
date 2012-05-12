@@ -44,8 +44,7 @@ namespace mp
 		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
 
 		// Add two test characters to the world.
-		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f)) );
-		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 8.0f), b2Vec2(1.0f, 2.0f)) );
+		worldData->addCharacter( new Character(worldData, world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0) );
 
 		// Unlock world data
 		worldDataMutex.unlock();
@@ -95,14 +94,14 @@ namespace mp
 		}
 	}
 
-	void World::createCharacter(b2Vec2 position, b2Vec2 size)
+	void World::createCharacter(b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
 	{
 		std::cout<<"createCharacter: 1"<<std::endl;
-		Character* character = new Character(worldData, world, position, size);
+		//Character* character = ;
 		std::cout<<"createCharacter: 2"<<std::endl;
 		worldDataMutex.lock();
 		std::cout<<"createCharacter: 3"<<std::endl;
-		worldData->addCharacter(character);
+		worldData->addCharacter(new Character(worldData, world, position, size, clientID));
 		std::cout<<"createCharacter: 4"<<std::endl;
 		worldDataMutex.unlock();
 		std::cout<<"createCharacter: 5"<<std::endl;

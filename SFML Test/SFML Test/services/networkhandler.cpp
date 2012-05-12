@@ -18,6 +18,7 @@ namespace mp
 		this->worldData = worldData;
 		this->model = model;
 		currentClientID = 1;
+		myID = 0;
 
 		hasConnected = false;
 
@@ -85,7 +86,7 @@ namespace mp
 
 						//adds that client to the clientmap
 						clientMap[currentClientID] = client;
-						currentClientID++;
+
 						std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
 
 						position.x = x;
@@ -93,7 +94,10 @@ namespace mp
 						size.x = 1.0f;
 						size.y = 2.0f;
 
-						model->createCharacter(position, size);
+						model->createCharacter(position, size, currentClientID);
+
+						sendClientID(currentClientID);
+						currentClientID++;
 						break;
 
 					//Client trying to disconnect
@@ -126,9 +130,15 @@ namespace mp
 						}
 
 						break;
-
-					//Receive a text message
 					case 4:
+						receivedData >> clientID >> x >> y;
+						break;
+					//Recieve your ID from the server
+					case 11:
+						receivedData >> myID;
+						break;
+					//Receive a text message
+					case 12:
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
@@ -151,7 +161,7 @@ namespace mp
 	{
 		sf::Packet packet;
 
-		sf::Int8 type = 4;
+		sf::Int8 type = 12;
 		packet << type << message;
 
 		sender.send(packet, IP, receivePort);
@@ -165,7 +175,7 @@ namespace mp
 	{
 		sf::Packet packet;
 
-		sf::Int8 type = 4;
+		sf::Int8 type = 12;
 		packet << type << message;
 
 		sender.send(packet, myIP, receivePort);
@@ -202,6 +212,35 @@ namespace mp
 
 		sender.send(packet, myIP, 55001);
 		std::cout<<"Hej"<<std::endl;
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sends the position of a character to the specified IP-address
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendCharacterPosToServer()
+	{
+		sf::Int8 type = 4;
+		sf::Packet packet;
+
+		float32 x = worldData->getCurrentCharacter()->getBody()->GetPosition().x;
+		float32 y = worldData->getCurrentCharacter()->getBody()->GetPosition().y;
+
+		packet << type << myID << x << y;
+		sender.send(packet, myIP, 55001);
+
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sends the client ID to the specified client
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendClientID(sf::Int8 ID)
+	{
+		sf::Packet packet;
+		sf::Int8 type = 11;
+
+		packet << type << ID;
+
+		sender.send(packet, clientMap[ID].IP, 55001);
 	}
 
 	////////////////////////////////////////////////////////////
