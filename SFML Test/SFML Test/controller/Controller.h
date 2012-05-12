@@ -31,13 +31,14 @@ namespace mp
     class Controller
     {
         public:
-			Controller(World* model);
+			Controller(World* model, WorldView* view);
 			~Controller();
 			void exec();
             
 
         private:
 			World* model;
+			WorldView* view;
 			Player* currentPlayer;
     };
 }
