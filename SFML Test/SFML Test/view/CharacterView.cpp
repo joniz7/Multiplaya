@@ -58,8 +58,10 @@ namespace mp
 			sprite->playAnimation("idle");
 
 		// kinda ugly solution, "to be continued.."
-		if (character->isFacingRight() != facedRightLastUpdate)
+		if (character->isFacingRight() != facedRightLastUpdate) {
+			std::cout << "character facing right? " << character->isFacingRight() << std::endl;
 			sprite->scale(-1, 1);
+		}
 		facedRightLastUpdate = character->isFacingRight();
 	}
 

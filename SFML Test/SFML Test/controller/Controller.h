@@ -31,9 +31,10 @@ namespace mp
     class Controller
     {
         public:
-			Controller(World* model, WorldView* view, NetworkHandler* network);
+			Controller(World* model, WorldView* view);
 			~Controller();
 			void exec();
+			void setNetworkHandler(NetworkHandler* network);
             
 
         private:

@@ -18,14 +18,18 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor. Initializes the world.
 	////////////////////////////////////////////////////////////
-    Controller::Controller(World* model, WorldView* view, NetworkHandler* network)
+    Controller::Controller(World* model, WorldView* view)
     {
 		this->model = model;
 		this->view = view;
+		this->network = NULL; 
 		this->currentPlayer = new Player();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
-		this->network = network;
     }
+
+	void Controller::setNetworkHandler(NetworkHandler* network) {
+		this->network = network;	
+	}
 
 	////////////////////////////////////////////////////////////
 	// The logic loop; updates the game world, runs Box2D etc.
@@ -36,7 +40,10 @@ namespace mp
 		while(running) {
 			model->exec();
 			currentPlayer->update();
-			if(network->isConnectedToServer()){
+			// Wait until setNetworkHandler() is called.
+			while(network == NULL) {}
+
+			if(network->isConnectedToServer()) {
 				network->sendCharacterPosToServer();
 			}
 		}

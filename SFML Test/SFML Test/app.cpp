@@ -36,6 +36,10 @@ namespace mp
 		Controller* controller;
 		WorldView* view;
 		NetworkHandler* network;
+
+		bool viewThreadFinished;
+		bool logicThreadFinished;
+		bool networkThreadFinished;
 	};
 	
 	////////////////////////////////////////////////////////////
@@ -52,9 +56,12 @@ namespace mp
 		// Instantiate model and controller.
 		// (Expects worldData and view to already exist)
 		data->model = new World(data->worldData);
-		data->controller = new Controller(data->model, data->view, data->network);
-
+		std::cout << "network adress: " << data->network << std::endl;
+		data->controller = new Controller(data->model, data->view);
+		std::cout << "network adress: " << data->network << std::endl;
 		worldDataMutex.unlock();
+		// We're done, let the main program continue.
+		data->logicThreadFinished = true;
 		data->controller->exec();
 	}
 
@@ -76,6 +83,9 @@ namespace mp
 		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
 		// Unlock world data
 		worldDataMutex.unlock();
+		// We're done, let the main program continue.
+		data->viewThreadFinished = true;
+		// Run the view's infinite loop
 		data->view->exec();
 	}
 
@@ -93,12 +103,14 @@ namespace mp
 		Container* data = static_cast<Container*>(UserData);
 		std::cout<<".";
 		data->network = new NetworkHandler(data->worldData, data->model);
+		data->controller->setNetworkHandler(data->network);
 		// We want to observe worldData.
 		data->worldData->addObserver(data->network);
 		std::cout<<std::endl<<"Network thread up and running!"<<std::endl;
 		//Unlock world data
 		worldDataMutex.unlock();
-
+		// We're done, let the main program continue.
+		data->networkThreadFinished = true;
 		data->network->exec();
 	}
 
@@ -128,15 +140,18 @@ namespace mp
 		// Create and launch the view thread.
 		sf::Thread viewThread(&createViewThread, data);
 		viewThread.launch();
+		while(!data->viewThreadFinished) {}
 
 		// Create and launch the logic thread.
 		// Important: depends on viewThread already being launched!
 		sf::Thread logicThread(&createLogicThread, data);
 		logicThread.launch();
+		while(!data->logicThreadFinished) {}
 
 		//Create and launch the network thread
 		sf::Thread networkThread(&createNetworkThread, data);
 		networkThread.launch();
+		while(!data->networkThreadFinished) {}
 
         return EXIT_SUCCESS;
     }
