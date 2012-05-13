@@ -53,9 +53,8 @@ namespace mp
 
 		sf::Packet packet;
 
-		b2Vec2 position;
-		float32 x,y;
-		b2Vec2 size;
+		b2Vec2 position, size, velocity;
+		float32 x,y,xvel,yvel,angle;
 
 		std::vector<Character*>* characters;
 
@@ -132,19 +131,21 @@ namespace mp
 						}
 
 						break;
-					//Receives the position of a clients character and updates it
+					//Receives character data from a client.
 					case 4:
-						receivedData >> clientID >> x >> y;
+						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
 
 						position.Set(x,y);
-
+						velocity.Set(xvel, yvel);
 						characters = worldData->getCharacters();
 
+						//Updates the character in question
 						for(int i = 0; i < characters->size(); i++)
 						{
 							if(characters->at(i)->getClientID() == clientID)
 							{
-								characters->at(i)->setPosition(position);
+								characters->at(i)->setPosition(position, angle);
+								characters->at(i)->setLinVelocity(velocity);
 							}
 						}
 						break;
@@ -233,15 +234,18 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	/// Sends the position of a character to the specified IP-address
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::sendCharacterPosToServer()
+	void NetworkHandler::sendCharacterDataToServer()
 	{
 		sf::Int8 type = 4;
 		sf::Packet packet;
 
 		float32 x = worldData->getCurrentCharacter()->getBody()->GetPosition().x;
 		float32 y = worldData->getCurrentCharacter()->getBody()->GetPosition().y;
+		float32 xvel = worldData->getCurrentCharacter()->getBody()->GetLinearVelocity().x;
+		float32 yvel = worldData->getCurrentCharacter()->getBody()->GetLinearVelocity().y;
+		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
 
-		packet << type << myID << x << y;
+		packet << type << myID << x << y << xvel << yvel << angle;
 		sender.send(packet, myIP, 55001);
 
 	}

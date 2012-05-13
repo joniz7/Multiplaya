@@ -43,7 +43,7 @@ namespace mp
 			void sendClientID(sf::Int8 ID);
 			void connectToServer(std::string name);
 			bool isConnectedToServer(){return hasConnected;};
-			void sendCharacterPosToServer();
+			void sendCharacterDataToServer();
 
 			virtual void notify(Event e, void* object);
         private:

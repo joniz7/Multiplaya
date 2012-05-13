@@ -18,7 +18,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Character::Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
     {
-		std::cout<<"character: 1"<<std::endl;
 
 		this->objectType = character;
 		this->worldData = worldData;
@@ -31,24 +30,14 @@ namespace mp
 		this->cooldown = 100; // milliseconds in between shots.
 		this->clientID = clientID;
 
-		std::cout<<"character: 2"<<std::endl;
-
 		this->shootingTimer = new sf::Clock();
-
-		std::cout<<"character: 3"<<std::endl;
 
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
 
-		std::cout<<"character: 4"<<std::endl;
-
 		bodyDef.position.Set(position.x, position.y);
-		std::cout<<"innan create body"<<std::endl;
 		this->characterBody = world->CreateBody(&bodyDef);
-		std::cout<<"efter create body"<<std::endl;
-
-		std::cout<<"character: 5"<<std::endl;
 
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -243,9 +232,13 @@ namespace mp
 	}
 
 
-	void Character::setPosition(b2Vec2 position)
+	void Character::setPosition(b2Vec2 position, float32 angle)
 	{
-		
+		characterBody->SetTransform(position, angle);
 	}
 
+	void Character::setLinVelocity(b2Vec2 velocity)
+	{
+		characterBody->SetLinearVelocity(velocity);
+	}
 }

@@ -50,15 +50,14 @@ namespace mp
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<<"Starting controller/model thread.";
+		std::cout<<"Starting controller/model thread."<<std::endl;
 		// Cast to controller pointer
 		Container* data = static_cast<Container*>(UserData);
 		// Instantiate model and controller.
 		// (Expects worldData and view to already exist)
 		data->model = new World(data->worldData);
-		std::cout << "network adress: " << data->network << std::endl;
 		data->controller = new Controller(data->model, data->view);
-		std::cout << "network adress: " << data->network << std::endl;
+
 		worldDataMutex.unlock();
 		// We're done, let the main program continue.
 		data->logicThreadFinished = true;

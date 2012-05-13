@@ -62,7 +62,8 @@ namespace mp
 			void setIsFacingRight(bool choice) { facingRight = choice; }
 			bool isFacingRight() { return facingRight; }
 
-			void setPosition(b2Vec2 position);
+			void setPosition(b2Vec2 position, float32 angle);
+			void setLinVelocity(b2Vec2 velocity);
 
 			sf::Int8 getClientID(){return clientID;};
 

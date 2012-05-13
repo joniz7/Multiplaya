@@ -44,7 +44,7 @@ namespace mp
 			while(network == NULL) {}
 
 			if(network->isConnectedToServer()) {
-				network->sendCharacterPosToServer();
+				network->sendCharacterDataToServer();
 			}
 		}
 
