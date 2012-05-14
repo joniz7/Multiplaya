@@ -60,6 +60,8 @@ namespace mp
 			b2Vec2 getMousePosition() {return *mousePosition;}
 			// Get a specific character
 			Character* getCharacter(int i){ return characters.at(i); };
+			// Get the character with the specific client ID
+			Character* getCharacter(sf::Int8 clientID);
 			// Get a specific bullet
 			Bullet* getBullet(int i){ return bullets.at(i); };
 			// Get a specific body

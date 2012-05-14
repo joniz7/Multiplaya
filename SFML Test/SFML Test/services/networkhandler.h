@@ -44,9 +44,12 @@ namespace mp
 			void connectToServer(std::string name);
 			bool isConnectedToServer(){return hasConnected;};
 			void sendCharacterDataToServer();
-
+			void sendCharacterDataToClient(sf::Int8 clientID);
+			
 			virtual void notify(Event e, void* object);
         private:
+			
+			void setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle);
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;

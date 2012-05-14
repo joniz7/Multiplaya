@@ -136,4 +136,15 @@ namespace mp
 		mousePosition->Set(x,y);
 	}
 
+	Character* WorldData::getCharacter(sf::Int8 clientID)
+	{
+		for(int i = 0; i < characters.size(); i++)
+		{
+			if(characters.at(i)->getClientID() == clientID)
+			{
+				return characters.at(i);
+			}
+		}
+	}
+
 }

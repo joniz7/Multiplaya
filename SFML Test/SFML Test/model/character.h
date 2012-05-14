@@ -65,6 +65,10 @@ namespace mp
 			void setPosition(b2Vec2 position, float32 angle);
 			void setLinVelocity(b2Vec2 velocity);
 
+			b2Vec2 getPosition() {return characterBody->GetPosition();};
+			float32 getAngle() {return characterBody->GetAngle();};
+			b2Vec2 getLinVelocity() {return characterBody->GetLinearVelocity();};
+
 			sf::Int8 getClientID(){return clientID;};
 
 			virtual void onCollision(GameObject* crashedWith);
