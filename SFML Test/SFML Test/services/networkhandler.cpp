@@ -260,11 +260,13 @@ namespace mp
 			tempCharacter = worldData->getCharacter(i);
 			x = tempCharacter->getPosition().x;
 			y = tempCharacter->getPosition().y;
-			xvel = tempCharacter->GetLinearVelocity().x;
-			yvel = tempCharacter->GetLinearVelocity().y;
-			angle = tempCharacter->GetAngle();
+
+			xvel = tempCharacter->getBody()->GetLinearVelocity().x;
+			yvel = tempCharacter->getBody()->GetLinearVelocity().y;
+			angle = tempCharacter->getBody()->GetAngle();
 
 			packet << x << y << xvel << yvel << angle;
+			
 		}
 
 		sender.send(packet, clientMap[clientID].IP, receivePort);
