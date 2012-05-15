@@ -28,9 +28,14 @@ namespace mp
 		this->walking = false;
 		this->setHealth(100); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
+		this->reloadTime = 1000; // Milliseconds it takes to reload.
+		this->clipSize = 5; // Amount of bullets magazine holds.
+		this->clip = clipSize; // Begin game fully loaded.
+
 		this->clientID = clientID;
 
 		this->shootingTimer = new sf::Clock();
+		this->reloadTimer = new sf::Clock();
 
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
@@ -122,17 +127,33 @@ namespace mp
 		}
 	}
 
-	void Character::setShooting() {
-		shootingTimer->restart();
+	void Character::shoot() {
+		if (--clip <= 0) {
+			this->reload();
+		}
+		else {
+			shootingTimer->restart();
+		}
 	}
 	bool Character::isShooting() {
 		return (shootingTimer->getElapsedTime().asMilliseconds() < cooldown);
 	}
 
+	void Character::reload() {
+		// Fill our magazine.
+		this->clip = clipSize;
+		// Force the user to wait >:)
+		reloadTimer->restart();
+	}
+	bool Character::isReloading() {
+		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
+	}
+
 	void Character::primaryFire()
 	{
+		if (isReloading()) { return; }
 		if (isShooting()) { return; }
-		else { setShooting(); }
+		else { shoot(); }
 
 		int speed = 800;
 		b2Vec2 charPos = characterBody->GetPosition();
