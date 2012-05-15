@@ -12,14 +12,14 @@ namespace mp
 		public:
 			JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen);
 			virtual ~JoinGameController();
-			void handleInput(sf::Event &event);
+			void handleInput(sf::Event &ev);
 		protected:
 		private:
 
 			bool ipTextClicked;
 			bool portTextClicked;
 
-			bool isNumberOrDot(sf::Event &event);
+			bool isNumberOrDot(sf::Event &ev);
 
 			GUIElement* cancelButton;
 			GUIElement* connectButton;

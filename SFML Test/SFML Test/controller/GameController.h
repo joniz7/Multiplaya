@@ -34,7 +34,7 @@ namespace mp
         public:
 			GameController(World* model, sf::RenderWindow* window, Screen* joinGameScreen);
 			~GameController();
-			void handleInput(sf::Event &event);
+			void handleInput(sf::Event &ev);
 			void setNetworkHandler(NetworkHandler* network);
             
 

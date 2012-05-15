@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include "../GameState.h"
+#include <sfml/Graphics.hpp>
 
 #include "Screen.h"
 #include "MainScreen.h"
@@ -12,6 +13,7 @@
 
 namespace mp
 {
+	class Screen;
 	class Window
 	{
 		public:

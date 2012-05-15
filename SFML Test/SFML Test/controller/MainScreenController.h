@@ -12,7 +12,7 @@ namespace mp
 		public:
 			MainScreenController(sf::RenderWindow* window, Screen* mainScreen);
 			virtual ~MainScreenController();
-			void handleInput(sf::Event &event);
+			void handleInput(sf::Event &ev);
 		protected:
 		private:
 		GUIElement* joinButton;

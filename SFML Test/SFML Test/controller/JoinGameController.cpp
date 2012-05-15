@@ -19,13 +19,13 @@ namespace mp
 		//dtor
 	}
 
-	void JoinGameController::handleInput(sf::Event &event)
+	void JoinGameController::handleInput(sf::Event &ev)
 	{
 		// for hover effects
 		sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
 		getScreen()->hover(mousePos);
 
-		if (event.type == sf::Event::MouseButtonReleased)
+		if (ev.type == sf::Event::MouseButtonReleased)
 		{
 			// get in constructor instead
 			if ( cancelButton->isMouseOver(mousePos) )
@@ -79,14 +79,14 @@ namespace mp
 			}
 		}
 
-		if (event.type == sf::Event::TextEntered)
+		if (ev.type == sf::Event::TextEntered)
 		{
-			if (isNumberOrDot(event))
+			if (isNumberOrDot(ev))
 			{
 				if (ipTextClicked)
-					ipTextField->setText(ipTextField->getText() + event.text.unicode);
+					ipTextField->setText(ipTextField->getText() + ev.text.unicode);
 				if (portTextClicked)
-					portTextField->setText(portTextField->getText() + event.text.unicode);
+					portTextField->setText(portTextField->getText() + ev.text.unicode);
 			}
 
 				//event.TextEvent.unicode;
@@ -101,8 +101,8 @@ namespace mp
 
 	}
 
-	bool JoinGameController::isNumberOrDot(sf::Event &event)
+	bool JoinGameController::isNumberOrDot(sf::Event &ev)
 	{
-		return (event.text.unicode >= 48 && event.text.unicode <= 57 ) || event.text.unicode == 46;
+		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 ) || ev.text.unicode == 46;
 	}
 }

@@ -10,7 +10,7 @@ namespace mp
 		public:
 			HostGameController(sf::RenderWindow* window, Screen* hostScreen);
 			virtual ~HostGameController();
-			void handleInput(sf::Event &event);
+			void handleInput(sf::Event &ev);
 		protected:
 		private:
 

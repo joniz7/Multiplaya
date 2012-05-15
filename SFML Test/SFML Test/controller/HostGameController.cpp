@@ -12,7 +12,7 @@ namespace mp
 		//dtor
 	}
 
-	void HostGameController::handleInput(sf::Event &event)
+	void HostGameController::handleInput(sf::Event &ev)
 	{
 
 	}

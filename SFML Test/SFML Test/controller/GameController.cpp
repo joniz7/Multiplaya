@@ -33,9 +33,8 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
-    void GameController::handleInput(sf::Event &event)
+    void GameController::handleInput(sf::Event &ev)
     {
-		model->exec();
 		currentPlayer->update();
 		// Wait until setNetworkHandler() is called.
 		while(network == NULL) {}

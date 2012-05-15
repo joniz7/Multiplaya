@@ -22,7 +22,7 @@ namespace mp
 		protected:
 		private:
 			//alternative is a map
-			sf::Event* event;
+			sf::Event* ev;
 			//std::vector<IController*> controllers;
 			std::map<std::string, IController*> controllers;
 			Window* window;

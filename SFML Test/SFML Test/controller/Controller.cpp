@@ -7,7 +7,7 @@ namespace mp
 		//ctor
 		this->window = window;
 		renderWindow = window->getRenderWindow();
-		event = new sf::Event();
+		ev = new sf::Event();
 
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
@@ -27,38 +27,31 @@ namespace mp
 
 	void Controller::exec()
 	{
-		while (true)
+		while (window->getRenderWindow()->pollEvent(*ev))
 		{
-		   while (renderWindow->pollEvent(*event))
-		   {
+			if (ev->type == sf::Event::Closed)
+				renderWindow->close();
+			if ((ev->type == sf::Event::KeyPressed) && (ev->key.code == sf::Keyboard::Escape))
+				renderWindow->close();
 
-				if (event->type == sf::Event::Closed)
-					renderWindow->close();
-				if ((event->type == sf::Event::KeyPressed) && (event->key.code == sf::Keyboard::Escape))
-					renderWindow->close();
+			switch (GameState::getInstance()->getGameState())
+			{
+				case GameState::MAIN_SCREEN:
+					controllers["mainScreen"]->handleInput(*ev);
+				break;
 
+				case GameState::JOIN_GAME:
+					controllers["joinGame"]->handleInput(*ev);
+				break;
 
-				switch (GameState::getInstance()->getGameState())
-				{
-					case GameState::MAIN_SCREEN:
-						controllers["mainScreen"]->handleInput(*event);
-					break;
+				case GameState::HOST_GAME:
+					controllers["hostGame"]->handleInput(*ev);
+				break;
 
-					case GameState::JOIN_GAME:
-						controllers["joinGame"]->handleInput(*event);
-					break;
+				case GameState::SETTINGS_SCREEN:
 
-					case GameState::HOST_GAME:
-						controllers["hostGame"]->handleInput(*event);
-					break;
-
-					case GameState::SETTINGS_SCREEN:
-
-					break;
-
-
-				}
-		   }
+				break;
+			} 
 		}
 	}
 }

@@ -13,7 +13,6 @@ namespace mp
 		//ctor
 		window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "Multiplaya");
 		window->setFramerateLimit(60);
-
 		// Set window data
         window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
         window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
@@ -23,15 +22,13 @@ namespace mp
 		screens.push_back( new JoinGameScreen() );
 		screens.push_back ( new SettingsScreen() );
 		*/
-		std::cout << "here?" << std::endl;
 		sf::Vector2u resolution = window->getSize();
 		screens["mainScreen"] = new MainScreen(resolution);
 		screens["joinGameScreen"] = new JoinGameScreen(resolution);
 		screens["settingsScreen"] = new SettingsScreen(resolution);
 		// will change
-		std::cout << "Creating worldview" << std::endl;
 		screens["hostScreen"] = new WorldView(worldData, window);
-		std::cout << "komemr hit???" << std::endl;
+
 
 	}
 
@@ -39,31 +36,28 @@ namespace mp
 
 	void Window::exec()
 	{
-		while (true)
+
+		window->clear();
+		switch (GameState::getInstance()->getGameState())
 		{
-			window->clear();
-			switch (GameState::getInstance()->getGameState())
-			{
-				case GameState::MAIN_SCREEN:
-					window->draw(*screens["mainScreen"]);
-				break;
+			case GameState::MAIN_SCREEN:
+				window->draw(*screens["mainScreen"]);
+			break;
 
-				case GameState::JOIN_GAME:
-					window->draw(*screens["joinGameScreen"]);
-				break;
+			case GameState::JOIN_GAME:
+				window->draw(*screens["joinGameScreen"]);
+			break;
 
-				case GameState::HOST_GAME:
-					window->draw(*screens["hostScreen"]);
-				break;
+			case GameState::HOST_GAME:
+				window->draw(*screens["hostScreen"]);
+			break;
 
-				case GameState::SETTINGS_SCREEN:
-					window->draw(*screens["settingsScreen"]);
-				break;
-			}
-
-			window->display();
+			case GameState::SETTINGS_SCREEN:
+				window->draw(*screens["settingsScreen"]);
+			break;
 		}
 
+		window->display();
 	}
 
 	sf::RenderWindow* Window::getRenderWindow()

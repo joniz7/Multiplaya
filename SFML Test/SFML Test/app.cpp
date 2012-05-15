@@ -21,7 +21,6 @@
 
 #include "controller/Controller.h"
 #include "model/World.h"
-#include "view/WorldView.h"
 #include "view/Window.h"
 
 ////////////////////////////////////////////////////////////
@@ -57,12 +56,10 @@ namespace mp
 		// Instantiate model and controller.
 		// (Expects worldData and view to already exist)
 		data->model = new World(data->worldData);
-		data->controller = new Controller(data->model, data->view);
-
 		worldDataMutex.unlock();
 		// We're done, let the main program continue.
 		data->logicThreadFinished = true;
-		data->controller->exec();
+		data->model->exec();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -73,11 +70,12 @@ namespace mp
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<<"Starting view thread.";
+		std::cout<< "Starting view thread.";
 		// Cast to world data pointer
 		Container* data = static_cast<Container*>(UserData);
 		std::cout<<".";
 		data->view = new Window(data->worldData);
+		data->controller = new Controller(data->model, data->view);
 		// We want to observe WorldData.
 		data->worldData->addObserver(data->view->getGameWindow());
 		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
@@ -86,7 +84,12 @@ namespace mp
 		// We're done, let the main program continue.
 		data->viewThreadFinished = true;
 		// Run the view's infinite loop
-		data->view->exec();
+		while (true)
+		{
+			data->view->exec();
+			data->controller->exec();
+		}
+
 	}
 
 	////////////////////////////////////////////////////////////
@@ -137,16 +140,17 @@ namespace mp
 		// Instantiate everything!
 		data->worldData = new WorldData();
 
-		// Create and launch the view thread.
-		sf::Thread viewThread(&createViewThread, data);
-		viewThread.launch();
-		while(!data->viewThreadFinished) {}
-
 		// Create and launch the logic thread.
 		// Important: depends on viewThread already being launched!
 		sf::Thread logicThread(&createLogicThread, data);
 		logicThread.launch();
 		while(!data->logicThreadFinished) {}
+
+		// Create and launch the view thread.
+		sf::Thread viewThread(&createViewThread, data);
+		viewThread.launch();
+		while(!data->viewThreadFinished) {}
+
 
 		//Create and launch the network thread
 		sf::Thread networkThread(&createNetworkThread, data);

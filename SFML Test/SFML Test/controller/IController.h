@@ -14,7 +14,7 @@ namespace mp
 			 IController(sf::RenderWindow* window, Screen* screen);
 			 virtual ~IController();
 			// might be a better way to send window in constructor instead
-			virtual void handleInput(sf::Event &event) = 0;
+			virtual void handleInput(sf::Event &ev) = 0;
 
 			Screen* getScreen();
 			sf::RenderWindow* getRenderWindow();

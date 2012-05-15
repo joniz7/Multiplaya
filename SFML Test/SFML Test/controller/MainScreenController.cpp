@@ -12,13 +12,13 @@ namespace mp
 		//dtor
 	}
 
-	void MainScreenController::handleInput(sf::Event &event)
+	void MainScreenController::handleInput(sf::Event &ev)
 	{
 		// for hover effects
 		sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
 		getScreen()->hover(mousePos);
 
-		if (event.type == sf::Event::MouseButtonReleased)
+		if (ev.type == sf::Event::MouseButtonReleased)
 		{
 			if ( joinButton->isMouseOver(mousePos) )
 			{
