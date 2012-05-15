@@ -47,7 +47,7 @@ namespace mp
 		Client client;
 		std::string name;
 
-		sf::Int8 clientID;
+		sf::Int8 clientID, numOfChars;
 
 		std::string message;
 
@@ -153,7 +153,16 @@ namespace mp
 						break;
 					//Receive character data from the server
 					case 13:
-						//TODO: Complete this!
+						receivedData >> numOfChars;
+
+						for(int i = 0; i<numOfChars; i++)
+						{
+							receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
+							position.Set(x,y);
+							velocity.Set(xvel, yvel);
+
+							setCharacterData(clientID, position, velocity, angle);
+						}
 						break;
 				}
 			}
@@ -249,7 +258,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharacterDataToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 13, numOfChars = worldData->getCharacters()->size();
+		sf::Int8 type = 13, tempClientID, numOfChars = worldData->getCharacters()->size();
 		sf::Packet packet;
 		Character* tempCharacter;
 		float32 x, y, xvel, yvel, angle;
@@ -258,13 +267,14 @@ namespace mp
 		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
+			tempClientID = tempCharacter->getClientID();
 			x = tempCharacter->getPosition().x;
 			y = tempCharacter->getPosition().y;
-			xvel = tempCharacter->GetLinearVelocity().x;
-			yvel = tempCharacter->GetLinearVelocity().y;
-			angle = tempCharacter->GetAngle();
+			xvel = tempCharacter->getLinVelocity().x;
+			yvel = tempCharacter->getLinVelocity().y;
+			angle = tempCharacter->getAngle();
 
-			packet << x << y << xvel << yvel << angle;
+			packet << tempClientID << x << y << xvel << yvel << angle;
 		}
 
 		sender.send(packet, clientMap[clientID].IP, receivePort);
