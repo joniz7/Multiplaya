@@ -54,7 +54,10 @@ namespace mp
 			bool isGrounded() { return grounded; }
 
 			bool isShooting();
-			void setShooting();
+			void shoot();
+			
+			bool isReloading();
+			void reload();
 
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
@@ -80,9 +83,14 @@ namespace mp
 			WorldData* worldData;
 			b2World* world;
 			sf::Clock* shootingTimer;
+			sf::Clock* reloadTimer;
 
 			short health;
 			short cooldown;
+			short reloadTime;
+			
+			int clip;
+			int clipSize;
 
 			bool facingRight;
 			bool grounded;
