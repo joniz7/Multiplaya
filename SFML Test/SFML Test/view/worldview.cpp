@@ -27,7 +27,8 @@ namespace mp
 		this->pixelScale = 1 / 10.0f;
 		counter = 0;
 		elapsed = 0;
-		started = false;
+		//should probably just be called initialize or something
+		exec();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -160,11 +161,7 @@ namespace mp
 
 	void WorldView::update()
 	{
-		if (!started)
-		{
-			exec();
-			started = true;
-		}
+
 		tempLoop();
 		calculateCam();
 		// TODO: The upper should suffice. What's the deal? :(
@@ -196,17 +193,15 @@ namespace mp
 
 			// Set world view so we can render the world in world coordinates
 			window.setView(*worldView);
-            // Clear screen
-           // window->clear();
             
             // Render World.
 			drawWorld( window );
 
 			// Render UI.
-//			drawUI( window );
+			drawUI( window );
 
             // Update the window
-          //  window->display();
+
 			// Save mouse position for next frame
 			*mousePosOld = *mousePos;
 	}
@@ -256,7 +251,7 @@ namespace mp
 		// Zoom view
 		worldView->zoom( 1.5 );
 		// Set view
-		window->setView(*worldView);
+		//window->setView(*worldView);
 		//------------------
 		// Instantiate stuff.
 		mousePos = new sf::Vector2f(0,0);
@@ -426,10 +421,10 @@ namespace mp
 			(*it)->updatePosition();
 	}
 
-	void WorldView::drawUI(sf::RenderTarget& window)
+	void WorldView::drawUI(sf::RenderTarget& window) const
 	{
 		// Set default view so we can render the ui in window coordinates
-		window.setView(window.getDefaultView());
+		window.setView(this->window->getDefaultView());
 		window.draw(*dotSpr);
 		// Draw hud
 		if(ConfigHandler::instance().getBool("r_drawhud"))

@@ -16,6 +16,7 @@ namespace mp
 		protected:
 		private:
 		GUIElement* joinButton;
+		GUIElement* hostButton;
 
 	};
 }

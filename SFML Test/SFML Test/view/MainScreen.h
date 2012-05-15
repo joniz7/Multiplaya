@@ -32,10 +32,6 @@ namespace mp
 
 			std::map<std::string, Button*> buttons;
 
-			TextField* textField;
-
-
-
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 
 	};

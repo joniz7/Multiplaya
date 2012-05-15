@@ -29,7 +29,8 @@ namespace mp
 		private:
 			sf::RenderWindow* window;
 		   // std::vector<Screen*> screens;
-		   std::map<std::string, Screen*> screens;
+			std::map<std::string, Screen*> screens;
+			WorldView* worldView;
 	};
 }
 #endif // WINDOW_H

@@ -5,6 +5,7 @@ namespace mp
 	MainScreenController::MainScreenController(sf::RenderWindow* window, Screen* mainScreen) : IController(window, mainScreen)
 	{
 		joinButton = mainScreen->getElement("joinButton");
+		hostButton = mainScreen->getElement("hostButton");
 	}
 
 	MainScreenController::~MainScreenController()
@@ -24,6 +25,12 @@ namespace mp
 			{
 				joinButton->click();
 				GameState::getInstance()->setGameState(GameState::JOIN_GAME);
+			}
+
+			if ( hostButton->isMouseOver(mousePos) )
+			{
+				hostButton->click();
+				GameState::getInstance()->setGameState(GameState::HOST_GAME);
 			}
 
 			// get button elements and see which hovers

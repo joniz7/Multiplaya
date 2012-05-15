@@ -62,7 +62,7 @@ namespace mp
 			float pixelScale;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
-			sf::RenderWindow* window;
+			mutable sf::RenderWindow* window;
 			WorldData* worldData;
 			sf::View* worldView;
 			
@@ -117,13 +117,12 @@ namespace mp
 			void drawEnvironment(sf::RenderTarget& window) const;
 			void drawBullets(sf::RenderTarget& window) const;
 			void drawCharacters(sf::RenderTarget& window) const;
-			void drawUI(sf::RenderTarget& window);
+			void drawUI(sf::RenderTarget& window) const;
 			void drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const;
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
 
 			virtual bool hover (const sf::Vector2i& mousePos) { return true; }
 
-			bool started;
 			void tempLoop();
 
 			int counter;
