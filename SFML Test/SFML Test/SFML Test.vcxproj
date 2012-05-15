@@ -102,6 +102,7 @@
     <ClCompile Include="view\animatedsprite.cpp" />
     <ClCompile Include="view\BulletView.cpp" />
     <ClCompile Include="view\CharacterView.cpp" />
+    <ClCompile Include="view\HUDSprite.cpp" />
     <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="view\BulletView.h" />
     <ClInclude Include="view\CharacterView.h" />
     <ClInclude Include="view\GameObjectView.h" />
+    <ClInclude Include="view\HUDSprite.h" />
     <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <ItemGroup>

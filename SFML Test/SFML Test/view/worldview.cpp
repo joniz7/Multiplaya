@@ -171,6 +171,7 @@ namespace mp
 			// and call updateAnimation() on all of them.
 
 			updatePositions();
+			updateHUD();
 
 			// Unlock world data mutex
 			worldDataMutex.unlock();
@@ -183,7 +184,7 @@ namespace mp
 			drawWorld();
 
 			// Render UI.
-			drawUI();
+			drawHUD();
 
             // Update the window
             window->display();
@@ -249,12 +250,9 @@ namespace mp
 		mousePosOld = new sf::Vector2f(0,0);
 		mouseSpeed = new sf::Vector2f(0,0);
 
-		//----Test stuff----
-		// Fake HUD
-		if(!hudTex.loadFromFile("resources/hud.png"))
-			std::cout << "Failed to load texture: hud.png" << std::endl;
-		hudSpr.setTexture(hudTex);
-		hudSpr.setScale(WIDTH / 1920, HEIGHT / 1080);
+		// Initialize the HUD.
+		this->initHUD();
+
 		// Light bubble
 		lightTex = new sf::Texture();
 		lightTex->loadFromFile("resources/light.png");
@@ -272,6 +270,64 @@ namespace mp
 		dotSpr->setTexture(*dotTex);
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5, 0.5);
+	}
+
+
+	/////////////////////////////////
+	/// Initializes all HUD elements.
+	/////////////////////////////////
+	void WorldView::initHUD() {
+		resourcesDir = "resources/";
+		
+		//------- Create "Kills" sprite. -------
+		// TODO: superimpose text label for dynamic-ness?
+		int x,y;
+		killsTexture = new sf::Texture();
+		if (!killsTexture->loadFromFile((resourcesDir+"kills.png"))) {
+			std::cout << "Failed to load texture: kills.png" << std::endl;
+		}
+		// Kills sprite.
+		killsSprite = new sf::Sprite();
+		killsSprite->setTexture(*killsTexture);
+		x = ((WIDTH)/2) - killsSprite->getTexture()->getSize().x;
+		y = 0;
+		killsSprite->setPosition(x,y);
+		// TODO: uncomment below line and fix the positioning error that occurs.
+		//killsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		//------- Create "Deaths" sprite. -------
+		// TODO: superimpose text label for dynamic-ness?
+		deathsTexture = new sf::Texture();
+		// Load image file
+		if (!deathsTexture->loadFromFile((resourcesDir+"deaths.png"))) {
+			std::cout << "Failed to load texture: deaths.png" << std::endl;
+		}
+		// Deaths sprite.
+		deathsSprite = new sf::Sprite();
+		deathsSprite->setTexture(*deathsTexture);
+		x = ((WIDTH)/2);
+		y = 0;
+		deathsSprite->setPosition(x,y);
+		// TODO: read above.
+		//deathsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		//-------- Ammo sprite. ---------
+		// ammo sprite.
+		ammoSprite = new HUDSprite(resourcesDir + "ammo.png", 12);
+		x = 0;
+		y = (HEIGHT) - ammoSprite->getHeight();
+		ammoSprite->setPosition(x,y);
+		//ammoSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		//--------- HP sprite. ---------.
+		hpSprite = new HUDSprite(resourcesDir + "hp.png", 9);
+		x = (WIDTH)  - hpSprite->getWidth();
+		y = (HEIGHT) - hpSprite->getHeight();
+		hpSprite->setPosition(x,y);
+		// TODO: read above.
+		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
+		//------------------------------
+
 	}
 
 	// Fetches all character models,
@@ -362,6 +418,15 @@ namespace mp
 		worldViewMutex.unlock();
 	}
 
+	void WorldView::updateHUD()
+	{
+		worldViewMutex.lock();
+		ammoSprite->setState(worldData->getCurrentCharacter()->getClip());
+		hpSprite->setState(worldData->getCurrentCharacter()->getHealthState());
+		// TODO: get kill/death-count for use in text labels.
+		worldViewMutex.unlock();
+	}
+
 	// better name
 	void WorldView::drawVector(std::vector<GameObjectView*>& vector)
 	{
@@ -411,7 +476,7 @@ namespace mp
 			(*it)->updatePosition();
 	}
 
-	void WorldView::drawUI()
+	void WorldView::drawHUD()
 	{
 		// Set default view so we can render the ui in window coordinates
 		window->setView(window->getDefaultView());
@@ -419,7 +484,11 @@ namespace mp
 		// Draw hud
 		if(ConfigHandler::instance().getBool("r_drawhud"))
 		{
-			window->draw(hudSpr);
+			window->draw(*killsSprite);
+			window->draw(*deathsSprite);
+			window->draw(*ammoSprite);
+			// TODO: cast to base
+			window->draw(*hpSprite);
 		}
 		// Draw debug labels
 		if(ConfigHandler::instance().getBool("s_debugmode"))

@@ -24,6 +24,7 @@
 // Game specific headers
 #include "../game.h"
 #include "BulletView.h"
+#include "HUDSprite.h"
 
 #include "../util/Observer.h"
 #include "GameObjectView.h"
@@ -38,6 +39,7 @@ namespace mp
 	class CharacterView;
 	class BulletView;
 	class GameObjectView;
+	class HUDSprite;
 	class AnimatedSprite; // TODO remove, after sprites has been fully moved to CharacterView.
     
 	class WorldView : public Observer
@@ -54,8 +56,21 @@ namespace mp
     		
 		private:
 			float pixelScale;
-			sf::Texture hudTex;
-			sf::Sprite hudSpr;
+
+			std::string resourcesDir;
+			
+			// HUD textures.
+			sf::Texture* killsTexture;
+			sf::Texture* deathsTexture;
+			
+			// HUD sprites.
+			// TODO: delete in constructor!
+			sf::Sprite* killsSprite;
+			sf::Sprite* deathsSprite;
+			HUDSprite* hpSprite;
+			HUDSprite* ammoSprite;
+			
+
 			WorldData* worldData;
 			sf::View* worldView;
 			sf::RenderWindow* window;
@@ -96,7 +111,8 @@ namespace mp
 			void constructMapGraphics();
 
 			void calculateCam();
-			
+			void updateHUD();
+
 			void updatePositions();
 			void updateBulletsPos();
 			void updateCharactersPos();
@@ -104,11 +120,12 @@ namespace mp
 			void createCharacterViews();
 
 			void initialize();
+			void initHUD();
 			void drawWorld();
 			void drawEnvironment();
 			void drawBullets();
 			void drawCharacters();
-			void drawUI();
+			void drawHUD();
 			void drawVector(std::vector<GameObjectView*>& vector);
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
 
