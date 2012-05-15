@@ -16,8 +16,7 @@ namespace mp
 
 		// calculate background sprite scaling
 		// move to method later on
-		backgroundSprite->scale( 2.0f,  1.0f);
-
+		backgroundSprite->scale( 2.0f,  1.2f);
 		font = new sf::Font();
 		font->loadFromFile("resources/gothic.ttf");
 

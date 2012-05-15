@@ -217,7 +217,7 @@ namespace mp
 		
 		// Background stuff
 		float screenWidth = window->getSize().x;
-		float screenHeight = window->getSize().x;
+		float screenHeight = window->getSize().y;
 
 		background = new sf::RectangleShape( sf::Vector2f(screenWidth * 2 * pixelScale, screenHeight * 2 * pixelScale) );
 		background->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
