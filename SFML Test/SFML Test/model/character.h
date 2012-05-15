@@ -47,7 +47,13 @@ namespace mp
 			void setMovement(int direction);
 
 			short getHealth() { return health; };
+			short getHealthState();
 			void setHealth(short health);
+
+			short getKills()  { return kills; }
+			short getDeaths() { return deaths; }
+
+			short getClip() { return clip; }
 
 			b2Body* getBody() { return characterBody; }
 			void setGrounded(bool choice) { grounded = choice; }
@@ -86,11 +92,14 @@ namespace mp
 			sf::Clock* reloadTimer;
 
 			short health;
+			short maxHealth;
 			short cooldown;
 			short reloadTime;
 			
-			int clip;
-			int clipSize;
+			short clip;
+			short clipSize;
+			short kills;
+			short deaths;
 
 			bool facingRight;
 			bool grounded;

@@ -26,10 +26,11 @@ namespace mp
 		this->leftSideTouchWall = false;
 		this->rightSideTouchWall = false;
 		this->walking = false;
-		this->setHealth(100); // TODO should default value be defined elsewhere?
+		this->maxHealth = 80;
+		this->setHealth(80); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
 		this->reloadTime = 1000; // Milliseconds it takes to reload.
-		this->clipSize = 5; // Amount of bullets magazine holds.
+		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
 
 		this->clientID = clientID;
@@ -201,11 +202,24 @@ namespace mp
 		if (health < 1) {
 			this->kill();
 		}
-		// Should we enforce maxHP here?
+		else if (health>maxHealth) {
+			this->health = maxHealth;
+		}
 		else {
 			this->health = health;
 		}
 		std::cout << "health: " << this->health << std::endl;
+	}
+	/////////////////////////////////////
+	/// Returns the character's health level.
+	/// \return a number between 0 and 8.
+	/////////////////////////////////////
+	short Character::getHealthState() {
+		int result = (health/10);
+		if ((result == 0) && health>0) {
+			result = 1;
+		}
+		return result;
 	}
 
 	void Character::kill() {
