@@ -82,7 +82,13 @@
   <ItemGroup>
     <ClCompile Include="app.cpp" />
     <ClCompile Include="controller\Controller.cpp" />
+    <ClCompile Include="controller\GameController.cpp" />
+    <ClCompile Include="controller\HostGameController.cpp" />
+    <ClCompile Include="controller\IController.cpp" />
+    <ClCompile Include="controller\JoinGameController.cpp" />
+    <ClCompile Include="controller\MainScreenController.cpp" />
     <ClCompile Include="controller\Player.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
@@ -102,15 +108,27 @@
     <ClCompile Include="view\animatedsprite.cpp" />
     <ClCompile Include="view\BulletView.cpp" />
     <ClCompile Include="view\CharacterView.cpp" />
+    <ClCompile Include="view\GUIElements\Button.cpp" />
+    <ClCompile Include="view\GUIElements\TextField.cpp" />
+    <ClCompile Include="view\JoinGameScreen.cpp" />
+    <ClCompile Include="view\MainScreen.cpp" />
+    <ClCompile Include="view\SettingsScreen.cpp" />
+    <ClCompile Include="view\Window.cpp" />
     <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="client.h" />
     <ClInclude Include="controller\Controller.h" />
+    <ClInclude Include="controller\GameController.h" />
+    <ClInclude Include="controller\HostGameController.h" />
+    <ClInclude Include="controller\IController.h" />
+    <ClInclude Include="controller\JoinGameController.h" />
+    <ClInclude Include="controller\MainScreenController.h" />
     <ClInclude Include="controller\Player.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="model\bullet.h" />
     <ClInclude Include="model\character.h" />
@@ -133,6 +151,14 @@
     <ClInclude Include="view\BulletView.h" />
     <ClInclude Include="view\CharacterView.h" />
     <ClInclude Include="view\GameObjectView.h" />
+    <ClInclude Include="view\GUIElements\Button.h" />
+    <ClInclude Include="view\GUIElements\GUIElement.h" />
+    <ClInclude Include="view\GUIElements\TextField.h" />
+    <ClInclude Include="view\JoinGameScreen.h" />
+    <ClInclude Include="view\MainScreen.h" />
+    <ClInclude Include="view\Screen.h" />
+    <ClInclude Include="view\SettingsScreen.h" />
+    <ClInclude Include="view\Window.h" />
     <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <ItemGroup>

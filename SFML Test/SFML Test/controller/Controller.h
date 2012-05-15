@@ -2,28 +2,33 @@
 #define CONTROLLER_H
 
 #include <string>
-#include "GameState.h"
-#include "Window.h"
+#include "../GameState.h"
+#include "../view/Window.h"
 #include "MainScreenController.h"
 #include "HostGameController.h"
 #include "JoinGameController.h"
+#include "GameController.h"
+#include "../model/world.h"
 
-class Controller
+namespace mp
 {
-    public:
-        Controller(Window* window);
-        virtual ~Controller();
-        void run();
-    protected:
-    private:
-        //alternative is a map
-        sf::Event* event;
-        //std::vector<IController*> controllers;
-        std::map<std::string, IController*> controllers;
-        Window* window;
-        sf::RenderWindow* renderWindow;
+	class Controller
+	{
+		public:
+			Controller(World* world, Window* window);
+			virtual ~Controller();
+			void exec();
+			void setNetworkHandler(NetworkHandler* network);
+		protected:
+		private:
+			//alternative is a map
+			sf::Event* event;
+			//std::vector<IController*> controllers;
+			std::map<std::string, IController*> controllers;
+			Window* window;
+			sf::RenderWindow* renderWindow;
 
-        // sf window reference
-};
-
+			// sf window reference
+	};
+}
 #endif // CONTROLLER_H

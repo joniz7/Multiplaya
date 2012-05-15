@@ -19,9 +19,10 @@
 #include "defines.h"
 #include "global.h"
 
-#include "controller/GameController.h"
+#include "controller/Controller.h"
 #include "model/World.h"
 #include "view/WorldView.h"
+#include "view/Window.h"
 
 ////////////////////////////////////////////////////////////
 /// Application class. Manages the program.
@@ -34,7 +35,7 @@ namespace mp
 		World* model;
 		WorldData* worldData;
 		Controller* controller;
-		WorldView* view;
+		Window* view;
 		NetworkHandler* network;
 
 		bool viewThreadFinished;
@@ -76,9 +77,9 @@ namespace mp
 		// Cast to world data pointer
 		Container* data = static_cast<Container*>(UserData);
 		std::cout<<".";
-		data->view = new WorldView(data->worldData);
+		data->view = new Window(data->worldData);
 		// We want to observe WorldData.
-		data->worldData->addObserver(data->view);
+		data->worldData->addObserver(data->view->getGameWindow());
 		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
 		// Unlock world data
 		worldDataMutex.unlock();

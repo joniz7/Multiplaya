@@ -8,18 +8,21 @@
 #include "JoinGameScreen.h"
 #include "SettingsScreen.h"
 #include "worldview.h"
+#include "../model/worlddata.h"
 
 namespace mp
 {
 	class Window
 	{
 		public:
-			Window();
+			Window(WorldData* worldData);
 			virtual ~Window();
-			void run();
+			void exec();
 
 			Screen* getScreen(std::string string);
 			sf::RenderWindow* getRenderWindow();
+
+			WorldView* getGameWindow() { return (WorldView*) screens["hostScreen"]; }
 		protected:
 		private:
 			sf::RenderWindow* window;

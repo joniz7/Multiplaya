@@ -30,6 +30,9 @@
     <Filter Include="src\controller">
       <UniqueIdentifier>{f3a75e3f-769f-4f7b-aa63-0170847a4b36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\view\GUIElements">
+      <UniqueIdentifier>{201842e0-08df-4e50-a7c9-f1800b6d50e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="model\bullet.cpp">
@@ -95,11 +98,47 @@
     <ClCompile Include="model\Wall.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
+    <ClCompile Include="controller\Player.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="view\JoinGameScreen.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\MainScreen.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\SettingsScreen.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\Window.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\GameController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
     <ClCompile Include="controller\Controller.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
-    <ClCompile Include="controller\Player.cpp">
+    <ClCompile Include="controller\HostGameController.cpp">
       <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\IController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\JoinGameController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\MainScreenController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="view\GUIElements\Button.cpp">
+      <Filter>src\view\GUIElements</Filter>
+    </ClCompile>
+    <ClCompile Include="view\GUIElements\TextField.cpp">
+      <Filter>src\view\GUIElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,11 +223,53 @@
     <ClInclude Include="client.h">
       <Filter>src\includes</Filter>
     </ClInclude>
+    <ClInclude Include="controller\Player.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="view\JoinGameScreen.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\MainScreen.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\Screen.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\SettingsScreen.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\Window.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\GameController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
     <ClInclude Include="controller\Controller.h">
       <Filter>src\controller</Filter>
     </ClInclude>
-    <ClInclude Include="controller\Player.h">
+    <ClInclude Include="controller\HostGameController.h">
       <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\IController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\JoinGameController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\MainScreenController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="view\GUIElements\Button.h">
+      <Filter>src\view\GUIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="view\GUIElements\GUIElement.h">
+      <Filter>src\view\GUIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="view\GUIElements\TextField.h">
+      <Filter>src\view\GUIElements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

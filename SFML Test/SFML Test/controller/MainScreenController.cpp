@@ -1,29 +1,32 @@
 #include "MainScreenController.h"
 
-MainScreenController::MainScreenController(sf::RenderWindow* window, Screen* mainScreen) : IController(window, mainScreen)
+namespace mp
 {
-    joinButton = mainScreen->getElement("joinButton");
-}
+	MainScreenController::MainScreenController(sf::RenderWindow* window, Screen* mainScreen) : IController(window, mainScreen)
+	{
+		joinButton = mainScreen->getElement("joinButton");
+	}
 
-MainScreenController::~MainScreenController()
-{
-    //dtor
-}
+	MainScreenController::~MainScreenController()
+	{
+		//dtor
+	}
 
-void MainScreenController::handleInput(sf::Event &event)
-{
-    // for hover effects
-    sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
-    getScreen()->hover(mousePos);
+	void MainScreenController::handleInput(sf::Event &event)
+	{
+		// for hover effects
+		sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
+		getScreen()->hover(mousePos);
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
-        if ( joinButton->isMouseOver(mousePos) )
-        {
-            joinButton->click();
-            GameState::getInstance()->setGameState(GameState::JOIN_GAME);
-        }
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			if ( joinButton->isMouseOver(mousePos) )
+			{
+				joinButton->click();
+				GameState::getInstance()->setGameState(GameState::JOIN_GAME);
+			}
 
-        // get button elements and see which hovers
-    }
+			// get button elements and see which hovers
+		}
+	}
 }

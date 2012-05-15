@@ -63,6 +63,8 @@ namespace mp
 		buttons["cancelButton"]->isMouseOver(mousePos);
 		buttons["ipTextField"]->isMouseOver(mousePos);
 		buttons["portTextField"]->isMouseOver(mousePos);
+
+		return true;
 	}
 
 	void JoinGameScreen::draw(sf::RenderTarget& window, sf::RenderStates states) const

@@ -3,15 +3,18 @@
 
 #include "IController.h"
 
-class HostGameController : public IController
+namespace mp
 {
-    public:
-        HostGameController(sf::RenderWindow* window, Screen* hostScreen);
-        virtual ~HostGameController();
-        void handleInput(sf::Event &event);
-    protected:
-    private:
+	class HostGameController : public IController
+	{
+		public:
+			HostGameController(sf::RenderWindow* window, Screen* hostScreen);
+			virtual ~HostGameController();
+			void handleInput(sf::Event &event);
+		protected:
+		private:
 
-};
+	};
+}
 
 #endif // HOSTGAMECONTROLLER_H

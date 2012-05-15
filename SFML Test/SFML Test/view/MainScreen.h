@@ -2,8 +2,8 @@
 #define MAINSCREEN_H
 
 #include "Screen.h"
-#include "Button.h"
-#include "TextField.h"
+#include "GUIElements/Button.h"
+#include "GUIElements/TextField.h"
 #include <map>
 
 namespace mp
@@ -18,6 +18,7 @@ namespace mp
 			//int click(const sf::Vector2i& mousePos);
 			virtual GUIElement* getElement(std::string element);
 
+			virtual void update() {}
 		protected:
 		private:
 			sf::Font* font;

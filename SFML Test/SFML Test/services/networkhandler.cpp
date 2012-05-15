@@ -249,7 +249,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharacterDataToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 13, numOfChars = worldData->getCharacters()->size();
+		/*sf::Int8 type = 13, numOfChars = worldData->getCharacters()->size();
 		sf::Packet packet;
 		Character* tempCharacter;
 		float32 x, y, xvel, yvel, angle;
@@ -267,7 +267,7 @@ namespace mp
 			packet << x << y << xvel << yvel << angle;
 		}
 
-		sender.send(packet, clientMap[clientID].IP, receivePort);
+		sender.send(packet, clientMap[clientID].IP, receivePort);*/
 	}
 
 	////////////////////////////////////////////////////////////

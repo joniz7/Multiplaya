@@ -32,6 +32,7 @@
 #include "../global.h"
 
 #include "Screen.h"
+#include "GUIElements/GUIElement.h"
 
 namespace mp
 {
@@ -45,22 +46,25 @@ namespace mp
 	class WorldView : public Screen, public Observer
     {
         public:
-			WorldView( sf::RenderWindow* window, WorldData* worldData );
+			WorldView( WorldData* worldData, sf::RenderWindow* window );
 			void exec();
 			sf::View* getView() { return worldView; }
             ~WorldView();
 			virtual void notify(Event e, void* object);
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
+			virtual void update();
+			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
 			
 		protected:
     		
 		private:
+			std::map<std::string, GUIElement*> buttons;
 			float pixelScale;
 			sf::Texture hudTex;
 			sf::Sprite hudSpr;
+			sf::RenderWindow* window;
 			WorldData* worldData;
 			sf::View* worldView;
-			sf::RenderWindow* window;
 			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
@@ -108,16 +112,22 @@ namespace mp
 			void initialize();
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
-			void drawWorld();
-			void drawEnvironment();
-			void drawBullets();
-			void drawCharacters();
-			void drawUI();
-			void drawVector(std::vector<GameObjectView*>& vector);
+
+			void drawWorld(sf::RenderTarget& window) const;
+			void drawEnvironment(sf::RenderTarget& window) const;
+			void drawBullets(sf::RenderTarget& window) const;
+			void drawCharacters(sf::RenderTarget& window) const;
+			void drawUI(sf::RenderTarget& window);
+			void drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const;
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
 
-			virtual bool hover (const sf::Vector2i& mousePos) {};
-			virtual GUIElement* getElement(std::string element) {};
+			virtual bool hover (const sf::Vector2i& mousePos) { return true; }
+
+			bool started;
+			void tempLoop();
+
+			int counter;
+			float elapsed;
 
     };
 }

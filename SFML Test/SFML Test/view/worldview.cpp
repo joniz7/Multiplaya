@@ -17,16 +17,17 @@
 
 namespace mp
 {
-	const float WIDTH = ConfigHandler::instance().getInt("r_width");
-	const float HEIGHT = ConfigHandler::instance().getInt("r_height");
-
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldView::WorldView(sf::RenderWindow* window, WorldData* worldData)
+	WorldView::WorldView(WorldData* worldData, sf::RenderWindow* window)
 	{
 		this->worldData = worldData;
+		this->window = window;
 		this->pixelScale = 1 / 10.0f;
+		counter = 0;
+		elapsed = 0;
+		started = false;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -82,7 +83,7 @@ namespace mp
 
 		// Initialize the window.
 		initialize();
-
+		std::cout << "init" << std::endl;
 		// ---- Character's Sprite ----
 		// TODO: move all this to CharacterView's constructor.
 		characterTexture = new sf::Texture();
@@ -107,6 +108,7 @@ namespace mp
 		characterSprite->setPosition(0,0);
 		characterSprite->scale(0.0016f, 0.0016f);
 		characterSprite->playAnimation("idle");
+		std::cout << "init2" << std::endl;
 		// ----------------------------
 
 		//instantiate map graphics
@@ -119,17 +121,18 @@ namespace mp
 
 		std::cout << "Render window initialized!" << std::endl;
 
-		int counter = 0;
-		bool running = true;
-		while (running)
-        {
+
+	}
+
+	void WorldView::tempLoop()
+	{
 			// Fetch mouse-related things.
 			*mousePosWindow = sf::Mouse::getPosition(*window);
 			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *worldView ) / pixelScale;
 			
 			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
-            float elapsed = clock.getElapsedTime().asSeconds();
+            elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
 			
@@ -153,48 +156,59 @@ namespace mp
 			else {
 				counter++;
 			}
+	}
 
-            // Handle events
-			handleEvents();
+	void WorldView::update()
+	{
+		if (!started)
+		{
+			exec();
+			started = true;
+		}
+		tempLoop();
+		calculateCam();
+		// TODO: The upper should suffice. What's the deal? :(
+		//player->updateAnimation(elapsed);
+		characterSprite->update(elapsed);
+		// Handle events
+		//handleEvents();
 
-			// Access world data
-			worldDataMutex.lock();
+		// Access world data
+		worldDataMutex.lock();
 
-			calculateCam();
 
-			// TODO: The upper should suffice. What's the deal? :(
-			//player->updateAnimation(elapsed);
-			characterSprite->update(elapsed);
+
+
 			
-			// TODO: when updateAnimation() works as intended,
-			// we should loop through all elements in characters
-			// and call updateAnimation() on all of them.
+		// TODO: when updateAnimation() works as intended,
+		// we should loop through all elements in characters
+		// and call updateAnimation() on all of them.
 
-			updatePositions();
+		updatePositions();
 
-			// Unlock world data mutex
-			worldDataMutex.unlock();
-			// Set world view so we can render the world in world coordinates
-			window->setView(*worldView);
-            // Clear screen
-            window->clear();
-            
-            // Render World.
-			drawWorld();
+		// Unlock world data mutex
+		worldDataMutex.unlock();
 
-			// Render UI.
-			drawUI();
-
-            // Update the window
-            window->display();
-			// Save mouse position for next frame
-			*mousePosOld = *mousePos;
-        }
 	}
 
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const
 	{
 
+			// Set world view so we can render the world in world coordinates
+			window.setView(*worldView);
+            // Clear screen
+           // window->clear();
+            
+            // Render World.
+			drawWorld( window );
+
+			// Render UI.
+//			drawUI( window );
+
+            // Update the window
+          //  window->display();
+			// Save mouse position for next frame
+			*mousePosOld = *mousePos;
 	}
 
 	//////////////////////////////
@@ -202,20 +216,16 @@ namespace mp
 	// Change SFML settings, etc.
 	//////////////////////////////
 	void WorldView::initialize() {
-		// Set up and initialize render window
-		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
-		window = new sf::RenderWindow(videoMode, "SFML Test Window");
-		
+		// Set up and initialize render window		
 		// Don't display mouse cursor
-		window->setMouseCursorVisible(false);
-		
-		// Set window data
-        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
-        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
+		//window->setMouseCursorVisible(false);
 		
 		// Background stuff
-		background = new sf::RectangleShape( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
-		background->setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
+		float screenWidth = window->getSize().x;
+		float screenHeight = window->getSize().x;
+
+		background = new sf::RectangleShape( sf::Vector2f(screenWidth * 2 * pixelScale, screenHeight * 2 * pixelScale) );
+		background->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
 		background->setPosition(0, 0);
         background->setFillColor( sf::Color(30, 30, 30) );
 
@@ -239,7 +249,7 @@ namespace mp
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
+		sf::Vector2f halfSize(screenWidth / 2 * pixelScale, screenHeight / 2 *pixelScale);
 		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
 		// Rotate the view 180 degrees
 		worldView->setRotation(180);
@@ -259,7 +269,7 @@ namespace mp
 		if(!hudTex.loadFromFile("resources/hud.png"))
 			std::cout << "Failed to load texture: hud.png" << std::endl;
 		hudSpr.setTexture(hudTex);
-		hudSpr.setScale(WIDTH / 1920, HEIGHT / 1080);
+		hudSpr.setScale(screenWidth / 1920, screenHeight / 1080);
 		// Light bubble
 		lightTex = new sf::Texture();
 		lightTex->loadFromFile("resources/light.png");
@@ -296,7 +306,7 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::handleEvents()
+	/*void WorldView::handleEvents()
 	{
 		sf::Event Event;
         while (window->pollEvent(Event))
@@ -316,7 +326,7 @@ namespace mp
 				window->setView(*worldView);
 			}
         }
-	}
+	}*/
 
 	void WorldView::constructMapGraphics()
 	{
@@ -368,43 +378,43 @@ namespace mp
 	}
 
 	// better name
-	void WorldView::drawVector(std::vector<GameObjectView*>& vector)
+	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
 	{
-		std::vector<GameObjectView*>::iterator it;
+		std::vector<GameObjectView*>::const_iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ )
-			window->draw(**it);
+			window.draw(**it);
 	}
 
-	void WorldView::drawWorld()
+	void WorldView::drawWorld(sf::RenderTarget& window) const
 	{
-		drawEnvironment();
-		drawCharacters();
-		drawBullets();
+		drawEnvironment(window);
+		drawCharacters(window);
+		drawBullets(window);
 		// Draw light.
-		window->draw(*lightSpr, sf::BlendAdd);
+		window.draw(*lightSpr, sf::BlendAdd);
 	}
 
 
-	void WorldView::drawEnvironment()
+	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
-		window->draw(*background);
-		window->draw(*ground);
-		window->draw(*ground2);
-		window->draw(*ground3);
-		window->draw(*ground4);
+		window.draw(*background);
+		window.draw(*ground);
+		window.draw(*ground2);
+		window.draw(*ground3);
+		window.draw(*ground4);
 	}
 
-	void WorldView::drawBullets()
+	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
 		worldViewMutex.lock();
-		drawVector(bullets);
+		drawVector(bullets, window);
 		worldViewMutex.unlock();
 	}
 	
-	void WorldView::drawCharacters()
+	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
 		worldViewMutex.lock();
-		drawVector(characters);
+		drawVector(characters, window);
 		worldViewMutex.unlock();
 	}
 
@@ -416,21 +426,21 @@ namespace mp
 			(*it)->updatePosition();
 	}
 
-	void WorldView::drawUI()
+	void WorldView::drawUI(sf::RenderTarget& window)
 	{
 		// Set default view so we can render the ui in window coordinates
-		window->setView(window->getDefaultView());
-		window->draw(*dotSpr);
+		window.setView(window.getDefaultView());
+		window.draw(*dotSpr);
 		// Draw hud
 		if(ConfigHandler::instance().getBool("r_drawhud"))
 		{
-			window->draw(hudSpr);
+			window.draw(hudSpr);
 		}
 		// Draw debug labels
 		if(ConfigHandler::instance().getBool("s_debugmode"))
 		{
-			window->draw(*renderFpsTxt);
-			window->draw(*logicFpsTxt);
+			window.draw(*renderFpsTxt);
+			window.draw(*logicFpsTxt);
 		}
 	}
 

@@ -2,29 +2,32 @@
 #define JOINGAMECONTROLLER_H
 
 #include "IController.h"
-#include "JoinGameScreen.h"
+#include "../view/JoinGameScreen.h"
 #include <iostream>
 
-class JoinGameController : public IController
+namespace mp
 {
-    public:
-        JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen);
-        virtual ~JoinGameController();
-        void handleInput(sf::Event &event);
-    protected:
-    private:
+	class JoinGameController : public IController
+	{
+		public:
+			JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen);
+			virtual ~JoinGameController();
+			void handleInput(sf::Event &event);
+		protected:
+		private:
 
-        bool ipTextClicked;
-        bool portTextClicked;
+			bool ipTextClicked;
+			bool portTextClicked;
 
-        bool isNumberOrDot(sf::Event &event);
+			bool isNumberOrDot(sf::Event &event);
 
-        GUIElement* cancelButton;
-        GUIElement* connectButton;
+			GUIElement* cancelButton;
+			GUIElement* connectButton;
 
-        GUIElement* ipTextField;
-        GUIElement* portTextField;
+			GUIElement* ipTextField;
+			GUIElement* portTextField;
 
-};
+	};
+}
 
 #endif // JOINGAMECONTROLLER_H

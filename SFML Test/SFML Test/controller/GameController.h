@@ -22,24 +22,25 @@
 // Defines
 #include "../defines.h"
 #include "../controller/Player.h"
+#include "IController.h"
 
 namespace mp
 {
 	//Forward declaration so World can have a WorldData pointer
 	class World;
 
-    class Controller
+    class GameController : public IController
     {
         public:
-			Controller(World* model, WorldView* view);
-			~Controller();
-			void exec();
+			GameController(World* model, sf::RenderWindow* window, Screen* joinGameScreen);
+			~GameController();
+			void handleInput(sf::Event &event);
 			void setNetworkHandler(NetworkHandler* network);
             
 
         private:
 			World* model;
-			WorldView* view;
+
 			Player* currentPlayer;
 			NetworkHandler* network;
     };

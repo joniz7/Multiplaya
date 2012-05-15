@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "../global.h"
-#include "Controller.h"
+#include "GameController.h"
 
 ////////////////////////////////////////////////////////////
 /// Controller class. Handles input.
@@ -18,41 +18,36 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor. Initializes the world.
 	////////////////////////////////////////////////////////////
-    Controller::Controller(World* model, WorldView* view)
+    GameController::GameController(World* model, sf::RenderWindow* window, Screen* gameScreen) : IController(window, gameScreen)
     {
 		this->model = model;
-		this->view = view;
 		this->network = NULL; 
 		this->currentPlayer = new Player();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
     }
 
-	void Controller::setNetworkHandler(NetworkHandler* network) {
+	void GameController::setNetworkHandler(NetworkHandler* network) {
 		this->network = network;	
 	}
 
 	////////////////////////////////////////////////////////////
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
-    void Controller::exec()
+    void GameController::handleInput(sf::Event &event)
     {
-		bool running = true;
-		while(running) {
-			model->exec();
-			currentPlayer->update();
-			// Wait until setNetworkHandler() is called.
-			while(network == NULL) {}
+		model->exec();
+		currentPlayer->update();
+		// Wait until setNetworkHandler() is called.
+		while(network == NULL) {}
 
-			if(network->isConnectedToServer()) {
-				network->sendCharacterDataToServer();
-			}
+		if(network->isConnectedToServer()) {
+			network->sendCharacterDataToServer();
 		}
-
     }
 
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////
-    Controller::~Controller(){}
+    GameController::~GameController(){}
 
 }

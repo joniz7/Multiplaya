@@ -2,8 +2,8 @@
 #define JOINGAMESCREEN_H
 
 #include "Screen.h"
-#include "Button.h"
-#include "TextField.h"
+#include "GUIElements/Button.h"
+#include "GUIElements/TextField.h"
 #include <map>
 
 namespace mp
@@ -16,6 +16,7 @@ namespace mp
 
 			virtual bool hover(const sf::Vector2i& mousePos);
 
+			virtual void update() {}
 		   // int click(const sf::Vector2i& mousePos) { return 1; };
 			virtual GUIElement* getElement(std::string element);
 		protected:
