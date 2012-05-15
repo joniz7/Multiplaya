@@ -19,7 +19,7 @@
 #include "defines.h"
 #include "global.h"
 
-#include "controller/Controller.h"
+#include "controller/GameController.h"
 #include "model/World.h"
 #include "view/WorldView.h"
 

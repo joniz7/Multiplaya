@@ -23,7 +23,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldView::WorldView(WorldData* worldData)
+    WorldView::WorldView(sf::RenderWindow* window, WorldData* worldData)
 	{
 		this->worldData = worldData;
 		this->pixelScale = 1 / 10.0f;
@@ -190,6 +190,11 @@ namespace mp
 			// Save mouse position for next frame
 			*mousePosOld = *mousePos;
         }
+	}
+
+	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const
+	{
+
 	}
 
 	//////////////////////////////

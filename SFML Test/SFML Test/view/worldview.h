@@ -31,6 +31,8 @@
 // Not sure if worldViewMutex should be defined here..
 #include "../global.h"
 
+#include "Screen.h"
+
 namespace mp
 {
 	//Forward declaration so WorldView can have a WorldData pointer
@@ -40,10 +42,10 @@ namespace mp
 	class GameObjectView;
 	class AnimatedSprite; // TODO remove, after sprites has been fully moved to CharacterView.
     
-	class WorldView : public Observer
+	class WorldView : public Screen, public Observer
     {
         public:
-			WorldView( WorldData* worldData );
+			WorldView( sf::RenderWindow* window, WorldData* worldData );
 			void exec();
 			sf::View* getView() { return worldView; }
             ~WorldView();
@@ -104,6 +106,8 @@ namespace mp
 			void createCharacterViews();
 
 			void initialize();
+
+			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 			void drawWorld();
 			void drawEnvironment();
 			void drawBullets();
@@ -111,6 +115,9 @@ namespace mp
 			void drawUI();
 			void drawVector(std::vector<GameObjectView*>& vector);
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
+
+			virtual bool hover (const sf::Vector2i& mousePos) {};
+			virtual GUIElement* getElement(std::string element) {};
 
     };
 }
