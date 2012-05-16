@@ -7,32 +7,26 @@
 // Other headers
 #include <string>
 #include <cstdlib>
-#include <list>
 #include <cmath>
 #include <map>
 #include <iostream>
 
 // SFML specific headers
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
 // Box2D specific headers
 #include <Box2D.h>
 
 // Game specific headers
-#include "../game.h"
 #include "../client.h"
 #include "../model/world.h"
+#include "../model/worlddata.h"
 
 namespace mp
 {
 	class World;
     class NetworkHandler : public Observer
     {
-		
-
         public:
 			NetworkHandler(WorldData* worldData, World* model);
 			void exec();
@@ -55,7 +49,7 @@ namespace mp
 			bool running;
 			WorldData* worldData;
 			World* model;
-			std::map<sf::Int8,Client> clientMap;
+			std::map<sf::Int8, Client> clientMap;
 			sf::Int8 currentClientID;
 			sf::IpAddress myIP;
 			unsigned short receivePort;

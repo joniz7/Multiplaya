@@ -11,14 +11,11 @@
 #include "../defines.h"
 
 #include "../game.h"
+#include "../model/character.h"
 
-#include "../model/worlddata.h"
 
 namespace mp
 {
-	class Character;
-	class WorldData;
-
 	class Player
 	{
 		public:

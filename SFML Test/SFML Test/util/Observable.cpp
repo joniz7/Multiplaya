@@ -4,35 +4,30 @@
 // Class header
 #include "Observable.h"
 
-////////////////////////////////////////////////////////////
-/// Observable class.  Holds data supporting the Observer
-//  pattern.
-////////////////////////////////////////////////////////////
-
 namespace mp 
 {
 	////////////////////////////////////////////////////////////
-	// Adds observer to the set of observers
-	//
-	// observer		- Class implementing Observer interface
+	/// Adds observer to the set of observers
+	///
+	/// @param observer - Class implementing Observer interface
 	////////////////////////////////////////////////////////////
 	void Observable::addObserver(Observer* observer) {
 		observers.insert(observer);
 	}
 
 	////////////////////////////////////////////////////////////
-	// Removess observer from the set of observers
-	//
-	// observer		- Class implementing Observer interface
+	/// Removess observer from the set of observers
+	///
+	/// @param observer - Class implementing Observer interface
 	////////////////////////////////////////////////////////////
 	void Observable::removeObserver(Observer* observer) {
 		observers.erase(observer);
 	}
 
 	////////////////////////////////////////////////////////////
-	// Calls all the observer's notify method
-	//
-	// observer		- Class implementing Observer interface
+	/// Calls all the observer's notify method
+	///
+	/// @param observer - Class implementing Observer interface
 	////////////////////////////////////////////////////////////
 	void Observable::notify(Event e, void* object) {
 		std::set<Observer*>::iterator it;
