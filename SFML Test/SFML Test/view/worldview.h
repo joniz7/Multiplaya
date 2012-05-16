@@ -22,7 +22,6 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "../game.h"
 #include "BulletView.h"
 #include "HUDSprite.h"
 

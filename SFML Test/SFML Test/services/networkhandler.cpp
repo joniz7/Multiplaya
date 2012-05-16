@@ -24,7 +24,7 @@ namespace mp
 
 		receivePort = 55001;
 		//Binds the receiving socket to a port
-		if(receiver.bind(receivePort) == sf::Socket::Status::Error)
+		if(receiver.bind(receivePort) == sf::Socket::Error)
 		{
 			std::cout<<"Error binding to port "<<receivePort<<std::endl;
 		}

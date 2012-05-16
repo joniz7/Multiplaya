@@ -10,15 +10,6 @@
 #include <list>
 #include <cmath>
 
-// SFML specific headers
-#include "../sfml.h"
-
-// Box2D specific headers
-#include <Box2D.h>
-
-//Defines
-#include "../defines.h"
-
 namespace mp
 {
     class Sound

@@ -11,28 +11,16 @@
 #include <cmath>
 #include <map>
 
-// SFML specific headers
-#include "../sfml.h"
-
-// Box2D specific headers
-#include <Box2D.h>
-
-// Game specific headers
-#include "../game.h"
-
-//Defines
-#include "../defines.h"
-
 namespace mp
 {
     class ConfigHandler
     {
         public:
 			static ConfigHandler& instance();
-			bool getBool(std::string s){return boolMap[s];};
-			int getInt(std::string s){return intMap[s];};
-			float getfloat(std::string s){return floatMap[s];};
-			std::string getString(std::string s){return stringMap[s];};
+			bool getBool(std::string s) {return boolMap[s];};
+			int getInt(std::string s) {return intMap[s];};
+			float getfloat(std::string s) {return floatMap[s];};
+			std::string getString(std::string s) {return stringMap[s];};
         private:
 			// Singleton stuff
 			ConfigHandler();
