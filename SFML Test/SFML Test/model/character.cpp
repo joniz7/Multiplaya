@@ -203,6 +203,7 @@ namespace mp
 	void Character::setHealth(short health) {
 		// Die if HP drops below 1.
 		if (health < 1) {
+			this->health = 0;
 			this->kill();
 		}
 		else if (health>maxHealth) {
