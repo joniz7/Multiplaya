@@ -36,7 +36,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     void GameController::handleInput()
     {
-		currentPlayer->update();
+		currentPlayer->update(sf::Mouse::getPosition(*getRenderWindow()));
 
 		// Wait until setNetworkHandler() is called.
 		while(network == NULL) {}

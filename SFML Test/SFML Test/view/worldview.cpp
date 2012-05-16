@@ -154,9 +154,6 @@ namespace mp
 				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
-				// TODO: Shouldn't be transmitted via WorldData! MVC!
-				worldData->setMousePosition(mousePos);
-
 				worldDataMutex.unlock();
 				counter = 0;
 			}

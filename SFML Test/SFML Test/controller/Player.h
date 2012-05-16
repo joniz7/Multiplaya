@@ -21,7 +21,7 @@ namespace mp
 		public:
 			Player();
 			~Player();
-			void update();
+			void update(const sf::Vector2i &mousePos);
 			void setCharacter(Character* character);
 			Character* getCharacter() { return character; }
 		private:
@@ -30,7 +30,7 @@ namespace mp
 			WorldData* worldData;
 			b2World* world;
 
-			void checkUserInput();
+			void checkUserInput(const sf::Vector2i &mousePos);
 
 			bool pressingKeyForMovingRight();
 			bool pressingKeyForMovingLeft();
