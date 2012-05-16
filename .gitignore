@@ -22,3 +22,7 @@ SFML Test/gtest-1.6.0/msvc/gtest/Debug/
 
 SFML Test/Tests/Debug/
 SFML Test/Tests/Debug/*
+
+Menyer/obj/
+Menyer/bin/
+Menyer/resources/
