@@ -3,22 +3,8 @@
 
 namespace mp
 {
-	TextField::TextField(const float xPos, const float yPos, const int width, const int height)
+	TextField::TextField(const float xPos, const float yPos, const int width, const int height) : GUIElement(xPos, yPos, width, height)
 	{
-		this->xPos = xPos;
-		this->yPos = yPos;
-
-		this->width = width;
-		this->height = height;
-
-		background = new sf::RectangleShape( sf::Vector2f(width, height) );
-		background->setPosition(xPos, yPos);
-
-		text = new sf::Text();
-		text->setPosition(xPos + 5, yPos + 5);
-		text->setColor(sf::Color::Black);
-		hoverEnabled = true;
-		hovering = false;
 		clicked = false;
 		//ctor
 	}
@@ -26,38 +12,14 @@ namespace mp
 	TextField::~TextField()
 	{
 		//dtor
-		delete background;
-		delete text;
-	}
 
-	void TextField::setText(std::string text)
-	{
-		this->text->setString(text);
-	}
-
-	void TextField::draw(sf::RenderTarget& window, sf::RenderStates states) const
-	{
-		window.draw(*background, states);
-		window.draw(*text, states);
 	}
 
 	bool TextField::isMouseOver(const sf::Vector2i& mousePos)
 	{
-		// if mouse is over, increase font size a bi
+		// if mouse is over
 		if (mouseInsideHitbox(mousePos))
-		{
-		   /* if (hoverEnabled && !hovering)
-			{
-				setBackgroundAlpha(background->getFillColor().a + 20);
-				hovering = true;
-			}*/
 			return true;
-		}
-		// if mouse is not inside hitbox
-		/*if (hoverEnabled && hovering) {
-			setBackgroundAlpha(background->getFillColor().a - 20);
-			hovering = false;
-		}*/
 		return false;
 	}
 
@@ -65,27 +27,35 @@ namespace mp
 	{
 		if (!clicked)
 		{
-			background->setOutlineThickness(1);
-			background->setOutlineColor(sf::Color::Red);
+			getBackground()->setOutlineThickness(borderThicknessClicked);
+			getBackground()->setOutlineColor(borderColorClicked);
 			clicked = true;
 		}
 		else
 		{
-			background->setOutlineThickness(0);
+			getBackground()->setOutlineThickness(getBorderThickness());
+			getBackground()->setOutlineColor(getBorderColor());
 			clicked = false;
 		}
-
 	}
 
-	void TextField::setBackgroundAlpha(int alpha)
+	void TextField::setBorderColorClicked(const sf::Color& color)
 	{
-		background->setFillColor( sf::Color(background->getFillColor().r, background->getFillColor().g, background->getFillColor().b, alpha) );
+		borderColorClicked = color;
 	}
-
-	bool TextField::mouseInsideHitbox(const sf::Vector2i& mousePos)
+	const sf::Color& TextField::getBorderColorClicked()
 	{
-		return (mousePos.x > xPos) && (mousePos.y > yPos) &&
-				 (mousePos.x < xPos + width) && (mousePos.y < yPos + height);
+		return borderColorClicked;
 	}
 
+
+	float TextField::getBorderThicknessClicked()
+	{
+		return borderThicknessClicked;
+	}
+
+	
+	void TextField::setBorderThicknessClicked(float thickness) {
+		borderThicknessClicked = thickness;
+	}
 }

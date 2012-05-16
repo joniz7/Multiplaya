@@ -21,7 +21,12 @@ namespace mp
 		ipTitleText->setPosition(300, 100);
 		ipTitleText->setCharacterSize(30);
 
-		buttons["ipTextField"] = new TextField(400, 100, 100, 30);
+		TextField* ipTextField = new TextField(400, 100, 200, 30);
+		ipTextField->setBorderColorClicked(sf::Color::Blue);
+		ipTextField->setFontColor(sf::Color::Black);
+		ipTextField->setFontSize(20);
+		ipTextField->setBorderThicknessClicked(1);		
+		buttons["ipTextField"] = ipTextField;
 
 		portTitleText = new sf::Text("Port");
 		portTitleText->setFont(*font);
@@ -30,7 +35,12 @@ namespace mp
 		portTitleText->setPosition(300, 140);
 		portTitleText->setCharacterSize(30);
 
-		buttons["portTextField"] = new TextField(400, 145, 100, 30);
+		TextField* portTextField = new TextField(400, 145, 200, 30);
+		portTextField->setBorderColorClicked(sf::Color::Blue);
+		portTextField->setFontColor(sf::Color::Black);
+		portTextField->setFontSize(20);
+		portTextField->setBorderThicknessClicked(1);		
+		buttons["portTextField"] = portTextField;
 
 		background = new sf::RectangleShape( sf::Vector2f(resolution.x, resolution.y) );
 		background->setFillColor( sf::Color(94, 94, 94, 255) );

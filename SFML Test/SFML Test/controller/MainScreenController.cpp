@@ -22,6 +22,12 @@ namespace mp
 
 			getScreen()->hover(mousePos);
 
+			
+			if (ev.type == sf::Event::Closed)
+				getRenderWindow()->close();
+			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape))
+				getRenderWindow()->close();
+
 			if (ev.type == sf::Event::MouseButtonReleased)
 			{
 				if ( joinButton->isMouseOver(mousePos) )

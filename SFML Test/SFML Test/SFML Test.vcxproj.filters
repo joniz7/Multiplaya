@@ -143,8 +143,8 @@
     <ClCompile Include="view\HUDSprite.cpp">
       <Filter>src\view</Filter>
     </ClCompile>
-    <ClCompile Include="model\GameObjectFactory.cpp">
-      <Filter>src\model</Filter>
+    <ClCompile Include="view\GUIElements\GUIElement.cpp">
+      <Filter>src\view\GUIElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,9 +279,6 @@
     </ClInclude>
     <ClInclude Include="view\HUDSprite.h">
       <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="model\GameObjectFactory.h">
-      <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

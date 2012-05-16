@@ -53,9 +53,9 @@ namespace mp
 			if ( ev.type == sf::Event::MouseWheelMoved )
 			{
 				if( ev.mouseWheel.delta > 0)
-					( (WorldView*) getScreen() )->zoom(0.9f);
+					worldView->zoom(0.9f);
 				else
-					( (WorldView*) getScreen() )->zoom(1.1f);
+					worldView->zoom(1.1f);
 			}
 		}
     }
