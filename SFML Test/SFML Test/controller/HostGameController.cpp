@@ -12,8 +12,12 @@ namespace mp
 		//dtor
 	}
 
-	void HostGameController::handleInput(sf::Event &ev)
+	void HostGameController::handleInput()
 	{
+		while (getRenderWindow()->pollEvent(ev))
+		{
+
+		}
 
 	}
 }

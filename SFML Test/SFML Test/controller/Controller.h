@@ -21,8 +21,6 @@ namespace mp
 			void setNetworkHandler(NetworkHandler* network);
 		protected:
 		private:
-			//alternative is a map
-			sf::Event* ev;
 			//std::vector<IController*> controllers;
 			std::map<std::string, IController*> controllers;
 			Window* window;

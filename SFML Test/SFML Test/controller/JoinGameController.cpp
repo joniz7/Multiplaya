@@ -19,85 +19,88 @@ namespace mp
 		//dtor
 	}
 
-	void JoinGameController::handleInput(sf::Event &ev)
+	void JoinGameController::handleInput()
 	{
 		// for hover effects
-		sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
-		getScreen()->hover(mousePos);
-
-		if (ev.type == sf::Event::MouseButtonReleased)
+		while (getRenderWindow()->pollEvent(ev))
 		{
-			// get in constructor instead
-			if ( cancelButton->isMouseOver(mousePos) )
+			sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
+			getScreen()->hover(mousePos);
+
+			if (ev.type == sf::Event::MouseButtonReleased)
 			{
-				cancelButton->click();
-				GameState::getInstance()->setGameState(GameState::MAIN_SCREEN);
+				// get in constructor instead
+				if ( cancelButton->isMouseOver(mousePos) )
+				{
+					cancelButton->click();
+					GameState::getInstance()->setGameState(GameState::MAIN_SCREEN);
+				}
+
+				if ( ipTextField->isMouseOver(mousePos) )
+				{
+					// lose focus
+					if (portTextClicked)
+					{
+						portTextField->click();
+						portTextClicked = false;
+					}
+
+					if (ipTextClicked)
+					{
+						ipTextField->click();
+						ipTextClicked = false;
+					}
+					else
+					{
+						ipTextField->click();
+						ipTextClicked = true;
+					}
+
+				}
+
+				if ( portTextField->isMouseOver(mousePos) )
+				{
+					// lose focus
+					if (ipTextClicked)
+					{
+						ipTextField->click();
+						ipTextClicked = false;
+					}
+
+					if (portTextClicked)
+					{
+						portTextField->click();
+						portTextClicked = false;
+					}
+					else
+					{
+						portTextField->click();
+						portTextClicked = true;
+					}
+
+				}
 			}
 
-			if ( ipTextField->isMouseOver(mousePos) )
+			if (ev.type == sf::Event::TextEntered)
 			{
-				// lose focus
-				if (portTextClicked)
+				if (isNumberOrDot(ev))
 				{
-					portTextField->click();
-					portTextClicked = false;
+					if (ipTextClicked)
+						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
+					if (portTextClicked)
+						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 
-				if (ipTextClicked)
-				{
-					ipTextField->click();
-					ipTextClicked = false;
-				}
-				else
-				{
-					ipTextField->click();
-					ipTextClicked = true;
-				}
+					//event.TextEvent.unicode;
+					//char c = static_cast<char>();
 
+					// sf::Event::TextEvent::unicode;
+						//if ipfield is clicked, set text in that field
+
+					//if portfield is clicked, set text in that field
 			}
 
-			if ( portTextField->isMouseOver(mousePos) )
-			{
-				// lose focus
-				if (ipTextClicked)
-				{
-					ipTextField->click();
-					ipTextClicked = false;
-				}
-
-				if (portTextClicked)
-				{
-					portTextField->click();
-					portTextClicked = false;
-				}
-				else
-				{
-					portTextField->click();
-					portTextClicked = true;
-				}
-
-			}
 		}
-
-		if (ev.type == sf::Event::TextEntered)
-		{
-			if (isNumberOrDot(ev))
-			{
-				if (ipTextClicked)
-					ipTextField->setText(ipTextField->getText() + ev.text.unicode);
-				if (portTextClicked)
-					portTextField->setText(portTextField->getText() + ev.text.unicode);
-			}
-
-				//event.TextEvent.unicode;
-				//char c = static_cast<char>();
-
-				// sf::Event::TextEvent::unicode;
-					//if ipfield is clicked, set text in that field
-
-				//if portfield is clicked, set text in that field
-		}
-
 
 	}
 

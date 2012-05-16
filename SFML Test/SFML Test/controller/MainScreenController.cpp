@@ -13,27 +13,29 @@ namespace mp
 		//dtor
 	}
 
-	void MainScreenController::handleInput(sf::Event &ev)
+	void MainScreenController::handleInput()
 	{
 		// for hover effects
-		sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
-		getScreen()->hover(mousePos);
-
-		if (ev.type == sf::Event::MouseButtonReleased)
+		while (getRenderWindow()->pollEvent(ev))
 		{
-			if ( joinButton->isMouseOver(mousePos) )
-			{
-				joinButton->click();
-				GameState::getInstance()->setGameState(GameState::JOIN_GAME);
-			}
+			sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
+			getScreen()->hover(mousePos);
 
-			if ( hostButton->isMouseOver(mousePos) )
+			if (ev.type == sf::Event::MouseButtonReleased)
 			{
-				hostButton->click();
-				GameState::getInstance()->setGameState(GameState::HOST_GAME);
-			}
+				if ( joinButton->isMouseOver(mousePos) )
+				{
+					joinButton->click();
+					GameState::getInstance()->setGameState(GameState::JOIN_GAME);
+				}
 
-			// get button elements and see which hovers
+				if ( hostButton->isMouseOver(mousePos) )
+				{
+					hostButton->click();
+					GameState::getInstance()->setGameState(GameState::HOST_GAME);
+				}
+				// get button elements and see which hovers
+			}
 		}
 	}
 }

@@ -32,12 +32,15 @@ namespace mp
         public:
 			GameController(World* model, sf::RenderWindow* window, Screen* joinGameScreen);
 			~GameController();
-			void handleInput(sf::Event &ev);
+			void handleInput();
 			void setNetworkHandler(NetworkHandler* network);
             
 
         private:
 			World* model;
+
+			// not sure if all controller classes should own a sf::event instanec
+			sf::Event ev;
 
 			Player* currentPlayer;
 			NetworkHandler* network;
