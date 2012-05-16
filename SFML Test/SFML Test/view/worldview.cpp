@@ -17,16 +17,18 @@
 
 namespace mp
 {
-	const float WIDTH = ConfigHandler::instance().getInt("r_width");
-	const float HEIGHT = ConfigHandler::instance().getInt("r_height");
-
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldView::WorldView(WorldData* worldData)
+	WorldView::WorldView(WorldData* worldData, sf::RenderWindow* window)
 	{
 		this->worldData = worldData;
+		this->window = window;
 		this->pixelScale = 1 / 10.0f;
+		counter = 0;
+		elapsed = 0;
+		//should probably just be called initialize or something
+		exec();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -82,7 +84,7 @@ namespace mp
 
 		// Initialize the window.
 		initialize();
-
+		std::cout << "init" << std::endl;
 		// ---- Character's Sprite ----
 		// TODO: move all this to CharacterView's constructor.
 		characterTexture = new sf::Texture();
@@ -107,6 +109,7 @@ namespace mp
 		characterSprite->setPosition(0,0);
 		characterSprite->scale(0.0016f, 0.0016f);
 		characterSprite->playAnimation("idle");
+		std::cout << "init2" << std::endl;
 		// ----------------------------
 
 		//instantiate map graphics
@@ -119,17 +122,18 @@ namespace mp
 
 		std::cout << "Render window initialized!" << std::endl;
 
-		int counter = 0;
-		bool running = true;
-		while (running)
-        {
+
+	}
+
+	void WorldView::tempLoop()
+	{
 			// Fetch mouse-related things.
 			*mousePosWindow = sf::Mouse::getPosition(*window);
 			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *worldView ) / pixelScale;
 			
 			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
-            float elapsed = clock.getElapsedTime().asSeconds();
+            elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
 			
@@ -153,44 +157,48 @@ namespace mp
 			else {
 				counter++;
 			}
+	}
 
-            // Handle events
-			handleEvents();
+	void WorldView::update()
+	{
 
-			// Access world data
-			worldDataMutex.lock();
+		tempLoop();
+		calculateCam();
+		// TODO: The upper should suffice. What's the deal? :(
+		//player->updateAnimation(elapsed);
+		characterSprite->update(elapsed);
+		// Handle events
+		//handleEvents();
 
-			calculateCam();
+		// Access world data
+		worldDataMutex.lock();
 
-			// TODO: The upper should suffice. What's the deal? :(
-			//player->updateAnimation(elapsed);
-			characterSprite->update(elapsed);
 			
-			// TODO: when updateAnimation() works as intended,
-			// we should loop through all elements in characters
-			// and call updateAnimation() on all of them.
+		// TODO: when updateAnimation() works as intended,
+		// we should loop through all elements in characters
+		// and call updateAnimation() on all of them.
 
-			updatePositions();
-			updateHUD();
+		updatePositions();
+		updateHUD();
 
-			// Unlock world data mutex
-			worldDataMutex.unlock();
+		// Unlock world data mutex
+		worldDataMutex.unlock();
+
+	}
+
+	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+
 			// Set world view so we can render the world in world coordinates
-			window->setView(*worldView);
-            // Clear screen
-            window->clear();
+			window.setView(*worldView);
             
             // Render World.
-			drawWorld();
+			drawWorld( window );
 
 			// Render UI.
-			drawHUD();
+			drawHUD( window );
 
-            // Update the window
-            window->display();
 			// Save mouse position for next frame
 			*mousePosOld = *mousePos;
-        }
 	}
 
 	//////////////////////////////
@@ -198,20 +206,16 @@ namespace mp
 	// Change SFML settings, etc.
 	//////////////////////////////
 	void WorldView::initialize() {
-		// Set up and initialize render window
-		sf::VideoMode videoMode(sf::VideoMode(WIDTH, HEIGHT, 32));
-		window = new sf::RenderWindow(videoMode, "SFML Test Window");
-		
+		// Set up and initialize render window		
 		// Don't display mouse cursor
-		window->setMouseCursorVisible(false);
-		
-		// Set window data
-        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
-        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
+		//window->setMouseCursorVisible(false);
 		
 		// Background stuff
-		background = new sf::RectangleShape( sf::Vector2f(WIDTH * 2 * pixelScale, HEIGHT * 2 * pixelScale) );
-		background->setOrigin(WIDTH / 2 * pixelScale, HEIGHT / 2 * pixelScale);
+		float screenWidth = window->getSize().x;
+		float screenHeight = window->getSize().y;
+
+		background = new sf::RectangleShape( sf::Vector2f(screenWidth * 2 * pixelScale, screenHeight * 2 * pixelScale) );
+		background->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
 		background->setPosition(0, 0);
         background->setFillColor( sf::Color(30, 30, 30) );
 
@@ -235,14 +239,14 @@ namespace mp
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(WIDTH / 2 * pixelScale, HEIGHT / 2 *pixelScale);
+		sf::Vector2f halfSize(screenWidth / 2 * pixelScale, screenHeight / 2 *pixelScale);
 		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
 		// Rotate the view 180 degrees
 		worldView->setRotation(180);
 		// Zoom view
 		worldView->zoom( 1.5 );
 		// Set view
-		window->setView(*worldView);
+		//window->setView(*worldView);
 		//------------------
 		// Instantiate stuff.
 		mousePos = new sf::Vector2f(0,0);
@@ -277,16 +281,17 @@ namespace mp
 	/// Initializes all HUD elements.
 	/////////////////////////////////
 	void WorldView::initHUD() {
+		const int WIDTH = window->getSize().x;
+		const int HEIGHT = window->getSize().y;
 		resourcesDir = "resources/";
-		
+		int x,y;
+
 		//------- Create "Kills" sprite. -------
 		// TODO: superimpose text label for dynamic-ness?
-		int x,y;
 		killsTexture = new sf::Texture();
 		if (!killsTexture->loadFromFile((resourcesDir+"kills.png"))) {
 			std::cout << "Failed to load texture: kills.png" << std::endl;
 		}
-		// Kills sprite.
 		killsSprite = new sf::Sprite();
 		killsSprite->setTexture(*killsTexture);
 		x = ((WIDTH)/2) - killsSprite->getTexture()->getSize().x;
@@ -302,7 +307,6 @@ namespace mp
 		if (!deathsTexture->loadFromFile((resourcesDir+"deaths.png"))) {
 			std::cout << "Failed to load texture: deaths.png" << std::endl;
 		}
-		// Deaths sprite.
 		deathsSprite = new sf::Sprite();
 		deathsSprite->setTexture(*deathsTexture);
 		x = ((WIDTH)/2);
@@ -347,7 +351,7 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::handleEvents()
+	/*void WorldView::handleEvents()
 	{
 		sf::Event Event;
         while (window->pollEvent(Event))
@@ -367,7 +371,7 @@ namespace mp
 				window->setView(*worldView);
 			}
         }
-	}
+	}*/
 
 	void WorldView::constructMapGraphics()
 	{
@@ -428,45 +432,65 @@ namespace mp
 	}
 
 	// better name
-	void WorldView::drawVector(std::vector<GameObjectView*>& vector)
+	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
 	{
-		std::vector<GameObjectView*>::iterator it;
+		std::vector<GameObjectView*>::const_iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ )
-			window->draw(**it);
+			window.draw(**it);
 	}
 
-	void WorldView::drawWorld()
+	void WorldView::drawWorld(sf::RenderTarget& window) const
 	{
-		drawEnvironment();
-		drawCharacters();
-		drawBullets();
+		drawEnvironment(window);
+		drawCharacters(window);
+		drawBullets(window);
 		// Draw light.
-		window->draw(*lightSpr, sf::BlendAdd);
+		window.draw(*lightSpr, sf::BlendAdd);
 	}
 
 
-	void WorldView::drawEnvironment()
+	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
-		window->draw(*background);
-		window->draw(*ground);
-		window->draw(*ground2);
-		window->draw(*ground3);
-		window->draw(*ground4);
+		window.draw(*background);
+		window.draw(*ground);
+		window.draw(*ground2);
+		window.draw(*ground3);
+		window.draw(*ground4);
 	}
 
-	void WorldView::drawBullets()
+	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
 		worldViewMutex.lock();
-		drawVector(bullets);
+		drawVector(bullets, window);
 		worldViewMutex.unlock();
 	}
 	
-	void WorldView::drawCharacters()
+	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
 		worldViewMutex.lock();
-		drawVector(characters);
+		drawVector(characters, window);
 		worldViewMutex.unlock();
 	}
+	
+	void WorldView::drawHUD(sf::RenderTarget& window) const {
+		// Set default view so we can render the ui in window coordinates
+		window.setView(this->window->getDefaultView());
+		window.draw(*dotSpr);
+		// Draw hud
+		if(ConfigHandler::instance().getBool("r_drawhud")) {
+			window.draw(*killsSprite);
+			window.draw(*deathsSprite);
+			window.draw(*ammoSprite);
+			window.draw(*hpSprite);
+		}
+		// Draw debug labels
+		if(ConfigHandler::instance().getBool("s_debugmode"))
+		{
+			window.draw(*renderFpsTxt);
+			window.draw(*logicFpsTxt);
+		}
+	}
+
 
 	// better name maybe
 	void WorldView::updateVectorPos(std::vector<GameObjectView*>& vector)
@@ -474,28 +498,6 @@ namespace mp
 		std::vector<GameObjectView*>::iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ )
 			(*it)->updatePosition();
-	}
-
-	void WorldView::drawHUD()
-	{
-		// Set default view so we can render the ui in window coordinates
-		window->setView(window->getDefaultView());
-		window->draw(*dotSpr);
-		// Draw hud
-		if(ConfigHandler::instance().getBool("r_drawhud"))
-		{
-			window->draw(*killsSprite);
-			window->draw(*deathsSprite);
-			window->draw(*ammoSprite);
-			// TODO: cast to base
-			window->draw(*hpSprite);
-		}
-		// Draw debug labels
-		if(ConfigHandler::instance().getBool("s_debugmode"))
-		{
-			window->draw(*renderFpsTxt);
-			window->draw(*logicFpsTxt);
-		}
 	}
 
 	void WorldView::calculateCam() 
@@ -525,6 +527,15 @@ namespace mp
 			delete bullets.at(i);
 		}
 
+		// Destroy HUD.
+		delete killsTexture;
+		delete deathsTexture;
+		delete killsSprite;
+		delete deathsSprite;
+		delete hpSprite;
+		delete ammoSprite;
+
+		// Destroy debug labels.
 		delete fontGothic;
 		delete renderFpsTxt;
 		delete logicFpsTxt;

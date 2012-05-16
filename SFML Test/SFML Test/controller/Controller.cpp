@@ -1,58 +1,57 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
-// Class header
-#include "../model/world.h"
-
-#include <iostream>
-
-#include "../global.h"
 #include "Controller.h"
-
-////////////////////////////////////////////////////////////
-/// Controller class. Handles input.
-////////////////////////////////////////////////////////////
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor. Initializes the world.
-	////////////////////////////////////////////////////////////
-    Controller::Controller(World* model, WorldView* view)
-    {
-		this->model = model;
-		this->view = view;
-		this->network = NULL; 
-		this->currentPlayer = new Player();
-		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
-    }
+	Controller::Controller(World* world, Window* window)
+	{
+		//ctor
+		this->window = window;
+		renderWindow = window->getRenderWindow();
+		ev = new sf::Event();
 
-	void Controller::setNetworkHandler(NetworkHandler* network) {
-		this->network = network;	
+		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
+		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
+	  //  controllers["hostGame"] = new HostGameController();
+		controllers["hostGame"] = new GameController(world, renderWindow, window->getScreen("hostScreen"));
 	}
 
-	////////////////////////////////////////////////////////////
-	// The logic loop; updates the game world, runs Box2D etc.
-	////////////////////////////////////////////////////////////
-    void Controller::exec()
-    {
-		bool running = true;
-		while(running) {
-			model->exec();
-			currentPlayer->update();
-			// Wait until setNetworkHandler() is called.
-			while(network == NULL) {}
+	Controller::~Controller()
+	{
+		//dtor
+	}
 
-			if(network->isConnectedToServer()) {
-				network->sendCharacterDataToServer();
-			}
+	void Controller::setNetworkHandler(NetworkHandler* network) {
+		GameController* gameController = (GameController*) controllers["hostGame"];
+		gameController->setNetworkHandler(network);
+	}
+
+	void Controller::exec()
+	{
+		while (window->getRenderWindow()->pollEvent(*ev))
+		{
+			if (ev->type == sf::Event::Closed)
+				renderWindow->close();
+			if ((ev->type == sf::Event::KeyPressed) && (ev->key.code == sf::Keyboard::Escape))
+				renderWindow->close();
+
+			switch (GameState::getInstance()->getGameState())
+			{
+				case GameState::MAIN_SCREEN:
+					controllers["mainScreen"]->handleInput(*ev);
+				break;
+
+				case GameState::JOIN_GAME:
+					controllers["joinGame"]->handleInput(*ev);
+				break;
+
+				case GameState::HOST_GAME:
+					controllers["hostGame"]->handleInput(*ev);
+				break;
+
+				case GameState::SETTINGS_SCREEN:
+
+				break;
+			} 
 		}
-
-    }
-
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
-    Controller::~Controller(){}
-
+	}
 }

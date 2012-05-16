@@ -55,29 +55,31 @@ namespace mp
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
     void World::exec() {
-        clock->restart();
-		// Lock world data so only one thread can access world data at the same time
-		worldDataMutex.lock();
-		// Perform a physics step
-		world->Step(timeStep, velocityIterations, positionIterations);
-		// Clear physics forces in prep for next step
-		world->ClearForces();
-		// Delete bullets, now that we're finished with physics.
-		deleteBullets();
-		// Get frame time
-		float elapsed = clock->getElapsedTime().asSeconds();
-		// Save logic fps
-		worldData->setLogicFps((int)(1 / elapsed));
+		while (true) 
+		{
+			clock->restart();
+			// Lock world data so only one thread can access world data at the same time
+			worldDataMutex.lock();
+			// Perform a physics step
+			world->Step(timeStep, velocityIterations, positionIterations);
+			// Clear physics forces in prep for next step
+			world->ClearForces();
+			// Delete bullets, now that we're finished with physics.
+			deleteBullets();
+			// Get frame time
+			float elapsed = clock->getElapsedTime().asSeconds();
+			// Save logic fps
+			worldData->setLogicFps((int)(1 / elapsed));
 
-		// Unlock world data
-		worldDataMutex.unlock();
+			// Unlock world data
+			worldDataMutex.unlock();
 
-		// Have we finished faster than expected?
-		if(elapsed<(1 / 60.0f))
-		{	// Leave the arena now and rest - you've earned it.
-			sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
+			// Have we finished faster than expected?
+			if(elapsed<(1 / 60.0f))
+			{	// Leave the arena now and rest - you've earned it.
+				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
+			}
 		}
-	
     }
 
 	void World::deleteBullets()

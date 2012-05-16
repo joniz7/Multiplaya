@@ -1,48 +1,34 @@
-////////////////////////////////////////////////////////////
-/// World class. Takes care of game physics and logic
-////////////////////////////////////////////////////////////
-#ifndef CONTROLLER_H_INCLUDED
-#define CONTROLLER_H_INCLUDED
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
-// Other headers
 #include <string>
-#include <cstdlib>
-#include <list>
-#include <cmath>
-
-// SFML specific headers
-#include "../sfml.h"
-
-// Box2D specific headers
-#include <Box2D.h>
-
-// Game specific headers
-#include "../game.h"
-
-// Defines
-#include "../defines.h"
-#include "../controller/Player.h"
+#include "../GameState.h"
+#include "../view/Window.h"
+#include "MainScreenController.h"
+#include "HostGameController.h"
+#include "JoinGameController.h"
+#include "GameController.h"
+#include "../model/world.h"
 
 namespace mp
 {
-	//Forward declaration so World can have a WorldData pointer
-	class World;
-
-    class Controller
-    {
-        public:
-			Controller(World* model, WorldView* view);
-			~Controller();
+	class Controller
+	{
+		public:
+			Controller(World* world, Window* window);
+			virtual ~Controller();
 			void exec();
 			void setNetworkHandler(NetworkHandler* network);
-            
+		protected:
+		private:
+			//alternative is a map
+			sf::Event* ev;
+			//std::vector<IController*> controllers;
+			std::map<std::string, IController*> controllers;
+			Window* window;
+			sf::RenderWindow* renderWindow;
 
-        private:
-			World* model;
-			WorldView* view;
-			Player* currentPlayer;
-			NetworkHandler* network;
-    };
+			// sf window reference
+	};
 }
-
-#endif
+#endif // CONTROLLER_H

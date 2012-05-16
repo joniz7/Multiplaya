@@ -253,32 +253,7 @@ namespace mp
 
 	}
 
-	////////////////////////////////////////////////////////////
-	/// Sends the data of all the character to the specified client
-	////////////////////////////////////////////////////////////
-	void NetworkHandler::sendCharacterDataToClient(sf::Int8 clientID)
-	{
-		sf::Int8 type = 13, tempClientID, numOfChars = worldData->getCharacters()->size();
-		sf::Packet packet;
-		Character* tempCharacter;
-		float32 x, y, xvel, yvel, angle;
-		packet << type << numOfChars;
-
-		for(int i = 0; i<numOfChars; i++)
-		{
-			tempCharacter = worldData->getCharacter(i);
-			tempClientID = tempCharacter->getClientID();
-			x = tempCharacter->getPosition().x;
-			y = tempCharacter->getPosition().y;
-			xvel = tempCharacter->getLinVelocity().x;
-			yvel = tempCharacter->getLinVelocity().y;
-			angle = tempCharacter->getAngle();
-
-			packet << tempClientID << x << y << xvel << yvel << angle;
-		}
-
-		sender.send(packet, clientMap[clientID].IP, receivePort);
-	}
+	
 
 	////////////////////////////////////////////////////////////
 	/// Sends the client ID to the specified client

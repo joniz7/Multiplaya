@@ -32,6 +32,9 @@
 // Not sure if worldViewMutex should be defined here..
 #include "../global.h"
 
+#include "Screen.h"
+#include "GUIElements/GUIElement.h"
+
 namespace mp
 {
 	//Forward declaration so WorldView can have a WorldData pointer
@@ -42,21 +45,25 @@ namespace mp
 	class HUDSprite;
 	class AnimatedSprite; // TODO remove, after sprites has been fully moved to CharacterView.
     
-	class WorldView : public Observer
+	class WorldView : public Screen, public Observer
     {
         public:
-			WorldView( WorldData* worldData );
+			WorldView( WorldData* worldData, sf::RenderWindow* window );
 			void exec();
 			sf::View* getView() { return worldView; }
             ~WorldView();
 			virtual void notify(Event e, void* object);
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
+			virtual void update();
+			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
 			
 		protected:
     		
 		private:
+			std::map<std::string, GUIElement*> buttons;
 			float pixelScale;
 
+			// The directory of resource files.
 			std::string resourcesDir;
 			
 			// HUD textures.
@@ -70,10 +77,10 @@ namespace mp
 			HUDSprite* hpSprite;
 			HUDSprite* ammoSprite;
 			
+			mutable sf::RenderWindow* window;
 
 			WorldData* worldData;
 			sf::View* worldView;
-			sf::RenderWindow* window;
 			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
@@ -121,13 +128,23 @@ namespace mp
 
 			void initialize();
 			void initHUD();
-			void drawWorld();
-			void drawEnvironment();
-			void drawBullets();
-			void drawCharacters();
-			void drawHUD();
-			void drawVector(std::vector<GameObjectView*>& vector);
+
+			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
+			void drawWorld(sf::RenderTarget& window) const;
+			void drawEnvironment(sf::RenderTarget& window) const;
+			void drawBullets(sf::RenderTarget& window) const;
+			void drawCharacters(sf::RenderTarget& window) const;
+			void drawHUD(sf::RenderTarget& window) const;
+			void drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const;
+
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
+
+			virtual bool hover (const sf::Vector2i& mousePos) { return true; }
+
+			void tempLoop();
+
+			int counter;
+			float elapsed;
 
     };
 }
