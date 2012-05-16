@@ -29,7 +29,7 @@ namespace mp
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
-		myIP = "192.168.1.41";
+		myIP = "172.16.0.6";
     }
 
 	void NetworkHandler::exec() 
@@ -47,7 +47,7 @@ namespace mp
 		Client client;
 		std::string name;
 
-		sf::Int8 clientID, numOfChars;
+		sf::Int8 clientID, numOfChars, numOfBullets;
 
 		std::string message;
 
@@ -131,7 +131,7 @@ namespace mp
 						}
 
 						break;
-					//Receives character data from a client.
+					//Receive character data from a client.
 					case 4:
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
 
@@ -139,6 +139,21 @@ namespace mp
 						velocity.Set(xvel, yvel);
 
 						setCharacterData(clientID, position, velocity, angle);
+						break;
+					//Receive bullet data from a client
+					case 5:
+						receivedData >> numOfBullets;
+
+						//All the bullets in the packet is added to the world
+						for(int i = 0; i<numOfBullets; i++)
+						{
+							receivedData >> clientID >> x >> y >> xvel >> yvel;
+
+							position.Set(x,y);
+							velocity.Set(xvel, yvel);
+
+							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
+						}
 						break;
 					//Recieve your ID from the server
 					case 11:
@@ -162,6 +177,24 @@ namespace mp
 							velocity.Set(xvel, yvel);
 
 							setCharacterData(clientID, position, velocity, angle);
+						}
+						break;
+					//Receive bullet data from the server
+					case 14:
+						receivedData >> numOfBullets;
+
+						//The current bullet list is cleared
+						worldData->getBullets()->clear();
+
+						//And replaced by the new bullets
+						for(int i = 0; i<numOfBullets; i++)
+						{
+							receivedData >> clientID >> x >> y >> xvel >> yvel;
+
+							position.Set(x,y);
+							velocity.Set(xvel, yvel);
+
+							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
 						}
 						break;
 				}
@@ -299,7 +332,8 @@ namespace mp
 			}
 		} else if(e == BULLET_ADDED) 
 		{
-			sendMessageToEveryone("Bullet added");
+			sendMessageToEveryone("Bullet added to buffer");
+			bulletsToSend.push_back((Bullet*)object);
 		} else if(e == BULLET_DELETED) 
 		{
 			sendMessageToEveryone("Bullet deleted");

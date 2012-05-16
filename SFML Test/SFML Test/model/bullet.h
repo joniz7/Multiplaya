@@ -26,7 +26,7 @@ namespace mp
     class Bullet : public GameObject
     {
         public:
-			Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData  );
+			Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData  );
             virtual ~Bullet();
 
 			void explode();
@@ -35,13 +35,13 @@ namespace mp
 			b2BodyDef* getBodyDef(){return &bodyDef;};
 			b2Body* getBody(){return body;};
 			BulletType getType(){return type;};
-			int getOwner(){return owner;};
+			sf::Int8 getOwner(){return owner;};
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {};
 			bool operator == (const Bullet* bullet);
         private:
 			BulletType type;
-			int owner;
+			sf::Int8 owner;
 			b2BodyDef bodyDef;
 			b2Body* body;
 

@@ -23,7 +23,7 @@ namespace mp
 	//
 	// returns true upon success
 	////////////////////////////////////////////////////////////
-    Bullet::Bullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
+    Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
     {
 		//test
 		this->objectType = bullet;
