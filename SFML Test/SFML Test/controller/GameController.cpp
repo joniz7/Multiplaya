@@ -8,6 +8,7 @@
 
 #include "../global.h"
 #include "GameController.h"
+#include "../view/worldview.h"
 
 ////////////////////////////////////////////////////////////
 /// Controller class. Handles input.
@@ -36,6 +37,17 @@ namespace mp
     void GameController::handleInput(sf::Event &ev)
     {
 		currentPlayer->update();
+
+		// Handle zooming of viewport
+		if ( ev.type == sf::Event::MouseWheelMoved )
+		{
+			if( ev.mouseWheel.delta > 0)
+				( (WorldView*) getScreen() )->zoom(0.9f);
+			else
+				( (WorldView*) getScreen() )->zoom(1.1f);
+			
+		}
+
 		// Wait until setNetworkHandler() is called.
 		while(network == NULL) {}
 
