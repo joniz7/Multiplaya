@@ -14,12 +14,12 @@ namespace mp {
 	{
 	}
 
-	void Player::update() 
+	void Player::update(const sf::Vector2i &mousePos) 
 	{
-		checkUserInput();
+		checkUserInput(mousePos);
 	}
 
-	void Player::checkUserInput()
+	void Player::checkUserInput(const sf::Vector2i &mousePos)
 	{
 		if ( pressingKeyForMovingLeft() )
 		{

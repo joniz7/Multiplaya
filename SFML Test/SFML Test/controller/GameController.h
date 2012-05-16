@@ -38,7 +38,8 @@ namespace mp
 
         private:
 			World* model;
-
+			// temporary, better solution will be found!
+			WorldView* worldView;
 			// not sure if all controller classes should own a sf::event instanec
 			sf::Event ev;
 

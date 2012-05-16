@@ -14,12 +14,12 @@ namespace mp {
 	{
 	}
 
-	void Player::update(const sf::Vector2i &mousePos) 
+	void Player::update(const sf::Vector2f &mousePos) 
 	{
 		checkUserInput(mousePos);
 	}
 
-	void Player::checkUserInput(const sf::Vector2i &mousePos)
+	void Player::checkUserInput(const sf::Vector2f &mousePos)
 	{
 		if ( pressingKeyForMovingLeft() )
 		{
@@ -51,10 +51,8 @@ namespace mp {
 		}
 		if( pressingKeyForPrimaryFire() )
         {
-			// calculate angle and what not
 			b2Vec2 targetPos(mousePos.x, mousePos.y); 
 			character->primaryFire(targetPos);
-		
         }
 			
 		if ( pressingKeyForJumping() )

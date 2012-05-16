@@ -56,6 +56,7 @@ namespace mp
 			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
 			void zoom(float factor);
+			sf::View* getCamera() { return camera; }
 			
 		protected:
     		

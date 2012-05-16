@@ -19,6 +19,7 @@ namespace mp
 		while (getRenderWindow()->pollEvent(ev))
 		{
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
+
 			getScreen()->hover(mousePos);
 
 			if (ev.type == sf::Event::MouseButtonReleased)

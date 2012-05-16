@@ -21,6 +21,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     GameController::GameController(World* model, sf::RenderWindow* window, Screen* gameScreen) : IController(window, gameScreen)
     {
+		worldView = (WorldView*) gameScreen;
 		this->model = model;
 		this->network = NULL; 
 		this->currentPlayer = new Player();
@@ -36,7 +37,8 @@ namespace mp
 	////////////////////////////////////////////////////////////
     void GameController::handleInput()
     {
-		currentPlayer->update(sf::Mouse::getPosition(*getRenderWindow()));
+		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());
+		currentPlayer->update(mousePos);
 
 		// Wait until setNetworkHandler() is called.
 		while(network == NULL) {}
