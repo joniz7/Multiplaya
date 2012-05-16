@@ -13,11 +13,15 @@
 #include <list>
 
 // SFML specific headers
-#include "sfml.h"
-#include "game.h"
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+
 #include "model/world.h"
 #include "model/worlddata.h"
 #include "controller/Controller.h"
+#include "view/worldview.h"
+#include "view/Window.h"
 
 typedef std::list<sf::Drawable*> RenderList;
 
@@ -26,7 +30,8 @@ namespace mp
     class App
     {
         public:
-            App(sf::VideoMode mode);
+           // App(sf::VideoMode mode);
+			App();
             ~App();
             int exec(); //Main game loop
         private:

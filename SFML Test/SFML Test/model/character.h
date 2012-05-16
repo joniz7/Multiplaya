@@ -17,7 +17,6 @@
 #include <Box2D.h>
 
 #include "bullet.h"
-#include "worlddata.h"
 
 //Defines
 #include "../defines.h"
@@ -35,11 +34,11 @@ namespace mp
     class Character : public GameObject
     {
         public:
-			Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size, sf::Int8 clientID);
+			Character(WorldData* worldData, b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
             virtual ~Character();
 			void jump();
 			void crouch();
-			void primaryFire();
+			void primaryFire(const b2Vec2 &targetPos);
 			void secondaryFire();
 			void inflictDamage(Bullet* b);
 			void kill();
@@ -74,19 +73,20 @@ namespace mp
 			void setPosition(b2Vec2 position, float32 angle);
 			void setLinVelocity(b2Vec2 velocity);
 
-			b2Vec2 getPosition() {return characterBody->GetPosition();};
-			float32 getAngle() {return characterBody->GetAngle();};
-			b2Vec2 getLinVelocity() {return characterBody->GetLinearVelocity();};
+			b2Vec2 getPosition() { return characterBody->GetPosition(); }
+			float32 getAngle() { return characterBody->GetAngle(); }
+			b2Vec2 getLinVelocity() { return characterBody->GetLinearVelocity(); }
 
-			sf::Int8 getClientID(){return clientID;};
+			sf::Int8 getClientID(){ return clientID; } 
 
 			virtual void onCollision(GameObject* crashedWith);
-			virtual void onNoCollision(GameObject* crashedWith) {};
+			virtual void onNoCollision(GameObject* crashedWith) {}
 
 			void connectToServer();
+
         private:
-			b2Body* characterBody;
 			WorldData* worldData;
+			b2Body* characterBody;
 			b2World* world;
 			sf::Clock* shootingTimer;
 			sf::Clock* reloadTimer;

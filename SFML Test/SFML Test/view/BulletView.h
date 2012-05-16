@@ -7,8 +7,8 @@
 // SFML specific headers
 #include "../sfml.h"
 
-#include "../game.h"
 #include "GameObjectView.h"
+#include "../model/bullet.h"
 
 namespace mp
 {

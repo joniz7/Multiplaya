@@ -2,11 +2,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 // Class header
-#include "../model/world.h"
 
-#include <iostream>
-
-#include "../global.h"
 #include "GameController.h"
 
 ////////////////////////////////////////////////////////////
@@ -20,6 +16,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     GameController::GameController(World* model, sf::RenderWindow* window, Screen* gameScreen) : IController(window, gameScreen)
     {
+		worldView = (WorldView*) gameScreen;
 		this->model = model;
 		this->network = NULL; 
 		this->currentPlayer = new Player();
@@ -33,14 +30,33 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
-    void GameController::handleInput(sf::Event &ev)
+    void GameController::handleInput()
     {
-		currentPlayer->update();
+		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());
+		currentPlayer->update(mousePos);
+
 		// Wait until setNetworkHandler() is called.
 		while(network == NULL) {}
 
 		if(network->isConnectedToServer()) {
 			network->sendCharacterDataToServer();
+		}
+
+		while (getRenderWindow()->pollEvent(ev))
+		{
+			if (ev.type == sf::Event::Closed)
+				getRenderWindow()->close();
+			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape))
+				getRenderWindow()->close();
+
+			// Handle zooming of viewport
+			if ( ev.type == sf::Event::MouseWheelMoved )
+			{
+				if( ev.mouseWheel.delta > 0)
+					( (WorldView*) getScreen() )->zoom(0.9f);
+				else
+					( (WorldView*) getScreen() )->zoom(1.1f);
+			}
 		}
     }
 

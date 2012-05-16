@@ -4,29 +4,9 @@
 // Class header
 #include "app.h"
 
-// Other headers
-#include <string>
-#include <cstdlib>
-#include <list>
-
-// SFML specific headers
-#include "sfml.h"
-// Box2D specific headers
-#include <Box2D.h>
-// Game specific headers
-#include "game.h"
-// Defines
-#include "defines.h"
-#include "global.h"
-
-#include "controller/Controller.h"
-#include "model/World.h"
-#include "view/Window.h"
-
 ////////////////////////////////////////////////////////////
 /// Application class. Manages the program.
 ////////////////////////////////////////////////////////////
-
 namespace mp
 {
 	// Contains instances of all parts of our program.
@@ -120,7 +100,8 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    App::App(sf::VideoMode mode){videoMode = mode;}
+    //App::App(sf::VideoMode mode) { videoMode = mode; }
+	App::App() { }
 
 	////////////////////////////////////////////////////////////
 	// Destructor

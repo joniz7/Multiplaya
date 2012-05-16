@@ -24,9 +24,9 @@ namespace mp
 
 		receivePort = 55001;
 		//Binds the receiving socket to a port
-		if(receiver.bind(receivePort) == sf::Socket::Status::Error)
+		if(receiver.bind(receivePort) == sf::Socket::Error)
 		{
-			std::cout<<"Error binding to port "<<receivePort<<std::endl;
+			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
 		myIP = "172.16.0.6";
@@ -225,6 +225,7 @@ namespace mp
 		sf::Int8 type = 1;
 		sf::Packet packet;
 
+		// should probably be something like getPlayer->getCurrentCharacter()
 		Character* character = worldData->getCurrentCharacter();
 		float32 x = character->getBody()->GetPosition().x;
 		float32 y = character->getBody()->GetPosition().y;

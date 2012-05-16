@@ -8,23 +8,19 @@
 #include <Box2D.h>
 
 //Defines
-#include "../defines.h"
+#include "../sfml.h"
 
-#include "../game.h"
+#include "../model/character.h"
 
-#include "../model/worlddata.h"
 
 namespace mp
 {
-	class Character;
-	class WorldData;
-
 	class Player
 	{
 		public:
 			Player();
 			~Player();
-			void update();
+			void update(const sf::Vector2f &mousePos);
 			void setCharacter(Character* character);
 			Character* getCharacter() { return character; }
 		private:
@@ -33,7 +29,7 @@ namespace mp
 			WorldData* worldData;
 			b2World* world;
 
-			void checkUserInput();
+			void checkUserInput(const sf::Vector2f &mousePos);
 
 			bool pressingKeyForMovingRight();
 			bool pressingKeyForMovingLeft();

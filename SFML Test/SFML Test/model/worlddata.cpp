@@ -20,7 +20,6 @@ namespace mp
     WorldData::WorldData() 
 	{
 		logicFps = 0;
-		mousePosition = new b2Vec2();
 		// TODO hardcoded. not good !1!
 		currentCharacterId = 0;
 	}
@@ -63,6 +62,14 @@ namespace mp
 		characters.push_back(c);
 		return true;
     }
+
+	bool WorldData::addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
+	{
+
+		characters.push_back( new Character(this, world, pos, size, clientID) );
+
+		return true;
+	}
 
 	////////////////////////////////////////////////////////////
 	// Adds a generic body to the world
@@ -125,15 +132,6 @@ namespace mp
 				bullets.erase(bullets.begin() + i);
 			}
 		}
-	}
-
-	// Sets the current mouse position.
-	// (Using world coordinates)
-	void WorldData::setMousePosition(sf::Vector2f* pos) {
-		// Convert from sf::Vector2f to b2Vec2.
-		float32 x = pos->x;
-		float32 y = pos->y;
-		mousePosition->Set(x,y);
 	}
 
 	Character* WorldData::getCharacter(sf::Int8 clientID)

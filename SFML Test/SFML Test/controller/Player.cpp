@@ -14,12 +14,12 @@ namespace mp {
 	{
 	}
 
-	void Player::update() 
+	void Player::update(const sf::Vector2f &mousePos) 
 	{
-		checkUserInput();
+		checkUserInput(mousePos);
 	}
 
-	void Player::checkUserInput()
+	void Player::checkUserInput(const sf::Vector2f &mousePos)
 	{
 		if ( pressingKeyForMovingLeft() )
 		{
@@ -51,7 +51,8 @@ namespace mp {
 		}
 		if( pressingKeyForPrimaryFire() )
         {
-			character->primaryFire();
+			b2Vec2 targetPos(mousePos.x, mousePos.y); 
+			character->primaryFire(targetPos);
         }
 			
 		if ( pressingKeyForJumping() )
@@ -75,6 +76,7 @@ namespace mp {
 
 		if ( pressingKeyForConnecting() )
 		{
+			//worldData->notify() bblala
 			character->connectToServer();
 		}
 				

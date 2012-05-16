@@ -22,7 +22,6 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "../game.h"
 #include "BulletView.h"
 #include "HUDSprite.h"
 
@@ -50,12 +49,14 @@ namespace mp
         public:
 			WorldView( WorldData* worldData, sf::RenderWindow* window );
 			void exec();
-			sf::View* getView() { return worldView; }
+			sf::View* getView() { return camera; }
             ~WorldView();
 			virtual void notify(Event e, void* object);
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
+			void zoom(float factor);
+			sf::View* getCamera() { return camera; }
 			
 		protected:
     		
@@ -84,7 +85,7 @@ namespace mp
 			mutable sf::RenderWindow* window;
 
 			WorldData* worldData;
-			sf::View* worldView;
+			sf::View* camera;
 			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
@@ -116,8 +117,6 @@ namespace mp
 
 			void addBullet(Bullet* bullet);
 			void deleteBullet(int i);
-
-			void handleEvents();
 
 			void constructMapGraphics();
 

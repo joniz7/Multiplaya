@@ -2,7 +2,6 @@
 #define CONTROLLER_H
 
 #include <string>
-#include "../GameState.h"
 #include "../view/Window.h"
 #include "MainScreenController.h"
 #include "HostGameController.h"
@@ -21,8 +20,6 @@ namespace mp
 			void setNetworkHandler(NetworkHandler* network);
 		protected:
 		private:
-			//alternative is a map
-			sf::Event* ev;
 			//std::vector<IController*> controllers;
 			std::map<std::string, IController*> controllers;
 			Window* window;

@@ -125,11 +125,17 @@ namespace mp
 
 	}
 
+	void WorldView::zoom(float factor)
+	{
+		camera->zoom(factor);
+		window->setView(*camera);
+	}
+
 	void WorldView::tempLoop()
 	{
 			// Fetch mouse-related things.
 			*mousePosWindow = sf::Mouse::getPosition(*window);
-			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *worldView ) / pixelScale;
+			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / pixelScale;
 			
 			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
@@ -147,9 +153,6 @@ namespace mp
 				renderFpsTxt->setString("Render fps: " + renderFpsString);
 				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
-
-				// TODO: Shouldn't be transmitted via WorldData! MVC!
-				worldData->setMousePosition(mousePos);
 
 				worldDataMutex.unlock();
 				counter = 0;
@@ -189,7 +192,7 @@ namespace mp
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
 			// Set world view so we can render the world in world coordinates
-			window.setView(*worldView);
+			window.setView(*camera);
             
             // Render World.
 			drawWorld( window );
@@ -243,13 +246,13 @@ namespace mp
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(screenWidth / 2 * pixelScale, screenHeight / 2 *pixelScale);
-		worldView = new sf::View(center * pixelScale, halfSize * pixelScale);
+		camera = new sf::View(center * pixelScale, halfSize * pixelScale);
 		// Rotate the view 180 degrees
-		worldView->setRotation(180);
+		camera->setRotation(180);
 		// Zoom view
-		worldView->zoom( 1.5 );
+		camera->zoom( 1.5 );
 		// Set view
-		//window->setView(*worldView);
+		//window->setView(*camera);
 		//------------------
 		// Instantiate stuff.
 		mousePos = new sf::Vector2f(0,0);
@@ -372,7 +375,7 @@ namespace mp
 		 //music->setVolume(50);         // reduce the volume
 		 music->setLoop(true);         // make it loop
 		 // Play it
-		 music->play();
+		 //music->play();
 
 	}
 
@@ -392,28 +395,6 @@ namespace mp
 		}
 		worldDataMutex.unlock();
 	}
-
-	/*void WorldView::handleEvents()
-	{
-		sf::Event Event;
-        while (window->pollEvent(Event))
-        {
-			// Shut down application if user closes window or hits ESC key
-            if ( Event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ) {
-                window->close();
-			}
-
-			// Handle zooming of viewport
-			if ( Event.type == sf::Event::MouseWheelMoved )
-			{
-				if( Event.mouseWheel.delta > 0)
-					worldView->zoom(0.9f);
-				else
-					worldView->zoom(1.1f);
-				window->setView(*worldView);
-			}
-        }
-	}*/
 
 	void WorldView::constructMapGraphics()
 	{
@@ -565,8 +546,8 @@ namespace mp
 		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
 		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
 
-		worldView->setCenter(x * pixelScale, y * pixelScale);
-		window->setView(*worldView);
+		camera->setCenter(x * pixelScale, y * pixelScale);
+		window->setView(*camera);
 	}
 
 	////////////////////////////////////////////////////////////

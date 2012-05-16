@@ -4,16 +4,9 @@
 #ifndef CHARACTER_VIEW_H
 #define CHARACTER_VIEW_H
 
-// SFML specific headers
-#include "../sfml.h"
-
-// Box2D specific headers
-#include <Box2D.h>
-
 // Game specific headers
-#include "../game.h"
+#include "../model/character.h"
 #include "animatedsprite.h"
-#include "../util/Observer.h"
 #include "GameObjectView.h"
 
 namespace mp

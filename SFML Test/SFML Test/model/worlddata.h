@@ -19,7 +19,8 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "../game.h"
+#include "model/character.h"
+#include "model/bullet.h"
 
 //Defines
 #include "../defines.h"
@@ -43,6 +44,8 @@ namespace mp
 
 			//Adders
 			bool addCharacter(Character* c);
+			bool addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
+
 			bool addBullet( Bullet* bullet );
 			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
@@ -57,7 +60,7 @@ namespace mp
 			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
 			// Get list of all bodies
 			std::vector<b2Body*>* getBodies(){ return &bodies; };
-			b2Vec2 getMousePosition() {return *mousePosition;}
+
 			// Get a specific character
 			Character* getCharacter(int i){ return characters.at(i); };
 			// Get the character with the specific client ID
@@ -70,7 +73,7 @@ namespace mp
 			//b2World* getb2World();
 
 			// Get logic fps
-			int getLogicFps(){return logicFps;};
+			int getLogicFps(){ return logicFps; }
 
 			void scheduleBulletForDeletion(Bullet* bullet);
 			void removeBullet(Bullet* bullet);
@@ -78,8 +81,6 @@ namespace mp
 			// Setters
 			// Set logic fps
 			void setLogicFps(int fps){logicFps = fps;};
-
-			void setMousePosition(sf::Vector2f* pos);
 
 			void setCurrentCharacterId(int id) {currentCharacterId = id;}
 			int getCurrentCharacterId() {return currentCharacterId;}
@@ -98,8 +99,7 @@ namespace mp
 			std::vector<Wall*> walls;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodies;
-			// The mouse position (in world coordinates)
-			b2Vec2* mousePosition;
+
 			// Variable for keeping track of logic thread fps
 			int logicFps;
     };

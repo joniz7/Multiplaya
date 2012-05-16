@@ -16,13 +16,18 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-// Game specific headers
-#include "../game.h"
-
 // Defines
+#include "../services/networkhandler.h"
 #include "../defines.h"
 #include "../controller/Player.h"
 #include "IController.h"
+#include "../view/worldview.h"
+
+#include "../model/world.h"
+
+#include <iostream>
+
+#include "../global.h"
 
 namespace mp
 {
@@ -34,12 +39,16 @@ namespace mp
         public:
 			GameController(World* model, sf::RenderWindow* window, Screen* joinGameScreen);
 			~GameController();
-			void handleInput(sf::Event &ev);
+			void handleInput();
 			void setNetworkHandler(NetworkHandler* network);
             
 
         private:
 			World* model;
+			// temporary, better solution will be found!
+			WorldView* worldView;
+			// not sure if all controller classes should own a sf::event instanec
+			sf::Event ev;
 
 			Player* currentPlayer;
 			NetworkHandler* network;
