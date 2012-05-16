@@ -372,7 +372,7 @@ namespace mp
 		 //music->setVolume(50);         // reduce the volume
 		 music->setLoop(true);         // make it loop
 		 // Play it
-		 music->play();
+		 //music->play();
 
 	}
 
