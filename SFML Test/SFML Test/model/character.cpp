@@ -33,6 +33,9 @@ namespace mp
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
 
+		this->kills  = 0;// Kill stat.
+		this->deaths = 0;// Death stat.
+
 		this->clientID = clientID;
 
 		this->shootingTimer = new sf::Clock();

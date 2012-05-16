@@ -76,6 +76,10 @@ namespace mp
 			sf::Sprite* deathsSprite;
 			HUDSprite* hpSprite;
 			HUDSprite* ammoSprite;
+			sf::Text* killsText;
+			sf::Text* deathsText;
+
+			sf::Music* music;
 			
 			mutable sf::RenderWindow* window;
 
@@ -128,6 +132,7 @@ namespace mp
 
 			void initialize();
 			void initHUD();
+			void initMusic();
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 			void drawWorld(sf::RenderTarget& window) const;

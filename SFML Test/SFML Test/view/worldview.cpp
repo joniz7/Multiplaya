@@ -210,6 +210,9 @@ namespace mp
 		// Don't display mouse cursor
 		//window->setMouseCursorVisible(false);
 		
+		// The path to resources
+		resourcesDir = "resources/";
+
 		// Background stuff
 		float screenWidth = window->getSize().x;
 		float screenHeight = window->getSize().y;
@@ -257,6 +260,9 @@ namespace mp
 		// Initialize the HUD.
 		this->initHUD();
 
+		// Create background music!
+		this->initMusic();
+
 		// Light bubble
 		lightTex = new sf::Texture();
 		lightTex->loadFromFile("resources/light.png");
@@ -283,7 +289,6 @@ namespace mp
 	void WorldView::initHUD() {
 		const int WIDTH = window->getSize().x;
 		const int HEIGHT = window->getSize().y;
-		resourcesDir = "resources/";
 		int x,y;
 
 		//------- Create "Kills" sprite. -------
@@ -299,6 +304,17 @@ namespace mp
 		killsSprite->setPosition(x,y);
 		// TODO: uncomment below line and fix the positioning error that occurs.
 		//killsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
+		
+		// Create text label to display kill count.
+		killsText = new sf::Text("0");
+		killsText->setFont(*fontGothic);
+		killsText->setCharacterSize(60);
+		killsText->setStyle(sf::Text::Regular);
+		// TODO: Fix positioning. Fails for strings of length>1.
+		x = killsSprite->getPosition().x + (WIDTH/12.5);
+		y = killsSprite->getPosition().y + (HEIGHT/18);
+		killsText->setPosition(x, y);
+
 
 		//------- Create "Deaths" sprite. -------
 		// TODO: superimpose text label for dynamic-ness?
@@ -314,6 +330,13 @@ namespace mp
 		deathsSprite->setPosition(x,y);
 		// TODO: read above.
 		//deathsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		deathsText = new sf::Text("0");
+		deathsText ->setFont(*fontGothic);
+		deathsText ->setCharacterSize(60);
+		x = deathsSprite->getPosition().x + (WIDTH/9);  // TODO: kinda hardcoded.
+		y = deathsSprite->getPosition().y + (HEIGHT/18);// doesn't work for all res's?
+		deathsText->setPosition(x, y);
 
 		//-------- Ammo sprite. ---------
 		// ammo sprite.
@@ -331,6 +354,25 @@ namespace mp
 		// TODO: read above.
 		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 		//------------------------------
+
+	}
+
+	void WorldView::initMusic() {
+
+		music = new sf::Music();
+
+		 // Open it from an audio file
+		 if (!music->openFromFile(resourcesDir+"bgmusic.ogg")) {
+			 std::cout << "Failed to load music: bgmusic.ogg" << std::endl;
+		 }
+
+		 // Change some parameters
+		 //music->setPosition(0, 1, 10); // change its 3D position
+		 //music->setPitch(2);           // increase the pitch
+		 //music->setVolume(50);         // reduce the volume
+		 music->setLoop(true);         // make it loop
+		 // Play it
+		 music->play();
 
 	}
 
@@ -425,9 +467,18 @@ namespace mp
 	void WorldView::updateHUD()
 	{
 		worldViewMutex.lock();
-		ammoSprite->setState(worldData->getCurrentCharacter()->getClip());
-		hpSprite->setState(worldData->getCurrentCharacter()->getHealthState());
-		// TODO: get kill/death-count for use in text labels.
+		
+		Character currentCharacter = *worldData->getCurrentCharacter();
+		std::ostringstream kills, deaths; // (convert short->string)
+		
+		kills << currentCharacter.getKills();
+		killsText->setString(kills.str());
+		deaths << currentCharacter.getDeaths();
+		deathsText->setString(deaths.str());
+
+		ammoSprite->setState(currentCharacter.getClip());
+		hpSprite->setState(currentCharacter.getHealthState());
+
 		worldViewMutex.unlock();
 	}
 
@@ -479,7 +530,11 @@ namespace mp
 		// Draw hud
 		if(ConfigHandler::instance().getBool("r_drawhud")) {
 			window.draw(*killsSprite);
+			window.draw(*killsText);
+
 			window.draw(*deathsSprite);
+			window.draw(*deathsText);
+
 			window.draw(*ammoSprite);
 			window.draw(*hpSprite);
 		}
