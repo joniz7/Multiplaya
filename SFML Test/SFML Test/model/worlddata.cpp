@@ -65,9 +65,9 @@ namespace mp
 
 	bool WorldData::addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
 	{
+		std::cout << "Adding character" << std::endl;
 
 		characters.push_back( new Character(this, world, pos, size, clientID) );
-
 		return true;
 	}
 

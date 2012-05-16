@@ -98,15 +98,17 @@ namespace mp
 
 	void World::createCharacter(b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
 	{
-		std::cout<<"createCharacter: 1"<<std::endl;
 		//Character* character = ;
-		std::cout<<"createCharacter: 2"<<std::endl;
 		worldDataMutex.lock();
-		std::cout<<"createCharacter: 3"<<std::endl;
 		worldData->addCharacter( world, position, size, clientID );
-		std::cout<<"createCharacter: 4"<<std::endl;
 		worldDataMutex.unlock();
-		std::cout<<"createCharacter: 5"<<std::endl;
+	}
+
+	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type)
+	{
+		worldDataMutex.lock();
+		worldData->addBullet(new Bullet(type, clientID, world, position, force, worldData));
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////
