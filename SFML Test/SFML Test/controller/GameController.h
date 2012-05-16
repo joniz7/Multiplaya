@@ -16,10 +16,8 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-// Game specific headers
-#include "../game.h"
-
 // Defines
+#include "../services/networkhandler.h"
 #include "../defines.h"
 #include "../controller/Player.h"
 #include "IController.h"

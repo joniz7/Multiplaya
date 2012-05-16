@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "sfml.h"
-
 struct Client{
 	sf::IpAddress IP;
 	std::string name;

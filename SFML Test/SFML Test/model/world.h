@@ -16,9 +16,6 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-// Game specific headers
-#include "../game.h"
-
 // Defines
 #include "../defines.h"
 
@@ -33,8 +30,8 @@ namespace mp
 			World(WorldData* worldData);
 			void exec();
             ~World();
-			b2World* getWorld(){return world;};
-			WorldData* getWorldData() {return worldData;};
+			b2World* getWorld(){ return world; }
+			WorldData* getWorldData() { return worldData; }
 			void createCharacter(b2Vec2 positions, b2Vec2 size, sf::Int8 clientID);
 			void deleteBullets();
         private:
