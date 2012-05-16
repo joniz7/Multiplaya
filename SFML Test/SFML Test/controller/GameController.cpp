@@ -2,13 +2,8 @@
 // Headers
 ////////////////////////////////////////////////////////////
 // Class header
-#include "../model/world.h"
 
-#include <iostream>
-
-#include "../global.h"
 #include "GameController.h"
-#include "../view/worldview.h"
 
 ////////////////////////////////////////////////////////////
 /// Controller class. Handles input.

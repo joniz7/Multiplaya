@@ -8,9 +8,8 @@
 #include <Box2D.h>
 
 //Defines
-#include "../defines.h"
+#include "../sfml.h"
 
-#include "../game.h"
 #include "../model/character.h"
 
 

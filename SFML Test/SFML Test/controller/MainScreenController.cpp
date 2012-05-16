@@ -33,6 +33,7 @@ namespace mp
 				if ( hostButton->isMouseOver(mousePos) )
 				{
 					hostButton->click();
+					getRenderWindow()->setMouseCursorVisible(false);
 					GameState::getInstance()->setGameState(GameState::HOST_GAME);
 				}
 				// get button elements and see which hovers

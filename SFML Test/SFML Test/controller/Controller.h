@@ -2,7 +2,6 @@
 #define CONTROLLER_H
 
 #include <string>
-#include "../GameState.h"
 #include "../view/Window.h"
 #include "MainScreenController.h"
 #include "HostGameController.h"

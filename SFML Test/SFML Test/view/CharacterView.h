@@ -4,9 +4,6 @@
 #ifndef CHARACTER_VIEW_H
 #define CHARACTER_VIEW_H
 
-// SFML specific headers
-#include "../sfml.h"
-
 // Game specific headers
 #include "../model/character.h"
 #include "animatedsprite.h"

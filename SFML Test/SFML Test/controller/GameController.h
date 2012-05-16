@@ -21,6 +21,13 @@
 #include "../defines.h"
 #include "../controller/Player.h"
 #include "IController.h"
+#include "../view/worldview.h"
+
+#include "../model/world.h"
+
+#include <iostream>
+
+#include "../global.h"
 
 namespace mp
 {
