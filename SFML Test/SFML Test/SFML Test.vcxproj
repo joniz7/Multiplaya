@@ -94,6 +94,7 @@
     <ClCompile Include="model\bullet.cpp" />
     <ClCompile Include="model\character.cpp" />
     <ClCompile Include="model\ContactListener.cpp" />
+    <ClCompile Include="model\GameObjectFactory.cpp" />
     <ClCompile Include="model\Wall.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="model\character.h" />
     <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\GameObject.h" />
+    <ClInclude Include="model\GameObjectFactory.h" />
     <ClInclude Include="model\Wall.h" />
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worlddata.h" />

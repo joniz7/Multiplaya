@@ -76,6 +76,7 @@ namespace mp {
 
 		if ( pressingKeyForConnecting() )
 		{
+			//worldData->notify() bblala
 			character->connectToServer();
 		}
 				

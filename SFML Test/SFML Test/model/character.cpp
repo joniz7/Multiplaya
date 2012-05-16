@@ -16,12 +16,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Character::Character(WorldData* worldData, b2World* world, b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
+    Character::Character(WorldData* worldData, b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
     {
-
-		this->objectType = character;
 		this->worldData = worldData;
 		this->world = world;
+		this->objectType = character;
 		this->grounded = true;
 		this->leftSideTouchWall = false;
 		this->rightSideTouchWall = false;
@@ -45,9 +44,9 @@ namespace mp
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
 
-		bodyDef.position.Set(position.x, position.y);
-		this->characterBody = world->CreateBody(&bodyDef);
-
+		bodyDef.position.Set(pos.x, pos.y);
+		b2Body* characterBody = world->CreateBody(&bodyDef);
+		this->characterBody = characterBody;
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
 		dynamicBox.SetAsBox(size.x, size.y);
@@ -65,12 +64,12 @@ namespace mp
 		// Add the shape to the body.
 		characterBody->CreateFixture(&fixtureDef);
 		characterBody->SetFixedRotation(true);
-
-
 		// Test code
 		//add foot sensor fixture
 		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
+
 		fixtureDef.isSensor = true;
+
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded ) );
 
@@ -229,8 +228,9 @@ namespace mp
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
 
-	void Character::connectToServer() {
-		worldData->notify(CONNECT_SERVER , 0);
+	void Character::connectToServer()
+	{
+		worldData->notify(CONNECT_SERVER, 0);
 	}
 
 	//Foot sensor
