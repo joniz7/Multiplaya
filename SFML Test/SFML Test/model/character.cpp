@@ -61,6 +61,12 @@ namespace mp
 		fixtureDef.friction = 2.0f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
+		
+		// Calculate unique identifying bits for this player.
+		// (This makes us not collide with our own bullets)
+		const short playerBits = pow(2.0, clientID + 1);
+		fixtureDef.filter.categoryBits = playerBits;
+		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
 
 		// Add the shape to the body.
 		b2Fixture* characterBodyFixture = characterBody->CreateFixture(&fixtureDef);
@@ -174,7 +180,7 @@ namespace mp
 		force.Normalize();
 		gunPosition = force;
 		// Apply speed factor and characer's speed to our force vector.
-		force.Set((force.x * speed) + charSpeed.x, - ((force.y * speed) + charSpeed.y));
+		force.Set(-((force.x * speed) + charSpeed.x), - ((force.y * speed) + charSpeed.y));
 		// Bullet spawning point should be relative to char.
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 

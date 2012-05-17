@@ -174,10 +174,13 @@ namespace mp
 		float screenWidth = window->getSize().x;
 		float screenHeight = window->getSize().y;
 
-		background = new sf::RectangleShape( sf::Vector2f(screenWidth * 2 * pixelScale, screenHeight * 2 * pixelScale) );
-		background->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
-		background->setPosition(0, 0);
-        background->setFillColor( sf::Color(30, 30, 30) );
+		backgroundTexture = new sf::Texture();
+		backgroundTexture->loadFromFile("resources/bg.png");
+		backgroundSprite = new sf::Sprite();
+		backgroundSprite->setTexture(*backgroundTexture);
+		backgroundSprite->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
+		backgroundSprite->setPosition(-20, -10);
+		backgroundSprite->scale(0.02, 0.02);
 
 		// Load font file.
 		fontGothic = new sf::Font();
@@ -461,10 +464,9 @@ namespace mp
 		window.draw(*lightSpr, sf::BlendAdd);
 	}
 
-
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
-		window.draw(*background);
+		window.draw(*backgroundSprite);
 		window.draw(*ground);
 		window.draw(*ground2);
 		window.draw(*ground3);
@@ -557,8 +559,11 @@ namespace mp
 		delete renderFpsTxt;
 		delete logicFpsTxt;
 
+		// Background.
+		delete backgroundTexture;
+		delete backgroundSprite;
+
 		// TODO: This (as well as their creation) should be dynamic.
-		delete background;
 		delete ground;
 		delete ground2;
 		delete ground3;

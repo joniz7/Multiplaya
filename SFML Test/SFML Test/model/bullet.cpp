@@ -25,7 +25,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
     {
-		//test
 		this->objectType = bullet;
 		this->worldData = worldData;
 		this->world = world;
@@ -51,12 +50,18 @@ namespace mp
 		fixtureDef.friction = 0.0f;
 		// Set restitution
 		fixtureDef.restitution = 1.0f;
+
+		// Calculate unique identifying bits for this bullet.
+		// (This makes us pass through our player)
+		const short playerBits = pow(2.0, owner + 1);
+		fixtureDef.filter.categoryBits = playerBits;
+		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
+
 		// Add the shape to the body.
 		b2Fixture* testFixture = body->CreateFixture(&fixtureDef);
 		testFixture->SetUserData(this);
 		// Send the bullet flying
 		body->ApplyForce( force, body->GetPosition() );
-
 	}
 
 	void Bullet::onCollision(GameObject* crashedWith)

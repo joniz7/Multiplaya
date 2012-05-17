@@ -45,7 +45,7 @@ namespace mp
 
 		// Add´test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
-		worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
+		worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
 
 		// Unlock world data
 		worldDataMutex.unlock();
