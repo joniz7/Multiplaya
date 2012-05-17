@@ -20,7 +20,11 @@ namespace mp
 			bool ipTextClicked;
 			bool portTextClicked;
 
-			bool isNumberOrDot(sf::Event &ev);
+			bool isNumber(sf::Event &ev);
+			bool isDot(sf::Event &ev);
+			bool isBackspace(sf::Event &ev);
+
+			void removeLastCharacter(GUIElement* element);
 
 			GUIElement* cancelButton;
 			GUIElement* connectButton;

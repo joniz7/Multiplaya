@@ -29,7 +29,6 @@ namespace mp
 
 			if (ev.type == sf::Event::MouseButtonReleased)
 			{
-				// get in constructor instead
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
@@ -55,12 +54,11 @@ namespace mp
 						ipTextField->click();
 						ipTextClicked = true;
 					}
-
 				}
 
 				if ( portTextField->isMouseOver(mousePos) )
 				{
-					// lose focus
+					// if ipTextField is clicked then lose focus..
 					if (ipTextClicked)
 					{
 						ipTextField->click();
@@ -77,35 +75,65 @@ namespace mp
 						portTextField->click();
 						portTextClicked = true;
 					}
-
 				}
 			}
 
 			if (ev.type == sf::Event::TextEntered)
 			{
-				if (isNumberOrDot(ev))
+				if (isNumber(ev))
 				{
 					if (ipTextClicked)
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
 					if (portTextClicked)
 						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
+				else if (isDot(ev))
+				{
+					// "remove" the possibility to input double dots
+					if (ipTextClicked)
+						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
 
-					//event.TextEvent.unicode;
-					//char c = static_cast<char>();
-
-					// sf::Event::TextEvent::unicode;
-						//if ipfield is clicked, set text in that field
-
-					//if portfield is clicked, set text in that field
-			}
-
-		}
-
+					if (portTextClicked)
+						portTextField->setText(portTextField->getText() + ev.text.unicode);
+				}
+				else if (isBackspace(ev))
+				{
+					if (ipTextClicked)
+					{
+						removeLastCharacter(ipTextField);
+					}
+						
+					if (portTextClicked)
+					{
+						removeLastCharacter(portTextField);
+					}	
+				}
+			} // end of textentered
+		} // end of pollEvent loop
 	}
 
-	bool JoinGameController::isNumberOrDot(sf::Event &ev)
+	void JoinGameController::removeLastCharacter(GUIElement* element)
 	{
-		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 ) || ev.text.unicode == 46;
+		int textLength = element->getText().getSize();
+		if (textLength > 0)
+		{
+			std::string text = element->getText();
+			element->setText(text.erase(textLength - 1, 1));
+		}
+	}
+
+	bool JoinGameController::isNumber(sf::Event &ev)
+	{
+		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 );
+	}
+
+	bool JoinGameController::isDot(sf::Event &ev)
+	{
+		return ev.text.unicode == 46;
+	}
+
+	bool JoinGameController::isBackspace(sf::Event &ev)
+	{
+		return ev.text.unicode == 8;
 	}
 }
