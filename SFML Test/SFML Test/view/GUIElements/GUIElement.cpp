@@ -2,18 +2,7 @@
 
 namespace mp
 {
-	GUIElement::GUIElement(const float xPos, const float yPos, const int width, const int height, std::string text )
-	{
-		init(xPos, yPos, width, height);
-		this->text->setString(text);
-	}
-
-	GUIElement::GUIElement(const float xPos, const float yPos, const int width, const int height )
-	{
-		init(xPos, yPos, width, height);
-	}
-
-	void GUIElement::init(const float xPos, const float yPos, const int width, const int height)
+	GUIElement::GUIElement(const float xPos, const float yPos, const int width, const int height, const std::string text )
 	{
 		this->xPos = xPos;
 		this->yPos = yPos;
@@ -21,7 +10,7 @@ namespace mp
 		this->width = width;
 		this->height = height;
 
-		this->text = new sf::Text();
+		this->text = new sf::Text(text);
 		this->text->setPosition(xPos + 5, yPos + 5);
 	   // alignment = CENTER;
 

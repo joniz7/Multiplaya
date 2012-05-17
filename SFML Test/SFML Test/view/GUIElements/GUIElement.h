@@ -15,8 +15,7 @@ namespace mp
 			  RIGHT
 		   };
 
-			GUIElement(const float xPos, const float yPos, const int width, const int height, std::string text );
-			GUIElement(const float xPos, const float yPos, const int width, const int height);
+			GUIElement(const float xPos, const float yPos, const int width, const int height, const std::string text = "" );
 
 			virtual ~GUIElement();
 
