@@ -152,7 +152,7 @@ namespace mp
 		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
 	}
 
-	void Character::primaryFire(const b2Vec2 &targetPos)
+	void Character::primaryFire(b2Vec2 &targetPos)
 	{
 		if (isReloading()) { return; }
 		if (isShooting()) { return; }
@@ -161,6 +161,7 @@ namespace mp
 		int speed = 800;
 		b2Vec2 charPos = characterBody->GetPosition();
 		b2Vec2 charSpeed = characterBody->GetLinearVelocity();
+		targetPos.Set(targetPos.x * 10, targetPos.y * 10); // (Don't ask. It works.)
 
 		// We're just about to calculate these two vectors.
 		b2Vec2 gunPosition; // Where the bullet should be placed.
@@ -174,8 +175,6 @@ namespace mp
 		force.Set((force.x * speed) + charSpeed.x, - ((force.y * speed) + charSpeed.y));
 		// Bullet spawning point should be relative to char.
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
-
-		// TODO: bullet spawning point is not perfect.
 
 		// Create bullet, and add to world.
 		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);

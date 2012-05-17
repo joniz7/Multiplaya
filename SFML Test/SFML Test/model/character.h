@@ -38,7 +38,7 @@ namespace mp
             virtual ~Character();
 			void jump();
 			void crouch();
-			void primaryFire(const b2Vec2 &targetPos);
+			void primaryFire(b2Vec2 &targetPos);
 			void secondaryFire();
 			void inflictDamage(Bullet* b);
 			void kill();
