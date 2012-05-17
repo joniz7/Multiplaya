@@ -25,7 +25,7 @@ namespace mp
 			sf::Shape* background;
 			Button* connectButton;
 			Button* cancelButton;
-			std::map<std::string, GUIElement*> buttons;
+			std::map<std::string, GUIElement*> guiElements;
 
 			sf::Text* screenTitleText;
 			sf::Text* ipTitleText;
