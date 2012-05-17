@@ -7,6 +7,11 @@ namespace mp
 		//ctor
 		this->window = window;
 		renderWindow = window->getRenderWindow();
+		
+		// Start our title music.
+		MusicHandler::instance().chooseSong("title");
+		MusicHandler::instance().play();
+
 
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
@@ -44,5 +49,37 @@ namespace mp
 
 			break;
 		} 	
+	}
+
+	void Controller::initTitleMusic() {
+
+		/*
+		std::string resourcesDir = ConfigHandler::instance().getString("s_resourcesdir");
+		std::cout << "resourcesDir: "<<resourcesDir<<std::endl;
+
+		titleMusic = new sf::Music();
+
+		// Generate random number between 1 and 10.
+		srand ( time(NULL) );
+		int songNumber = rand() % 10 + 1;
+		// generate path to .ogg-file.
+		std::stringstream path;
+		path << resourcesDir << "bgmusic-" << songNumber << ".ogg";
+		// Open it from an audio file.
+		if (!titleMusic->openFromFile(path.str())) {
+			std::cout << "Failed to load titleMusic: "+path.str() << std::endl;
+		}
+		else {
+			std::cout << "Playing song #"<<songNumber<<". Rock on!" << std::endl;
+		}
+
+		 //titleMusic->setPosition(0, 1, 10); // change its 3D position
+		 //titleMusic->setPitch(1);           // increase the pitch
+		 //titleMusic->setVolume(50);         // reduce the volume
+		 titleMusic->setLoop(true);         // make it loop
+		 // Play it
+		 titleMusic->play();
+		 */
+
 	}
 }

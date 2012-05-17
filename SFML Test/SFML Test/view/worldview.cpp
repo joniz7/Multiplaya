@@ -174,10 +174,13 @@ namespace mp
 		float screenWidth = window->getSize().x;
 		float screenHeight = window->getSize().y;
 
-		background = new sf::RectangleShape( sf::Vector2f(screenWidth * 2 * pixelScale, screenHeight * 2 * pixelScale) );
-		background->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
-		background->setPosition(0, 0);
-        background->setFillColor( sf::Color(30, 30, 30) );
+		backgroundTexture = new sf::Texture();
+		backgroundTexture->loadFromFile("resources/bg.png");
+		backgroundSprite = new sf::Sprite();
+		backgroundSprite->setTexture(*backgroundTexture);
+		backgroundSprite->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
+		backgroundSprite->setPosition(-20, -10);
+		backgroundSprite->scale(0.02, 0.02);
 
 		// Load font file.
 		fontGothic = new sf::Font();
@@ -216,9 +219,6 @@ namespace mp
 
 		// Initialize the HUD.
 		this->initHUD();
-
-		// Create background music!
-		this->initMusic();
 
 		// Light bubble
 		lightTex = new sf::Texture();
@@ -333,33 +333,6 @@ namespace mp
 
 	}
 
-	void WorldView::initMusic() {
-
-		music = new sf::Music();
-
-		// Generate random number between 1 and 10.
-		srand ( time(NULL) );
-		int songNumber = rand() % 10 + 1;
-		// generate path to .ogg-file.
-		std::stringstream path;
-		path << resourcesDir << "bgmusic-" << songNumber << ".ogg";
-		// Open it from an audio file.
-		if (!music->openFromFile(path.str())) {
-			std::cout << "Failed to load music: "+path.str() << std::endl;
-		}
-		else {
-			std::cout << "Playing song #"<<songNumber<<". Rock on!" << std::endl;
-		}
-
-		 //music->setPosition(0, 1, 10); // change its 3D position
-		 //music->setPitch(1);           // increase the pitch
-		 //music->setVolume(50);         // reduce the volume
-		 music->setLoop(true);         // make it loop
-		 // Play it
-		 music->play();
-
-	}
-
 	// Fetches all character models,
 	// and creates their corresponding views.
 	void WorldView::createCharacterViews() {
@@ -461,10 +434,9 @@ namespace mp
 		window.draw(*lightSpr, sf::BlendAdd);
 	}
 
-
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
-		window.draw(*background);
+		window.draw(*backgroundSprite);
 		window.draw(*ground);
 		window.draw(*ground2);
 		window.draw(*ground3);
@@ -557,8 +529,11 @@ namespace mp
 		delete renderFpsTxt;
 		delete logicFpsTxt;
 
+		// Background.
+		delete backgroundTexture;
+		delete backgroundSprite;
+
 		// TODO: This (as well as their creation) should be dynamic.
-		delete background;
 		delete ground;
 		delete ground2;
 		delete ground3;

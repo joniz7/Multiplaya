@@ -97,7 +97,9 @@ namespace mp
 			sf::Text* renderFpsTxt;
 			sf::Text* logicFpsTxt;
 
-			sf::RectangleShape* background;
+			sf::Texture* backgroundTexture;
+			sf::Sprite* backgroundSprite;
+
 			sf::RectangleShape* ground;
 			sf::RectangleShape* ground2;
 			sf::RectangleShape* ground3;
