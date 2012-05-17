@@ -99,6 +99,7 @@
     <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\confighandler.cpp" />
     <ClCompile Include="services\keylookup.cpp" />
+    <ClCompile Include="services\MusicHandler.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
     <ClCompile Include="services\resourcehandler.cpp" />
     <ClCompile Include="sound\sound.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\confighandler.h" />
     <ClInclude Include="services\keylookup.h" />
+    <ClInclude Include="services\MusicHandler.h" />
     <ClInclude Include="services\networkhandler.h" />
     <ClInclude Include="services\resourcehandler.h" />
     <ClInclude Include="sfml.h" />

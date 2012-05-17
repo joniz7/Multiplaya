@@ -17,6 +17,12 @@ namespace mp
 
 	void GameState::setGameState(States state)
 	{
+		// TODO: not really hostGame, but for now.?
+		if (state == GameState::HOST_GAME) {
+			// Start ingame music.
+			MusicHandler::instance().chooseSong("bg");
+			MusicHandler::instance().play();
+		}
 		currentState = state;
 	}
 

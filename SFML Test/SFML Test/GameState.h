@@ -2,6 +2,7 @@
 #define GAMESTATE_H
 
 #include <stddef.h>
+#include "services\MusicHandler.h"
 
 namespace mp
 {

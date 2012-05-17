@@ -220,9 +220,6 @@ namespace mp
 		// Initialize the HUD.
 		this->initHUD();
 
-		// Create background music!
-		this->initMusic();
-
 		// Light bubble
 		lightTex = new sf::Texture();
 		lightTex->loadFromFile("resources/light.png");
@@ -333,33 +330,6 @@ namespace mp
 		// TODO: read above.
 		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 		//------------------------------
-
-	}
-
-	void WorldView::initMusic() {
-
-		music = new sf::Music();
-
-		// Generate random number between 1 and 10.
-		srand ( time(NULL) );
-		int songNumber = rand() % 10 + 1;
-		// generate path to .ogg-file.
-		std::stringstream path;
-		path << resourcesDir << "bgmusic-" << songNumber << ".ogg";
-		// Open it from an audio file.
-		if (!music->openFromFile(path.str())) {
-			std::cout << "Failed to load music: "+path.str() << std::endl;
-		}
-		else {
-			std::cout << "Playing song #"<<songNumber<<". Rock on!" << std::endl;
-		}
-
-		 //music->setPosition(0, 1, 10); // change its 3D position
-		 //music->setPitch(1);           // increase the pitch
-		 //music->setVolume(50);         // reduce the volume
-		 music->setLoop(true);         // make it loop
-		 // Play it
-		 music->play();
 
 	}
 

@@ -7,6 +7,8 @@
 #include "HostGameController.h"
 #include "JoinGameController.h"
 #include "GameController.h"
+#include "../services/confighandler.h"
+#include "../services/musichandler.h"
 #include "../model/world.h"
 
 namespace mp
@@ -17,6 +19,7 @@ namespace mp
 			Controller(World* world, Window* window);
 			virtual ~Controller();
 			void exec();
+			void initTitleMusic();
 			void setNetworkHandler(NetworkHandler* network);
 		protected:
 		private:
@@ -24,6 +27,7 @@ namespace mp
 			std::map<std::string, IController*> controllers;
 			Window* window;
 			sf::RenderWindow* renderWindow;
+			sf::Music* titleMusic;
 
 			// sf window reference
 	};
