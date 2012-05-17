@@ -22,7 +22,7 @@ namespace mp
 			CharacterView(Character* character, CharacterSprite* sprite);
 			CharacterView(Character* character);
 			~CharacterView();
-			void updateAnimation(int elapsed);
+			void updateAnimation(float elapsed);
 			void updatePosition();
 		private:
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

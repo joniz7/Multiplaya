@@ -27,8 +27,8 @@ namespace mp
 		this->pixelScale = 1 / 10.0f;
 		counter = 0;
 		elapsed = 0;
-		//should probably just be called initialize or something
-		exec();
+		
+		initialize();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -75,37 +75,6 @@ namespace mp
 
 		worldViewMutex.unlock();
 	}
-	
-	////////////////////////////////////////////////////////////
-	// The graphics loop.
-	// Fetches info, prints to screen, repeat.
-	////////////////////////////////////////////////////////////
-	void WorldView::exec() {
-
-		// Initialize the window.
-		initialize();
-		std::cout << "init" << std::endl;
-		// ---- Character's Sprite ----
-		// TODO: move all this to CharacterView's constructor.
-
-		characterSprite = new CharacterSprite("resources/test/testsprite.png",8);
-
-		characterSprite->idle();
-		std::cout << "init2" << std::endl;
-		// ----------------------------
-
-		//instantiate map graphics
-		constructMapGraphics();
-
-		createCharacterViews();
-		//CharacterView* player = new CharacterView(worldData->getCurrentCharacter());
-		CharacterView* player = new CharacterView(worldData->getCurrentCharacter(), characterSprite);
-		characters.push_back( player );
-
-		std::cout << "Render window initialized!" << std::endl;
-
-
-	}
 
 	void WorldView::zoom(float factor)
 	{
@@ -150,8 +119,11 @@ namespace mp
 		tempLoop();
 		calculateCam();
 		// TODO: The upper should suffice. What's the deal? :(
+		for(int i=0;i<characters.size();i++) {
+			((CharacterView*)characters.at(i))->updateAnimation(elapsed);
+		}
 		//player->updateAnimation(elapsed);
-		characterSprite->update(elapsed);
+		//AnimatedSprite->update(elapsed);
 		// Handle events
 		//handleEvents();
 
@@ -265,6 +237,27 @@ namespace mp
 		dotSpr->setTexture(*dotTex);
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5, 0.5);
+
+		
+		// ---- Character's Sprite ----
+		// TODO: move all this to CharacterView's constructor.
+
+		//AnimatedSprite = new AnimatedSprite("resources/test/testsprite.png",8);
+		//AnimatedSprite->idle();
+
+		std::cout << "init2" << std::endl;
+		// ----------------------------
+
+		//instantiate map graphics
+		constructMapGraphics();
+
+		createCharacterViews();
+
+		//CharacterView* player = new CharacterView(worldData->getCurrentCharacter());
+		//CharacterView* player = new CharacterView(worldData->getCurrentCharacter(), AnimatedSprite);
+		//characters.push_back( player );
+
+		std::cout << "Render window initialized!" << std::endl;
 	}
 
 
@@ -277,7 +270,6 @@ namespace mp
 		int x,y;
 
 		//------- Create "Kills" sprite. -------
-		// TODO: superimpose text label for dynamic-ness?
 		killsTexture = new sf::Texture();
 		if (!killsTexture->loadFromFile((resourcesDir+"kills.png"))) {
 			std::cout << "Failed to load texture: kills.png" << std::endl;
@@ -302,7 +294,6 @@ namespace mp
 
 
 		//------- Create "Deaths" sprite. -------
-		// TODO: superimpose text label for dynamic-ness?
 		deathsTexture = new sf::Texture();
 		// Load image file
 		if (!deathsTexture->loadFromFile((resourcesDir+"deaths.png"))) {
@@ -346,18 +337,26 @@ namespace mp
 
 		music = new sf::Music();
 
-		 // Open it from an audio file
-		 if (!music->openFromFile(resourcesDir+"bgmusic.ogg")) {
-			 std::cout << "Failed to load music: bgmusic.ogg" << std::endl;
-		 }
+		// Generate random number between 1 and 10.
+		srand ( time(NULL) );
+		int songNumber = rand() % 10 + 1;
+		// generate path to .ogg-file.
+		std::stringstream path;
+		path << resourcesDir << "bgmusic-" << songNumber << ".ogg";
+		// Open it from an audio file.
+		if (!music->openFromFile(path.str())) {
+			std::cout << "Failed to load music: "+path.str() << std::endl;
+		}
+		else {
+			std::cout << "Playing song #"<<songNumber<<". Rock on!" << std::endl;
+		}
 
-		 // Change some parameters
 		 //music->setPosition(0, 1, 10); // change its 3D position
-		 //music->setPitch(2);           // increase the pitch
+		 //music->setPitch(1);           // increase the pitch
 		 //music->setVolume(50);         // reduce the volume
 		 music->setLoop(true);         // make it loop
 		 // Play it
-		 //music->play();
+		 music->play();
 
 	}
 
@@ -371,7 +370,7 @@ namespace mp
 		// Loop through them,
 		for (int i=0;i<characterModels->size();i++) {
 			// create for each one a visual representation,
-			CharacterView* view = new CharacterView(worldData->getCurrentCharacter(), characterSprite);
+			CharacterView* view = new CharacterView(characterModels->at(i));
 			// and add it to our list of CharacterViews.
 			this->characters.push_back( view );
 		}

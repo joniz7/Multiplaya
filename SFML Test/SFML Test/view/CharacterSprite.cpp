@@ -150,6 +150,7 @@ namespace mp
 	// Updates the animated sprite.
 	////////////////////////////////////////////////////////////
 	void CharacterSprite::update(float elapsed) {
+
 		// Add elapsed time to frame counter.
 		frameCounter += elapsed;
 		// Check if we should advance one frame.

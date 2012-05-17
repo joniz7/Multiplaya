@@ -11,29 +11,17 @@
 enum BulletType { GENERIC_BULLET };
 
 // Structs
-struct BulletData
-{
+struct BulletData {
 	float force;
 	short damage;
 };
 
-enum Event
-{
+enum Event {
 	BULLET_ADDED,
 	BULLET_DELETED,
 	CHARACTER_ADDED,
 	CHARACTER_DELETED,
 	CONNECT_SERVER
-};
-
-
-struct Animation{
-	// Playback fps.
-	float fps;
-	// Should this animation loop?
-	bool loop;
-	// Sequence vector containing the frames in playback order.
-	std::vector<sf::Vector2i> sequence;
 };
 
 #endif

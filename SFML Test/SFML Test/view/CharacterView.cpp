@@ -41,7 +41,7 @@ namespace mp
 
 	}
 
-	void CharacterView::updateAnimation(int elapsed) {
+	void CharacterView::updateAnimation(float elapsed) {
 		this->sprite->update(elapsed);
 	}
 
