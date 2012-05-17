@@ -18,6 +18,7 @@
 #include <sstream>
 
 #include "CharacterView.h"
+#include "CharacterSprite.h"
 // Box2D specific headers
 #include <Box2D.h>
 
@@ -42,7 +43,7 @@ namespace mp
 	class BulletView;
 	class GameObjectView;
 	class HUDSprite;
-	class AnimatedSprite; // TODO remove, after sprites has been fully moved to CharacterView.
+	class CharacterSprite; // TODO remove, after sprites has been fully moved to CharacterView.
     
 	class WorldView : public Screen, public Observer
     {
@@ -107,7 +108,7 @@ namespace mp
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
 			// TODO remove, after sprites has been fully moved to CharacterView.
-			mp::AnimatedSprite* characterSprite;
+			mp::CharacterSprite* characterSprite;
 			sf::Texture* characterTexture;
 
 			sf::Vector2f* mousePosOld;

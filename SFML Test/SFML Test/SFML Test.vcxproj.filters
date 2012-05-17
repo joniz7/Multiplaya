@@ -146,6 +146,9 @@
     <ClCompile Include="view\GUIElements\GUIElement.cpp">
       <Filter>src\view\GUIElements</Filter>
     </ClCompile>
+    <ClCompile Include="view\CharacterSprite.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -278,6 +281,9 @@
       <Filter>src\view\GUIElements</Filter>
     </ClInclude>
     <ClInclude Include="view\HUDSprite.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\CharacterSprite.h">
       <Filter>src\view</Filter>
     </ClInclude>
   </ItemGroup>

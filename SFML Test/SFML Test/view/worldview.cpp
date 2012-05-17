@@ -87,28 +87,10 @@ namespace mp
 		std::cout << "init" << std::endl;
 		// ---- Character's Sprite ----
 		// TODO: move all this to CharacterView's constructor.
-		characterTexture = new sf::Texture();
-		characterTexture->loadFromFile("resources/test/testsprite.png");
 
-		characterSprite = new AnimatedSprite(characterTexture,sf::Vector2i(8, 1));
-		std::vector<sf::Vector2i> sequence;
-		sequence.push_back(sf::Vector2i(2, 1));
-		sequence.push_back(sf::Vector2i(3, 1));
-		sequence.push_back(sf::Vector2i(4, 1));
-		sequence.push_back(sf::Vector2i(5, 1));
-		sequence.push_back(sf::Vector2i(6, 1));
-		sequence.push_back(sf::Vector2i(7, 1));
-		characterSprite->addAnimation("walk", 9, true, sequence);
-		sequence.clear();
+		characterSprite = new CharacterSprite("resources/test/testsprite.png",8);
 
-		sequence.push_back(sf::Vector2i(1, 1));
-		characterSprite->addAnimation("idle", 9, true, sequence);
-		sequence.clear();
-
-		characterSprite->rotate(180);
-		characterSprite->setPosition(0,0);
-		characterSprite->scale(0.0016f, 0.0016f);
-		characterSprite->playAnimation("idle");
+		characterSprite->idle();
 		std::cout << "init2" << std::endl;
 		// ----------------------------
 

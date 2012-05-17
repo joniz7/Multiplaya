@@ -67,8 +67,8 @@ namespace mp
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
 
-			void setIsFacingRight(bool choice) { facingRight = choice; }
-			bool isFacingRight() { return facingRight; }
+			void setIsFacingLeft(bool choice) { facingLeft = choice; }
+			bool isFacingLeft() { return facingLeft; }
 
 			void setPosition(b2Vec2 position, float32 angle);
 			void setLinVelocity(b2Vec2 velocity);
@@ -101,7 +101,7 @@ namespace mp
 			short kills;
 			short deaths;
 
-			bool facingRight;
+			bool facingLeft;
 			bool grounded;
 			bool leftSideTouchWall;
 			bool rightSideTouchWall;

@@ -7,17 +7,19 @@
 // Game specific headers
 #include "../model/character.h"
 #include "animatedsprite.h"
+#include "CharacterSprite.h"
 #include "GameObjectView.h"
 
 namespace mp
 {
 	class Character;
+	class CharacterSprite;
 
 	class CharacterView : public GameObjectView
 	{
 		public:
 			//CharacterView(Character* model, sf::Sprite* sprite);
-			CharacterView(Character* character, AnimatedSprite* sprite);
+			CharacterView(Character* character, CharacterSprite* sprite);
 			CharacterView(Character* character);
 			~CharacterView();
 			void updateAnimation(int elapsed);
@@ -26,8 +28,7 @@ namespace mp
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			Character* character;
 			//sf::Sprite* sprite;
-			AnimatedSprite* sprite;
-			sf::Texture* texture;
+			CharacterSprite* sprite;
 
 			bool facedRightLastUpdate;
 
