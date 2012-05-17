@@ -20,6 +20,7 @@ namespace mp
     {
 		this->worldData = worldData;
 		this->world = world;
+
 		this->objectType = character;
 		this->grounded = true;
 		this->leftSideTouchWall = false;
@@ -62,7 +63,8 @@ namespace mp
 		fixtureDef.restitution = 0.0f;
 
 		// Add the shape to the body.
-		characterBody->CreateFixture(&fixtureDef);
+		b2Fixture* characterBodyFixture = characterBody->CreateFixture(&fixtureDef);
+		characterBodyFixture->SetUserData( this );
 		characterBody->SetFixedRotation(true);
 		// Test code
 		//add foot sensor fixture
