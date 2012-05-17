@@ -18,10 +18,7 @@ class BulletTest : public ::testing::Test {
 	mp::WorldData* worldData;
 	b2World* physicsWorld;
 
-	mp::Bullet* testBullet01;
-	mp::Bullet* testBullet02;
-	mp::Bullet* testBullet11;
-	mp::Bullet* testBullet12;
+	std::vector<mp::Bullet*> testBullets;
 
   BulletTest() {
 	// Setup the world properties.
@@ -32,11 +29,11 @@ class BulletTest : public ::testing::Test {
 	worldData = new mp::WorldData();
 
 	// Create generic bullets, owner ID 0.
-	testBullet01 = new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0), worldData);
-	testBullet02 = new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0), worldData);
+	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0), worldData) );
+	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0), worldData) );
 	// Create generic bullets, owner ID 1.
-	testBullet11 = new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(20,20),b2Vec2(-40,0), worldData);
-	testBullet12 = new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(30,30),b2Vec2(40,0), worldData);
+	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(20,20),b2Vec2(-40,0), worldData) );
+	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(30,30),b2Vec2(40,0), worldData)  );
   }
 
   virtual ~BulletTest() {
@@ -49,35 +46,31 @@ class BulletTest : public ::testing::Test {
 TEST_F(BulletTest, bullet_comparisons)
 {	
 	// A bullet should be equal itself.
-	ASSERT_EQ(&testBullet01, &testBullet01);
-	// Two bullets should differ, even though they share all attributes.
-	ASSERT_NE(&testBullet01, &testBullet02);
+	ASSERT_EQ(testBullets.at(0)->getBody(), testBullets.at(0)->getBody());
+	ASSERT_EQ(testBullets.at(0)->getOwner(), testBullets.at(0)->getOwner());
+	ASSERT_EQ(testBullets.at(0)->getPosition(), testBullets.at(0)->getPosition());
+	ASSERT_EQ(testBullets.at(0)->getType(), testBullets.at(0)->getType());
+
 }
 
 TEST_F(BulletTest, bullet_addition)
 {
+	// Add all our test bullets to world.	
+	for(int i=0;i<testBullets.size(); i++) {
+		worldData->addBullet(testBullets.at(i));
+	}
 	
-	// Add our 4 bullets to the world.
+	// Compare previously created bullet with the one returned from getBullet().
+	for(int i=0;i<testBullets.size(); i++) {
+		ASSERT_EQ(testBullets.at(i)->getBody(), worldData->getBullet(i)->getBody());
+		ASSERT_EQ(testBullets.at(i)->getOwner(), worldData->getBullet(i)->getOwner());
+		ASSERT_EQ(testBullets.at(i)->getPosition(), worldData->getBullet(i)->getPosition());
+		ASSERT_EQ(testBullets.at(i)->getType(), worldData->getBullet(i)->getType());
+	}
 
-	/* TODO: addBullet() results in "unknown file: error: SEH exception". whyyy?
-	*/
-	worldData->addBullet(testBullet01);
-	worldData->addBullet(testBullet02);
-	worldData->addBullet(testBullet11);
-	worldData->addBullet(testBullet12);
-	
-
-	// TODO: Compare previously created bullet with the one returned from getBullet().
-	// EXPECT_EQ((&testBullet0_1), &(worldData->getBullet(0)));
-	// Repeat for all 4 bullets.
-
-
-	
 	// We have added 4 bullets, so size should be 4.
-//	int size = worldData->getBltVec()->size();
-	//ASSERT_EQ(4, size);
-	
-	ASSERT_EQ(4, 4);
+	int size = worldData->getBullets()->size();
+	ASSERT_EQ(testBullets.size(), size);
 	
 }
 

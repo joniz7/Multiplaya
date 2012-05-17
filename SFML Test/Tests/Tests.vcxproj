@@ -85,7 +85,6 @@
     <ClInclude Include="..\SFML Test\model\bullet.h" />
     <ClInclude Include="..\SFML Test\model\character.h" />
     <ClInclude Include="..\SFML Test\model\ContactListener.h" />
-    <ClInclude Include="..\SFML Test\model\Player.h" />
     <ClInclude Include="..\SFML Test\model\Wall.h" />
     <ClInclude Include="..\SFML Test\model\world.h" />
     <ClInclude Include="..\SFML Test\model\worlddata.h" />
@@ -103,7 +102,6 @@
     <ClCompile Include="..\SFML Test\model\bullet.cpp" />
     <ClCompile Include="..\SFML Test\model\character.cpp" />
     <ClCompile Include="..\SFML Test\model\ContactListener.cpp" />
-    <ClCompile Include="..\SFML Test\model\Player.cpp" />
     <ClCompile Include="..\SFML Test\model\Wall.cpp" />
     <ClCompile Include="..\SFML Test\model\world.cpp" />
     <ClCompile Include="..\SFML Test\model\worlddata.cpp" />
@@ -114,11 +112,13 @@
     <ClCompile Include="..\SFML Test\util\Observable.cpp" />
     <ClCompile Include="BodyTest.cpp" />
     <ClCompile Include="BulletTest.cpp" />
+    <ClCompile Include="CharacterTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Tests.cpp" />
+    <ClCompile Include="WorldTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

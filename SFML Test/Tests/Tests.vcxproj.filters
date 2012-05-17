@@ -48,9 +48,6 @@
     <ClInclude Include="..\SFML Test\global.h">
       <Filter>SFML Test\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\SFML Test\model\Player.h">
-      <Filter>SFML Test\model</Filter>
-    </ClInclude>
     <ClInclude Include="..\SFML Test\model\world.h">
       <Filter>SFML Test\model</Filter>
     </ClInclude>
@@ -101,9 +98,6 @@
     <ClCompile Include="..\SFML Test\global.cpp">
       <Filter>SFML Test\model</Filter>
     </ClCompile>
-    <ClCompile Include="..\SFML Test\model\Player.cpp">
-      <Filter>SFML Test\model</Filter>
-    </ClCompile>
     <ClCompile Include="..\SFML Test\model\world.cpp">
       <Filter>SFML Test\model</Filter>
     </ClCompile>
@@ -130,6 +124,12 @@
     </ClCompile>
     <ClCompile Include="..\SFML Test\model\Wall.cpp">
       <Filter>SFML Test\model</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
