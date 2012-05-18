@@ -15,7 +15,7 @@ namespace mp
 			virtual ~MainScreen();
 
 			virtual bool hover(const sf::Vector2i& mousePos);
-			//int click(const sf::Vector2i& mousePos);
+
 			virtual GUIElement* getElement(std::string element);
 
 			virtual void update() {}
@@ -30,7 +30,7 @@ namespace mp
 
 			sf::Text* gameTitleText;
 
-			std::map<std::string, Button*> buttons;
+			std::map<std::string, Button*> guiElements;
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 

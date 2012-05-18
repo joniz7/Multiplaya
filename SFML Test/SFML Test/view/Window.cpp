@@ -28,8 +28,6 @@ namespace mp
 		screens["settingsScreen"] = new SettingsScreen(resolution);
 		// will change
 		screens["hostScreen"] = new WorldView(worldData, window);
-		worldView = (WorldView*) screens["hostScreen"];
-
 
 	}
 
@@ -50,7 +48,7 @@ namespace mp
 			break;
 
 			case GameState::HOST_GAME:
-				worldView->update();
+				screens["hostScreen"]->update();
 				window->draw(*screens["hostScreen"]);
 			break;
 

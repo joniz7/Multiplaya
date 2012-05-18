@@ -26,7 +26,7 @@ namespace mp
 		ipTextField->setFontColor(sf::Color::Black);
 		ipTextField->setFontSize(20);
 		ipTextField->setBorderThicknessClicked(1);		
-		buttons["ipTextField"] = ipTextField;
+		guiElements["ipTextField"] = ipTextField;
 
 		portTitleText = new sf::Text("Port");
 		portTitleText->setFont(*font);
@@ -40,7 +40,7 @@ namespace mp
 		portTextField->setFontColor(sf::Color::Black);
 		portTextField->setFontSize(20);
 		portTextField->setBorderThicknessClicked(1);		
-		buttons["portTextField"] = portTextField;
+		guiElements["portTextField"] = portTextField;
 
 		background = new sf::RectangleShape( sf::Vector2f(resolution.x, resolution.y) );
 		background->setFillColor( sf::Color(94, 94, 94, 255) );
@@ -52,13 +52,13 @@ namespace mp
 		// add text like Port:
 		// same as above input field for port number
 
-		buttons["connectButton"] = new Button(40, 100, 200, 60, "Connect");
-		buttons["connectButton"]->setFont(*font);
-		buttons["connectButton"]->setFontColor(sf::Color::Black);
+		guiElements["connectButton"] = new Button(40, 100, 200, 60, "Connect");
+		guiElements["connectButton"]->setFont(*font);
+		guiElements["connectButton"]->setFontColor(sf::Color::Black);
 
-		buttons["cancelButton"] = new Button(40, 180, 200, 60, "Cancel");
-		buttons["cancelButton"]->setFont(*font);
-		buttons["cancelButton"]->setFontColor(sf::Color::Black);
+		guiElements["cancelButton"] = new Button(40, 180, 200, 60, "Cancel");
+		guiElements["cancelButton"]->setFont(*font);
+		guiElements["cancelButton"]->setFontColor(sf::Color::Black);
 
 	}
 
@@ -69,10 +69,10 @@ namespace mp
 
 	bool JoinGameScreen::hover(const sf::Vector2i& mousePos)
 	{
-		buttons["connectButton"]->isMouseOver(mousePos);
-		buttons["cancelButton"]->isMouseOver(mousePos);
-		buttons["ipTextField"]->isMouseOver(mousePos);
-		buttons["portTextField"]->isMouseOver(mousePos);
+		guiElements["connectButton"]->isMouseOver(mousePos);
+		guiElements["cancelButton"]->isMouseOver(mousePos);
+		guiElements["ipTextField"]->isMouseOver(mousePos);
+		guiElements["portTextField"]->isMouseOver(mousePos);
 
 		return true;
 	}
@@ -82,7 +82,7 @@ namespace mp
 		window.draw(*background);
 		window.draw(*ipTitleText);
 		window.draw(*portTitleText);
-		for( std::map<std::string, GUIElement*>::const_iterator it = buttons.begin(); it != buttons.end(); it++ )
+		for( std::map<std::string, GUIElement*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
 		{
 		   window.draw(*it->second);
 		}
@@ -91,6 +91,6 @@ namespace mp
 
 	GUIElement* JoinGameScreen::getElement(std::string element)
 	{
-		return buttons[element];
+		return guiElements[element];
 	}
 }
