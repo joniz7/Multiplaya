@@ -58,7 +58,7 @@ namespace mp
 		// Set the box density to be non-zero, so it will be dynamic.
 		fixtureDef.density = 1.0f;
 		// Override the default friction.
-		fixtureDef.friction = 2.0f;
+		fixtureDef.friction = 0.0f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
 		
