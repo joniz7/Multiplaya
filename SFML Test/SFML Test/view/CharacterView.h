@@ -26,9 +26,10 @@ namespace mp
 			void updateAnimation(float elapsed);
 			void updatePosition();
 		private:
+			bool facingLeft;
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			Character* character;
-			CharacterSprite* sprite;
+			AnimatedSprite* sprite;
 
 	};
 }
