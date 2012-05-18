@@ -12,7 +12,9 @@ namespace mp
 		backgroundTexture = new sf::Texture();
 		
 		// Pick one of three background images
+		srand ( time(NULL) );
 		int randomInt = rand() % 3;
+		std::cout<<"Din mamma: "<<randomInt<<std::endl;
 		std::stringstream backgroundFile;
 		backgroundFile << "resources/background" << randomInt << ".jpg";
 		backgroundTexture->loadFromFile( backgroundFile.str() );
