@@ -57,8 +57,8 @@ namespace mp
 
 		// Instantiate everything!
 		data->worldData = new WorldData();
-		data->view = new Window(data->worldData);
 		data->model = new World(data->worldData);
+		data->view = new Window(data->worldData);
 		data->controller = new Controller(data->model, data->view);
 		// We want to observe WorldData.
 		data->worldData->addObserver(data->view->getGameWindow());

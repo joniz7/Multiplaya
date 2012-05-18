@@ -314,7 +314,6 @@ namespace mp
 	// Fetches all character models,
 	// and creates their corresponding views.
 	void WorldView::createCharacterViews() {
-		
 		worldDataMutex.lock();
 		
 		// Fetch character models.
@@ -465,8 +464,9 @@ namespace mp
 	void WorldView::updateVectorPos(std::vector<GameObjectView*>& vector)
 	{
 		std::vector<GameObjectView*>::iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ )
+		for ( it = vector.begin() ; it < vector.end(); it++ ) {
 			(*it)->updatePosition();
+		}
 	}
 
 	void WorldView::calculateCam() 

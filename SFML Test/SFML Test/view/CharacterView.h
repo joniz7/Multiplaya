@@ -28,10 +28,7 @@ namespace mp
 		private:
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 			Character* character;
-			//sf::Sprite* sprite;
 			CharacterSprite* sprite;
-
-			bool facedRightLastUpdate;
 
 	};
 }
