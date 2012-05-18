@@ -11,7 +11,7 @@ namespace mp
 		this->height = height;
 
 		this->text = new sf::Text(text);
-		this->text->setPosition(xPos + 5, yPos + 5);
+		setTextPosition(5, 5);
 	   // alignment = CENTER;
 
 		background = new sf::RectangleShape( sf::Vector2f(width, height));
@@ -22,6 +22,11 @@ namespace mp
 	{
 		delete background;
 		delete text;
+	}
+
+	void GUIElement::setTextPosition(const float x, const float y)
+	{
+		text->setPosition(xPos + x, yPos + y);
 	}
 
 	void GUIElement::setFontStyle(sf::Text::Style style)

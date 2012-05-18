@@ -36,20 +36,24 @@ namespace mp
 		gameTitleText->setPosition(500, 20);
 		gameTitleText->setCharacterSize(40);
 
-		guiElements["joinButton"] = new Button(40, 100, 200, 60, "Join game");
+		guiElements["joinButton"] = new Button(0, 440, 250, 50, "Join game");
 		guiElements["joinButton"]->setFont(*font);
+		guiElements["joinButton"]->setTextPosition(60, 5);
 		guiElements["joinButton"]->setFontColor(sf::Color::Black);
 
-		guiElements["hostButton"] = new Button(40, 180, 200, 60, "Host game");
+		guiElements["hostButton"] = new Button(0, 500, 250, 50, "Host game");
 		guiElements["hostButton"]->setFont(*font);
+		guiElements["hostButton"]->setTextPosition(60, 5);
 		guiElements["hostButton"]->setFontColor(sf::Color::Black);
 
-		guiElements["settingsButton"] = new Button(40, 260, 200, 60, "Settings");
+		guiElements["settingsButton"] = new Button(0, 560, 250, 50, "Settings");
 		guiElements["settingsButton"]->setFont(*font);
+		guiElements["settingsButton"]->setTextPosition(60, 5);
 		guiElements["settingsButton"]->setFontColor(sf::Color::Black);
 
-		guiElements["exitButton"] = new Button(40, 340, 200, 60, "Exit game");
+		guiElements["exitButton"] = new Button(0, 620, 250, 50, "Exit game");
 		guiElements["exitButton"]->setFont(*font);
+		guiElements["exitButton"]->setTextPosition(60, 5);
 		guiElements["exitButton"]->setFontColor(sf::Color::Black);
 
 	}

@@ -15,6 +15,20 @@ namespace mp
 		//dtor
 	}
 
+	void Button::setHoverBorderColor(const sf::Color &color)
+	{
+		hoverBorderColor = color;
+	}
+
+	void Button::setHoverBorderThickness(const float thickness) 
+	{
+		hoverBorderThickness = thickness;
+	}
+
+	float Button::getHoverBorderThickness()
+	{
+		return hoverBorderThickness;
+	}
 
 	// refactor this method like...
 	bool Button::isMouseOver(const sf::Vector2i& mousePos)
@@ -45,5 +59,4 @@ namespace mp
 			hovering = false;
 		}
 	}
-
 }

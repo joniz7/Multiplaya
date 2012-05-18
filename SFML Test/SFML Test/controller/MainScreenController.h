@@ -18,6 +18,7 @@ namespace mp
 		sf::Event ev;
 		GUIElement* joinButton;
 		GUIElement* hostButton;
+		GUIElement* exitButton;
 
 	};
 }

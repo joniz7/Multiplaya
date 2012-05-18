@@ -25,7 +25,7 @@ namespace mp
 		ipTextField->setBorderColorClicked(sf::Color::Blue);
 		ipTextField->setFontColor(sf::Color::Black);
 		ipTextField->setFontSize(20);
-		ipTextField->setBorderThicknessClicked(1);		
+		ipTextField->setBorderThicknessClicked(1);
 		guiElements["ipTextField"] = ipTextField;
 
 		portTitleText = new sf::Text("Port");
@@ -39,7 +39,7 @@ namespace mp
 		portTextField->setBorderColorClicked(sf::Color::Blue);
 		portTextField->setFontColor(sf::Color::Black);
 		portTextField->setFontSize(20);
-		portTextField->setBorderThicknessClicked(1);		
+		portTextField->setBorderThicknessClicked(1);	
 		guiElements["portTextField"] = portTextField;
 
 		background = new sf::RectangleShape( sf::Vector2f(resolution.x, resolution.y) );
