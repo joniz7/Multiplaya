@@ -22,7 +22,7 @@ namespace mp
 		this->world = world;
 
 		this->objectType = character;
-		this->grounded = true;
+		this->grounded = false;
 		this->leftSideTouchWall = false;
 		this->rightSideTouchWall = false;
 		this->walking = false;

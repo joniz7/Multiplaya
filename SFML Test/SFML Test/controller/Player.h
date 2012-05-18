@@ -39,8 +39,8 @@ namespace mp
 			bool pressingKeyForJumping();
 			bool pressingKeyForConnecting();
 
-			void moveLeft();
-			void moveRight();
+			void moveLeft(int maxForce, int forceIteration);
+			void moveRight(int maxForce, int forceIteration);
 			void moveUp();
 			void moveDown();
 

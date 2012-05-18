@@ -21,31 +21,61 @@ namespace mp {
 
 	void Player::checkUserInput(const sf::Vector2f &mousePos)
 	{
-		if ( pressingKeyForMovingLeft() )
+
+		if( pressingKeyForMovingLeft() || pressingKeyForMovingRight() )
 		{
-			moveLeft();
-			worldDataMutex.lock();
-			character->setIsFacingLeft(true);
-			worldDataMutex.unlock();
-		}
-	
-		if ( pressingKeyForMovingRight() )
-		{
-			moveRight();
-			worldDataMutex.lock();
-			character->setIsFacingLeft(false);
-			worldDataMutex.unlock();
+			if ( pressingKeyForMovingLeft() && !pressingKeyForMovingRight() )	// Character should face left
+			{
+					worldDataMutex.lock();
+					character->setIsFacingLeft(true);
+					worldDataMutex.unlock();
+			}
+			else if ( pressingKeyForMovingRight() && !pressingKeyForMovingLeft() )	// Character should face right
+			{
+				worldDataMutex.lock();
+				character->setIsFacingLeft(false);
+				worldDataMutex.unlock();
+			}
+
+			// If we're not trying to move in both directions at once
+			if( !(pressingKeyForMovingLeft() && pressingKeyForMovingRight()) )
+			{
+				// Nullify linear damping so we can move
+				character->getBody()->SetLinearDamping(0);
+
+				if ( pressingKeyForMovingLeft() && !pressingKeyForMovingRight() )
+					if(character->isGrounded())
+						moveLeft(18,50);
+					else
+						moveLeft(18,5);
+				else if ( pressingKeyForMovingRight() && !pressingKeyForMovingLeft() )
+					if(character->isGrounded())
+						moveRight(18,50);
+					else
+						moveRight(18,5);
+
+				if (pressingKeyForMovingLeft() || pressingKeyForMovingRight() && character->isGrounded()) {
+					worldDataMutex.lock();
+					character->setWalking(true);
+					worldDataMutex.unlock();
+				} 
+				else {
+					worldDataMutex.lock();
+					character->setWalking(false);
+					worldDataMutex.unlock();
+				}
+			}
+
 		}
 
-		if (pressingKeyForMovingLeft() || pressingKeyForMovingRight()) {
-			worldDataMutex.lock();
-			character->setWalking(true);
-			worldDataMutex.unlock();
-		} 
-		else {
-			worldDataMutex.lock();
-			character->setWalking(false);
-			worldDataMutex.unlock();
+		if( !(pressingKeyForMovingLeft() || pressingKeyForMovingRight()) && character->isGrounded() )
+		{
+			// Set linear damping so we stop
+			character->getBody()->SetLinearDamping(5);
+		}
+		else if(!character->isGrounded())
+		{
+			character->getBody()->SetLinearDamping(0);
 		}
 
 		if ( pressingKeyForMovingUp() ) 
@@ -54,7 +84,7 @@ namespace mp {
 		}
 		if ( pressingKeyForMovingDown() ) 
 		{
-			moveDown();
+			//moveDown();
 		}
 		if( pressingKeyForPrimaryFire() )
         {
@@ -71,10 +101,12 @@ namespace mp {
 			{
 				worldDataMutex.lock();
 				character->jump();
+				/*
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					character->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), character->getBody()->GetPosition() );
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					character->getBody()->ApplyLinearImpulse( b2Vec2(-40, 0), character->getBody()->GetPosition() );
+					*/
 				worldDataMutex.unlock();
 
 				released = false;
@@ -132,20 +164,20 @@ namespace mp {
 		return sf::Keyboard::isKeyPressed(sf::Keyboard::C);
 	}
 
-	void Player::moveLeft()
+	void Player::moveLeft(int maxForce, int forceIteration)
 	{
 		worldDataMutex.lock();
-		if(character->getBody()->GetLinearVelocity().x < 7) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(5, 0), character->getBody()->GetPosition() );
+		if(character->getBody()->GetLinearVelocity().x < maxForce) {
+			character->getBody()->ApplyLinearImpulse( b2Vec2(forceIteration, 0), character->getBody()->GetPosition() );
 		}
 		worldDataMutex.unlock();
 	}
 
-	void Player::moveRight()
+	void Player::moveRight(int maxForce, int forceIteration)
 	{
 		worldDataMutex.lock();
-		if(character->getBody()->GetLinearVelocity().x > -7) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(-5, 0), character->getBody()->GetPosition() );
+		if(character->getBody()->GetLinearVelocity().x > -maxForce) {
+			character->getBody()->ApplyLinearImpulse( b2Vec2(-forceIteration, 0), character->getBody()->GetPosition() );
 		}
 		worldDataMutex.unlock();
 	}
