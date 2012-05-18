@@ -9,7 +9,6 @@
 #include <sfml.h>
 #include <model/worlddata.h>
 #include <model/world.h>
-#include <model/Player.h>
 #include <model/bullet.h>
 #include <model/character.h>
 

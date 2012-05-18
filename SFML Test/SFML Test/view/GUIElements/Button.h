@@ -14,10 +14,10 @@ namespace mp
 
 			virtual ~Button();
 
+			void setHoverBorderColor(const sf::Color& color);
+			sf::Color& getHoverBorderColor();
 			
-			void setHoverBorderColor();
-			void getHoverBorderColor();
-			void setHoverBorderThickness(float thickness);
+			void setHoverBorderThickness(const float thickness);
 			float getHoverBorderThickness();
 
 			virtual bool isMouseOver(const sf::Vector2i& mousePos);

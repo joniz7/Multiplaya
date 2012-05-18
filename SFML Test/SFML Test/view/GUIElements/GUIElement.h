@@ -39,6 +39,8 @@ namespace mp
 			virtual void setText(const std::string text);
 			const sf::String& getText();
 			void setTextAlignment(TextAlignment alignment);
+					
+			void setTextPosition(const float x, const float y);
 
 		protected:
 			virtual bool mouseInsideHitbox(const sf::Vector2i& mousePos);

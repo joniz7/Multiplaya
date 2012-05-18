@@ -94,9 +94,9 @@ namespace mp
 		// Check if we have bullets to remove.
 		if (bulletsToRemove->size() > 0) {
 			std::vector<Bullet*>::iterator it;
-			for ( it = bulletsToRemove->begin() ; it < bulletsToRemove->end(); it++ ) {
-				Bullet* bullet = (*it);
- 				delete bullet;
+			for ( it = bulletsToRemove->begin() ; it != bulletsToRemove->end(); ) {
+				delete *it;
+				it = bulletsToRemove->erase(it);
 			}
 			bulletsToRemove->clear();
 		}

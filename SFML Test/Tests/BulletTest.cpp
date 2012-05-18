@@ -8,7 +8,7 @@
 //#include <global.h>
 #include <sfml.h>
 #include <model/worlddata.h>
-#include <model/Player.h>
+
 
 namespace mpt {
 
