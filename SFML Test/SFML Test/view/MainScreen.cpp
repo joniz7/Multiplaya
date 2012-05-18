@@ -1,6 +1,8 @@
 #include "MainScreen.h"
 
 #include <iostream>
+#include <string>
+#include <sstream>
 
 namespace mp
 {
@@ -8,7 +10,12 @@ namespace mp
 	{
 		// do I choose a sf::Texture or an sf::Image?
 		backgroundTexture = new sf::Texture();
-		backgroundTexture->loadFromFile("resources/background.jpg");
+		
+		// Pick one of three background images
+		int randomInt = rand() % 3;
+		std::stringstream backgroundFile;
+		backgroundFile << "resources/background" << randomInt << ".jpg";
+		backgroundTexture->loadFromFile( backgroundFile.str() );
 
 		backgroundSprite = new sf::Sprite();
 		backgroundSprite->setTexture(*backgroundTexture);
