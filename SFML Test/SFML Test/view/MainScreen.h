@@ -30,7 +30,8 @@ namespace mp
 
 			sf::Text* gameTitleText;
 
-			std::map<std::string, Button*> guiElements;
+			// move this and getElement to superclass
+			std::map<std::string, GUIElement*> guiElements;
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 

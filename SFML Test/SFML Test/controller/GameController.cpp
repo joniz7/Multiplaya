@@ -49,7 +49,11 @@ namespace mp
 			if (ev.type == sf::Event::Closed)
 				getRenderWindow()->close();
 			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape))
-				getRenderWindow()->close();
+			{
+				GameState::getInstance()->setGameState(GameState::MAIN_SCREEN);
+				getRenderWindow()->setMouseCursorVisible(true);
+			}
+
 
 			// Handle zooming of viewport
 			if ( ev.type == sf::Event::MouseWheelMoved )

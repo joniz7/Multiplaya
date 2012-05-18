@@ -6,6 +6,7 @@ namespace mp
 	{
 		joinButton = mainScreen->getElement("joinButton");
 		hostButton = mainScreen->getElement("hostButton");
+		exitButton = mainScreen->getElement("exitButton");
 	}
 
 	MainScreenController::~MainScreenController()
@@ -41,6 +42,11 @@ namespace mp
 					hostButton->click();
 					getRenderWindow()->setMouseCursorVisible(false);
 					GameState::getInstance()->setGameState(GameState::HOST_GAME);
+				}
+
+				if ( exitButton->isMouseOver(mousePos) )
+				{
+					getRenderWindow()->close();
 				}
 				// get button elements and see which hovers
 			}
