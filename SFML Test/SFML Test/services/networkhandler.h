@@ -18,6 +18,7 @@
 #include <Box2D.h>
 
 // Game specific headers
+#include "../global.h"
 #include "../client.h"
 #include "../model/world.h"
 #include "../model/worlddata.h"

@@ -2,11 +2,6 @@
 
 namespace mp
 {
-	// TODO: Remove last parameter, and create sprite in constructor.
-	CharacterView::CharacterView(Character* character, CharacterSprite* sprite) {
-		this->character = character;
-		this->sprite = sprite;
-	}
 
 	CharacterView::CharacterView(Character* character) {
 		this->character = character;
@@ -20,6 +15,8 @@ namespace mp
 
 	void CharacterView::updatePosition()
 	{
+		worldDataMutex.lock();
+
 		b2Vec2 position = character->getBody()->GetPosition();
 		float32 angle = character->getBody()->GetAngle();
 		//todo define pixelscale globaly
@@ -39,6 +36,7 @@ namespace mp
 			sprite->faceLeft();
 		}
 
+		worldDataMutex.unlock();
 	}
 
 	void CharacterView::updateAnimation(float elapsed) {

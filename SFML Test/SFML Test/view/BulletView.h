@@ -7,6 +7,7 @@
 // SFML specific headers
 #include "../sfml.h"
 
+#include "../global.h"
 #include "GameObjectView.h"
 #include "../model/bullet.h"
 

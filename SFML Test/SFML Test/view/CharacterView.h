@@ -5,6 +5,7 @@
 #define CHARACTER_VIEW_H
 
 // Game specific headers
+#include "../global.h"
 #include "../model/character.h"
 #include "animatedsprite.h"
 #include "CharacterSprite.h"

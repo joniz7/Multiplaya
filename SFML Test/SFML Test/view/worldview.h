@@ -100,6 +100,7 @@ namespace mp
 			sf::Texture* backgroundTexture;
 			sf::Sprite* backgroundSprite;
 
+			sf::RectangleShape* testBox;
 			sf::RectangleShape* ground;
 			sf::RectangleShape* ground2;
 			sf::RectangleShape* ground3;

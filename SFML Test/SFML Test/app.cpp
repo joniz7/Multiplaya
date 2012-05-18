@@ -54,7 +54,11 @@ namespace mp
 		// Cast to world data pointer
 		Container* data = static_cast<Container*>(UserData);
 		std::cout<<".";
+
+		// Instantiate everything!
+		data->worldData = new WorldData();
 		data->view = new Window(data->worldData);
+		data->model = new World(data->worldData);
 		data->controller = new Controller(data->model, data->view);
 		// We want to observe WorldData.
 		data->worldData->addObserver(data->view->getGameWindow());
@@ -66,8 +70,9 @@ namespace mp
 		// Run the view's infinite loop
 		while (true)
 		{
-			data->view->exec();
 			data->controller->exec();
+			data->model->exec();
+			data->view->exec();
 		}
 
 	}
@@ -117,15 +122,16 @@ namespace mp
     {
 		// Contains instances of all parts of our program.
 		Container* data = new Container();
-		
-		// Instantiate everything!
-		data->worldData = new WorldData();
 
-		// Create and launch the logic thread.
+		// Create WorldData.
+		//data->worldData = new WorldData();
+
+/*		// Create and launch the logic thread.
 		// Important: depends on viewThread already being launched!
 		sf::Thread logicThread(&createLogicThread, data);
 		logicThread.launch();
 		while(!data->logicThreadFinished) {}
+*/
 
 		// Create and launch the view thread.
 		sf::Thread viewThread(&createViewThread, data);

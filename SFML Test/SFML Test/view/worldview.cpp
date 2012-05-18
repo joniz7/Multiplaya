@@ -59,21 +59,21 @@ namespace mp
 
 	void WorldView::addBullet(Bullet* bullet)
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 		bullets.push_back(  new BulletView( bullet ) );
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 	
 	// delete bullet at index i 
 	void WorldView::deleteBullet(int i)
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 
 		BulletView* bullet = (BulletView*) bullets.at(i);
 		bullets.erase(bullets.begin() + i );
 		delete bullet;
 
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 
 	void WorldView::zoom(float factor)
@@ -97,15 +97,16 @@ namespace mp
 			// Every 10th frame:
 			if(counter == 10) {
 				int renderFps = (int)(1 / elapsed);
+				
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
-				
+				worldDataMutex.unlock();
+
 				std::string renderFpsString = convertInt(renderFps);
 				renderFpsTxt->setString("Render fps: " + renderFpsString);
 				std::string logicFpsString = convertInt(logicFps);
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
-				worldDataMutex.unlock();
 				counter = 0;
 			}
 			else {
@@ -118,28 +119,20 @@ namespace mp
 
 		tempLoop();
 		calculateCam();
-		// TODO: The upper should suffice. What's the deal? :(
+		
+
+		// Access world data
+		//worldDataMutex.lock();
+
 		for(int i=0;i<characters.size();i++) {
 			((CharacterView*)characters.at(i))->updateAnimation(elapsed);
 		}
-		//player->updateAnimation(elapsed);
-		//AnimatedSprite->update(elapsed);
-		// Handle events
-		//handleEvents();
-
-		// Access world data
-		worldDataMutex.lock();
-
-			
-		// TODO: when updateAnimation() works as intended,
-		// we should loop through all elements in characters
-		// and call updateAnimation() on all of them.
 
 		updatePositions();
 		updateHUD();
 
 		// Unlock world data mutex
-		worldDataMutex.unlock();
+		//worldDataMutex.unlock();
 
 	}
 
@@ -238,24 +231,10 @@ namespace mp
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5, 0.5);
 
-		
-		// ---- Character's Sprite ----
-		// TODO: move all this to CharacterView's constructor.
-
-		//AnimatedSprite = new AnimatedSprite("resources/test/testsprite.png",8);
-		//AnimatedSprite->idle();
-
-		std::cout << "init2" << std::endl;
-		// ----------------------------
-
 		//instantiate map graphics
 		constructMapGraphics();
 
 		createCharacterViews();
-
-		//CharacterView* player = new CharacterView(worldData->getCurrentCharacter());
-		//CharacterView* player = new CharacterView(worldData->getCurrentCharacter(), AnimatedSprite);
-		//characters.push_back( player );
 
 		std::cout << "Render window initialized!" << std::endl;
 	}
@@ -327,7 +306,6 @@ namespace mp
 		x = (WIDTH)  - hpSprite->getWidth();
 		y = (HEIGHT) - hpSprite->getHeight();
 		hpSprite->setPosition(x,y);
-		// TODO: read above.
 		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 		//------------------------------
 
@@ -336,6 +314,7 @@ namespace mp
 	// Fetches all character models,
 	// and creates their corresponding views.
 	void WorldView::createCharacterViews() {
+		
 		worldDataMutex.lock();
 		
 		// Fetch character models.
@@ -387,21 +366,22 @@ namespace mp
 
 	void WorldView::updateBulletsPos()
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 		updateVectorPos(bullets);
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 
 	void WorldView::updateCharactersPos()
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 		updateVectorPos(characters);
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 
 	void WorldView::updateHUD()
 	{
-		worldViewMutex.lock();
+		
+		worldDataMutex.lock();
 		
 		Character currentCharacter = *worldData->getCurrentCharacter();
 		std::ostringstream kills, deaths; // (convert short->string)
@@ -414,7 +394,7 @@ namespace mp
 		ammoSprite->setState(currentCharacter.getClip());
 		hpSprite->setState(currentCharacter.getHealthState());
 
-		worldViewMutex.unlock();
+		worldDataMutex.unlock();
 	}
 
 	// better name
@@ -445,16 +425,16 @@ namespace mp
 
 	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 		drawVector(bullets, window);
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 	
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 		drawVector(characters, window);
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 	
 	void WorldView::drawHUD(sf::RenderTarget& window) const {
@@ -491,11 +471,13 @@ namespace mp
 
 	void WorldView::calculateCam() 
 	{
+		worldDataMutex.lock();
 		// Calculate camera position (somehwere between character and mouse)
 		b2Vec2 position = worldData->getCurrentCharacter()->getBody()->GetPosition();
 		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
 		//testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
-		
+		worldDataMutex.unlock();
+
 		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
 		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
 

@@ -26,7 +26,9 @@ namespace mp
 		b2Vec2 gravity(0, -20.8f);
 		// Create the world
 		world = new b2World(gravity);
+		worldDataMutex.lock();
 		world->SetContactListener(new ContactListener(worldData));
+		worldDataMutex.unlock();
 
 		// World step properties
 		timeStep = 1.0f / 60.0f;
@@ -37,7 +39,6 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 
-		// if inside lock, bullets doesn't show. whyy??
 		worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
 		worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
 		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
@@ -56,8 +57,10 @@ namespace mp
 	// The logic loop; updates the game world, runs Box2D etc.
 	////////////////////////////////////////////////////////////
     void World::exec() {
-		while (true) 
-		{
+		// Moved loop to app.
+		//bool running=true;
+		//while(running) {
+
 			clock->restart();
 			// Lock world data so only one thread can access world data at the same time
 			worldDataMutex.lock();
@@ -76,15 +79,17 @@ namespace mp
 			worldDataMutex.unlock();
 
 			// Have we finished faster than expected?
-			if(elapsed<(1 / 60.0f))
+			if(elapsed<(1 / 120.0f))
 			{	// Leave the arena now and rest - you've earned it.
-				sf::sleep( sf::seconds( (1 / 60.0f)-elapsed ) );
+				sf::sleep( sf::seconds( (1 / 120.0f)-elapsed ) );
 			}
-		}
+
+		//}
     }
 
 	void World::deleteBullets()
 	{
+		worldDataMutex.lock();
 		std::vector<Bullet*>* bulletsToRemove = worldData->getBulletsToRemove();
 		// Check if we have bullets to remove.
 		if (bulletsToRemove->size() > 0) {
@@ -95,6 +100,7 @@ namespace mp
 			}
 			bulletsToRemove->clear();
 		}
+		worldDataMutex.unlock();
 	}
 
 	void World::createCharacter(b2Vec2 position, b2Vec2 size, sf::Int8 clientID)

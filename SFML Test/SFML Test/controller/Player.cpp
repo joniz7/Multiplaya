@@ -24,21 +24,28 @@ namespace mp {
 		if ( pressingKeyForMovingLeft() )
 		{
 			moveLeft();
+			worldDataMutex.lock();
 			character->setIsFacingLeft(true);
+			worldDataMutex.unlock();
 		}
 	
 		if ( pressingKeyForMovingRight() )
 		{
 			moveRight();
+			worldDataMutex.lock();
 			character->setIsFacingLeft(false);
+			worldDataMutex.unlock();
 		}
 
-		if (pressingKeyForMovingLeft() || pressingKeyForMovingRight())
-		{
+		if (pressingKeyForMovingLeft() || pressingKeyForMovingRight()) {
+			worldDataMutex.lock();
 			character->setWalking(true);
+			worldDataMutex.unlock();
 		} 
 		else {
+			worldDataMutex.lock();
 			character->setWalking(false);
+			worldDataMutex.unlock();
 		}
 
 		if ( pressingKeyForMovingUp() ) 
@@ -52,7 +59,9 @@ namespace mp {
 		if( pressingKeyForPrimaryFire() )
         {
 			b2Vec2 targetPos(mousePos.x, mousePos.y); 
+			worldDataMutex.lock();
 			character->primaryFire(targetPos);
+			worldDataMutex.unlock();
         }
 			
 		if ( pressingKeyForJumping() )
@@ -60,11 +69,13 @@ namespace mp {
 			//same as above will be moved to character class
 			if(released)
 			{
+				worldDataMutex.lock();
 				character->jump();
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					character->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), character->getBody()->GetPosition() );
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					character->getBody()->ApplyLinearImpulse( b2Vec2(-40, 0), character->getBody()->GetPosition() );
+				worldDataMutex.unlock();
 
 				released = false;
 			}
@@ -77,7 +88,9 @@ namespace mp {
 		if ( pressingKeyForConnecting() )
 		{
 			//worldData->notify() bblala
+			worldDataMutex.lock();
 			character->connectToServer();
+			worldDataMutex.unlock();
 		}
 				
 	}
@@ -121,26 +134,38 @@ namespace mp {
 
 	void Player::moveLeft()
 	{
-		if(character->getBody()->GetLinearVelocity().x < 7)
+		worldDataMutex.lock();
+		if(character->getBody()->GetLinearVelocity().x < 7) {
 			character->getBody()->ApplyLinearImpulse( b2Vec2(5, 0), character->getBody()->GetPosition() );
+		}
+		worldDataMutex.unlock();
 	}
 
 	void Player::moveRight()
 	{
-		if(character->getBody()->GetLinearVelocity().x > -7)
+		worldDataMutex.lock();
+		if(character->getBody()->GetLinearVelocity().x > -7) {
 			character->getBody()->ApplyLinearImpulse( b2Vec2(-5, 0), character->getBody()->GetPosition() );
+		}
+		worldDataMutex.unlock();
 	}
 
 	void Player::moveUp()
 	{
-		if(character->getBody()->GetLinearVelocity().y < 10)
+		worldDataMutex.lock();
+		if(character->getBody()->GetLinearVelocity().y < 10) {
 			character->getBody()->ApplyLinearImpulse( b2Vec2(0, 5), character->getBody()->GetPosition() );
+		}
+		worldDataMutex.unlock();
 	}
 
 	void Player::moveDown()
 	{
-		if(character->getBody()->GetLinearVelocity().y > -10)
+		worldDataMutex.lock();
+		if(character->getBody()->GetLinearVelocity().y > -10) {
 			character->getBody()->ApplyLinearImpulse( b2Vec2(0, -5), character->getBody()->GetPosition() );
+		}
+		worldDataMutex.unlock();
 	}
 
 }

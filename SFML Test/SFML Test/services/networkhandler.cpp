@@ -258,10 +258,11 @@ namespace mp
 		sf::Int8 type = 1;
 		sf::Packet packet;
 
-		// should probably be something like getPlayer->getCurrentCharacter()
+		worldDataMutex.lock();
 		Character* character = worldData->getCurrentCharacter();
 		float32 x = character->getBody()->GetPosition().x;
 		float32 y = character->getBody()->GetPosition().y;
+		worldDataMutex.unlock();
 
 		packet << type << name << x << y;
 
@@ -276,11 +277,13 @@ namespace mp
 		sf::Int8 type = 4;
 		sf::Packet packet;
 
+		worldDataMutex.lock();
 		float32 x = worldData->getCurrentCharacter()->getBody()->GetPosition().x;
 		float32 y = worldData->getCurrentCharacter()->getBody()->GetPosition().y;
 		float32 xvel = worldData->getCurrentCharacter()->getBody()->GetLinearVelocity().x;
 		float32 yvel = worldData->getCurrentCharacter()->getBody()->GetLinearVelocity().y;
 		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
+		worldDataMutex.unlock();
 
 		packet << type << myID << x << y << xvel << yvel << angle;
 		sender.send(packet, myIP, 55001);
@@ -308,10 +311,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle)
 	{
+		worldDataMutex.lock();
 		Character* character = worldData->getCharacter(clientID);
-
 		character->setPosition(position, angle);
 		character->setLinVelocity(velocity);
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////

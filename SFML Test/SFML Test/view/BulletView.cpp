@@ -25,8 +25,11 @@ namespace mp
 
 	void BulletView::updatePosition()
 	{
+		worldDataMutex.lock();
 		b2Vec2 position = model->getBody()->GetPosition();
 		b2Vec2 v = model->getBody()->GetLinearVelocity();
+		worldDataMutex.unlock();
+
 		float a = atan(v.x/v.y);
 		bulletVis->setPosition(position.x * 1 / 10.0f, position.y * 1 / 10.0f);
 		bulletVis->setRotation( a * 180 / -pi );

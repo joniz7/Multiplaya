@@ -9,7 +9,7 @@
 
 //Defines
 #include "../sfml.h"
-
+#include "../global.h"
 #include "../model/character.h"
 
 
