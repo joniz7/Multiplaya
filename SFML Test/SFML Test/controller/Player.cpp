@@ -89,6 +89,7 @@ namespace mp {
 		{
 			// Set linear damping so we stop
 			character->getBody()->SetLinearDamping(10);
+			character->setWalking(false);
 			nullifyLinearDamping = false;
 		}
 
