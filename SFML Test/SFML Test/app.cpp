@@ -50,10 +50,9 @@ namespace mp
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<< "Starting view thread.";
+		std::cout<< "Starting view thread."<<std::endl;
 		// Cast to world data pointer
 		Container* data = static_cast<Container*>(UserData);
-		std::cout<<".";
 
 		// Instantiate everything!
 		data->worldData = new WorldData();
@@ -79,7 +78,6 @@ namespace mp
 			
 			if(elapsed>(1/20.f))
 			{
-				std::cout<<"nu"<<std::endl;
 				clock.restart();
 				if(data->network->isServer)
 				{
@@ -104,11 +102,10 @@ namespace mp
 	{
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<<"Starting network thread.";
+		std::cout<<"Starting network thread."<<std::endl;
 		
 		// Cast to world data pointer
 		Container* data = static_cast<Container*>(UserData);
-		std::cout<<".";
 		data->network = new NetworkHandler(data->worldData, data->model);
 		data->controller->setNetworkHandler(data->network);
 		// We want to observe worldData.
