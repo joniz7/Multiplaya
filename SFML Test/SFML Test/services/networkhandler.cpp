@@ -32,7 +32,7 @@ namespace mp
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
-		serverIP = serverIP.getLocalAddress();
+		serverIP = serverIP.getPublicAddress();
 		std::cout<<"Your IP is: "<<serverIP<<std::endl;
     }
 
