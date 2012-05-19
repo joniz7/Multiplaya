@@ -262,14 +262,17 @@ namespace mp
 	}
 
 	// Leftside
-	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	{
+	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	
+	{
 		this->objectType = characterLeftSensor;
 	}
+
 	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall){
 			leftSideTouchWall = true;
 		}
 	}
+
 	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
 		leftSideTouchWall = false;
 	}

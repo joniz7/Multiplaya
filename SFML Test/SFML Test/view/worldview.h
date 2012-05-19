@@ -34,6 +34,7 @@
 
 #include "Screen.h"
 #include "GUIElements/GUIElement.h"
+#include "LayerHandler.h"
 
 namespace mp
 {
@@ -58,6 +59,8 @@ namespace mp
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
 			void zoom(float factor);
 			sf::View* getCamera() { return camera; }
+
+			void characterMoved(float moved);
 			
 		protected:
     		
@@ -153,6 +156,11 @@ namespace mp
 			int counter;
 			float elapsed;
 
+			LayerHandler* layerHandler;
+			sf::Texture* sunTexture;
+			sf::Sprite* sunSprite;
+
+			float characterXPos;
     };
 }
 

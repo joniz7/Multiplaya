@@ -27,7 +27,8 @@ namespace mp
 		this->pixelScale = 1 / 10.0f;
 		counter = 0;
 		elapsed = 0;
-		
+		layerHandler = new LayerHandler();
+		characterXPos = 0;
 		initialize();
 	}
 
@@ -81,6 +82,11 @@ namespace mp
 		//worldViewMutex.unlock();
 	}
 
+	/*void WorldView::characterMoved(float moved)
+	{
+		layerHandler->update(moved);
+	}*/
+
 	void WorldView::addCharacter(Character* character)
 	{
 		characters.push_back( new CharacterView( character ) );
@@ -103,6 +109,9 @@ namespace mp
             elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
+			// diff
+			layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
+			characterXPos = worldData->getCharacter(0)->getPosition().x;
 			
 			// Every 10th frame:
 			if(counter == 10) {
@@ -139,6 +148,8 @@ namespace mp
 
 		updatePositions();
 		updateHUD();
+		//layerHandler->update(1);
+
 
 		// Unlock world data mutex
 		//worldDataMutex.unlock();
@@ -152,6 +163,8 @@ namespace mp
             
             // Render World.
 			drawWorld( window );
+
+			window.draw(*layerHandler);
 
 			// Render UI.
 			drawHUD( window );
@@ -183,6 +196,14 @@ namespace mp
 		backgroundSprite->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
 		backgroundSprite->setPosition(-20, -10);
 		backgroundSprite->scale(0.02f, 0.02f);
+
+		sunTexture = new sf::Texture();
+		sunTexture->loadFromFile("resources/sun.jpg");
+		sunSprite = new sf::Sprite();
+		sunSprite->setTexture(*sunTexture);
+		sunSprite->setPosition(-20, -10);
+		sunSprite->scale(0.01, 0.01);
+		layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.
 		fontGothic = new sf::Font();

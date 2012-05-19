@@ -20,10 +20,12 @@ namespace mp
 		this->model = model;
 		this->network = NULL;
 		this->currentPlayer = new Player();
-			worldDataMutex.lock();
-
+		
+		worldDataMutex.lock();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
-			worldDataMutex.unlock();
+		worldDataMutex.unlock();
+
+		zoomFactor = 0;
     }
 
 	void GameController::setNetworkHandler(NetworkHandler* network) {
@@ -36,6 +38,7 @@ namespace mp
     void GameController::handleInput()
     {
 		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());
+
 		currentPlayer->update(mousePos);
 
 		// Wait until setNetworkHandler() is called.
@@ -60,10 +63,19 @@ namespace mp
 			if ( ev.type == sf::Event::MouseWheelMoved )
 			{
 				// TODO set maximum factor to zoom out
-				if( ev.mouseWheel.delta > 0)
+				if( ev.mouseWheel.delta > 0 && zoomFactor >= -0.7f)
+				{
+					std::cout << zoomFactor << std::endl;
 					worldView->zoom(0.9f);
-				else
+					zoomFactor -= 0.1f;
+				}
+				else if (ev.mouseWheel.delta < 0 && zoomFactor <= 0.1f)
+				{
+					std::cout << zoomFactor << std::endl;
 					worldView->zoom(1.1f);
+					zoomFactor += 0.1;
+				}
+					
 			}
 		}
     }
