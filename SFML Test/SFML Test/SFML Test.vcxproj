@@ -115,6 +115,8 @@
     <ClCompile Include="view\GUIElements\TextField.cpp" />
     <ClCompile Include="view\HUDSprite.cpp" />
     <ClCompile Include="view\JoinGameScreen.cpp" />
+    <ClCompile Include="view\Layer.cpp" />
+    <ClCompile Include="view\LayerHandler.cpp" />
     <ClCompile Include="view\MainScreen.cpp" />
     <ClCompile Include="view\SettingsScreen.cpp" />
     <ClCompile Include="view\Window.cpp" />
@@ -162,6 +164,8 @@
     <ClInclude Include="view\GUIElements\TextField.h" />
     <ClInclude Include="view\HUDSprite.h" />
     <ClInclude Include="view\JoinGameScreen.h" />
+    <ClInclude Include="view\Layer.h" />
+    <ClInclude Include="view\LayerHandler.h" />
     <ClInclude Include="view\MainScreen.h" />
     <ClInclude Include="view\Screen.h" />
     <ClInclude Include="view\SettingsScreen.h" />
