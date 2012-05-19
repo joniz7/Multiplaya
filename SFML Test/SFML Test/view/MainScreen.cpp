@@ -31,8 +31,8 @@ namespace mp
 		gameTitleText = new sf::Text("Multiplaya");
 		gameTitleText->setFont(*font);
 		gameTitleText->setStyle(sf::Text::Bold);
-		gameTitleText->setColor(sf::Color::Black);
-		gameTitleText->setPosition(500, 20);
+		gameTitleText->setColor(sf::Color::White);
+		gameTitleText->setPosition(20, 20);
 		gameTitleText->setCharacterSize(40);
 
 		guiElements["joinButton"] = new Button(0, 440, 250, 50, "Join game");
