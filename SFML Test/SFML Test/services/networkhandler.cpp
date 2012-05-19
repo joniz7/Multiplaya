@@ -199,7 +199,7 @@ namespace mp
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
-							setCharacterData(clientID, position, velocity, angle);
+							//setCharacterData(clientID, position, velocity, angle);
 						}
 						break;
 					//Receive bullet data from the server

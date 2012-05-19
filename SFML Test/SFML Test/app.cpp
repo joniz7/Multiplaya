@@ -16,6 +16,8 @@ namespace mp
 		Controller* controller;
 		Window* view;
 		NetworkHandler* network;
+		sf::Clock clock;
+
 
 		bool viewThreadFinished;
 		bool logicThreadFinished;
@@ -68,20 +70,24 @@ namespace mp
 		// We're done, let the main program continue.
 		data->viewThreadFinished = true;
 		// Run the view's infinite loop
+		float elapsed = data->clock.getElapsedTime().asSeconds();
 		while (true)
 		{
 			data->controller->exec();
 			data->model->exec();
 			data->view->exec();
 			
-			if(data->network->isServer)
+			if(elapsed<(1/60.0f))
 			{
-				data->network->updateAllClients();
-			}
+				if(data->network->isServer)
+				{
+					data->network->updateAllClients();
+				}
 			
-			if(data->network->isClient) 
-			{
-				data->network->sendCharacterDataToServer();
+				if(data->network->isClient) 
+				{
+					data->network->sendCharacterDataToServer();
+				}
 			}
 			
 		}
