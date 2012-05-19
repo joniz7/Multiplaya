@@ -6,6 +6,7 @@
 #include "worlddata.h"
 
 #include <iostream>
+#include <fstream>
 
 #include "ContactListener.h"
 #include "../global.h"
@@ -48,6 +49,9 @@ namespace mp
 		// Add´test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
 		worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
+
+		// Load world physics
+		loadMap("resources/maps/test");
 
 		// Unlock world data
 		worldDataMutex.unlock();
@@ -127,6 +131,58 @@ namespace mp
 		worldDataMutex.lock();
 		worldData->addBullet(new Bullet(type, clientID, world, position, force, worldData));
 		worldDataMutex.unlock();
+	}
+
+	////////////////////////////////////////////////////////////
+	// Destructor
+	////////////////////////////////////////////////////////////
+	void World::loadMap(const std::string& path)
+	{
+		loadPhysics(path);
+		//loadGraphics(path);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Destructor
+	////////////////////////////////////////////////////////////
+	void World::loadPhysics(const std::string& path)
+	{
+		std::string physicsFile = path;
+		physicsFile.append("/physics.po");
+
+		std::ifstream fileReader;
+		fileReader.open(physicsFile.c_str());
+        if(!fileReader)
+        {
+            std::cout<<"FATAL ERROR: Unable to open physics file for map "<<physicsFile<<std::endl;
+			return;
+        }
+		else
+		{
+			std::cout<<"Loading world physics"<<std::endl;;
+			std::string line;
+			while(getline(fileReader,line))
+            {
+				if(!line.empty())
+				{
+					bool search = true;
+					while(search)
+					{
+						short pos1 = line.find("(");
+						short pos2 = line.find(")");
+						std::cout<<"Paranthesises :"<<pos1<<" "<<pos2<<std::endl;
+
+						std::string data = line.substr(pos1+1,pos2-(pos1+1));
+
+						std::cout<<"Hejhej "<<data<<std::endl;
+
+						search = false;
+					}
+				}
+            }
+			std::cout<<std::endl<<"World physics loaded"<<std::endl;
+		}
+		fileReader.close();
 	}
 
 	////////////////////////////////////////////////////////////
