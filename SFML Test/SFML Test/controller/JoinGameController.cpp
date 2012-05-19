@@ -11,7 +11,6 @@ namespace mp
 
 		ipTextClicked = false;
 		portTextClicked = false;
-
 	}
 
 	JoinGameController::~JoinGameController()
@@ -21,6 +20,7 @@ namespace mp
 
 	void JoinGameController::handleInput()
 	{
+		float elapsed;
 		// for hover effects
 		while (getRenderWindow()->pollEvent(ev))
 		{
@@ -32,16 +32,17 @@ namespace mp
 				
 				if( connectButton->isMouseOver(mousePos) )
 				{
-					
+					elapsed = clock.getElapsedTime().asSeconds();
 					connectButton->click();
 					networkHandler->connectToServer("Jonte");
-					while(!networkHandler->isConnectedToServer()) 
+					while(!networkHandler->isConnectedToServer() || elapsed>5) {}
+
+					if(networkHandler->isConnectedToServer())
 					{
-						std::cout<<"gogogo"<<std::endl;
+						networkHandler->setIPAddress(ipTextField->getText());
+						networkHandler->setAsClient();
+						GameState::getInstance()->setGameState(GameState::HOST_GAME);
 					}
-					networkHandler->setIPAddress(ipTextField->getText());
-					networkHandler->setAsClient();
-					GameState::getInstance()->setGameState(GameState::HOST_GAME);
 				}
 				
 				if ( cancelButton->isMouseOver(mousePos) )
