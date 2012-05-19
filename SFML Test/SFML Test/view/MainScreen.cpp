@@ -14,7 +14,6 @@ namespace mp
 		// Pick one of three background images
 		srand ( time(NULL) );
 		int randomInt = rand() % 3;
-		std::cout<<"Din mamma: "<<randomInt<<std::endl;
 		std::stringstream backgroundFile;
 		backgroundFile << "resources/background" << randomInt << ".jpg";
 		backgroundTexture->loadFromFile( backgroundFile.str() );
@@ -77,7 +76,7 @@ namespace mp
 
 		// iterate ovef buttons map instead
 		// draw buttons
-		for( std::map<std::string, Button*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
+		for( std::map<std::string, GUIElement*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
 		{
 		   window.draw(*it->second);
 		}

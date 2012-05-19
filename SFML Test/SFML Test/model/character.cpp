@@ -32,6 +32,7 @@ namespace mp
 		this->reloadTime = 1000; // Milliseconds it takes to reload.
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
+		wallSliding = false;
 
 		this->kills  = 0;// Kill stat.
 		this->deaths = 0;// Death stat.
@@ -64,7 +65,7 @@ namespace mp
 		
 		// Calculate unique identifying bits for this player.
 		// (This makes us not collide with our own bullets)
-		const short playerBits = pow(2.0, clientID + 1);
+		const short playerBits = short(pow(2.0, clientID + 1));
 		fixtureDef.filter.categoryBits = playerBits;
 		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
 
@@ -74,7 +75,7 @@ namespace mp
 		characterBody->SetFixedRotation(true);
 		// Test code
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3, 0.3, b2Vec2(0,-2), 0);
+		dynamicBox.SetAsBox(0.3f, 0.3f, b2Vec2(0,-2), 0);
 
 		fixtureDef.isSensor = true;
 
@@ -82,14 +83,14 @@ namespace mp
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded ) );
 
 		//add left sensor fixture
-		dynamicBox.SetAsBox(0.1, 1, b2Vec2(1, 0), 0);
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* leftSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
 
 
 		//add right sensor fixture
-		dynamicBox.SetAsBox(0.1, 1, b2Vec2(-1.2, 0), 0);
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.2f, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
@@ -126,14 +127,14 @@ namespace mp
 			characterBody->ApplyLinearImpulse( b2Vec2(0, 200), characterBody->GetPosition());
 			setGrounded(false);
 		}
-		else if ( leftSideTouchWall )
+		else if ( leftSideTouchWall && isWallSliding() )
 		{
-			characterBody->ApplyLinearImpulse( b2Vec2( -250, 300), characterBody->GetPosition());
+			characterBody->ApplyLinearImpulse( b2Vec2( -300, 150), characterBody->GetPosition());
 			leftSideTouchWall = false;
 		}
-		else if ( rightSideTouchWall )
+		else if ( rightSideTouchWall && isWallSliding() )
 		{
-			characterBody->ApplyLinearImpulse( b2Vec2( 250, 300), characterBody->GetPosition());
+			characterBody->ApplyLinearImpulse( b2Vec2( 300, 150), characterBody->GetPosition());
 			rightSideTouchWall = false;
 		}
 	}

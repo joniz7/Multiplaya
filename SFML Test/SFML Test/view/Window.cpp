@@ -5,13 +5,13 @@
 
 namespace mp
 {
-	const float WIDTH = ConfigHandler::instance().getInt("r_width");
-	const float HEIGHT = ConfigHandler::instance().getInt("r_height");
+	const float WIDTH = float(ConfigHandler::instance().getInt("r_width"));
+	const float HEIGHT = float(ConfigHandler::instance().getInt("r_height"));
 	// send worlddata in constructor
 	Window::Window(WorldData* worldData)
 	{
 		//ctor
-		window = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT, 32), "Multiplaya");
+		window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya");
 		window->setFramerateLimit(60);
 		// Set window data
         window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));

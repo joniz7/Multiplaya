@@ -14,7 +14,7 @@ namespace mp
 		setTextPosition(5, 5);
 	   // alignment = CENTER;
 
-		background = new sf::RectangleShape( sf::Vector2f(width, height));
+		background = new sf::RectangleShape( sf::Vector2f(float(width), float(height)));
 		background->setPosition(xPos, yPos);
 	}
 

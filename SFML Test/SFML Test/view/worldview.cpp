@@ -164,8 +164,8 @@ namespace mp
 		resourcesDir = "resources/";
 
 		// Background stuff
-		float screenWidth = window->getSize().x;
-		float screenHeight = window->getSize().y;
+		float screenWidth = float(window->getSize().x);
+		float screenHeight = float(window->getSize().y);
 
 		backgroundTexture = new sf::Texture();
 		backgroundTexture->loadFromFile("resources/bg.png");
@@ -173,7 +173,7 @@ namespace mp
 		backgroundSprite->setTexture(*backgroundTexture);
 		backgroundSprite->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
 		backgroundSprite->setPosition(-20, -10);
-		backgroundSprite->scale(0.02, 0.02);
+		backgroundSprite->scale(0.02f, 0.02f);
 
 		// Load font file.
 		fontGothic = new sf::Font();
@@ -229,7 +229,7 @@ namespace mp
 			std::cout << "Failed to load texture: reddot.png" << std::endl;
 		dotSpr->setTexture(*dotTex);
 		dotSpr->setOrigin(32, 32);
-		dotSpr->setScale(0.5, 0.5);
+		dotSpr->setScale(0.5f, 0.5f);
 
 		//instantiate map graphics
 		constructMapGraphics();
@@ -257,7 +257,7 @@ namespace mp
 		killsSprite->setTexture(*killsTexture);
 		x = ((WIDTH)/2) - killsSprite->getTexture()->getSize().x;
 		y = 0;
-		killsSprite->setPosition(x,y);
+		killsSprite->setPosition(float(x),float(y));
 		// TODO: uncomment below line and fix the positioning error that occurs.
 		//killsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
 		
@@ -267,9 +267,9 @@ namespace mp
 		killsText->setCharacterSize(60);
 		killsText->setStyle(sf::Text::Regular);
 		// TODO: Fix positioning. Fails for strings of length>1.
-		x = killsSprite->getPosition().x + (WIDTH/12.5);
-		y = killsSprite->getPosition().y + (HEIGHT/18);
-		killsText->setPosition(x, y);
+		x = int(killsSprite->getPosition().x + (float(WIDTH)/12.5f));
+		y = int(killsSprite->getPosition().y + (float(HEIGHT)/18.0f));
+		killsText->setPosition(float(x), float(y));
 
 
 		//------- Create "Deaths" sprite. -------
@@ -282,30 +282,30 @@ namespace mp
 		deathsSprite->setTexture(*deathsTexture);
 		x = ((WIDTH)/2);
 		y = 0;
-		deathsSprite->setPosition(x,y);
+		deathsSprite->setPosition(float(x),float(y));
 		// TODO: read above.
 		//deathsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
 
 		deathsText = new sf::Text("0");
 		deathsText ->setFont(*fontGothic);
 		deathsText ->setCharacterSize(60);
-		x = deathsSprite->getPosition().x + (WIDTH/9);  // TODO: kinda hardcoded.
-		y = deathsSprite->getPosition().y + (HEIGHT/18);// doesn't work for all res's?
-		deathsText->setPosition(x, y);
+		x = int(deathsSprite->getPosition().x + (WIDTH/9));  // TODO: kinda hardcoded.
+		y = int(deathsSprite->getPosition().y + (HEIGHT/18));// doesn't work for all res's?
+		deathsText->setPosition(float(x), float(y));
 
 		//-------- Ammo sprite. ---------
 		// ammo sprite.
 		ammoSprite = new HUDSprite(resourcesDir + "ammo.png", 12);
 		x = 0;
 		y = (HEIGHT) - ammoSprite->getHeight();
-		ammoSprite->setPosition(x,y);
+		ammoSprite->setPosition(float(x),float(y));
 		//ammoSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 
 		//--------- HP sprite. ---------.
 		hpSprite = new HUDSprite(resourcesDir + "hp.png", 9);
 		x = (WIDTH)  - hpSprite->getWidth();
 		y = (HEIGHT) - hpSprite->getHeight();
-		hpSprite->setPosition(x,y);
+		hpSprite->setPosition(float(x),float(y));
 		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 		//------------------------------
 
@@ -356,7 +356,7 @@ namespace mp
 	void WorldView::updatePositions()
 	{
 		// Set sight position
-		dotSpr->setPosition(mousePosWindow->x, mousePosWindow->y);
+		dotSpr->setPosition(float(mousePosWindow->x), float(mousePosWindow->y));
 		lightSpr->setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
 
 		updateBulletsPos();

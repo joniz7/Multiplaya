@@ -42,7 +42,7 @@ TEST_F(WorldTest, bulletFactory) {
 	// Set up properties of a test bullet.
 	b2Vec2 position(2,2);
 	int clientID = 0;
-	BulletType bulletType = BulletType::GENERIC_BULLET;
+	BulletType bulletType = GENERIC_BULLET;
 	
 	// Create bullet using World's createBullet() factory.
 	world->createBullet(position, b2Vec2(2,2), clientID, bulletType);

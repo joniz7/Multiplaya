@@ -17,8 +17,8 @@ namespace mp
 	AnimatedSprite::AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions) : sf::Sprite(*spriteSheet,sf::IntRect(0,0,spriteSheet->getSize().x/sheetDimensions.x,spriteSheet->getSize().y / sheetDimensions.y))
     {
 		// Calculate sprite size
-		spriteSize.x = spriteSheet->getSize().x / sheetDimensions.x;
-		spriteSize.y = spriteSheet->getSize().y / sheetDimensions.y;
+		spriteSize.x = float(spriteSheet->getSize().x) / float(sheetDimensions.x);
+		spriteSize.y = float(spriteSheet->getSize().y) / float(sheetDimensions.y);
 		// Center origins
 		setOrigin(spriteSize.x/2,spriteSize.y/2);
 		// Save sheet dimensions
@@ -44,7 +44,7 @@ namespace mp
 	void AnimatedSprite::addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector2i> sequence)
 	{
 		Animation temp;
-		temp.fps = fps;
+		temp.fps = float(fps);
 		temp.loop = loop;
 		temp.sequence = sequence;
 		animationMap[animationName] = temp;
@@ -74,10 +74,10 @@ namespace mp
 	void AnimatedSprite::setFrame(sf::Vector2i frame)
 	{
 		sf::IntRect frameRect(
-			spriteSize.x * (frame.x-1),
-			spriteSize.y * (frame.y-1),
-			spriteSize.x,
-			spriteSize.y
+			int(spriteSize.x * (frame.x-1)),
+			int(spriteSize.y * (frame.y-1)),
+			int(spriteSize.x),
+			int(spriteSize.y)
 			);
 
 		setTextureRect(frameRect);

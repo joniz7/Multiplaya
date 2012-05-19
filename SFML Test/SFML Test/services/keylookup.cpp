@@ -196,6 +196,8 @@ namespace mp
 			return sf::Keyboard::Delete;
 		else if(keyName=="kb_pause")
 			return sf::Keyboard::Pause;
+		else
+			return sf::Keyboard::A;
     }
 
 	////////////////////////////////////////////////////////////
@@ -213,5 +215,7 @@ namespace mp
 			return sf::Mouse::XButton1;
 		else if(keyName=="mouse5")
 			return sf::Mouse::XButton2;
+		else
+			return sf::Mouse::Left;
 	}
 }

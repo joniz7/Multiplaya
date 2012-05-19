@@ -143,6 +143,7 @@ namespace mp
 				return characters.at(i);
 			}
 		}
+		return NULL;
 	}
 
 }

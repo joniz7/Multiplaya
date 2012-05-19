@@ -50,8 +50,8 @@ namespace mp
 		//setTextureRect(sf::IntRect(0,0,spriteSheet->getSize().x/frames,spriteSheet->getSize().y));
 		
 		// Calculate sprite size
-		spriteSize.x = spriteSheet->getSize().x / frames;
-		spriteSize.y = spriteSheet->getSize().y;
+		spriteSize.x = float(spriteSheet->getSize().x / frames);
+		spriteSize.y = float(spriteSheet->getSize().y);
 		// Center origins
 		setOrigin(spriteSize.x/2,spriteSize.y/2);;
 		// Initialize variables
@@ -107,7 +107,7 @@ namespace mp
 	void CharacterSprite::addAnimation(const std::string & animationName, int fps, bool loop, std::vector<int> sequence)
 	{
 		CharacterAnimation temp;
-		temp.fps = fps;
+		temp.fps = float(fps);
 		temp.loop = loop;
 		temp.sequence = sequence;
 		animationMap[animationName] = temp;

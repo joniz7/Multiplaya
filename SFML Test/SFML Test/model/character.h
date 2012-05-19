@@ -73,6 +73,12 @@ namespace mp
 			void setPosition(b2Vec2 position, float32 angle);
 			void setLinVelocity(b2Vec2 velocity);
 
+			bool isTouchingWallLeft(){ return leftSideTouchWall; }
+			bool isTouchingWallRight(){ return rightSideTouchWall; }
+
+			void setWallSliding(bool wS){wallSliding = wS;}
+			bool isWallSliding(){ return wallSliding; }
+
 			b2Vec2 getPosition() { return characterBody->GetPosition(); }
 			float32 getAngle() { return characterBody->GetAngle(); }
 			b2Vec2 getLinVelocity() { return characterBody->GetLinearVelocity(); }
@@ -106,6 +112,7 @@ namespace mp
 			bool leftSideTouchWall;
 			bool rightSideTouchWall;
 			bool walking;
+			bool wallSliding;
 
 			sf::Int8 clientID;
 

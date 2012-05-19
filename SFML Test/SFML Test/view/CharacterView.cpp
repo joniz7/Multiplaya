@@ -27,6 +27,10 @@ namespace mp
 		sprite->addAnimation("jump", 60, true, sequence);
 		sequence.clear();
 
+		sequence.push_back(sf::Vector2i(2,2));
+		sprite->addAnimation("wallslide", 60, true, sequence);
+		sequence.clear();
+
 		sequence.push_back(sf::Vector2i(2,1));
 		sequence.push_back(sf::Vector2i(3,1));
 		sequence.push_back(sf::Vector2i(4,1));
@@ -55,14 +59,14 @@ namespace mp
 		sprite->setPosition(position.x * 1 / 10.0f, position.y * 1 / 10.0f);
 		
 		// Check what animation to play.
-		if (!character->isGrounded()) {
+		if( character->isWallSliding() )
+			sprite->playAnimation("wallslide");
+		else if (!character->isGrounded())
 			sprite->playAnimation("jump");
-		}
-		else if (character->isWalking()) {
+		else if (character->isWalking())
 			sprite->playAnimation("walk");
-		} else {
+		else
 			sprite->playAnimation("idle");
-		}
 
 		// Check which way we're facing.
 		if(character->isFacingLeft() != facingLeft)

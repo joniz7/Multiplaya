@@ -42,7 +42,7 @@ namespace mp
 		portTextField->setBorderThicknessClicked(1);	
 		guiElements["portTextField"] = portTextField;
 
-		background = new sf::RectangleShape( sf::Vector2f(resolution.x, resolution.y) );
+		background = new sf::RectangleShape( sf::Vector2f(float(resolution.x), float(resolution.y)) );
 		background->setFillColor( sf::Color(94, 94, 94, 255) );
 		background->setPosition(0, 0);
 

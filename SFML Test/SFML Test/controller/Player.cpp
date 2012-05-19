@@ -21,28 +21,45 @@ namespace mp {
 
 	void Player::checkUserInput(const sf::Vector2f &mousePos)
 	{
-
+		bool nullifyLinearDamping = true;	// Determines if we should nullify linear damping at the end of this frame
+		character->setWallSliding(false);
+		// Movement keys are pressed
 		if( pressingKeyForMovingLeft() || pressingKeyForMovingRight() )
 		{
+			// Left movement key is pressed
 			if ( pressingKeyForMovingLeft() && !pressingKeyForMovingRight() )	// Character should face left
 			{
-					worldDataMutex.lock();
-					character->setIsFacingLeft(true);
-					worldDataMutex.unlock();
+				worldDataMutex.lock();
+				character->setIsFacingLeft(true);
+				// Apply slide speed
+				if(character->isTouchingWallLeft())
+				{
+					nullifyLinearDamping = false;
+					character->getBody()->SetLinearDamping(10);
+					character->setWallSliding(true);
+				}
+
+				worldDataMutex.unlock();
 			}
+			// Right movement key is pressed
 			else if ( pressingKeyForMovingRight() && !pressingKeyForMovingLeft() )	// Character should face right
 			{
 				worldDataMutex.lock();
 				character->setIsFacingLeft(false);
+				// Apply slide speed
+				if(character->isTouchingWallRight())
+				{
+					nullifyLinearDamping = false;
+					character->getBody()->SetLinearDamping(10);
+					character->setWallSliding(true);
+				}
+
 				worldDataMutex.unlock();
 			}
 
 			// If we're not trying to move in both directions at once
 			if( !(pressingKeyForMovingLeft() && pressingKeyForMovingRight()) )
 			{
-				// Nullify linear damping so we can move
-				character->getBody()->SetLinearDamping(0);
-
 				if ( pressingKeyForMovingLeft() && !pressingKeyForMovingRight() )
 					if(character->isGrounded())
 						moveLeft(18,50);
@@ -65,26 +82,22 @@ namespace mp {
 					worldDataMutex.unlock();
 				}
 			}
-
 		}
 
 		if( !(pressingKeyForMovingLeft() || pressingKeyForMovingRight()) && character->isGrounded() )
 		{
 			// Set linear damping so we stop
 			character->getBody()->SetLinearDamping(5);
-		}
-		else if(!character->isGrounded())
-		{
-			character->getBody()->SetLinearDamping(0);
+			nullifyLinearDamping = false;
 		}
 
 		if ( pressingKeyForMovingUp() ) 
 		{
-			moveUp();
+			//moveUp();
 		}
 		if ( pressingKeyForMovingDown() ) 
 		{
-			//moveDown();
+			moveDown();
 		}
 		if( pressingKeyForPrimaryFire() )
         {
@@ -124,7 +137,10 @@ namespace mp {
 			character->connectToServer();
 			worldDataMutex.unlock();
 		}
-				
+		
+
+		if(nullifyLinearDamping)
+			character->getBody()->SetLinearDamping(0);
 	}
 
 	bool Player::pressingKeyForJumping()
@@ -168,7 +184,7 @@ namespace mp {
 	{
 		worldDataMutex.lock();
 		if(character->getBody()->GetLinearVelocity().x < maxForce) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(forceIteration, 0), character->getBody()->GetPosition() );
+			character->getBody()->ApplyLinearImpulse( b2Vec2(float(forceIteration), 0), character->getBody()->GetPosition() );
 		}
 		worldDataMutex.unlock();
 	}
@@ -177,7 +193,7 @@ namespace mp {
 	{
 		worldDataMutex.lock();
 		if(character->getBody()->GetLinearVelocity().x > -maxForce) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(-forceIteration, 0), character->getBody()->GetPosition() );
+			character->getBody()->ApplyLinearImpulse( b2Vec2(float(-forceIteration), 0), character->getBody()->GetPosition() );
 		}
 		worldDataMutex.unlock();
 	}

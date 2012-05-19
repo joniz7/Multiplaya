@@ -68,6 +68,7 @@ namespace mp
     {
 		// Check if file exists in memory
 		for( std::map<std::string,sf::Texture>::iterator it=texMap.begin(); it!=texMap.end(); ++it)
+		{
 			if( (*it).first.compare(filePath)  )
 				return &texMap[filePath];	// It did, return pointer
 			else if(doRtLoading) // If not, check if we are allowing real time loading
@@ -75,8 +76,8 @@ namespace mp
 				if (loadTexture(filePath)); // If so, attempt to load texture
 					return getTexture(filePath); // Upon success try to get pointer again (be aware that if loadTexture does not function correctly this may result in an endless loop)
 			}
-			else
-				return &texMap["resources/debug/missingtexture.png"];
+		}
+		return &texMap["resources/debug/missingtexture.png"];
     }
 
 	////////////////////////////////////////////////////////////
