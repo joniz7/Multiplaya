@@ -218,8 +218,6 @@ namespace mp
 
 							model->createCharacter(position, size, clientID);
 
-							setCharacterData(clientID, position, velocity, angle);
-
 						}
 						break;
 

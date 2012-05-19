@@ -33,6 +33,7 @@ namespace mp
 				if( connectButton->isMouseOver(mousePos) )
 				{
 					connectButton->click();
+					networkHandler->connectToServer("Jonte");
 					networkHandler->setIPAddress(ipTextField->getText());
 					networkHandler->setAsClient();
 					GameState::getInstance()->setGameState(GameState::HOST_GAME);
