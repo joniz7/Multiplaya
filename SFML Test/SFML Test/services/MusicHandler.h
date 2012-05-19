@@ -29,7 +29,7 @@ namespace mp
 			MusicHandler();
 			~MusicHandler();
 			MusicHandler(MusicHandler const&){};
-			MusicHandler& operator=(MusicHandler const&){};
+			MusicHandler& operator=(MusicHandler const&);
 			// All available songs.
 			std::map<std::string, sf::Music*> songs;
 			// Currently playing song.
@@ -37,7 +37,7 @@ namespace mp
 			// Settings.
 			bool titleMusicEnabled;
 			bool bgMusicEnabled;
-			
+
 			float titleMusicPitch;
 			float bgMusicPitch;
 			float titleMusicVolume;

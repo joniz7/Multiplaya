@@ -16,29 +16,24 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef B2_WELD_JOINT_H
-#define B2_WELD_JOINT_H
+#ifndef B2_ROPE_JOINT_H
+#define B2_ROPE_JOINT_H
 
 #include <Box2D/Dynamics/Joints/b2Joint.h>
 
-/// Weld joint definition. You need to specify local anchor points
-/// where they are attached and the relative body angle. The position
-/// of the anchor points is important for computing the reaction torque.
-struct b2WeldJointDef : public b2JointDef
+/// Rope joint definition. This requires two body anchor points and
+/// a maximum lengths.
+/// Note: by default the connected objects will not collide.
+/// see collideConnected in b2JointDef.
+struct b2RopeJointDef : public b2JointDef
 {
-	b2WeldJointDef()
+	b2RopeJointDef()
 	{
-		type = e_weldJoint;
-		localAnchorA.Set(0.0f, 0.0f);
-		localAnchorB.Set(0.0f, 0.0f);
-		referenceAngle = 0.0f;
-		frequencyHz = 0.0f;
-		dampingRatio = 0.0f;
+		type = e_ropeJoint;
+		localAnchorA.Set(-1.0f, 0.0f);
+		localAnchorB.Set(1.0f, 0.0f);
+		maxLength = 0.0f;
 	}
-
-	/// Initialize the bodies, anchors, and reference angle using a world
-	/// anchor point.
-	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor);
 
 	/// The local anchor point relative to bodyA's origin.
 	b2Vec2 localAnchorA;
@@ -46,20 +41,21 @@ struct b2WeldJointDef : public b2JointDef
 	/// The local anchor point relative to bodyB's origin.
 	b2Vec2 localAnchorB;
 
-	/// The bodyB angle minus bodyA angle in the reference state (radians).
-	float32 referenceAngle;
-	
-	/// The mass-spring-damper frequency in Hertz. Rotation only.
-	/// Disable softness with a value of 0.
-	float32 frequencyHz;
-
-	/// The damping ratio. 0 = no damping, 1 = critical damping.
-	float32 dampingRatio;
+	/// The maximum length of the rope.
+	/// Warning: this must be larger than b2_linearSlop or
+	/// the joint will have no effect.
+	float32 maxLength;
 };
 
-/// A weld joint essentially glues two bodies together. A weld joint may
-/// distort somewhat because the island constraint solver is approximate.
-class b2WeldJoint : public b2Joint
+/// A rope joint enforces a maximum distance between two points
+/// on two bodies. It has no other effect.
+/// Warning: if you attempt to change the maximum length during
+/// the simulation you will get some non-physical behavior.
+/// A model that would allow you to dynamically modify the length
+/// would have some sponginess, so I chose not to implement it
+/// that way. See b2DistanceJoint if you want to dynamically
+/// control length.
+class b2RopeJoint : public b2Joint
 {
 public:
 	b2Vec2 GetAnchorA() const;
@@ -74,44 +70,35 @@ public:
 	/// The local anchor point relative to bodyB's origin.
 	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
 
-	/// Get the reference angle.
-	float32 GetReferenceAngle() const { return m_referenceAngle; }
+	/// Set/Get the maximum length of the rope.
+	void SetMaxLength(float32 length) { m_maxLength = length; }
+	float32 GetMaxLength() const;
 
-	/// Set/get frequency in Hz.
-	void SetFrequency(float32 hz) { m_frequencyHz = hz; }
-	float32 GetFrequency() const { return m_frequencyHz; }
+	b2LimitState GetLimitState() const;
 
-	/// Set/get damping ratio.
-	void SetDampingRatio(float32 ratio) { m_dampingRatio = ratio; }
-	float32 GetDampingRatio() const { return m_dampingRatio; }
-
-	/// Dump to b2Log
+	/// Dump joint to dmLog
 	void Dump();
 
 protected:
 
 	friend class b2Joint;
-
-	b2WeldJoint(const b2WeldJointDef* def);
+	b2RopeJoint(const b2RopeJointDef* data);
 
 	void InitVelocityConstraints(const b2SolverData& data);
 	void SolveVelocityConstraints(const b2SolverData& data);
 	bool SolvePositionConstraints(const b2SolverData& data);
 
-	float32 m_frequencyHz;
-	float32 m_dampingRatio;
-	float32 m_bias;
-
 	// Solver shared
 	b2Vec2 m_localAnchorA;
 	b2Vec2 m_localAnchorB;
-	float32 m_referenceAngle;
-	float32 m_gamma;
-	b2Vec3 m_impulse;
+	float32 m_maxLength;
+	float32 m_length;
+	float32 m_impulse;
 
 	// Solver temp
 	int32 m_indexA;
 	int32 m_indexB;
+	b2Vec2 m_u;
 	b2Vec2 m_rA;
 	b2Vec2 m_rB;
 	b2Vec2 m_localCenterA;
@@ -120,7 +107,8 @@ protected:
 	float32 m_invMassB;
 	float32 m_invIA;
 	float32 m_invIB;
-	b2Mat33 m_mass;
+	float32 m_mass;
+	b2LimitState m_state;
 };
 
 #endif

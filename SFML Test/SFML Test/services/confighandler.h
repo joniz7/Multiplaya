@@ -25,7 +25,7 @@ namespace mp
 			// Singleton stuff
 			ConfigHandler();
 			ConfigHandler(ConfigHandler const&){};
-			ConfigHandler& operator=(ConfigHandler const&){};
+			ConfigHandler& operator=(ConfigHandler const&);
 			// Data maps
 			std::map<std::string, bool> boolMap;
 			std::map<std::string, int> intMap;

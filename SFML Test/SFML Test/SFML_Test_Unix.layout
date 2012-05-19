@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="app.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4347" topLine="123" />
+	<File name="app.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="4752" topLine="72" />
 	</File>
 	<File name="defines.h" open="0" top="0" tabpos="9">
 		<Cursor position="215" topLine="0" />
@@ -10,19 +10,16 @@
 	<File name="global.h" open="0" top="0" tabpos="8">
 		<Cursor position="219" topLine="0" />
 	</File>
-	<File name="model/Player.h" open="1" top="0" tabpos="4">
-		<Cursor position="291" topLine="0" />
-	</File>
-	<File name="model/Wall.cpp" open="1" top="0" tabpos="7">
+	<File name="model/Wall.cpp" open="1" top="0" tabpos="6">
 		<Cursor position="142" topLine="0" />
 	</File>
-	<File name="model/Wall.h" open="1" top="0" tabpos="8">
+	<File name="model/Wall.h" open="1" top="0" tabpos="7">
 		<Cursor position="159" topLine="0" />
 	</File>
 	<File name="model/bullet.h" open="0" top="0" tabpos="2">
 		<Cursor position="410" topLine="10" />
 	</File>
-	<File name="model/character.cpp" open="1" top="0" tabpos="6">
+	<File name="model/character.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="4990" topLine="144" />
 	</File>
 	<File name="model/character.h" open="1" top="0" tabpos="2">
@@ -37,8 +34,11 @@
 	<File name="model/worlddata.h" open="1" top="0" tabpos="3">
 		<Cursor position="528" topLine="10" />
 	</File>
+	<File name="services/MusicHandler.h" open="1" top="0" tabpos="10">
+		<Cursor position="510" topLine="0" />
+	</File>
 	<File name="services/confighandler.h" open="1" top="0" tabpos="1">
-		<Cursor position="907" topLine="24" />
+		<Cursor position="786" topLine="0" />
 	</File>
 	<File name="services/keylookup.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="5885" topLine="196" />
@@ -46,7 +46,7 @@
 	<File name="services/keylookup.h" open="0" top="0" tabpos="12">
 		<Cursor position="487" topLine="7" />
 	</File>
-	<File name="services/networkhandler.h" open="1" top="0" tabpos="5">
+	<File name="services/networkhandler.h" open="1" top="0" tabpos="4">
 		<Cursor position="577" topLine="15" />
 	</File>
 	<File name="services/resourcehandler.cpp" open="0" top="0" tabpos="17">
@@ -61,7 +61,7 @@
 	<File name="view/animatedsprite.cpp" open="0" top="0" tabpos="16">
 		<Cursor position="727" topLine="6" />
 	</File>
-	<File name="view/worldview.cpp" open="1" top="1" tabpos="9">
+	<File name="view/worldview.cpp" open="1" top="0" tabpos="8">
 		<Cursor position="4842" topLine="103" />
 	</File>
 </CodeBlocks_layout_file>
