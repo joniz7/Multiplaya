@@ -13,6 +13,7 @@ namespace mp
 			LayerHandler();
 			~LayerHandler();
 
+			void update(const float moved);
 			void addLayer(sf::Sprite, const float xSpeed);
 
 			private:

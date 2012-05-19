@@ -58,6 +58,7 @@ namespace mp
 			// Handle zooming of viewport
 			if ( ev.type == sf::Event::MouseWheelMoved )
 			{
+				// TODO set maximum factor to zoom out
 				if( ev.mouseWheel.delta > 0)
 					worldView->zoom(0.9f);
 				else

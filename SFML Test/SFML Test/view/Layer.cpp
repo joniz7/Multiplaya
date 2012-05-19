@@ -13,6 +13,11 @@ namespace mp
 	{
 	}
 
+	void Layer::update(const float moved)
+	{
+		sprite.setPosition(sprite.getPosition().x + moved * xSpeed, sprite.getPosition().y);
+	}
+
 	void Layer::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 		window.draw(sprite);
 	}
