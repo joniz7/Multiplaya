@@ -6,8 +6,8 @@ namespace mp
 	BulletView::BulletView(Bullet* model)
 	{
 		this->model = model;
-		bulletVis = new sf::RectangleShape( sf::Vector2f(0.5f * 1 / 10.0f, 1.5f * 1 / 10.0f) );
-		bulletVis->setOrigin(0.25f * 1 / 10.0f, 0.75f * 1 / 10.0f);
+		bulletVis = new sf::RectangleShape( sf::Vector2f(0.25f * 1 / 10.0f, 1.5f * 1 / 10.0f) );
+		bulletVis->setOrigin(0.125f * 1 / 10.0f, 0.75f * 1 / 10.0f);
 		bulletVis->setFillColor(sf::Color(255, 255, 255));
 		bulletVis->setOutlineThickness(0.1f * 1 / 10.0f);
 		bulletVis->setOutlineColor(sf::Color::Black);

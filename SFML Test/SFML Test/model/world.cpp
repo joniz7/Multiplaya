@@ -23,7 +23,7 @@ namespace mp
     {
 		this->worldData = worldData;
 		// Setup the world properties
-		b2Vec2 gravity(0, -20.8f);
+		b2Vec2 gravity(0, -9.8f * 8);
 		// Create the world
 		world = new b2World(gravity);
 		worldDataMutex.lock();
@@ -66,8 +66,18 @@ namespace mp
 			worldDataMutex.lock();
 			// Perform a physics step
 			world->Step(timeStep, velocityIterations, positionIterations);
+
 			// Clear physics forces in prep for next step
 			world->ClearForces();
+
+			// Nullify bullet gravity		-9.8f * 8
+			std::vector<Bullet*> bulletVec = *worldData->getBullets();
+
+			for(std::vector<Bullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
+				//(*it)->getBody()->ApplyForce( b2Vec2(900000.8f * 8,0), (*it)->getBody()->GetPosition() );
+				(*it)->getBody()->ApplyForce( b2Vec2( 0, 12), (*it)->getBody()->GetPosition());
+			}
+
 			// Delete bullets, now that we're finished with physics.
 			deleteBullets();
 			// Get frame time

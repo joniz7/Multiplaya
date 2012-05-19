@@ -9,7 +9,7 @@ namespace mp
 		sf::Texture* tex = new sf::Texture();
 		tex->loadFromFile("resources/test/testsprite.png");
 
-		this->sprite = new AnimatedSprite(tex,sf::Vector2i(8,2));
+		this->sprite = new AnimatedSprite(tex,sf::Vector2i(8,3));
 
 		this->sprite->rotate(180);
 		this->sprite->setPosition(0,0);
@@ -40,6 +40,19 @@ namespace mp
 		sprite->addAnimation("walk", 9, true, sequence);
 		sequence.clear();
 
+		sequence.push_back(sf::Vector2i(3,2));
+		sequence.push_back(sf::Vector2i(4,2));
+		sequence.push_back(sf::Vector2i(5,2));
+		sequence.push_back(sf::Vector2i(6,2));
+		sequence.push_back(sf::Vector2i(7,2));
+		sequence.push_back(sf::Vector2i(3,3));
+		sequence.push_back(sf::Vector2i(4,3));
+		sequence.push_back(sf::Vector2i(5,3));
+
+		sequence.push_back(sf::Vector2i(1,2));
+		sprite->addAnimation("airroll", 22, false, sequence);
+		sequence.clear();
+
 		sprite->playAnimation("idle");
 		
 	}
@@ -62,7 +75,12 @@ namespace mp
 		if( character->isWallSliding() )
 			sprite->playAnimation("wallslide");
 		else if (!character->isGrounded())
-			sprite->playAnimation("jump");
+		{
+			if(character->doFlip())
+				sprite->playAnimation("airroll");
+			else
+				sprite->playAnimation("jump");
+		}
 		else if (character->isWalking())
 			sprite->playAnimation("walk");
 		else

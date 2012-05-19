@@ -87,7 +87,7 @@ namespace mp {
 		if( !(pressingKeyForMovingLeft() || pressingKeyForMovingRight()) && character->isGrounded() )
 		{
 			// Set linear damping so we stop
-			character->getBody()->SetLinearDamping(5);
+			character->getBody()->SetLinearDamping(10);
 			nullifyLinearDamping = false;
 		}
 

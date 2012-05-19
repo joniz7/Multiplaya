@@ -79,6 +79,8 @@ namespace mp
 			void setWallSliding(bool wS){wallSliding = wS;}
 			bool isWallSliding(){ return wallSliding; }
 
+			bool doFlip(){return isFlipping;}
+
 			b2Vec2 getPosition() { return characterBody->GetPosition(); }
 			float32 getAngle() { return characterBody->GetAngle(); }
 			b2Vec2 getLinVelocity() { return characterBody->GetLinearVelocity(); }
@@ -113,6 +115,7 @@ namespace mp
 			bool rightSideTouchWall;
 			bool walking;
 			bool wallSliding;
+			bool isFlipping;
 
 			sf::Int8 clientID;
 
@@ -121,7 +124,7 @@ namespace mp
 		{
 			public:
 				//CharacterFootSensor(Character* character);
-				CharacterFootSensor(bool& grounded);
+				CharacterFootSensor(bool& grounded, bool& isFlipping);
 				virtual ~CharacterFootSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
 				virtual void onNoCollision(GameObject* crashedWith) {};
@@ -129,6 +132,7 @@ namespace mp
 			private:
 				//Character* characterObject;
 				bool& grounded;
+				bool& isFlipping;
 		};
 
 		class CharacterLeftSensor : public GameObject

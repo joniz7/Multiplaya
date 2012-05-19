@@ -32,7 +32,9 @@ namespace mp
 		this->reloadTime = 1000; // Milliseconds it takes to reload.
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
-		wallSliding = false;
+		this->wallSliding = false;
+		this->isFlipping = false;
+		this->facingLeft = true;
 
 		this->kills  = 0;// Kill stat.
 		this->deaths = 0;// Death stat.
@@ -80,7 +82,7 @@ namespace mp
 		fixtureDef.isSensor = true;
 
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( new CharacterFootSensor( grounded ) );
+		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, isFlipping ) );
 
 		//add left sensor fixture
 		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
@@ -124,18 +126,24 @@ namespace mp
 	void Character::jump()
 	{
 		if ( grounded ) {
-			characterBody->ApplyLinearImpulse( b2Vec2(0, 200), characterBody->GetPosition());
+			characterBody->ApplyLinearImpulse( b2Vec2(0, 350), characterBody->GetPosition());
 			setGrounded(false);
 		}
 		else if ( leftSideTouchWall && isWallSliding() )
 		{
-			characterBody->ApplyLinearImpulse( b2Vec2( -300, 150), characterBody->GetPosition());
+			characterBody->ApplyLinearImpulse( b2Vec2( -300, 350), characterBody->GetPosition());
 			leftSideTouchWall = false;
+			isFlipping = true;
 		}
 		else if ( rightSideTouchWall && isWallSliding() )
 		{
-			characterBody->ApplyLinearImpulse( b2Vec2( 300, 150), characterBody->GetPosition());
+			characterBody->ApplyLinearImpulse( b2Vec2( 300, 350), characterBody->GetPosition());
 			rightSideTouchWall = false;
+			isFlipping = true;
+		}
+		else
+		{
+			isFlipping = true;
 		}
 	}
 
@@ -167,7 +175,7 @@ namespace mp
 		if (isShooting()) { return; }
 		else { shoot(); }
 
-		int speed = 800;
+		int speed = 8000;
 		b2Vec2 charPos = characterBody->GetPosition();
 		b2Vec2 charSpeed = characterBody->GetLinearVelocity();
 		targetPos.Set(targetPos.x * 10, targetPos.y * 10); // (Don't ask. It works.)
@@ -242,12 +250,13 @@ namespace mp
 	}
 
 	//Foot sensor
-	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded) : grounded(grounded) {
+	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded, bool& isFlipping) : grounded(grounded), isFlipping(isFlipping) {
 		this->objectType = characterFootSensor;
 	}
 	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			grounded = true;
+			isFlipping = false;
 		}
 	}
 
