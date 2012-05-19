@@ -54,9 +54,9 @@ namespace mp
 
 		// Calculate unique identifying bits for this bullet.
 		// (This makes us pass through our player)
-		/*const short playerBits = short(pow(2.0, owner + 1));
+		const short playerBits = short(pow(2.0, owner + 1));
 		fixtureDef.filter.categoryBits = playerBits;
-		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);*/
+		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
 
 		// Add the shape to the body.
 		b2Fixture* testFixture = body->CreateFixture(&fixtureDef);
