@@ -36,7 +36,7 @@ namespace mp
 		std::cout<<"Your IP is: "<<serverIP<<std::endl;
 
 		clientMap[myID].IP = serverIP;
-		clientMap[myID].IP = "host";
+		clientMap[myID].name = "host";
     }
 
 	void NetworkHandler::exec() 
@@ -65,6 +65,7 @@ namespace mp
 
 		std::vector<Character*>* characters;
 
+		std::map<sf::Int8, Client>::iterator it;
 		int test;
 
 		////////////////////////////////////////////////////////////
@@ -74,7 +75,8 @@ namespace mp
 		while(running) 
 		{
 			//Receives a packet
-			std::cout<<"Receiving data..."<<std::endl;
+			//std::cout<<"Receiving data..."<<std::endl;
+			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
 
 			//Tries to read what type of message the packet was
@@ -90,26 +92,29 @@ namespace mp
 					case 1:
 						std::cout<<"type 1"<<std::endl;
 						//Creates a client from the data
-						receivedData >> name >> x >> y;
+						if(isServer) 
+						{
+							receivedData >> name >> x >> y;
 	
-						client.IP = senderIP;
-						client.name = name;
+							client.IP = senderIP;
+							client.name = name;
 
-						//adds that client to the clientmap
-						clientMap[currentClientID] = client;
+							//adds that client to the clientmap
+							clientMap[currentClientID] = client;
 
-						std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
+							std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
 
-						position.x = x;
-						position.y = y;
-						size.x = 1.0f;
-						size.y = 2.0f;
+							position.x = x;
+							position.y = y;
+							size.x = 1.0f;
+							size.y = 2.0f;
 
-						model->createCharacter(position, size, currentClientID);
+							model->createCharacter(position, size, currentClientID);
 
-						sendClientID(currentClientID);
-						sendCharactersToClient(currentClientID);
-						currentClientID++;
+							sendClientID(currentClientID);
+							sendCharactersToClient(currentClientID);
+							currentClientID++;
+						}
 						break;
 
 					//Client trying to disconnect
@@ -134,12 +139,10 @@ namespace mp
 						//If the clientMap is empty there are no clients to send to
 						if(!clientMap.empty())
 						{
-							//Loops through the clientMap and sends the message to everyone
-							for(sf::Int8 i = 1; i <= clientMap.size(); i++)
+							for(it = clientMap.begin(); it != clientMap.end(); it++)
 							{
-								client = clientMap[i];
-								sendMessage(message, client.IP);
-								std::cout<<"Message sent to "<<client.IP<<std::endl;
+								sendMessage(message, (*it).second.IP);
+								std::cout<<"Message sent to "<<(*it).second.IP<<std::endl;
 							}
 						}
 
@@ -154,7 +157,7 @@ namespace mp
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
 
-						setCharacterData(clientID, position, velocity, angle);
+						//setCharacterData(clientID, position, velocity, angle);
 						break;
 					//Receive bullet data from a client
 					case 5:
@@ -199,7 +202,7 @@ namespace mp
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
-							//setCharacterData(clientID, position, velocity, angle);
+							setCharacterData(clientID, position, velocity, angle);
 						}
 						break;
 					//Receive bullet data from the server
@@ -444,7 +447,7 @@ namespace mp
 		} else if(e == BULLET_ADDED) 
 		{
 			sendMessageToEveryone("Bullet added to buffer");
-			bulletsToSend.push_back((Bullet*)object);
+			//bulletsToSend.push_back((Bullet*)object);
 		} else if(e == BULLET_DELETED) 
 		{
 			sendMessageToEveryone("Bullet deleted");

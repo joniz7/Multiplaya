@@ -32,9 +32,13 @@ namespace mp
 				
 				if( connectButton->isMouseOver(mousePos) )
 				{
+					
 					connectButton->click();
 					networkHandler->connectToServer("Jonte");
-					while(networkHandler->isConnectedToServer()) {}
+					while(!networkHandler->isConnectedToServer()) 
+					{
+						std::cout<<"gogogo"<<std::endl;
+					}
 					networkHandler->setIPAddress(ipTextField->getText());
 					networkHandler->setAsClient();
 					GameState::getInstance()->setGameState(GameState::HOST_GAME);
