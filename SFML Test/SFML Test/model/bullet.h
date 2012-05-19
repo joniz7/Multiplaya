@@ -47,6 +47,8 @@ namespace mp
 
 			WorldData* worldData;
 			b2World* world;
+
+			bool scheduledForDeletion;
     };
 }
 

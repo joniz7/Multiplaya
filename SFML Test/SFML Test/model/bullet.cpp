@@ -25,6 +25,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
     {
+		scheduledForDeletion = false;
 		this->objectType = bullet;
 		this->worldData = worldData;
 		this->world = world;
@@ -89,7 +90,11 @@ namespace mp
 	///////////////////////////
 	void Bullet::explode() {
 		//std::cout << "explode()" << std::endl;
-		worldData->scheduleBulletForDeletion(this);
+		if (!scheduledForDeletion)
+		{
+			worldData->scheduleBulletForDeletion(this);
+			scheduledForDeletion = true;
+		}
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
