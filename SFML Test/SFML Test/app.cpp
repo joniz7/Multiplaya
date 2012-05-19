@@ -73,17 +73,17 @@ namespace mp
 			data->controller->exec();
 			data->model->exec();
 			data->view->exec();
-			/*
+			
 			if(data->network->isServer)
 			{
-				//data->network->updateAllClients();
+				data->network->updateAllClients();
 			}
 			
 			if(data->network->isClient) 
 			{
-				//data->network->sendCharacterDataToServer();
+				data->network->sendCharacterDataToServer();
 			}
-			*/
+			
 		}
 
 	}
