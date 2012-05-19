@@ -20,13 +20,14 @@ namespace mp
 		this->model = model;
 		this->network = NULL;
 		this->currentPlayer = new Player();
-		worldDataMutex.unlock();
+			worldDataMutex.lock();
+
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
-		worldDataMutex.lock();
+			worldDataMutex.unlock();
     }
 
 	void GameController::setNetworkHandler(NetworkHandler* network) {
-		this->network = network;	
+		this->network = network;
 	}
 
 	////////////////////////////////////////////////////////////

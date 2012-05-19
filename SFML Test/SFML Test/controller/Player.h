@@ -11,6 +11,7 @@
 #include "../sfml.h"
 #include "../global.h"
 #include "../model/character.h"
+#include "../services/input.h"
 
 
 namespace mp
@@ -29,10 +30,10 @@ namespace mp
 			WorldData* worldData;
 			b2World* world;
 
+			Input* input;
+
 			void checkUserInput(const sf::Vector2f &mousePos);
 
-			bool pressingKeyForMovingRight();
-			bool pressingKeyForMovingLeft();
 			bool pressingKeyForMovingUp();
 			bool pressingKeyForMovingDown();
 			bool pressingKeyForPrimaryFire();

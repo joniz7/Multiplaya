@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+* Copyright (c) 2006-2010 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -16,16 +16,21 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef B2_CIRCLE_SHAPE_H
-#define B2_CIRCLE_SHAPE_H
+#ifndef B2_EDGE_SHAPE_H
+#define B2_EDGE_SHAPE_H
 
 #include <Box2D/Collision/Shapes/b2Shape.h>
 
-/// A circle shape.
-class b2CircleShape : public b2Shape
+/// A line segment (edge) shape. These can be connected in chains or loops
+/// to other edge shapes. The connectivity information is used to ensure
+/// correct contact normals.
+class b2EdgeShape : public b2Shape
 {
 public:
-	b2CircleShape();
+	b2EdgeShape();
+
+	/// Set this as an isolated edge.
+	void Set(const b2Vec2& v1, const b2Vec2& v2);
 
 	/// Implement b2Shape.
 	b2Shape* Clone(b2BlockAllocator* allocator) const;
@@ -33,7 +38,7 @@ public:
 	/// @see b2Shape::GetChildCount
 	int32 GetChildCount() const;
 
-	/// Implement b2Shape.
+	/// @see b2Shape::TestPoint
 	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
 
 	/// Implement b2Shape.
@@ -45,47 +50,25 @@ public:
 
 	/// @see b2Shape::ComputeMass
 	void ComputeMass(b2MassData* massData, float32 density) const;
+	
+	/// These are the edge vertices
+	b2Vec2 m_vertex1, m_vertex2;
 
-	/// Get the supporting vertex index in the given direction.
-	int32 GetSupport(const b2Vec2& d) const;
-
-	/// Get the supporting vertex in the given direction.
-	const b2Vec2& GetSupportVertex(const b2Vec2& d) const;
-
-	/// Get the vertex count.
-	int32 GetVertexCount() const { return 1; }
-
-	/// Get a vertex by index. Used by b2Distance.
-	const b2Vec2& GetVertex(int32 index) const;
-
-	/// Position
-	b2Vec2 m_p;
+	/// Optional adjacent vertices. These are used for smooth collision.
+	b2Vec2 m_vertex0, m_vertex3;
+	bool m_hasVertex0, m_hasVertex3;
 };
 
-inline b2CircleShape::b2CircleShape()
+inline b2EdgeShape::b2EdgeShape()
 {
-	m_type = e_circle;
-	m_radius = 0.0f;
-	m_p.SetZero();
-}
-
-inline int32 b2CircleShape::GetSupport(const b2Vec2 &d) const
-{
-	B2_NOT_USED(d);
-	return 0;
-}
-
-inline const b2Vec2& b2CircleShape::GetSupportVertex(const b2Vec2 &d) const
-{
-	B2_NOT_USED(d);
-	return m_p;
-}
-
-inline const b2Vec2& b2CircleShape::GetVertex(int32 index) const
-{
-	B2_NOT_USED(index);
-	b2Assert(index == 0);
-	return m_p;
+	m_type = e_edge;
+	m_radius = b2_polygonRadius;
+	m_vertex0.x = 0.0f;
+	m_vertex0.y = 0.0f;
+	m_vertex3.x = 0.0f;
+	m_vertex3.y = 0.0f;
+	m_hasVertex0 = false;
+	m_hasVertex3 = false;
 }
 
 #endif

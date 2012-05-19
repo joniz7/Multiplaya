@@ -77,7 +77,7 @@ namespace mp
 		else if (crashedWith->objectType == bullet) {
 			//std::cout << "Collision: bullet <-> bullet" << std::endl;
 		}
-		
+
 		// If we collide with character, explode (we handle the dmg elsewhere).
 		else if (crashedWith->objectType == character) {
 			std::cout << "Collision: bullet <-> character" << std::endl;
@@ -98,7 +98,7 @@ namespace mp
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
-        return bullet == this; 
+        return bullet == this;
     }
 
 	////////////////////////////////////////////////////////////
