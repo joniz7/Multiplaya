@@ -40,6 +40,7 @@ namespace mp
 			bool isConnectedToServer(){return hasConnected;};
 			void sendCharacterDataToServer();
 			void sendCharacterDataToClient(sf::Int8 clientID);
+			void sendCharactersToClient(sf::Int8 clientID);
 			void updateAllClients();
 			void setIPAddress(const sf::String IPAddress);
 			void setAsServer(){isServer = true;};

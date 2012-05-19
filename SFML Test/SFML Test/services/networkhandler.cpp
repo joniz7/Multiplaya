@@ -32,7 +32,8 @@ namespace mp
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
-		serverIP = serverIP.getPublicAddress();
+		serverIP = serverIP.getLocalAddress();
+		std::cout<<"Your IP is: "<<serverIP<<std::endl;
     }
 
 	void NetworkHandler::exec() 
@@ -101,6 +102,7 @@ namespace mp
 						model->createCharacter(position, size, currentClientID);
 
 						sendClientID(currentClientID);
+						sendCharactersToClient(currentClientID);
 						currentClientID++;
 						break;
 
@@ -203,6 +205,24 @@ namespace mp
 							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
 						}
 						break;
+					//Receive character data from the server
+					case 15:
+						receivedData >> numOfChars;
+
+						size.Set(1.0f, 2.0f);
+
+						for(int i = 0; i<numOfChars; i++)
+						{
+							receivedData >> clientID >> x >> y;
+							position.Set(x,y);
+
+							model->createCharacter(position, size, clientID);
+
+							setCharacterData(clientID, position, velocity, angle);
+
+						}
+						break;
+
 				}
 			}
 		}
@@ -322,6 +342,27 @@ namespace mp
 		sender.send(packet, clientMap[clientID].IP, receivePort);
 	}
 
+	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
+	{
+		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Packet packet;
+		Character* tempCharacter;
+		float32 x, y;
+		packet << type << numOfChars;
+
+		for(int i = 0; i<numOfChars; i++)
+		{
+			tempCharacter = worldData->getCharacter(i);
+			tempClientID = tempCharacter->getClientID();
+			x = tempCharacter->getPosition().x;
+			y = tempCharacter->getPosition().y;
+
+			packet << tempClientID << x << y;
+		}
+
+		sender.send(packet, clientMap[clientID].IP, receivePort);
+	}
+
 	////////////////////////////////////////////////////////////
 	/// Sends the data of all the character to the all clients
 	////////////////////////////////////////////////////////////
@@ -383,6 +424,7 @@ namespace mp
 			if(!hasConnected)
 			{
 				connectToServer("testClient");
+				hasConnected = true;
 			}
 		} else if(e == BULLET_ADDED) 
 		{
