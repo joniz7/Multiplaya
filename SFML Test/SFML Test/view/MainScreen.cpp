@@ -77,7 +77,7 @@ namespace mp
 
 		// iterate ovef buttons map instead
 		// draw buttons
-		for( std::map<std::string, Button*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
+		for( std::map<std::string, GUIElement*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
 		{
 		   window.draw(*it->second);
 		}
