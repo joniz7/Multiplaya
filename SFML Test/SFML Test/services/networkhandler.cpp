@@ -34,6 +34,9 @@ namespace mp
 
 		serverIP = serverIP.getLocalAddress();
 		std::cout<<"Your IP is: "<<serverIP<<std::endl;
+
+		clientMap[myID].IP = serverIP;
+		clientMap[myID].IP = "host";
     }
 
 	void NetworkHandler::exec() 
@@ -62,6 +65,8 @@ namespace mp
 
 		std::vector<Character*>* characters;
 
+		int test;
+
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
 		/// Constantly checks if there are any incoming data packets
@@ -83,6 +88,7 @@ namespace mp
 				{
 					//Client trying to connect
 					case 1:
+						std::cout<<"type 1"<<std::endl;
 						//Creates a client from the data
 						receivedData >> name >> x >> y;
 	
@@ -108,6 +114,7 @@ namespace mp
 
 					//Client trying to disconnect
 					case 2:
+						std::cout<<"type 2"<<std::endl;
 						receivedData >> clientID;
 
 						client = clientMap[clientID];
@@ -119,6 +126,7 @@ namespace mp
 
 					//Receive a text message and send it to all clients
 					case 3:
+						std::cout<<"type 3"<<std::endl;
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
@@ -138,8 +146,11 @@ namespace mp
 						break;
 					//Receive character data from a client.
 					case 4:
+						std::cout<<"type 4"<<std::endl;
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
-
+						test = worldData->getCharacter(0)->getClientID();
+						std::cout<<test<<std::endl;
+						std::cout<<clientMap.size()<<std::endl;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
 
@@ -147,6 +158,7 @@ namespace mp
 						break;
 					//Receive bullet data from a client
 					case 5:
+						std::cout<<"type 5"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//All the bullets in the packet is added to the world
@@ -162,6 +174,7 @@ namespace mp
 						break;
 					//Recieve your ID from the server
 					case 11:
+						std::cout<<"type 11"<<std::endl;
 						receivedData >> myID;
 						worldDataMutex.lock();
 						worldData->getCharacter(0)->setClientID(myID);
@@ -170,12 +183,14 @@ namespace mp
 						break;
 					//Receive a text message
 					case 12:
+						std::cout<<"type 12"<<std::endl;
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
 					//Receive character data from the server
 					case 13:
+						std::cout<<"type 13"<<std::endl;
 						receivedData >> numOfChars;
 
 						for(int i = 0; i<numOfChars; i++)
@@ -189,6 +204,7 @@ namespace mp
 						break;
 					//Receive bullet data from the server
 					case 14:
+						std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//The current bullet list is cleared
@@ -207,6 +223,7 @@ namespace mp
 						break;
 					//Receive character data from the server
 					case 15:
+						std::cout<<"type 15"<<std::endl;
 						receivedData >> numOfChars;
 
 						size.Set(1.0f, 2.0f);
@@ -422,8 +439,7 @@ namespace mp
 			if(!hasConnected)
 			{
 				connectToServer("testClient");
-				std::cout<<"Connection to server IP: "<<serverIP<<std::endl;
-				hasConnected = true;
+				std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
 			}
 		} else if(e == BULLET_ADDED) 
 		{

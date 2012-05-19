@@ -34,6 +34,7 @@ namespace mp
 				{
 					connectButton->click();
 					networkHandler->connectToServer("Jonte");
+					while(networkHandler->isConnectedToServer()) {}
 					networkHandler->setIPAddress(ipTextField->getText());
 					networkHandler->setAsClient();
 					GameState::getInstance()->setGameState(GameState::HOST_GAME);
