@@ -26,7 +26,7 @@ namespace mp
 		const b2Vec2 gravity(0, -9.8f * 8);
 		bool doSleep = true;
 		// Create the world
-		world = new b2World(gravity, true);
+		world = new b2World(gravity);
 		worldDataMutex.lock();
 		world->SetContactListener(new ContactListener(worldData));
 		worldDataMutex.unlock();
