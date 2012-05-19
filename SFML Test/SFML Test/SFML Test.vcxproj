@@ -98,6 +98,7 @@
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\confighandler.cpp" />
+    <ClCompile Include="services\input.cpp" />
     <ClCompile Include="services\keylookup.cpp" />
     <ClCompile Include="services\MusicHandler.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\confighandler.h" />
+    <ClInclude Include="services\input.h" />
     <ClInclude Include="services\keylookup.h" />
     <ClInclude Include="services\MusicHandler.h" />
     <ClInclude Include="services\networkhandler.h" />

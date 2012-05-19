@@ -8,6 +8,7 @@
 #include<iomanip>
 #include<fstream>
 #include<algorithm>
+#include <cctype>
 
 
 ////////////////////////////////////////////////////////////
@@ -20,9 +21,8 @@ namespace mp
 	bool isNumber(const std::string& str)
 	{
 	   for (int i = 0; i < str.length(); i++)
-		   if (!isdigit(str[i])&&!str[i]=='.')
+		   if (std::isdigit(str[i])==0&&str[i]!='.')
 			   return false;
-
 	   return true;
 	}
 
@@ -87,7 +87,9 @@ namespace mp
 							intMap[setting] = atoi(data.c_str());	// Int
 					}
 					else
+					{
 						stringMap[setting] = data;
+					}
 				}
             }
 			std::cout<<std::endl<<"Config read!"<<std::endl;
