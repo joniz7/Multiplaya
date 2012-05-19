@@ -57,6 +57,7 @@ namespace mp
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
+			void zoom(float zoomFactor);
 			void zoomIn();
 			void zoomOut();
 			sf::View* getCamera() { return camera; }

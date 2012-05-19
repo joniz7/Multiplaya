@@ -60,22 +60,17 @@ namespace mp
 
 
 			// Handle zooming of viewport
-			if ( ev.type == sf::Event::MouseWheelMoved )
-			{
-				// TODO set maximum factor to zoom out
-				if( ev.mouseWheel.delta > 0 && zoomFactor >= -0.7f)
-				{
+			if ( ev.type == sf::Event::MouseWheelMoved ) {
+				if( ev.mouseWheel.delta > 0 && zoomFactor >= -0.7f) {
 					std::cout << zoomFactor << std::endl;
-					worldView->zoom(0.9f);
+					worldView->zoom(1/1.1f);
 					zoomFactor -= 0.1f;
 				}
-				else if (ev.mouseWheel.delta < 0 && zoomFactor <= 0.1f)
-				{
+				else if (ev.mouseWheel.delta < 0 && zoomFactor <= 0.1f) {
 					std::cout << zoomFactor << std::endl;
 					worldView->zoom(1.1f);
-					zoomFactor += 0.1;
+					zoomFactor += 0.1f;
 				}
-					
 			}
 		}
     }

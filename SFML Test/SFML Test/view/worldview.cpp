@@ -93,6 +93,14 @@ namespace mp
 	}
 
 	/////////////////////////////////
+	/// Changes the zoom of the camera.
+	/// \param zoomFactor - how much we should zoom.
+	/////////////////////////////////
+	void WorldView::zoom(float zoomFactor) {
+		camera->zoom(zoomFactor);
+	}
+
+	/////////////////////////////////
 	/// Zooms the camera in, if we're
 	/// not already at our maximum zoomed-in level.
 	/////////////////////////////////
