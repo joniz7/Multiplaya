@@ -23,9 +23,10 @@ namespace mp
     {
 		this->worldData = worldData;
 		// Setup the world properties
-		b2Vec2 gravity(0, -9.8f * 8);
+		const b2Vec2 gravity(0, -9.8f * 8);
+		bool doSleep = true;
 		// Create the world
-		world = new b2World(gravity);
+		world = new b2World(gravity, true);
 		worldDataMutex.lock();
 		world->SetContactListener(new ContactListener(worldData));
 		worldDataMutex.unlock();

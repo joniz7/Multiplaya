@@ -2,7 +2,7 @@
 #define WINDOW_H
 
 #include "../GameState.h"
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "Screen.h"
 #include "MainScreen.h"

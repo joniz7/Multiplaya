@@ -8,7 +8,7 @@
 #include "JoinGameController.h"
 #include "GameController.h"
 #include "../services/confighandler.h"
-#include "../services/musichandler.h"
+#include "../services/MusicHandler.h"
 #include "../model/world.h"
 
 namespace mp

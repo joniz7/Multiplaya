@@ -1,7 +1,7 @@
 #ifndef GUIELEMENT_H
 #define GUIELEMENT_H
 
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <string>
 
 namespace mp
@@ -35,11 +35,11 @@ namespace mp
 			virtual void setFontSize(unsigned int size);
 			virtual void setFontColor(const sf::Color &color);
 			void setFontStyle(sf::Text::Style style);
-			
+
 			virtual void setText(const std::string text);
 			const sf::String& getText();
 			void setTextAlignment(TextAlignment alignment);
-					
+
 			void setTextPosition(const float x, const float y);
 
 		protected:
