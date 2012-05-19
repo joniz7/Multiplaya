@@ -29,6 +29,8 @@
 
 #include "../global.h"
 
+#include "../view/worldview.h"
+
 namespace mp
 {
 	//Forward declaration so World can have a WorldData pointer
@@ -52,6 +54,8 @@ namespace mp
 
 			Player* currentPlayer;
 			NetworkHandler* network;
+
+			float zoomFactor;
     };
 }
 

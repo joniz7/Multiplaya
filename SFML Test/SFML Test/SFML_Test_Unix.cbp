@@ -146,6 +146,10 @@
 		<Unit filename="view/HUDSprite.h" />
 		<Unit filename="view/JoinGameScreen.cpp" />
 		<Unit filename="view/JoinGameScreen.h" />
+		<Unit filename="view/Layer.cpp" />
+		<Unit filename="view/Layer.h" />
+		<Unit filename="view/LayerHandler.cpp" />
+		<Unit filename="view/LayerHandler.h" />
 		<Unit filename="view/MainScreen.cpp" />
 		<Unit filename="view/MainScreen.h" />
 		<Unit filename="view/Screen.h" />
