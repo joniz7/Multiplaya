@@ -167,18 +167,39 @@ namespace mp
 				if(!line.empty())
 				{
 					bool search = true;
+					int vCount = 0;
+					b2Vec2 vs[99];
 					while(search)
 					{
 						short pos1 = line.find("(");
-						short pos2 = line.find(")");
-						std::cout<<"Paranthesises :"<<pos1<<" "<<pos2<<std::endl;
 
-						std::string data = line.substr(pos1+1,pos2-(pos1+1));
+						if(pos1==std::string::npos)
+							search = false;
+						else
+						{
+							short pos2 = line.find(")");
 
-						std::cout<<"Hejhej "<<data<<std::endl;
+							std::string data = line.substr(pos1+1,pos2-(pos1+1));
 
-						search = false;
+							int comPos = data.find(",");
+
+							int x = atoi( (data.substr(0,comPos)).c_str() );
+							int y = atoi( (data.substr(comPos+1,pos2-(comPos+1))).c_str() );
+
+							vs[vCount].Set((float)x,(float)y);
+
+							//std::cout<<"Vertex: "<<vCount<<std::endl<<"X: "<<x<<std::endl<<"Y: "<<y<<std::endl;
+
+							std::string temp = line.substr(pos2+1,line.size()-(pos2+1));
+							line = temp;
+							vCount++;
+						}
 					}
+
+					worldDataMutex.lock();
+					worldData->addChain(world, vs, vCount, 0.5f);
+					worldDataMutex.unlock();
+
 				}
             }
 			std::cout<<std::endl<<"World physics loaded"<<std::endl;

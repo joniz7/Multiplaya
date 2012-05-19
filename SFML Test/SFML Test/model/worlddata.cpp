@@ -108,9 +108,14 @@ namespace mp
 		return true;
     }
 
-	void WorldData::addWall( b2World* world, float xPos, float yPos, float width, float height)
+	void WorldData::addWall( b2World* world, float xPos, float yPos, float width, float height )
 	{
 		walls.push_back(new Wall(world, xPos, yPos, width, height));
+	}
+
+	void WorldData::addChain( b2World* world, b2Vec2 vertices[], int length, float friction )
+	{
+		chains.push_back(new WorldChain(world,vertices,length,friction));
 	}
 
 	bool WorldData::addBody( b2Body* body  )

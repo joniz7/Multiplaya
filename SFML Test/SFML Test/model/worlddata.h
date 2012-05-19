@@ -26,6 +26,7 @@
 #include "../defines.h"
 
 #include "Wall.h"
+#include "worldchain.h"
 
 #include "../util/Observable.h"
 
@@ -51,6 +52,7 @@ namespace mp
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
+			void addChain( b2World* world, b2Vec2 vertices[], int length, float friction );
 
 			// Getters
 			// Get list of all characters
@@ -97,6 +99,7 @@ namespace mp
 			// Vector containing characters
 			std::vector<Character*> characters;
 			std::vector<Wall*> walls;
+			std::vector<WorldChain*> chains;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodies;
 

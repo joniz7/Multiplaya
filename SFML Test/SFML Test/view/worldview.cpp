@@ -327,7 +327,6 @@ namespace mp
 			this->characters.push_back( view );
 		}
 		worldDataMutex.unlock();
-		std::cout<<"hjdå"<<std::endl;
 	}
 
 	void WorldView::constructMapGraphics()
