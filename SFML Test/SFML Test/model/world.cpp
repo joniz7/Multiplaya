@@ -75,7 +75,7 @@ namespace mp
 
 			for(std::vector<Bullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
 				//(*it)->getBody()->ApplyForce( b2Vec2(900000.8f * 8,0), (*it)->getBody()->GetPosition() );
-				(*it)->getBody()->ApplyForce( b2Vec2( 0, 12), (*it)->getBody()->GetPosition());
+				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0), (*it)->getBody()->GetPosition());
 			}
 
 			// Delete bullets, now that we're finished with physics.

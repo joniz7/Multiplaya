@@ -105,8 +105,6 @@ namespace mp
 			sf::RectangleShape* ground3;
 			sf::RectangleShape* ground4;
 
-			sf::Texture* lightTex;
-			sf::Sprite* lightSpr;
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
 			// TODO remove, after sprites has been fully moved to CharacterView.

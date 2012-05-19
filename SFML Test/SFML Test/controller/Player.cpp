@@ -137,7 +137,6 @@ namespace mp {
 			character->connectToServer();
 			worldDataMutex.unlock();
 		}
-		
 
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);
@@ -150,7 +149,7 @@ namespace mp {
 
 	bool Player::pressingKeyForPrimaryFire()
 	{
-		return sf::Mouse::isButtonPressed( sf::Mouse::Right );
+		return sf::Mouse::isButtonPressed( sf::Mouse::Left );
 	}
 
 	bool Player::pressingKeyForMovingDown()

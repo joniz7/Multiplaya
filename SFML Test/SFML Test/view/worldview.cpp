@@ -213,15 +213,6 @@ namespace mp
 		// Initialize the HUD.
 		this->initHUD();
 
-		// Light bubble
-		lightTex = new sf::Texture();
-		lightTex->loadFromFile("resources/light.png");
-		lightSpr = new sf::Sprite();
-		lightSpr->setTexture(*lightTex);
-		lightSpr->setOrigin(256, 256);
-		lightSpr->setScale(pixelScale * 0.1, pixelScale * 0.1);
-		lightSpr->setPosition(0,0);
-		lightSpr->setColor(sf::Color(255, 150, 125, 75));
 		// Red dot?
 		dotTex = new sf::Texture();
 		dotSpr = new sf::Sprite();
@@ -357,7 +348,6 @@ namespace mp
 	{
 		// Set sight position
 		dotSpr->setPosition(float(mousePosWindow->x), float(mousePosWindow->y));
-		lightSpr->setPosition(mousePos->x * pixelScale, mousePos->y * pixelScale);
 
 		updateBulletsPos();
 		updateCharactersPos();
@@ -410,7 +400,7 @@ namespace mp
 		drawCharacters(window);
 		drawBullets(window);
 		// Draw light.
-		window.draw(*lightSpr, sf::BlendAdd);
+		//window.draw(*lightSpr, sf::BlendAdd);
 	}
 
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
@@ -521,8 +511,6 @@ namespace mp
 		delete ground3;
 		delete ground4;
 
-		delete lightTex;
-		delete lightSpr;
 		delete dotTex;
 		delete dotSpr;
 			

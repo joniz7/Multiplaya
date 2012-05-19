@@ -27,7 +27,7 @@ namespace mp
 		// Should this animation loop?
 		bool loop;
 		// Sequence vector containing the frames in playback order.
-		std::vector<sf::Vector2i> sequence;
+		std::vector<sf::Vector3i> sequence;
 	};
 
     class AnimatedSprite : public sf::Sprite
@@ -35,9 +35,9 @@ namespace mp
         public:
 			AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions);
             ~AnimatedSprite();
-			void addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector2i> sequence);	// Adds an animation to the animation map.
+			void addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector3i> sequence);	// Adds an animation to the animation map.
 			void playAnimation(const std::string & animationName);	// Plays specified animation.
-			void setFrame(sf::Vector2i frame);	// Sets a specified frame.
+			void setFrame(sf::Vector3i frame);	// Sets a specified frame.
 			void update(float elapsed);	// Updates the animated sprite.
         private:
 			std::map<std::string, Animation> animationMap;	// Map containing all animations for the animated sprite.

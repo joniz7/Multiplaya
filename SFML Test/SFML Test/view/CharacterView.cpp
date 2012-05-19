@@ -18,39 +18,41 @@ namespace mp
 		facingLeft = false;
 
 		// Add animations
-		std::vector<sf::Vector2i> sequence;
-		sequence.push_back(sf::Vector2i(1,1));
+		std::vector<sf::Vector3i> sequence;
+		sequence.push_back(sf::Vector3i(1,1,0));
 		sprite->addAnimation("idle", 9, true, sequence);
 		sequence.clear();
 
-		sequence.push_back(sf::Vector2i(1,2));
+		sequence.push_back(sf::Vector3i(1,2,0));
 		sprite->addAnimation("jump", 60, true, sequence);
 		sequence.clear();
 
-		sequence.push_back(sf::Vector2i(2,2));
+		sequence.push_back(sf::Vector3i(2,2,0));
 		sprite->addAnimation("wallslide", 60, true, sequence);
 		sequence.clear();
 
-		sequence.push_back(sf::Vector2i(2,1));
-		sequence.push_back(sf::Vector2i(3,1));
-		sequence.push_back(sf::Vector2i(4,1));
-		sequence.push_back(sf::Vector2i(5,1));
-		sequence.push_back(sf::Vector2i(6,1));
-		sequence.push_back(sf::Vector2i(7,1));
+		sequence.push_back(sf::Vector3i(2,1,0));
+		sequence.push_back(sf::Vector3i(3,1,0));
+		sequence.push_back(sf::Vector3i(4,1,0));
+		sequence.push_back(sf::Vector3i(5,1,0));
+		sequence.push_back(sf::Vector3i(6,1,0));
+		sequence.push_back(sf::Vector3i(7,1,0));
 		sprite->addAnimation("walk", 9, true, sequence);
 		sequence.clear();
 
-		sequence.push_back(sf::Vector2i(3,2));
-		sequence.push_back(sf::Vector2i(4,2));
-		sequence.push_back(sf::Vector2i(5,2));
-		sequence.push_back(sf::Vector2i(6,2));
-		sequence.push_back(sf::Vector2i(7,2));
-		sequence.push_back(sf::Vector2i(3,3));
-		sequence.push_back(sf::Vector2i(4,3));
-		sequence.push_back(sf::Vector2i(5,3));
+		sequence.push_back(sf::Vector3i(3,2,40));
+		sequence.push_back(sf::Vector3i(3,2,80));
+		sequence.push_back(sf::Vector3i(3,2,120));
+		sequence.push_back(sf::Vector3i(3,2,160));
+		sequence.push_back(sf::Vector3i(3,2,200));
+		sequence.push_back(sf::Vector3i(3,2,240));
+		sequence.push_back(sf::Vector3i(3,2,260));
+		sequence.push_back(sf::Vector3i(3,2,320));
+		sequence.push_back(sf::Vector3i(3,2,360));
 
-		sequence.push_back(sf::Vector2i(1,2));
-		sprite->addAnimation("airroll", 22, false, sequence);
+
+		sequence.push_back(sf::Vector3i(1,2,0));
+		sprite->addAnimation("airroll", 40, false, sequence);
 		sequence.clear();
 
 		sprite->playAnimation("idle");

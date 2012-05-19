@@ -46,7 +46,7 @@ namespace mp
 		circle.m_radius = 0.25f;
 		fixtureDef.shape = &circle;
 		// Set the bullet density to be non-zero, so it will be dynamic.
-		fixtureDef.density = 1.f;
+		fixtureDef.density = 0.01f;
 		// Override the default friction.
 		fixtureDef.friction = 0.0f;
 		// Set restitution
