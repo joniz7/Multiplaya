@@ -1,8 +1,8 @@
 #ifndef ICONTROLLER_H
 #define ICONTROLLER_H
 
-#include <sfml/Graphics.hpp>
-#include "GameState.h"
+#include <SFML/Graphics.hpp>
+#include "../GameState.h"
 
 namespace mp
 {
@@ -14,11 +14,11 @@ namespace mp
 		public:
 			 IController(sf::RenderWindow* window, Screen* screen);
 			 virtual ~IController();
-			
-			 /// method which is supposed to handle events from renderwindow 
+
+			 /// method which is supposed to handle events from renderwindow
 			virtual void handleInput() = 0;
 
-			/// returns pointer to screen 
+			/// returns pointer to screen
 			Screen* getScreen();
 			// returns pointer to renderwindow
 			sf::RenderWindow* getRenderWindow();

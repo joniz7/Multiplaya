@@ -21,9 +21,15 @@
 
 int main()
 {
+    std::cout << "hej" << std::endl;
+
     // Create the application
 	mp::App application;
 
+    std::cout << "då" << std::endl;
+
     //Run
     return application.exec();
+
+    std::cout << "re" << std::endl;
 }

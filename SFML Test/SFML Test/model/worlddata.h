@@ -19,8 +19,8 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "model/character.h"
-#include "model/bullet.h"
+#include "character.h"
+#include "bullet.h"
 
 //Defines
 #include "../defines.h"
