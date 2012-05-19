@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2011 Erin Catto http://box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -17,17 +17,29 @@
 */
 
 #include <Box2D/Common/b2Settings.h>
-#include <cstdlib>
 
-b2Version b2_version = {2, 1, 2};
-
-// Memory allocators. Modify these to use your own allocator.
-void* b2Alloc(int32 size)
+/// Timer for profiling. This has platform specific code and may
+/// not work on every platform.
+class b2Timer
 {
-	return malloc(size);
-}
+public:
 
-void b2Free(void* mem)
-{
-	free(mem);
-}
+	/// Constructor
+	b2Timer();
+
+	/// Reset the timer.
+	void Reset();
+
+	/// Get the time since construction or the last reset.
+	float32 GetMilliseconds() const;
+
+private:
+
+#if defined(_WIN32)
+	float64 m_start;
+	static float64 s_invFrequency;
+#elif defined(__linux__) || defined (__APPLE__)
+	unsigned long m_start_sec;
+	unsigned long m_start_msec;
+#endif
+};

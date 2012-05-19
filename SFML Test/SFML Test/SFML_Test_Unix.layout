@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="app.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4347" topLine="123" />
+	<File name="app.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="3112" topLine="84" />
+	</File>
+	<File name="controller/Controller.cpp" open="1" top="0" tabpos="14">
+		<Cursor position="661" topLine="24" />
+	</File>
+	<File name="controller/GameController.cpp" open="1" top="0" tabpos="17">
+		<Cursor position="803" topLine="39" />
+	</File>
+	<File name="controller/JoinGameController.cpp" open="1" top="0" tabpos="16">
+		<Cursor position="528" topLine="0" />
+	</File>
+	<File name="controller/MainScreenController.cpp" open="1" top="0" tabpos="15">
+		<Cursor position="401" topLine="24" />
+	</File>
+	<File name="controller/Player.cpp" open="1" top="1" tabpos="19">
+		<Cursor position="1855" topLine="55" />
+	</File>
+	<File name="controller/Player.h" open="1" top="0" tabpos="20">
+		<Cursor position="401" topLine="6" />
 	</File>
 	<File name="defines.h" open="0" top="0" tabpos="9">
 		<Cursor position="215" topLine="0" />
@@ -10,35 +28,41 @@
 	<File name="global.h" open="0" top="0" tabpos="8">
 		<Cursor position="219" topLine="0" />
 	</File>
-	<File name="model/Player.h" open="1" top="0" tabpos="4">
-		<Cursor position="291" topLine="0" />
+	<File name="model/ContactListener.cpp" open="1" top="0" tabpos="13">
+		<Cursor position="714" topLine="13" />
 	</File>
-	<File name="model/Wall.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="142" topLine="0" />
+	<File name="model/Wall.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="350" topLine="0" />
 	</File>
-	<File name="model/Wall.h" open="1" top="0" tabpos="8">
+	<File name="model/Wall.h" open="1" top="0" tabpos="7">
 		<Cursor position="159" topLine="0" />
+	</File>
+	<File name="model/bullet.cpp" open="1" top="0" tabpos="18">
+		<Cursor position="2050" topLine="45" />
 	</File>
 	<File name="model/bullet.h" open="0" top="0" tabpos="2">
 		<Cursor position="410" topLine="10" />
 	</File>
-	<File name="model/character.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="4990" topLine="144" />
+	<File name="model/character.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="2479" topLine="210" />
 	</File>
 	<File name="model/character.h" open="1" top="0" tabpos="2">
 		<Cursor position="548" topLine="11" />
 	</File>
-	<File name="model/world.cpp" open="0" top="0" tabpos="7">
-		<Cursor position="167" topLine="15" />
+	<File name="model/world.cpp" open="1" top="0" tabpos="11">
+		<Cursor position="974" topLine="7" />
 	</File>
-	<File name="model/worlddata.cpp" open="0" top="0" tabpos="11">
-		<Cursor position="2134" topLine="62" />
+	<File name="model/worlddata.cpp" open="1" top="0" tabpos="12">
+		<Cursor position="2134" topLine="95" />
 	</File>
 	<File name="model/worlddata.h" open="1" top="0" tabpos="3">
-		<Cursor position="528" topLine="10" />
+		<Cursor position="2567" topLine="71" />
+	</File>
+	<File name="services/MusicHandler.h" open="1" top="0" tabpos="10">
+		<Cursor position="710" topLine="18" />
 	</File>
 	<File name="services/confighandler.h" open="1" top="0" tabpos="1">
-		<Cursor position="907" topLine="24" />
+		<Cursor position="786" topLine="13" />
 	</File>
 	<File name="services/keylookup.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="5885" topLine="196" />
@@ -46,7 +70,7 @@
 	<File name="services/keylookup.h" open="0" top="0" tabpos="12">
 		<Cursor position="487" topLine="7" />
 	</File>
-	<File name="services/networkhandler.h" open="1" top="0" tabpos="5">
+	<File name="services/networkhandler.h" open="1" top="0" tabpos="4">
 		<Cursor position="577" topLine="15" />
 	</File>
 	<File name="services/resourcehandler.cpp" open="0" top="0" tabpos="17">
@@ -61,7 +85,7 @@
 	<File name="view/animatedsprite.cpp" open="0" top="0" tabpos="16">
 		<Cursor position="727" topLine="6" />
 	</File>
-	<File name="view/worldview.cpp" open="1" top="1" tabpos="9">
-		<Cursor position="4842" topLine="103" />
+	<File name="view/worldview.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="4842" topLine="162" />
 	</File>
 </CodeBlocks_layout_file>

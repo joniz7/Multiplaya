@@ -24,7 +24,7 @@ namespace mp {
 			gameObjectA->onCollision(gameObjectB);
 		}
 	}
-  
+
 	void ContactListener::EndContact(b2Contact* contact) {
 		void* fixtureAUserData = contact->GetFixtureA()->GetUserData();
 		void* fixtureBUserData = contact->GetFixtureB()->GetUserData();

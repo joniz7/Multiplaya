@@ -54,9 +54,9 @@ namespace mp
 
 		// Calculate unique identifying bits for this bullet.
 		// (This makes us pass through our player)
-		const short playerBits = short(pow(2.0, owner + 1));
+		/*const short playerBits = short(pow(2.0, owner + 1));
 		fixtureDef.filter.categoryBits = playerBits;
-		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
+		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);*/
 
 		// Add the shape to the body.
 		b2Fixture* testFixture = body->CreateFixture(&fixtureDef);
@@ -77,7 +77,7 @@ namespace mp
 		else if (crashedWith->objectType == bullet) {
 			//std::cout << "Collision: bullet <-> bullet" << std::endl;
 		}
-		
+
 		// If we collide with character, explode (we handle the dmg elsewhere).
 		else if (crashedWith->objectType == character) {
 			std::cout << "Collision: bullet <-> character" << std::endl;
@@ -98,7 +98,7 @@ namespace mp
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
-        return bullet == this; 
+        return bullet == this;
     }
 
 	////////////////////////////////////////////////////////////

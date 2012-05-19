@@ -50,6 +50,7 @@ namespace mp
 
 		bodyDef.position.Set(pos.x, pos.y);
 		b2Body* characterBody = world->CreateBody(&bodyDef);
+		std::cout << world << std::endl;
 		this->characterBody = characterBody;
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -64,12 +65,12 @@ namespace mp
 		fixtureDef.friction = 0.0f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
-		
+
 		// Calculate unique identifying bits for this player.
 		// (This makes us not collide with our own bullets)
-		const short playerBits = short(pow(2.0, clientID + 1));
-		fixtureDef.filter.categoryBits = playerBits;
-		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
+		//const short playerBits = short(pow(2.0, clientID + 1));
+		//fixtureDef.filter.categoryBits = playerBits;
+		//fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
 
 		// Add the shape to the body.
 		b2Fixture* characterBodyFixture = characterBody->CreateFixture(&fixtureDef);
