@@ -59,6 +59,7 @@ namespace mp
     {
 		std::cout << "Adding character" << std::endl;
 
+		notify(CHARACTER_ADDED, c);
 		characters.push_back(c);
 		return true;
     }
@@ -67,7 +68,9 @@ namespace mp
 	{
 		std::cout << "Adding character" << std::endl;
 
-		characters.push_back( new Character(this, world, pos, size, clientID) );
+		Character* c = new Character(this, world, pos, size, clientID);
+		notify(CHARACTER_ADDED, c);
+		characters.push_back( c );
 		return true;
 	}
 

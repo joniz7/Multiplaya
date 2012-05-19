@@ -18,7 +18,7 @@ namespace mp
     {
 		worldView = (WorldView*) gameScreen;
 		this->model = model;
-		this->network = NULL; 
+		this->network = NULL;
 		this->currentPlayer = new Player();
 		worldDataMutex.unlock();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());

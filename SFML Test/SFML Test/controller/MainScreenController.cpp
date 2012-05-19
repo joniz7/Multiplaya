@@ -41,6 +41,8 @@ namespace mp
 				{
 					hostButton->click();
 					getRenderWindow()->setMouseCursorVisible(false);
+					networkHandler->setAsServer();
+					networkHandler->setAsClient();
 					GameState::getInstance()->setGameState(GameState::HOST_GAME);
 				}
 

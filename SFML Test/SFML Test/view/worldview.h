@@ -119,6 +119,8 @@ namespace mp
 			void addBullet(Bullet* bullet);
 			void deleteBullet(int i);
 
+			void addCharacter(Character* character);
+
 			void constructMapGraphics();
 
 			void calculateCam();

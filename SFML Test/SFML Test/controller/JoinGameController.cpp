@@ -29,6 +29,15 @@ namespace mp
 
 			if (ev.type == sf::Event::MouseButtonReleased)
 			{
+				
+				if( connectButton->isMouseOver(mousePos) )
+				{
+					connectButton->click();
+					networkHandler->setIPAddress(ipTextField->getText());
+					networkHandler->setAsClient();
+					GameState::getInstance()->setGameState(GameState::HOST_GAME);
+				}
+				
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
@@ -136,4 +145,5 @@ namespace mp
 	{
 		return ev.text.unicode == 8;
 	}
+	
 }

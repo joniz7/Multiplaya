@@ -55,6 +55,11 @@ namespace mp
 			int i = ( intptr_t )object;
 			deleteBullet(i);
 		}
+		else if (e == CHARACTER_ADDED)
+		{
+			Character* character = (Character*)object;
+			addCharacter(character);
+		}
 	}
 
 	void WorldView::addBullet(Bullet* bullet)
@@ -74,6 +79,11 @@ namespace mp
 		delete bullet;
 
 		//worldViewMutex.unlock();
+	}
+
+	void WorldView::addCharacter(Character* character)
+	{
+		characters.push_back( new CharacterView( character ) );
 	}
 
 	void WorldView::zoom(float factor)
@@ -108,8 +118,7 @@ namespace mp
 				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
 				counter = 0;
-			}
-			else {
+			} else {
 				counter++;
 			}
 	}
@@ -309,6 +318,7 @@ namespace mp
 		
 		// Fetch character models.
 		std::vector<Character*>* characterModels = worldData->getCharacters();
+		std::cout<<"Characters: "<<worldData->getCharacters()->size()<<std::endl;
 		// Loop through them,
 		for (int i=0;i<characterModels->size();i++) {
 			// create for each one a visual representation,
@@ -317,6 +327,7 @@ namespace mp
 			this->characters.push_back( view );
 		}
 		worldDataMutex.unlock();
+		std::cout<<"hjdå"<<std::endl;
 	}
 
 	void WorldView::constructMapGraphics()

@@ -20,6 +20,9 @@ namespace mp
 		currentClientID = 1;
 		myID = 0;
 
+		isServer = false;
+		isClient = false;
+
 		hasConnected = false;
 
 		receivePort = 55001;
@@ -29,7 +32,7 @@ namespace mp
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
-		myIP = "172.16.0.6";
+		serverIP = serverIP.getPublicAddress();
     }
 
 	void NetworkHandler::exec() 
@@ -158,6 +161,9 @@ namespace mp
 					//Recieve your ID from the server
 					case 11:
 						receivedData >> myID;
+						worldDataMutex.lock();
+						worldData->getCharacter(0)->setClientID(myID);
+						worldDataMutex.unlock();
 						hasConnected = true;
 						break;
 					//Receive a text message
@@ -232,7 +238,7 @@ namespace mp
 		sf::Int8 type = 12;
 		packet << type << message;
 
-		sender.send(packet, myIP, receivePort);
+		sender.send(packet, serverIP, receivePort);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -247,7 +253,7 @@ namespace mp
 		sf::Int8 type = 3;
 		packet << type << message;
 
-		sender.send(packet, myIP, 55001);
+		sender.send(packet, serverIP, 55001);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -266,7 +272,7 @@ namespace mp
 
 		packet << type << name << x << y;
 
-		sender.send(packet, myIP, 55001);
+		sender.send(packet, serverIP, 55001);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -286,11 +292,48 @@ namespace mp
 		worldDataMutex.unlock();
 
 		packet << type << myID << x << y << xvel << yvel << angle;
-		sender.send(packet, myIP, 55001);
-
+		sender.send(packet, serverIP, 55001);
 	}
 
-	
+	////////////////////////////////////////////////////////////
+	/// Sends the data of all the character to the specified client
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendCharacterDataToClient(sf::Int8 clientID)
+	{
+		sf::Int8 type = 13, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Packet packet;
+		Character* tempCharacter;
+		float32 x, y, xvel, yvel, angle;
+		packet << type << numOfChars;
+
+		for(int i = 0; i<numOfChars; i++)
+		{
+			tempCharacter = worldData->getCharacter(i);
+			tempClientID = tempCharacter->getClientID();
+			x = tempCharacter->getPosition().x;
+			y = tempCharacter->getPosition().y;
+			xvel = tempCharacter->getLinVelocity().x;
+			yvel = tempCharacter->getLinVelocity().y;
+			angle = tempCharacter->getAngle();
+
+			packet << tempClientID << x << y << xvel << yvel << angle;
+		}
+
+		sender.send(packet, clientMap[clientID].IP, receivePort);
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sends the data of all the character to the all clients
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::updateAllClients()
+	{
+		std::map<sf::Int8, Client>::iterator it;
+
+		for(it = clientMap.begin(); it != clientMap.end(); it++)
+		{
+			sendCharacterDataToClient((*it).first);
+		}
+	}
 
 	////////////////////////////////////////////////////////////
 	/// Sends the client ID to the specified client
@@ -317,6 +360,13 @@ namespace mp
 		character->setLinVelocity(velocity);
 		worldDataMutex.unlock();
 	}
+
+	void NetworkHandler::setIPAddress(const sf::String IPAddress)
+	{
+		serverIP = IPAddress.toAnsiString();
+	}
+
+
 
 	////////////////////////////////////////////////////////////
 	/// If the notification is connectToServer the client will try

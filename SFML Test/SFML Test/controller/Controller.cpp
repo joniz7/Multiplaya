@@ -12,11 +12,12 @@ namespace mp
 		MusicHandler::instance().chooseSong("title");
 		MusicHandler::instance().play();
 
-
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
 	  //  controllers["hostGame"] = new HostGameController();
 		controllers["hostGame"] = new GameController(world, renderWindow, window->getScreen("hostScreen"));
+
+		
 	}
 
 	Controller::~Controller()
@@ -25,8 +26,13 @@ namespace mp
 	}
 
 	void Controller::setNetworkHandler(NetworkHandler* network) {
+		MainScreenController* mainScreenController = (MainScreenController*) controllers["mainScreen"];
 		GameController* gameController = (GameController*) controllers["hostGame"];
+		JoinGameController* joinGameController = (JoinGameController*) controllers["joinGame"];
+
+		mainScreenController->setNetworkHandler(network);
 		gameController->setNetworkHandler(network);
+		joinGameController->setNetworkHandler(network);
 	}
 
 	void Controller::exec()

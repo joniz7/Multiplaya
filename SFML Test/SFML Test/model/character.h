@@ -72,6 +72,7 @@ namespace mp
 
 			void setPosition(b2Vec2 position, float32 angle);
 			void setLinVelocity(b2Vec2 velocity);
+			void setClientID(sf::Int8 ID){clientID = ID;};
 
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }
 			bool isTouchingWallRight(){ return rightSideTouchWall; }
