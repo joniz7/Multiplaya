@@ -57,7 +57,8 @@ namespace mp
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
-			void zoom(float factor);
+			void zoomIn();
+			void zoomOut();
 			sf::View* getCamera() { return camera; }
 
 			void characterMoved(float moved);
@@ -83,13 +84,13 @@ namespace mp
 			HUDSprite* ammoSprite;
 			sf::Text* killsText;
 			sf::Text* deathsText;
-
-			sf::Music* music;
 			
 			mutable sf::RenderWindow* window;
 
 			WorldData* worldData;
 			sf::View* camera;
+			unsigned int zoomLevel;
+			unsigned int zoomLevelMax;
 			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
