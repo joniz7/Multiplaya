@@ -35,6 +35,8 @@ namespace mp
 			void createCharacter(b2Vec2 positions, b2Vec2 size, sf::Int8 clientID);
 			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type);
 			void deleteBullets();
+			void loadMap(const std::string& path);
+			void loadPhysics(const std::string& path);
         private:
 			WorldData* worldData;
 			b2World* world;

@@ -4,10 +4,10 @@
 // Class header
 #include "confighandler.h"
 
-#include<iostream>
-#include<iomanip>
-#include<fstream>
-#include<algorithm>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <algorithm>
 #include <cctype>
 
 
