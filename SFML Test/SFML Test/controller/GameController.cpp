@@ -61,9 +61,9 @@ namespace mp
 			{
 				// TODO set maximum factor to zoom out
 				if( ev.mouseWheel.delta > 0)
-					worldView->zoom(0.9f);
+					worldView->zoomIn();
 				else
-					worldView->zoom(1.1f);
+					worldView->zoomOut();
 			}
 		}
     }

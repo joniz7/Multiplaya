@@ -86,10 +86,27 @@ namespace mp
 		characters.push_back( new CharacterView( character ) );
 	}
 
-	void WorldView::zoom(float factor)
-	{
-		camera->zoom(factor);
-		window->setView(*camera);
+	/////////////////////////////////
+	/// Zooms the camera in, if we're
+	/// not already at our maximum zoomed-in level.
+	/////////////////////////////////
+	void WorldView::zoomIn() {
+		std::cout << "zooming in." << std::endl;
+		if (zoomLevel < zoomLevelMax) {
+			camera->zoom(1/1.1);
+			zoomLevel++;
+		}
+	}
+
+	/////////////////////////////////
+	/// Zooms the camera out, unless we're at
+	/// our maximum zoomed-out level (where we started).
+	/////////////////////////////////
+	void WorldView::zoomOut() {
+		if (zoomLevel > 0) {
+			camera->zoom(1.1f);
+			zoomLevel--;
+		}
 	}
 
 	void WorldView::tempLoop()
@@ -205,13 +222,16 @@ namespace mp
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(screenWidth / 2 * pixelScale, screenHeight / 2 *pixelScale);
+		
+		// Intialize our camera.
+		this->zoomLevel = 0;	// We start at 0,
+		this->zoomLevelMax = 10;// 10 is our maximum zoomed-in level.
 		camera = new sf::View(center * pixelScale, halfSize * pixelScale);
+		camera->zoom( 1.5 );
+
 		// Rotate the view 180 degrees
 		camera->setRotation(180);
-		// Zoom view
-		camera->zoom( 1.5 );
-		// Set view
-		//window->setView(*camera);
+
 		//------------------
 		// Instantiate stuff.
 		mousePos = new sf::Vector2f(0,0);
@@ -482,7 +502,6 @@ namespace mp
 		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
 
 		camera->setCenter(x * pixelScale, y * pixelScale);
-		window->setView(*camera);
 	}
 
 	////////////////////////////////////////////////////////////
