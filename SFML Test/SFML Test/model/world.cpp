@@ -25,7 +25,6 @@ namespace mp
 		this->worldData = worldData;
 		// Setup the world properties
 		const b2Vec2 gravity(0, -9.8f * 8);
-		bool doSleep = true;
 		// Create the world
 		world = new b2World(gravity);
 		worldDataMutex.lock();
@@ -46,11 +45,11 @@ namespace mp
 		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
 		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
 
-		
+
 		// Add´test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
 		//worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
-		
+
 		// Load world physics
 		loadMap("resources/maps/test");
 

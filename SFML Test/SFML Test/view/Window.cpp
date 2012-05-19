@@ -14,9 +14,9 @@ namespace mp
 		//window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya");
 
 		if( ConfigHandler::instance().getBool("r_fullscreen") )
-			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya", sf::Style::Fullscreen, sf::ContextSettings::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
+			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya", sf::Style::Fullscreen, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
 		else
-			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya", sf::Style::Titlebar, sf::ContextSettings::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
+			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya", sf::Style::Titlebar, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
 
 		window->setFramerateLimit(60);
 		// Set window data

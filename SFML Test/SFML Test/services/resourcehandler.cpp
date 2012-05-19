@@ -28,7 +28,7 @@ namespace mp
 	// Destructor
 	////////////////////////////////////////////////////////////
     ResourceHandler::~ResourceHandler(){}
-	
+
 	////////////////////////////////////////////////////////////
 	// Load a texture to memory. Returns true upon success.
 	////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ namespace mp
     void ResourceHandler::loadTextures(std::vector<std::string> pathVec)
     {
 		// Iterate through vector and load all files
-		for (int i=0; i<pathVec.size(); i++)
+		for (unsigned int i=0; i<pathVec.size(); i++)
 			loadTexture(pathVec[i]);
 	}
 

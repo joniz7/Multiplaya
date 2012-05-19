@@ -15,12 +15,12 @@
 /// Reads config file and stores data in a map. Singleton.
 ////////////////////////////////////////////////////////////
 
-namespace mp	
+namespace mp
 {
 
 	bool isNumber(const std::string& str)
 	{
-	   for (int i = 0; i < str.length(); i++)
+	   for (unsigned int i = 0; i < str.length(); i++)
 		   if (std::isdigit(str[i])==0&&str[i]!='.')
 			   return false;
 	   return true;
@@ -67,9 +67,9 @@ namespace mp
 					std::string data = line.substr(setting.length()+1,std::string::npos);
 					//std::cout<<setting<<": "<<data;
 					// Convert to lower case
-					for(int i=0;i<setting.length();++i)
+					for(unsigned int i=0;i<setting.length();++i)
 						setting[i] = ::tolower(setting[i]);
-					for(int i=0;i<data.length();++i)
+					for(unsigned int i=0;i<data.length();++i)
 						data[i] = ::tolower(data[i]);
 
 					std::cout<<".";

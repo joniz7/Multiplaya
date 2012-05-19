@@ -103,6 +103,8 @@
 		<Unit filename="model/character.h" />
 		<Unit filename="model/world.cpp" />
 		<Unit filename="model/world.h" />
+		<Unit filename="model/worldchain.cpp" />
+		<Unit filename="model/worldchain.h" />
 		<Unit filename="model/worlddata.cpp" />
 		<Unit filename="model/worlddata.h" />
 		<Unit filename="services/MusicHandler.cpp" />

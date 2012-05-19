@@ -27,7 +27,7 @@ namespace mp
 		this->pixelScale = 1 / 10.0f;
 		counter = 0;
 		elapsed = 0;
-		
+
 		initialize();
 	}
 
@@ -41,7 +41,7 @@ namespace mp
 	   ss << number;//add number to the stream
 	   return ss.str();//return a string with the contents of the stream
 	}
-	
+
 	void WorldView::notify(Event e, void* object)
 	{
 		// could change to switch case
@@ -68,8 +68,8 @@ namespace mp
 		bullets.push_back(  new BulletView( bullet ) );
 		//worldViewMutex.unlock();
 	}
-	
-	// delete bullet at index i 
+
+	// delete bullet at index i
 	void WorldView::deleteBullet(int i)
 	{
 		//worldViewMutex.lock();
@@ -114,17 +114,17 @@ namespace mp
 			// Fetch mouse-related things.
 			*mousePosWindow = sf::Mouse::getPosition(*window);
 			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / pixelScale;
-			
+
 			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
             // Get elapsed time since last frame
             elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
 
-			
+
 			// Every 10th frame:
 			if(counter == 10) {
 				int renderFps = (int)(1 / elapsed);
-				
+
 				worldDataMutex.lock();
 				int logicFps = worldData->getLogicFps();
 				worldDataMutex.unlock();
@@ -145,12 +145,12 @@ namespace mp
 
 		tempLoop();
 		calculateCam();
-		
+
 
 		// Access world data
 		//worldDataMutex.lock();
 
-		for(int i=0;i<characters.size();i++) {
+		for(unsigned int i=0;i<characters.size();i++) {
 			((CharacterView*)characters.at(i))->updateAnimation(elapsed);
 		}
 
@@ -166,7 +166,7 @@ namespace mp
 
 			// Set world view so we can render the world in world coordinates
 			window.setView(*camera);
-            
+
             // Render World.
 			drawWorld( window );
 
@@ -182,10 +182,10 @@ namespace mp
 	// Change SFML settings, etc.
 	//////////////////////////////
 	void WorldView::initialize() {
-		// Set up and initialize render window		
+		// Set up and initialize render window
 		// Don't display mouse cursor
 		//window->setMouseCursorVisible(false);
-		
+
 		// The path to resources
 		resourcesDir = "resources/";
 
@@ -204,7 +204,7 @@ namespace mp
 		// Load font file.
 		fontGothic = new sf::Font();
 		fontGothic->loadFromFile("resources/gothic.ttf");
-		
+
 		// Setup fps labels.
 		renderFpsTxt = new sf::Text("Render fps: 00");
 		logicFpsTxt = new sf::Text("Logic fps: 00");
@@ -222,7 +222,7 @@ namespace mp
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
 		sf::Vector2f halfSize(screenWidth / 2 * pixelScale, screenHeight / 2 *pixelScale);
-		
+
 		// Intialize our camera.
 		this->zoomLevel = 0;	// We start at 0,
 		this->zoomLevelMax = 10;// 10 is our maximum zoomed-in level.
@@ -280,7 +280,7 @@ namespace mp
 		killsSprite->setPosition(float(x),float(y));
 		// TODO: uncomment below line and fix the positioning error that occurs.
 		//killsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
-		
+
 		// Create text label to display kill count.
 		killsText = new sf::Text("0");
 		killsText->setFont(*fontGothic);
@@ -335,12 +335,12 @@ namespace mp
 	// and creates their corresponding views.
 	void WorldView::createCharacterViews() {
 		worldDataMutex.lock();
-		
+
 		// Fetch character models.
 		std::vector<Character*>* characterModels = worldData->getCharacters();
 		std::cout<<"Characters: "<<worldData->getCharacters()->size()<<std::endl;
 		// Loop through them,
-		for (int i=0;i<characterModels->size();i++) {
+		for (unsigned int i=0;i<characterModels->size();i++) {
 			// create for each one a visual representation,
 			CharacterView* view = new CharacterView(characterModels->at(i));
 			// and add it to our list of CharacterViews.
@@ -362,7 +362,7 @@ namespace mp
 		ground2->setFillColor( c );
 		ground2->setOrigin(50 * pixelScale, 2.5f * pixelScale);
 		ground2->setPosition(0, 50.0f * pixelScale);
-		
+
 		ground3 = new sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
 		ground3->setFillColor( c );
 		ground3->setOrigin(2.5f * pixelScale, 50 * pixelScale);
@@ -399,12 +399,12 @@ namespace mp
 
 	void WorldView::updateHUD()
 	{
-		
+
 		worldDataMutex.lock();
-		
+
 		Character currentCharacter = *worldData->getCurrentCharacter();
 		std::ostringstream kills, deaths; // (convert short->string)
-		
+
 		kills << currentCharacter.getKills();
 		killsText->setString(kills.str());
 		deaths << currentCharacter.getDeaths();
@@ -448,14 +448,14 @@ namespace mp
 		drawVector(bullets, window);
 		//worldViewMutex.unlock();
 	}
-	
+
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
 		//worldViewMutex.lock();
 		drawVector(characters, window);
 		//worldViewMutex.unlock();
 	}
-	
+
 	void WorldView::drawHUD(sf::RenderTarget& window) const {
 		// Set default view so we can render the ui in window coordinates
 		window.setView(this->window->getDefaultView());
@@ -489,7 +489,7 @@ namespace mp
 		}
 	}
 
-	void WorldView::calculateCam() 
+	void WorldView::calculateCam()
 	{
 		worldDataMutex.lock();
 		// Calculate camera position (somehwere between character and mouse)
@@ -510,10 +510,10 @@ namespace mp
     WorldView::~WorldView()
     {
 		// Destroy all characters.
-		for(int i=0;i<characters.size();i++) {
+		for(unsigned int i=0;i<characters.size();i++) {
 			delete characters.at(i);
 		}// Destroy all bullets.
-		for(int i=0;i<bullets.size();i++) {
+		for(unsigned int i=0;i<bullets.size();i++) {
 			delete bullets.at(i);
 		}
 
@@ -542,7 +542,7 @@ namespace mp
 
 		delete dotTex;
 		delete dotSpr;
-			
+
 		delete mousePosOld;
 		delete mousePos;
 		delete mousePosWindow;
