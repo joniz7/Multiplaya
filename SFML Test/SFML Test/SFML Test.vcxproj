@@ -96,6 +96,7 @@
     <ClCompile Include="model\ContactListener.cpp" />
     <ClCompile Include="model\Wall.cpp" />
     <ClCompile Include="model\world.cpp" />
+    <ClCompile Include="model\worldchain.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\confighandler.cpp" />
     <ClCompile Include="services\input.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="model\GameObject.h" />
     <ClInclude Include="model\Wall.h" />
     <ClInclude Include="model\world.h" />
+    <ClInclude Include="model\worldchain.h" />
     <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\confighandler.h" />
     <ClInclude Include="services\input.h" />

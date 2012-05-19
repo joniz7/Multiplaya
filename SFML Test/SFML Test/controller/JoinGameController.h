@@ -36,6 +36,8 @@ namespace mp
 
 			NetworkHandler* networkHandler;
 
+			sf::Clock clock;
+
 	};
 }
 

@@ -161,6 +161,9 @@
     <ClCompile Include="services\input.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
+    <ClCompile Include="model\worldchain.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -309,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="services\input.h">
       <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="model\worldchain.h">
+      <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
