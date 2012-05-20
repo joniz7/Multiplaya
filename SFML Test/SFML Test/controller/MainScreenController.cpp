@@ -34,7 +34,8 @@ namespace mp
 				if ( joinButton->isMouseOver(mousePos) )
 				{
 					joinButton->click();
-					GameState::getInstance()->setGameState(GameState::JOIN_GAME);
+					// Change screen in main controller.
+					notifyObservers(Event::SHOW_JOIN,0);
 				}
 
 				if ( hostButton->isMouseOver(mousePos) )
@@ -43,7 +44,8 @@ namespace mp
 					getRenderWindow()->setMouseCursorVisible(false);
 					networkHandler->setAsServer();
 					networkHandler->setAsClient();
-					GameState::getInstance()->setGameState(GameState::HOST_GAME);
+					// Change screen in main controller.
+					notifyObservers(Event::SHOW_HOST, 0);
 				}
 
 				if ( exitButton->isMouseOver(mousePos) )

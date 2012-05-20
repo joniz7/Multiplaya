@@ -5,6 +5,7 @@
 #include "GUIElements/Button.h"
 #include "GUIElements/TextField.h"
 #include <map>
+#include "../services/resourcehandler.h"
 
 namespace mp
 {

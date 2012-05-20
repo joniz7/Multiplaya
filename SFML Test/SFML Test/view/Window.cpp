@@ -42,10 +42,10 @@ namespace mp
 	void Window::drawMainMenu() {
 		this->draw(screens["mainScreen"]);
 	}
-	void Window::drawGame() {
+	void Window::drawInGame() {
 		// TODO 	
 	}
-	void Window::drawIngameMenu() {
+	void Window::drawInGameMenu() {
 		// TODO
 	}
 	void Window::drawJoinMenu() {
@@ -70,43 +70,11 @@ namespace mp
 		window->display();
 	}
 
-	/* TODO: no longer needed?
-	void Window::exec()
-	{
-
-		window->clear();
-		switch (GameState::getInstance()->getGameState())
-		{
-			case GameState::MAIN_SCREEN:
-				window->draw(*screens["mainScreen"]);
-			break;
-
-			case GameState::JOIN_GAME:
-				window->draw(*screens["joinGameScreen"]);
-			break;
-
-			case GameState::HOST_GAME:
-				screens["hostScreen"]->update();
-				window->draw(*screens["hostScreen"]);
-			break;
-
-			case GameState::SETTINGS_SCREEN:
-				window->draw(*screens["settingsScreen"]);
-			break;
-		}
-
-		window->display();
-	}
-	*/
-
-
-	sf::RenderWindow* Window::getRenderWindow()
-	{
+	sf::RenderWindow* Window::getRenderWindow() {
 		return window;
 	}
 
-	Screen* Window::getScreen(std::string string)
-	{
+	Screen* Window::getScreen(std::string string) {
 		return screens[string];
 	}
 

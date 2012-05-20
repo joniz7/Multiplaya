@@ -92,7 +92,7 @@ namespace mp
 					}
 				}
             }
-			std::cout<<std::endl<<"Config read!"<<std::endl;
+			std::cout<<" Config read!"<<std::endl;
 		}
 		fileReader.close();
 	}

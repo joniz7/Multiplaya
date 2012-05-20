@@ -46,14 +46,15 @@ namespace mp
 					{
 						networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
-						GameState::getInstance()->setGameState(GameState::HOST_GAME);
+						// Change screen in main controller.
+						notifyObservers(Event::SHOW_HOST, 0);
 					}
 				}
 				
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
-					GameState::getInstance()->setGameState(GameState::MAIN_SCREEN);
+					notifyObservers(Event::SHOW_MAIN_MENU, 0);
 				}
 
 				if ( ipTextField->isMouseOver(mousePos) )

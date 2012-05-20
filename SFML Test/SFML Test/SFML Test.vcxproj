@@ -88,7 +88,6 @@
     <ClCompile Include="controller\JoinGameController.cpp" />
     <ClCompile Include="controller\MainScreenController.cpp" />
     <ClCompile Include="controller\Player.cpp" />
-    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\bullet.cpp" />
@@ -135,9 +134,7 @@
     <ClInclude Include="controller\MainScreenController.h" />
     <ClInclude Include="controller\Player.h" />
     <ClInclude Include="defines.h" />
-    <ClInclude Include="Event.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="GameState.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="model\bullet.h" />
     <ClInclude Include="model\character.h" />
@@ -158,6 +155,7 @@
     <ClInclude Include="sound\sound.h" />
     <ClInclude Include="sound\uisound.h" />
     <ClInclude Include="sound\worldsound.h" />
+    <ClInclude Include="util\Event.h" />
     <ClInclude Include="util\Observable.h" />
     <ClInclude Include="util\Observer.h" />
     <ClInclude Include="view\animatedsprite.h" />

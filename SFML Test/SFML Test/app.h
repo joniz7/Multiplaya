@@ -22,6 +22,7 @@
 #include "controller/Controller.h"
 #include "view/worldview.h"
 #include "view/Window.h"
+#include "services/resourcehandler.h"
 
 typedef std::list<sf::Drawable*> RenderList;
 
