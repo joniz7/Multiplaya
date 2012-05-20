@@ -62,6 +62,11 @@ namespace mp
 			Character* character = (Character*)object;
 			addCharacter(character);
 		}
+		else if (e == CHARACTER_DELETED)
+		{
+			int i = ( intptr_t )object;
+			deleteCharacter(i);
+		}
 	}
 
 	void WorldView::addBullet(Bullet* bullet)
@@ -91,6 +96,13 @@ namespace mp
 	void WorldView::addCharacter(Character* character)
 	{
 		characters.push_back( new CharacterView( character ) );
+	}
+
+	void WorldView::deleteCharacter(int i)
+	{
+		CharacterView* character = (CharacterView*) characters.at(i);
+		characters.erase(characters.begin() + i);
+		delete character;
 	}
 
 	/////////////////////////////////

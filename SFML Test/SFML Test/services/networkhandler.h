@@ -38,10 +38,12 @@ namespace mp
 			void sendClientID(sf::Int8 ID);
 			void connectToServer(std::string name);
 			void connectToServer(std::string name, std::string IPAddress);
+			void disconnectClient(sf::Int8 clientID);
 			bool isConnectedToServer(){return hasConnected;};
 			void sendCharacterDataToServer();
 			void sendCharacterDataToClient(sf::Int8 clientID);
 			void sendCharactersToClient(sf::Int8 clientID);
+			void removeCharacter(sf::Int8 clientID);
 			void updateAllClients();
 			void setIPAddress(const sf::String IPAddress);
 			void setAsServer(){isServer = true;};

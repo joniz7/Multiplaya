@@ -125,6 +125,7 @@ namespace mp
 			void deleteBullet(int i);
 
 			void addCharacter(Character* character);
+			void deleteCharacter(int i);
 
 			void constructMapGraphics();
 

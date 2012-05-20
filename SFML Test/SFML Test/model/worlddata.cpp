@@ -75,6 +75,18 @@ namespace mp
 		return true;
 	}
 
+	void WorldData::removeCharacter(sf::Int8 ID)
+	{
+		for(int i = 0; i<characters.size(); i++)
+		{
+			Character* character = characters.at(i);
+			if(character->getClientID() == ID)
+			{
+				notifyObservers(CHARACTER_DELETED, (void*) i);
+				characters.erase(characters.begin()+i);
+			}
+		}
+	}
 	////////////////////////////////////////////////////////////
 	// Adds a generic body to the world
 	// returns true upon success
