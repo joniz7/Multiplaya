@@ -32,10 +32,16 @@ namespace mp
 				
 				if( connectButton->isMouseOver(mousePos) )
 				{
-					elapsed = clock.getElapsedTime().asSeconds();
+					
 					connectButton->click();
 					networkHandler->connectToServer("Jonte");
-					while(!networkHandler->isConnectedToServer() || elapsed>5) {}
+					clock.restart();
+					elapsed = clock.getElapsedTime().asSeconds();
+					while(!networkHandler->isConnectedToServer() && elapsed<3) 
+					{
+						elapsed = clock.getElapsedTime().asSeconds();
+						std::cout<<elapsed<<std::endl;
+					}
 
 					if(networkHandler->isConnectedToServer())
 					{
