@@ -308,7 +308,15 @@ namespace mp
 
 		packet << type << name << x << y;
 
+		std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
+
 		sender.send(packet, serverIP, 55001);
+	}
+
+	void NetworkHandler::connectToServer(std::string name, std::string IPAddress)
+	{
+		serverIP = IPAddress;
+		connectToServer(name);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -373,7 +381,10 @@ namespace mp
 			x = tempCharacter->getPosition().x;
 			y = tempCharacter->getPosition().y;
 
-			packet << tempClientID << x << y;
+			if(tempClientID != clientID)
+			{
+				packet << tempClientID << x << y;
+			}
 		}
 
 		sender.send(packet, clientMap[clientID].IP, receivePort);
@@ -440,7 +451,6 @@ namespace mp
 			if(!hasConnected)
 			{
 				connectToServer("testClient");
-				std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
 			}
 		} else if(e == BULLET_ADDED) 
 		{

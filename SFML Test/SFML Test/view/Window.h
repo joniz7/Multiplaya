@@ -1,7 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "../GameState.h"
 #include <SFML/Graphics.hpp>
 
 #include "Screen.h"
@@ -23,8 +22,8 @@ namespace mp
 
 			void draw(Screen* screen);
 			void drawMainMenu();
-			void drawGame();
-			void drawIngameMenu();
+			void drawInGame();
+			void drawInGameMenu();
 			void drawJoinMenu();
 			void drawHostMenu();
 			void drawSettingsMenu();

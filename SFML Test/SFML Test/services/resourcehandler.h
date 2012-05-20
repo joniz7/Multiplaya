@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <list>
 #include <cmath>
+#include <iostream>
 #include <map>
 
 // SFML specific headers
@@ -22,8 +23,7 @@ namespace mp
     class ResourceHandler
     {
         public:
-			ResourceHandler();
-            ~ResourceHandler();
+			static ResourceHandler& instance();
 			bool loadTexture(std::string filePath);
 			void loadTextures(std::vector<std::string> pathVec);
 			sf::Texture* getTexture(std::string filePath);
@@ -31,6 +31,10 @@ namespace mp
 			void reloadAllTextures();
 			void doRealTimeLoading(bool b){doRtLoading=b;};
         private:
+			ResourceHandler();
+			ResourceHandler(ResourceHandler const&){};
+			ResourceHandler& operator=(ResourceHandler const&);
+
 			std::map<std::string, sf::Texture> texMap;
 			bool doRtLoading;
     };
