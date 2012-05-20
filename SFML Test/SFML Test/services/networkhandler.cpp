@@ -80,10 +80,13 @@ namespace mp
 			//std::cout<<"Receiving data..."<<std::endl;
 			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
+			/*
 			if(isServer)
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
 				{
+					std::cout << "before" << (*it).second.disconnectCounter << std::endl;
+					std::cout << (*it).second.IP << "    " << senderIP << std::endl;
 					if((*it).second.IP == senderIP)
 					{
 						(*it).second.disconnectCounter = 0;
@@ -91,13 +94,15 @@ namespace mp
 					else
 					{
 						(*it).second.disconnectCounter++;
-						if((*it).second.disconnectCounter == 20)
+						if((*it).second.disconnectCounter == 100)
 						{
-							disconnectClient((*it).first);
+							//disconnectClient((*it).first);
 						}
 					}
+					std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
+			*/
 
 			//Tries to read what type of message the packet was
 			if(!(receivedData >> type))
