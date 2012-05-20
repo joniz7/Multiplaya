@@ -34,7 +34,7 @@ namespace mp
 			Screen* getScreen(std::string string);
 			sf::RenderWindow* getRenderWindow();
 
-			WorldView* getGameWindow() { return (WorldView*) screens["gameScreen"]; }
+			WorldView* getGameWindow() { return static_cast<WorldView*>(screens["gameScreen"]); }
 		protected:
 		private:
 			sf::RenderWindow* window;
