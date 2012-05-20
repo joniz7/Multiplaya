@@ -21,6 +21,15 @@ namespace mp
 			virtual ~Window();
 			void exec();
 
+			void draw(Screen* screen);
+			void drawMainMenu();
+			void drawGame();
+			void drawIngameMenu();
+			void drawJoinMenu();
+			void drawHostMenu();
+			void drawSettingsMenu();
+
+
 			Screen* getScreen(std::string string);
 			sf::RenderWindow* getRenderWindow();
 
