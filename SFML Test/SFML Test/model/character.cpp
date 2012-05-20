@@ -208,7 +208,7 @@ namespace mp
 		worldData->addBullet(bullet);
 
 		// Play the sound
-		soundFire.play();
+		//soundFire.play();
 	}
 
 	/////////////////////////////////////////////////
