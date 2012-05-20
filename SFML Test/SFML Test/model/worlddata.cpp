@@ -83,7 +83,10 @@ namespace mp
 			if(character->getClientID() == ID)
 			{
 				notifyObservers(CHARACTER_DELETED, (void*) i);
+
+				worldDataMutex.lock();
 				characters.erase(characters.begin()+i);
+				worldDataMutex.unlock();
 			}
 		}
 	}
