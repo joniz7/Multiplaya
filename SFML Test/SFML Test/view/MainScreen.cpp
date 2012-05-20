@@ -15,7 +15,7 @@ namespace mp
 		srand ( time(NULL) );
 		int randomInt = rand() % 3;
 		std::stringstream backgroundFile;
-		backgroundFile << "resources/background" << randomInt << ".jpg";
+		backgroundFile << "resources/ui/backgrounds/bg_title" << randomInt << ".jpg";
 		backgroundTexture->loadFromFile( backgroundFile.str() );
 
 		backgroundSprite = new sf::Sprite();

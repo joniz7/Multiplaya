@@ -75,6 +75,9 @@
     <ClInclude Include="..\SFML Test\model\Wall.h">
       <Filter>SFML Test\model</Filter>
     </ClInclude>
+    <ClInclude Include="..\SFML Test\model\worldchain.h">
+      <Filter>SFML Test\model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -130,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="WorldTest.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SFML Test\model\worldchain.cpp">
+      <Filter>SFML Test\model</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
