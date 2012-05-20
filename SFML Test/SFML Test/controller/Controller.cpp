@@ -53,7 +53,11 @@ namespace mp
 
 			case EXIT_GAME:
 				std::cout << "EXIT_GAME" << std::endl;
-				// TODO: kill process here.
+				this->runGame = false;
+				// TODO: exit properly.
+				delete world;
+				delete window;
+				exit(0);
 				break;
 
 			case PAUSE_GAME:

@@ -62,6 +62,11 @@ namespace mp
 			Character* character = (Character*)object;
 			addCharacter(character);
 		}
+		else if (e == CHARACTER_DELETED)
+		{
+			int i = ( intptr_t )object;
+			deleteCharacter(i);
+		}
 	}
 
 	void WorldView::addBullet(Bullet* bullet)
@@ -93,6 +98,13 @@ namespace mp
 		characters.push_back( new CharacterView( character ) );
 	}
 
+	void WorldView::deleteCharacter(int i)
+	{
+		CharacterView* character = (CharacterView*) characters.at(i);
+		characters.erase(characters.begin() + i);
+		delete character;
+	}
+
 	/////////////////////////////////
 	/// Changes the zoom of the camera.
 	/// \param zoomFactor - how much we should zoom.
@@ -108,7 +120,7 @@ namespace mp
 	void WorldView::zoomIn() {
 		std::cout << "zooming in." << std::endl;
 		if (zoomLevel < zoomLevelMax) {
-			camera->zoom(1/1.1);
+			camera->zoom(1.0f/1.1f);
 			zoomLevel++;
 		}
 	}
@@ -228,7 +240,7 @@ namespace mp
 		sunSprite = new sf::Sprite();
 		sunSprite->setTexture(*sunTexture);
 		sunSprite->setPosition(-20, -10);
-		sunSprite->scale(0.01, 0.01);
+		sunSprite->scale(0.01f, 0.01f);
 		layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.

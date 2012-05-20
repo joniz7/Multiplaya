@@ -49,7 +49,8 @@ namespace mp
 
 				if ( exitButton->isMouseOver(mousePos) )
 				{
-					getRenderWindow()->close();
+					// Tell main controller to shut everything down.
+					notifyObservers(Event::EXIT_GAME, 0);
 				}
 				// get button elements and see which hovers
 			}
