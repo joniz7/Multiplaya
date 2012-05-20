@@ -112,11 +112,11 @@ namespace mp
 	}
 
 	void Controller::setNetworkHandler(NetworkHandler* network) {
-		MainScreenController* mainScreenController = (MainScreenController*) controllers["mainScreen"];
+		HostGameController* hostGameController = (HostGameController*) controllers["hostGame"];
 		GameController* gameController = (GameController*) controllers["game"];
 		JoinGameController* joinGameController = (JoinGameController*) controllers["joinGame"];
 
-		mainScreenController->setNetworkHandler(network);
+		hostGameController->setNetworkHandler(network);
 		gameController->setNetworkHandler(network);
 		joinGameController->setNetworkHandler(network);
 	}

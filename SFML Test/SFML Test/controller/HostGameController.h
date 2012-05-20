@@ -12,6 +12,7 @@ namespace mp
 			HostGameController(sf::RenderWindow* window, Screen* hostScreen);
 			virtual ~HostGameController();
 			void handleInput();
+			void setNetworkHandler(NetworkHandler* network){networkHandler = network;};
 		protected:
 		private:
 			sf::Event ev;
@@ -30,6 +31,8 @@ namespace mp
 			bool isBackspace(sf::Event &ev);
 			bool isDot(sf::Event &ev);
 			void removeLastCharacter(GUIElement* element);
+
+			NetworkHandler* networkHandler;
 						
 
 	};
