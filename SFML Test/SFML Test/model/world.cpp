@@ -174,6 +174,13 @@ namespace mp
 			std::cout<<"Graphics reloaded"<<std::endl;
 		}
 
+		if( ConfigHandler::instance().getBool("s_refreshsounds") )
+		{
+			std::cout<<std::endl<<"Reloading sounds..."<<std::endl;
+			ResourceHandler::instance().reloadAllSounds();
+			std::cout<<"Sounds reloaded"<<std::endl;
+		}
+
 		std::cout<<std::endl;
 	}
 

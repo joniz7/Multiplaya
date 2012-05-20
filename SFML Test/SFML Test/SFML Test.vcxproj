@@ -103,6 +103,7 @@
     <ClCompile Include="services\MusicHandler.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
     <ClCompile Include="services\resourcehandler.cpp" />
+    <ClCompile Include="services\soundhandler.cpp" />
     <ClCompile Include="sound\sound.cpp" />
     <ClCompile Include="sound\uisound.cpp" />
     <ClCompile Include="sound\worldsound.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="services\MusicHandler.h" />
     <ClInclude Include="services\networkhandler.h" />
     <ClInclude Include="services\resourcehandler.h" />
+    <ClInclude Include="services\soundhandler.h" />
     <ClInclude Include="sfml.h" />
     <ClInclude Include="sound\sound.h" />
     <ClInclude Include="sound\uisound.h" />

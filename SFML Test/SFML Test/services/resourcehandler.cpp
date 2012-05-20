@@ -28,10 +28,18 @@ namespace mp
     {
 		// Set default values
 		doRtLoading = ConfigHandler::instance().getBool("s_realtimeloading");
-		sf::Texture temp;
+		sf::Texture tempTex;
+		sf::SoundBuffer tempSound;
 		// Load debug textures
-		if(temp.loadFromFile("resources/debug/missingtexture.png"))
-			texMap["resources/debug/missingtexture.png"] = temp;
+		loadTexture("resources/debug/missingtexture.png");
+		loadSound("resources/debug/missingsound.wav");
+		/*
+		if(tempTex.loadFromFile("resources/debug/missingtexture.png"))
+			texMap["resources/debug/missingtexture.png"] = tempTex;
+
+		if(tempSound.loadFromFile("resources/debug/missingsound.wav"))
+			soundMap["resources/debug/missingsound.wav"] = tempSound;
+		*/
     }
 
 	////////////////////////////////////////////////////////////
@@ -60,6 +68,33 @@ namespace mp
 			// For some FUCKING reason we have to load another textore or else the one we just loaded won't work. TODO: FIX THIS SHIT
 			if(temp.loadFromFile("resources/debug/missingtexture.png"))
 				texMap["resources/debug/missingtexture.png"] = temp;
+
+			return true;
+		}
+    }
+
+	////////////////////////////////////////////////////////////
+	// Load a sound to memory. Returns true upon success.
+	////////////////////////////////////////////////////////////
+    bool ResourceHandler::loadSound(std::string filePath)
+    {
+		// Check if file already has been loaded
+		for( std::map<std::string,sf::SoundBuffer>::iterator it=soundMap.begin(); it!=soundMap.end(); ++it)
+		   if( (*it).first == (filePath)  )
+			   return true;
+
+		std::cout<<"Loading "<<filePath<<std::endl;
+		// Attempt to load from file
+		sf::SoundBuffer temp;
+		if(!temp.loadFromFile(filePath))
+		{
+			std::cout<<"Loading "<<filePath<<" FAILED."<<std::endl;
+			return false;
+		}
+		else
+		{
+			std::cout<<"Success!"<<std::endl;
+			soundMap[filePath] = temp;
 
 			return true;
 		}
@@ -103,6 +138,33 @@ namespace mp
     }
 
 	////////////////////////////////////////////////////////////
+	// Fetches a sound pointer. If sound is not present in
+	// memory and doRtLoading is set to true, attempt to load
+	// the sound.
+	////////////////////////////////////////////////////////////
+	sf::SoundBuffer* ResourceHandler::getSound(std::string filePath)
+    {
+		// Check if file exists in memory
+		for( std::map<std::string,sf::SoundBuffer>::iterator it=soundMap.begin(); it!=soundMap.end(); ++it)
+		{
+			//std::cout<<(*it).first<<" = "<<filePath<<std::endl;
+			if( (*it).first == filePath )
+				return &soundMap[filePath];	// It did, return pointer
+		}
+		if(doRtLoading) // If not, check if we are allowing real time loading
+		{
+			std::cout<<"Sound "<<filePath<<" not found in memory, attempting to load..."<<std::endl;
+			if( loadTexture(filePath) );
+				return &soundMap[filePath];
+		}
+		else
+		{
+			std::cout<<"Sound "<<filePath<<" not found in memory."<<std::endl;
+			return &soundMap["resources/debug/missingsound.wav"];
+		}
+    }
+
+	////////////////////////////////////////////////////////////
 	// Reloads a texture stored in memory. Returns true upon
 	// success.
 	////////////////////////////////////////////////////////////
@@ -125,6 +187,16 @@ namespace mp
     {
 		// Iterate through map and reload every texture
 		for( std::map<std::string,sf::Texture>::iterator it=texMap.begin(); it!=texMap.end(); ++it)
+			(*it).second.loadFromFile((*it).first);
+    }
+
+	////////////////////////////////////////////////////////////
+	// Reloads all sounds stored in memory.
+	////////////////////////////////////////////////////////////
+	void ResourceHandler::reloadAllSounds()
+    {
+		// Iterate through map and reload every texture
+		for( std::map<std::string,sf::SoundBuffer>::iterator it=soundMap.begin(); it!=soundMap.end(); ++it)
 			(*it).second.loadFromFile((*it).first);
     }
 }

@@ -29,6 +29,13 @@ namespace mp
 			sf::Texture* getTexture(std::string filePath);
 			bool reloadTexture(std::string filePath);
 			void reloadAllTextures();
+
+			bool loadSound(std::string filePath);
+			void loadSounds(std::vector<std::string> pathVec);
+			sf::SoundBuffer* getSound(std::string filePath);
+			bool reloadSound(std::string filePath);
+			void reloadAllSounds();
+
 			void doRealTimeLoading(bool b){doRtLoading=b;};
         private:
 			ResourceHandler();
@@ -36,6 +43,7 @@ namespace mp
 			ResourceHandler& operator=(ResourceHandler const&);
 
 			std::map<std::string, sf::Texture> texMap;
+			std::map<std::string, sf::SoundBuffer> soundMap;
 			bool doRtLoading;
     };
 }

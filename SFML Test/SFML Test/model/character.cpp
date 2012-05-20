@@ -91,13 +91,17 @@ namespace mp
 		b2Fixture* leftSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
 
-
 		//add right sensor fixture
 		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.0f, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
 
+		soundReload.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_reload1.ogg") );
+		soundFire.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_fire1.ogg") );
+
+		soundReload.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
+		soundFire.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
 
     }
 
@@ -161,10 +165,15 @@ namespace mp
 	}
 
 	void Character::reload() {
-		// Fill our magazine.
-		this->clip = clipSize;
-		// Force the user to wait >:)
-		reloadTimer->restart();
+		if(!isReloading())
+		{
+			// Fill our magazine.
+			this->clip = clipSize;
+			// Play the sound
+			soundReload.play();
+			// Force the user to wait >:)
+			reloadTimer->restart();
+		}
 	}
 	bool Character::isReloading() {
 		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
@@ -197,6 +206,9 @@ namespace mp
 		// Create bullet, and add to world.
 		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force);
 		worldData->addBullet(bullet);
+
+		// Play the sound
+		soundFire.play();
 	}
 
 	/////////////////////////////////////////////////
