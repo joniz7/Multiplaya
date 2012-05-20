@@ -93,7 +93,6 @@ namespace mp
 		if (!scheduledForDeletion)
 		{
 			notifyObservers(BULLET_DELETED, this);
-			//worldData->scheduleBulletForDeletion(this);
 			scheduledForDeletion = true;
 		}
 	}
