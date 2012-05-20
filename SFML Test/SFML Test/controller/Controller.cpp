@@ -11,7 +11,7 @@ namespace mp
 		// Create our minion controllers.
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
-				controllers["game"] =  new GameController(world, renderWindow, window->getScreen("gameScreen"));
+		controllers["game"] =  new GameController(world, renderWindow, window->getScreen("gameScreen"));
 		controllers["hostGame"] =  new HostGameController(renderWindow, window->getScreen("hostScreen"));
 
 		//controllers["worldScreen"] =

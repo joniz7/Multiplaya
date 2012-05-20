@@ -114,9 +114,6 @@ namespace mp
 					// "remove" the possibility to input double dots
 					if (ipTextClicked)
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
-
-					if (portTextClicked)
-						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 				else if (isBackspace(ev))
 				{
