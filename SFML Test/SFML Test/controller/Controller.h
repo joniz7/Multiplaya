@@ -37,11 +37,23 @@ namespace mp
 		protected:
 		private:
 			State state;
+			IController* currentController;		  // Pointer to our active controller.
+			void (Window::*currentDrawFunction)();// Pointer to our active screen.
 			bool runGame;
 			std::map<std::string, IController*> controllers;
 			World* world;
 			Window* window;
 			sf::RenderWindow* renderWindow;
+		
+			void startGame();
+			void stopGame();
+			void exitGame();
+			void pauseGame();
+			void resumeGame();
+			void showMainMenu();
+			void showJoinMenu();
+			void showHostMenu();
+			void showSettingsMenu();
 
 	};
 }

@@ -35,6 +35,7 @@ namespace mp
         public:
 			Character(WorldData* worldData, b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
             virtual ~Character();
+			void update();
 			void jump();
 			void crouch() {};
 			void primaryFire(b2Vec2 &targetPos);

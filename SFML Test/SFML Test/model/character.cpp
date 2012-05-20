@@ -241,8 +241,20 @@ namespace mp
 		return result;
 	}
 
-	void Character::kill() {
+	void Character::kill()
+	{
 		std::cout << "I'm a dead character. FML" << std::endl;
+	}
+
+	////////////////////////////////////////////////////////////
+	// Updates char data
+	////////////////////////////////////////////////////////////
+	void Character::update()
+	{
+		if( getBody()->GetLinearVelocity().x > 0 )
+			setIsFacingLeft(true);
+		else if( getBody()->GetLinearVelocity().x < 0 )
+			setIsFacingLeft(false);
 	}
 
 	void Character::connectToServer()

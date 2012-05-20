@@ -6,13 +6,7 @@ namespace mp
 	{
 		this->window = window;
 		this->world = world;
-		this->runGame = false;
-		this->state = MAIN_MENU;
 		renderWindow = window->getRenderWindow();
-		
-		// Start our menu music.
-		MusicHandler::instance().chooseSong("menu");
-		MusicHandler::instance().play();
 
 		// Create our minion controllers.
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
@@ -21,87 +15,96 @@ namespace mp
 		//controllers["worldScreen"] =
 		//new HostGameController(renderWindow, window->getScreen("hostScreen"));
 
-		// We're going to observe their every move.
-		// ...
-		// One Ring to rule them all, One Ring to find them,
-		// One Ring to bring them all and in the darkness bind them.
+		// Add ourselves as observer.
 		controllers["mainScreen"]->addObserver(this);
 		controllers["joinGame"]->addObserver(this);
 		controllers["hostGame"]->addObserver(this);
 		//controllers["worldScreen"]->addObserver(this);
+
+		// Begin at main menu.
+		this->notify(Event::SHOW_MAIN_MENU, 0);
+
 	}
+
 
 	void Controller::notify(Event e, void* object) {
 		std::cout << "Notified! Message: ";
 		switch (e) {
-			case START_GAME:
-				std::cout << "START_GAME" << std::endl;
-				// TODO: reset everything here.
-
-				// Start our ingame music.
-				MusicHandler::instance().chooseSong("bg");
-				MusicHandler::instance().play();
-				this->runGame = true;
-				//this->state = INGAME;
-				break;
-
-				case STOP_GAME:
-				std::cout << "STOP_GAME" << std::endl;
-				this->runGame = false;
-				this->state = MAIN_MENU;
-				break;
-
-			case EXIT_GAME:
-				std::cout << "EXIT_GAME" << std::endl;
-				this->runGame = false;
-				// TODO: exit properly.
-				delete world;
-				delete window;
-				exit(0);
-				break;
-
-			case PAUSE_GAME:
-				std::cout << "PAUSE_GAME" << std::endl;
-				//this->state = INGAME_MENU;
-				this->state = MAIN_MENU;
-				break;
-
-			case RESUME_GAME:
-				std::cout << "RESUME_GAME" << std::endl;
-				//this->state = INGAME;
-				this->state = HOST_MENU;
-				break;
-
-			case SHOW_HOST:
-				std::cout << "SHOW_HOST" << std::endl;
-				//  --- TODO: remove ---
-				// Start our ingame music.
-				MusicHandler::instance().chooseSong("bg");
-				MusicHandler::instance().play();
-				this->runGame = true;
-				// ---------------------
-				this->state = HOST_MENU;
-				break;
-
-			case SHOW_JOIN:
-				std::cout << "SHOW_JOIN" << std::endl;
-				this->state = JOIN_MENU;
-				break;
-
-			case SHOW_MAIN_MENU:
-				std::cout << "SHOW_MAIN_MENU" << std::endl;
-				
-				// Start our menu music.
-				MusicHandler::instance().chooseSong("menu");
-				MusicHandler::instance().play();
-				this->state = MAIN_MENU;
-				break;
-
-			case SHOW_SETTINGS:
-				std::cout << "SHOW_SETTINGS" << std::endl;
-				//this->state = SETTINGS_MENU;
-				break;
+			case START_GAME:     startGame();        break;
+			case STOP_GAME:      stopGame();         break;
+			case EXIT_GAME:      exitGame();         break;
+			case PAUSE_GAME:     pauseGame();        break;
+			case RESUME_GAME:    resumeGame();       break;
+			case SHOW_HOST:      showHostMenu();     break;
+			case SHOW_JOIN:      showJoinMenu();     break;
+			case SHOW_MAIN_MENU: showMainMenu();     break;
+			case SHOW_SETTINGS:  showSettingsMenu(); break;
 		}
+	}
+
+	void Controller::startGame() {
+		// TODO: reset everything here.
+		// Start our ingame music.
+		MusicHandler::instance().chooseSong("bg");
+		MusicHandler::instance().play();
+		// TODO: replace with "inGame"
+		this->currentDrawFunction = &Window::drawHostMenu;
+		this->currentController = controllers["hostGame"];
+	}
+	void Controller::stopGame() {
+		this->runGame = false;
+		// TODO: replace with "inGame"
+		this->currentDrawFunction = &Window::drawMainMenu;
+		this->currentController = controllers["mainScreen"];
+	}
+	void Controller::exitGame() {
+		this->runGame = false;
+		exit(0); // TODO: exit properly?
+	}
+
+	void Controller::pauseGame(){
+		// TODO: replace with "inGameMenu".
+		this->currentDrawFunction = &Window::drawMainMenu;
+		this->currentController = controllers["mainScreen"];
+		};
+	
+	void Controller::resumeGame(){
+		// TODO: replace with "inGame" later.
+		this->currentDrawFunction = &Window::drawHostMenu;
+		this->currentController = controllers["hostGame"];
+	}
+			
+	void Controller::showMainMenu(){
+		// Start our menu music.
+		MusicHandler::instance().chooseSong("menu");
+		MusicHandler::instance().play();
+		// Set pointers.
+		this->currentDrawFunction = &Window::drawMainMenu;
+		this->currentController = controllers["mainScreen"];
+	}
+			
+	void Controller::showJoinMenu(){
+		// Set pointers.
+		this->currentDrawFunction = &Window::drawJoinMenu;
+		this->currentController = controllers["joinGame"];
+	}
+			
+	void Controller::showHostMenu(){
+		//  --- TODO: remove ---
+		// Start our ingame music.
+		this->runGame = true;
+		MusicHandler::instance().chooseSong("bg");
+		MusicHandler::instance().play();
+		//  --------------------
+		// Set pointers.
+		this->currentDrawFunction = &Window::drawHostMenu;
+		this->currentController = controllers["hostGame"];
+	}
+
+	void Controller::showSettingsMenu(){
+		// Set pointers.
+		//this->currentDrawFunction = &Window::drawSettingsMenu;
+		//this->currentController   = controllers["settingsScreen"];
 	}
 
 
@@ -126,37 +129,8 @@ namespace mp
 		if (runGame) {
 			world->exec();
 		}
-	
-		switch (this->state)
-		{
-			case MAIN_MENU:
-				window->drawMainMenu();
-				controllers["mainScreen"]->handleInput();
-			break;
-
-			case JOIN_MENU:
-				window->drawJoinMenu();
-				controllers["joinGame"]->handleInput();
-			break;
-			
-			// The actual ingame (for now):
-			case HOST_MENU:
-				window->drawHostMenu();
-				controllers["hostGame"]->handleInput();
-				break;
-				
-			case INGAME:
-				// TODO: implement
-				//window->drawInGame();
-				//controllers["inGame"]->handleInput();
-				break;
-
-			case INGAME_MENU:
-				// TODO: implement
-				//window->drawInGameMenu();
-				//controllers["inGameMenu"]->handleInput();
-				break;
-
-		} 	
+		
+		(window->*currentDrawFunction)(); // Draw screen.
+		currentController->handleInput(); // Handle input.
 	}
 }
