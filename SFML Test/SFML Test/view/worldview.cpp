@@ -95,6 +95,7 @@ namespace mp
 
 	void WorldView::addCharacter(Character* character)
 	{
+		std::cout << "Adding character to view" << std::endl;
 		characters.push_back( new CharacterView( character ) );
 	}
 

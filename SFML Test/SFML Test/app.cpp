@@ -53,30 +53,25 @@ namespace mp
 		while(!data->networkThreadFinished) {}
 
 		// Run the view's infinite loop
-		sf::Clock clock, clock2;
+		sf::Clock clock;
 		while (true)
 		{
 			float elapsed = clock.getElapsedTime().asSeconds();
-			float elapsed2 = clock2.getElapsedTime().asSeconds();
 			// Execute controller statements (this also runs model and view).
-			data->controller->exec();
-			
-			if(elapsed2>1)
-			{
-				if(data->network->isServer)
-				{
-					data->network->updateAllClients();
-				}
-			}
-			
+			data->controller->exec();		
 
-			if(elapsed>(1/20.f)) 
+			if(elapsed>(1/10.f)) 
 			{
 				clock.restart();
 
 				if(data->network->isClient) 
 				{
 					data->network->sendCharacterDataToServer();
+				}
+
+				if(data->network->isServer)
+				{
+					data->network->updateAllClients();
 				}
 			}
 			

@@ -68,7 +68,7 @@ namespace mp
 		std::vector<Character*>* characters;
 
 		std::map<sf::Int8, Client>::iterator it;
-		int outputType;
+		int outputType, test;
 
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
@@ -192,8 +192,9 @@ namespace mp
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
+						test = clientID;
 
-						//setCharacterData(clientID, position, velocity, angle);
+						setCharacterData(clientID, position, velocity, angle);
 						break;
 					//Receive bullet data from a client
 					case 5:
@@ -428,6 +429,7 @@ namespace mp
 		worldDataMutex.unlock();
 
 		packet << type << myID << x << y << xvel << yvel << angle;
+		std::cout << "Sending character data to " << serverIP << std::endl;
 		sender.send(packet, serverIP, 55001);
 	}
 
