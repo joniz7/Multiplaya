@@ -83,6 +83,12 @@ namespace mp
 				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0), (*it)->getBody()->GetPosition());
 			}
 
+			std::vector<Character*> characters = *worldData->getCharacters();
+
+			for(std::vector<Character*>::iterator it = characters.begin(); it != characters.end(); ++it) {
+				(*it)->update();
+			}
+
 			// Delete bullets, now that we're finished with physics.
 			deleteBullets();
 			// Get frame time
