@@ -34,7 +34,7 @@ namespace mp
 				{
 					
 					connectButton->click();
-					networkHandler->connectToServer("Jonte", ipTextField->getText());
+					networkHandler->connectToServer("Felix laptop", "192.168.1.67");
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
 					while(!networkHandler->isConnectedToServer() && elapsed<3) 
