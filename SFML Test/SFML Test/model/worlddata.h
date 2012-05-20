@@ -46,6 +46,7 @@ namespace mp
 			//Adders
 			bool addCharacter(Character* c);
 			bool addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
+			void removeCharacter(sf::Int8 ID);
 
 			bool addBullet( Bullet* bullet );
 			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );

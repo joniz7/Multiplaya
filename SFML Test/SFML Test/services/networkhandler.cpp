@@ -78,6 +78,24 @@ namespace mp
 			//std::cout<<"Receiving data..."<<std::endl;
 			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
+			if(isServer)
+			{
+				for(it = clientMap.begin(); it != clientMap.end(); it++)
+				{
+					if((*it).second.IP == senderIP)
+					{
+						(*it).second.disconnectCounter = 0;
+					}
+					else
+					{
+						(*it).second.disconnectCounter++;
+						if((*it).second.disconnectCounter == 20)
+						{
+
+						}
+					}
+				}
+			}
 
 			//Tries to read what type of message the packet was
 			if(!(receivedData >> type))
@@ -98,6 +116,7 @@ namespace mp
 	
 							client.IP = senderIP;
 							client.name = name;
+							client.disconnectCounter = 0;
 
 							//adds that client to the clientmap
 							clientMap[currentClientID] = client;
@@ -124,7 +143,7 @@ namespace mp
 
 						client = clientMap[clientID];
 
-						std::cout<<name<<" has disconnected"<<std::endl;
+						std::cout<<client.name<<" has disconnected"<<std::endl;
 
 						clientMap.erase(clientID);
 						break;
@@ -238,7 +257,13 @@ namespace mp
 
 						}
 						break;
+					//Remove the specified character
+					case 16:
+						std::cout<<"type 16"<<std::endl;
+						receivedData >> clientID;
 
+						worldData->removeCharacter(clientID);
+						break;
 				}
 			}
 		}
@@ -313,10 +338,38 @@ namespace mp
 		sender.send(packet, serverIP, 55001);
 	}
 
+	////////////////////////////////////////////////////////////
+	/// Connects a client to the server with the given IPAddress
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::connectToServer(std::string name, std::string IPAddress)
 	{
 		serverIP = IPAddress;
-		connectToServer(name);
+		sf::Int8 type = 1;
+		sf::Packet packet;
+
+		worldDataMutex.lock();
+		Character* character = worldData->getCurrentCharacter();
+		float32 x = character->getBody()->GetPosition().x;
+		float32 y = character->getBody()->GetPosition().y;
+		worldDataMutex.unlock();
+
+		packet << type << name << x << y;
+
+		std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
+
+		sender.send(packet, serverIP, 55001);
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Disconnect the given client from the server
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::disconnectClient(sf::Int8 clientID)
+	{
+		Client client = clientMap[clientID];
+
+		std::cout<<client.name<<" has disconnected"<<std::endl;
+
+		clientMap.erase(clientID);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -366,6 +419,9 @@ namespace mp
 		sender.send(packet, clientMap[clientID].IP, receivePort);
 	}
 
+	////////////////////////////////////////////////////////////
+	/// Sends all characters to a client and tells it to create them
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
 	{
 		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size();
@@ -388,6 +444,20 @@ namespace mp
 		}
 
 		sender.send(packet, clientMap[clientID].IP, receivePort);
+	}
+
+	void NetworkHandler::removeCharacter(sf::Int8 clientID)
+	{
+		worldData->removeCharacter(clientID);
+
+		sf::Int8 type = 16;
+		sf::Packet packet;
+		std::map<sf::Int8, Client>::iterator it;
+		
+		for(it = clientMap.begin(); it != clientMap.end(); it++)
+		{
+			sender.send(packet, (*it).second.IP, 55001);
+		}
 	}
 
 	////////////////////////////////////////////////////////////

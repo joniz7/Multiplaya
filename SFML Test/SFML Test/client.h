@@ -6,6 +6,7 @@
 struct Client{
 	sf::IpAddress IP;
 	std::string name;
+	int disconnectCounter;
 };
 
 #endif
