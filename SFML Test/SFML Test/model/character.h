@@ -22,7 +22,7 @@
 #include "../defines.h"
 
 #include "../util/Observable.h"
-
+#include "worlddata.h"
 #include "GameObject.h"
 
 namespace mp

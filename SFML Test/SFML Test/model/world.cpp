@@ -129,7 +129,7 @@ namespace mp
 	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type)
 	{
 		worldDataMutex.lock();
-		worldData->addBullet(new Bullet(type, clientID, world, position, force, worldData));
+		worldData->addBullet(new Bullet(type, clientID, world, position, force));
 		worldDataMutex.unlock();
 	}
 

@@ -41,8 +41,9 @@ namespace mp
 		switch(type)
 		{
 			case GENERIC_BULLET:
+				bullet->addObserver(this);
 				bullets.push_back(bullet);
-				notify(BULLET_ADDED, bullet);
+				notifyObservers(BULLET_ADDED, bullet);
 				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 				return true;
 
@@ -59,7 +60,7 @@ namespace mp
     {
 		std::cout << "Adding character" << std::endl;
 
-		notify(CHARACTER_ADDED, c);
+		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back(c);
 		return true;
     }
@@ -69,7 +70,7 @@ namespace mp
 		std::cout << "Adding character" << std::endl;
 
 		Character* c = new Character(this, world, pos, size, clientID);
-		notify(CHARACTER_ADDED, c);
+		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
 		return true;
 	}
@@ -136,7 +137,7 @@ namespace mp
 			if ( it != bullets.end())
 			{
 				int i = (it - bullets.begin());
-				notify(BULLET_DELETED, (void*) i);
+				notifyObservers(BULLET_DELETED, (void*) i);
 				bullets.erase(bullets.begin() + i);
 			}
 		}
@@ -152,6 +153,18 @@ namespace mp
 			}
 		}
 		return NULL;
+	}
+
+	void WorldData::notify(Event e, void* object)
+	{
+		if (e == BULLET_DELETED)
+		{
+			Bullet* bullet = (Bullet*) object;
+			//bullet should be removed from box2d world after timestep
+			scheduleBulletForDeletion(bullet);
+			// remove bullet from bullets vector in worlddata and view
+			removeBullet(bullet);
+		}
 	}
 
 }

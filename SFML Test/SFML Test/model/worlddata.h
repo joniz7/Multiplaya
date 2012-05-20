@@ -37,7 +37,7 @@ namespace mp
 	class Bullet;
 	class Character;
 
-    class WorldData : public Observable
+    class WorldData : public Observable, public Observer
     {
         public:
 			WorldData();
@@ -87,6 +87,7 @@ namespace mp
 			void setCurrentCharacterId(int id) {currentCharacterId = id;}
 			int getCurrentCharacterId() {return currentCharacterId;}
 
+			virtual void notify(Event e, void* object);
 			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
 		private:
 			int currentCharacterId;

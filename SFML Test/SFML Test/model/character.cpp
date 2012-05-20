@@ -50,7 +50,7 @@ namespace mp
 
 		bodyDef.position.Set(pos.x, pos.y);
 		b2Body* characterBody = world->CreateBody(&bodyDef);
-		std::cout << world << std::endl;
+
 		this->characterBody = characterBody;
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -195,7 +195,7 @@ namespace mp
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);
+		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force);
 		worldData->addBullet(bullet);
 	}
 
@@ -247,7 +247,7 @@ namespace mp
 
 	void Character::connectToServer()
 	{
-		worldData->notify(CONNECT_SERVER, 0);
+		worldData->notifyObservers(CONNECT_SERVER, 0);
 	}
 
 	//Foot sensor
@@ -273,13 +273,15 @@ namespace mp
 	}
 
 	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall){
+		if ( crashedWith->objectType == wall) {
 			leftSideTouchWall = true;
 		}
 	}
 
 	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
-		leftSideTouchWall = false;
+		if ( crashedWith->objectType == wall) {
+			leftSideTouchWall = false;
+		}
 	}
 
 	// Rightside
@@ -292,7 +294,9 @@ namespace mp
 		}
 	}
 	void Character::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
-		rightSideTouchWall = false;
+		if ( crashedWith->objectType == wall) {
+			rightSideTouchWall = false;
+		}
 	}
 
 
