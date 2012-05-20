@@ -34,7 +34,7 @@ namespace mp
 				{
 					
 					connectButton->click();
-					networkHandler->connectToServer("Jonte", ipTextField->getText());
+					networkHandler->connectToServer("Felix laptop", "192.168.1.67");
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
 					while(!networkHandler->isConnectedToServer() && elapsed<3) 
@@ -44,7 +44,7 @@ namespace mp
 
 					if(networkHandler->isConnectedToServer())
 					{
-						networkHandler->setIPAddress(ipTextField->getText());
+						//networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
 						// Change screen in main controller.
 						notifyObservers(Event::SHOW_HOST, 0);
