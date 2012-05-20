@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <list>
 #include <cmath>
+#include "../services/resourcehandler.h"
+#include "../services/confighandler.h"
 
 // SFML specific headers
 #include <SFML/System.hpp>
@@ -36,7 +38,7 @@ namespace mp
 			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type);
 			void deleteBullets();
 			void loadMap(const std::string& path);
-			void reloadMap();
+			void reloadStuff();
 			void loadPhysics(const std::string& path);
 			void reloadPhysics();
         private:

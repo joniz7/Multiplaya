@@ -102,9 +102,7 @@ namespace mp
 		//}
 
 			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
-			{
-				reloadMap();
-			}
+				reloadStuff();
 
     }
 
@@ -145,21 +143,32 @@ namespace mp
 	void World::loadMap(const std::string& path)
 	{
 		currentMap = path;
-		std::cout<<"Loading world physics..."<<std::endl;;
+		std::cout<<"Loading world physics..."<<std::endl;
 		loadPhysics(currentMap);
-		std::cout<<std::endl<<"World physics loaded"<<std::endl;
+		std::cout<<"World physics loaded"<<std::endl;
 		//loadGraphics(currentMap);
 	}
 
 	////////////////////////////////////////////////////////////
 	// Reload current map
 	////////////////////////////////////////////////////////////
-	void World::reloadMap()
+	void World::reloadStuff()
 	{
-		std::cout<<"Reloading world physics..."<<std::endl;;
-		loadPhysics(currentMap);
-		std::cout<<std::endl<<"World physics reloaded"<<std::endl;
-		//loadGraphics(currentMap);
+		if( ConfigHandler::instance().getBool("s_refreshphysics") )
+		{
+			std::cout<<std::endl<<"Reloading world physics..."<<std::endl;
+			loadPhysics(currentMap);
+			std::cout<<"World physics reloaded"<<std::endl;
+		}
+
+		if( ConfigHandler::instance().getBool("s_refreshtextures") )
+		{
+			std::cout<<std::endl<<"Reloading graphics..."<<std::endl;
+			ResourceHandler::instance().reloadAllTextures();
+			std::cout<<"Graphics reloaded"<<std::endl;
+		}
+
+		std::cout<<std::endl;
 	}
 
 	////////////////////////////////////////////////////////////
