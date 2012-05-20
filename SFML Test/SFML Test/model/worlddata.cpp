@@ -72,6 +72,7 @@ namespace mp
 		Character* c = new Character(this, world, pos, size, clientID);
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
+		std::cout << "Done adding character " << std::endl;
 		return true;
 	}
 
