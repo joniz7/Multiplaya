@@ -37,6 +37,7 @@ namespace mp
 			void sendMessageToEveryone(std::string message);
 			void sendClientID(sf::Int8 ID);
 			void connectToServer(std::string name);
+			void connectToServer(std::string name, std::string IPAddress);
 			bool isConnectedToServer(){return hasConnected;};
 			void sendCharacterDataToServer();
 			void sendCharacterDataToClient(sf::Int8 clientID);

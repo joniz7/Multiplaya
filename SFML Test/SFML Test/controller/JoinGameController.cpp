@@ -34,13 +34,12 @@ namespace mp
 				{
 					
 					connectButton->click();
-					networkHandler->connectToServer("Jonte");
+					networkHandler->connectToServer("Jonte", ipTextField->getText());
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
 					while(!networkHandler->isConnectedToServer() && elapsed<3) 
 					{
 						elapsed = clock.getElapsedTime().asSeconds();
-						std::cout<<elapsed<<std::endl;
 					}
 
 					if(networkHandler->isConnectedToServer())
