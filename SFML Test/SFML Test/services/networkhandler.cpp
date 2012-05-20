@@ -80,7 +80,7 @@ namespace mp
 			//std::cout<<"Receiving data..."<<std::endl;
 			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
-			/*
+			
 			if(isServer)
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
@@ -94,7 +94,7 @@ namespace mp
 					else
 					{
 						(*it).second.disconnectCounter++;
-						if((*it).second.disconnectCounter == 100)
+						if((*it).second.disconnectCounter == 400)
 						{
 							disconnectClient((*it).first);
 						}
@@ -102,7 +102,7 @@ namespace mp
 					std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
-			*/
+			
 
 			//Tries to read what type of message the packet was
 			if(!(receivedData >> type))
@@ -411,9 +411,11 @@ namespace mp
 		std::map<sf::Int8, Client>::iterator it;
 		it = clientMap.find(clientID);
 		
+		/*
 		if(it != clientMap.end())
 			clientMap.erase(it);
-		
+		*/
+
 		removeCharacter(clientID);
 	}
 
@@ -579,12 +581,12 @@ namespace mp
 		} 
 		else if(e == BULLET_ADDED) 
 		{
-			sendMessageToEveryone("Bullet added to buffer");
+			//sendMessageToEveryone("Bullet added to buffer");
 			//bulletsToSend.push_back((Bullet*)object);
 		} 
 		else if(e == BULLET_DELETED) 
 		{
-			sendMessageToEveryone("Bullet deleted");
+			//sendMessageToEveryone("Bullet deleted");
 		} 
 		else if(e == CHARACTER_ADDED)
 		{
