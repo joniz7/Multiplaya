@@ -100,6 +100,12 @@ namespace mp
 			}
 
 		//}
+
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+			{
+				reloadMap();
+			}
+
     }
 
 	void World::deleteBullets()
@@ -134,19 +140,38 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	// Destructor
+	// Load a map
 	////////////////////////////////////////////////////////////
 	void World::loadMap(const std::string& path)
 	{
-		loadPhysics(path);
-		//loadGraphics(path);
+		currentMap = path;
+		std::cout<<"Loading world physics..."<<std::endl;;
+		loadPhysics(currentMap);
+		std::cout<<std::endl<<"World physics loaded"<<std::endl;
+		//loadGraphics(currentMap);
 	}
 
 	////////////////////////////////////////////////////////////
-	// Destructor
+	// Reload current map
+	////////////////////////////////////////////////////////////
+	void World::reloadMap()
+	{
+		std::cout<<"Reloading world physics..."<<std::endl;;
+		loadPhysics(currentMap);
+		std::cout<<std::endl<<"World physics reloaded"<<std::endl;
+		//loadGraphics(currentMap);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Load map physics
 	////////////////////////////////////////////////////////////
 	void World::loadPhysics(const std::string& path)
 	{
+		// Clear any physics already loaded
+		worldDataMutex.lock();
+		worldData->clearPhysics();
+		worldDataMutex.unlock();
+
 		std::string physicsFile = path;
 		physicsFile.append("/physics.po");
 
@@ -159,7 +184,6 @@ namespace mp
         }
 		else
 		{
-			std::cout<<"Loading world physics"<<std::endl;;
 			std::string line;
 			while(getline(fileReader,line))
             {
@@ -194,14 +218,15 @@ namespace mp
 							vCount++;
 						}
 					}
-
-					worldDataMutex.lock();
-					worldData->addChain(world, vs, vCount, 0.5f);
-					worldDataMutex.unlock();
+					if(vCount>1)
+					{
+						worldDataMutex.lock();
+						worldData->addChain(world, vs, vCount, 0.5f);
+						worldDataMutex.unlock();
+					}
 
 				}
             }
-			std::cout<<std::endl<<"World physics loaded"<<std::endl;
 		}
 		fileReader.close();
 	}

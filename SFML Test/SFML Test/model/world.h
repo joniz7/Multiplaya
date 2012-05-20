@@ -36,7 +36,9 @@ namespace mp
 			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type);
 			void deleteBullets();
 			void loadMap(const std::string& path);
+			void reloadMap();
 			void loadPhysics(const std::string& path);
+			void reloadPhysics();
         private:
 			WorldData* worldData;
 			b2World* world;
@@ -45,6 +47,7 @@ namespace mp
 			int32 velocityIterations;
 			int32 positionIterations;
 			sf::Clock* clock;
+			std::string currentMap;
 
     };
 }

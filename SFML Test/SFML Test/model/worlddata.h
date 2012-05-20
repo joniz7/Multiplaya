@@ -53,6 +53,7 @@ namespace mp
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
 			void addChain( b2World* world, b2Vec2 vertices[], int length, float friction );
+			void clearPhysics();
 
 			// Getters
 			// Get list of all characters

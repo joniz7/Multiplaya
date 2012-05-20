@@ -119,6 +119,13 @@ namespace mp
 		chains.push_back(new WorldChain(world,vertices,length,friction));
 	}
 
+	void WorldData::clearPhysics()
+	{
+		for(std::vector<WorldChain*>::iterator it = chains.begin(); it != chains.end(); ++it)
+			delete((*it));
+		chains.clear();
+	}
+
 	bool WorldData::addBody( b2Body* body  )
     {
 		bodies.push_back( body );

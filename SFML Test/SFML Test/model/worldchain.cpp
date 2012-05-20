@@ -17,6 +17,7 @@ namespace mp
 		b2Fixture* fixture = body->CreateFixture(&fixtureDef);
 		fixture->SetUserData(this);
 
+		this->world = world;
 		this->chainBody = body;
 		this->objectType = wall;
 	}
@@ -30,5 +31,6 @@ namespace mp
 
 	WorldChain::~WorldChain()
 	{
+		world->DestroyBody(chainBody);
 	}
 }
