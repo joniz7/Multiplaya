@@ -135,6 +135,7 @@
     <ClInclude Include="controller\MainScreenController.h" />
     <ClInclude Include="controller\Player.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="global.h" />
