@@ -7,6 +7,7 @@
 #include "MainScreen.h"
 #include "JoinGameScreen.h"
 #include "SettingsScreen.h"
+#include "HostGameScreen.h"
 #include "worldview.h"
 #include "../model/worlddata.h"
 
