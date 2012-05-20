@@ -93,7 +93,7 @@ namespace mp
 
 
 		//add right sensor fixture
-		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.2f, 0), 0);
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.0f, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
