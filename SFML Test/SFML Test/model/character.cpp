@@ -33,7 +33,7 @@ namespace mp
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
 		this->wallSliding = false;
-		this->isFlipping = false;
+		this->flipping = false;
 		this->facingLeft = true;
 
 		this->kills  = 0;// Kill stat.
@@ -83,7 +83,7 @@ namespace mp
 		fixtureDef.isSensor = true;
 
 		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, isFlipping ) );
+		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
 
 		//add left sensor fixture
 		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
@@ -134,17 +134,17 @@ namespace mp
 		{
 			characterBody->ApplyLinearImpulse( b2Vec2( -300, 350), characterBody->GetPosition());
 			leftSideTouchWall = false;
-			isFlipping = true;
+			flipping = true;
 		}
 		else if ( rightSideTouchWall && isWallSliding() )
 		{
 			characterBody->ApplyLinearImpulse( b2Vec2( 300, 350), characterBody->GetPosition());
 			rightSideTouchWall = false;
-			isFlipping = true;
+			flipping = true;
 		}
 		else
 		{
-			isFlipping = true;
+			flipping = true;
 		}
 	}
 
