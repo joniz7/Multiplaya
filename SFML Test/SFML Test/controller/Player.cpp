@@ -31,7 +31,7 @@ namespace mp {
 			if ( input->btnDwnLeft() && !input->btnDwnRight() )	// Character should face left
 			{
 				worldDataMutex.lock();
-				character->setIsFacingLeft(true);
+				//character->setIsFacingLeft(true);
 				// Apply slide speed
 				if(character->isTouchingWallLeft())
 				{
@@ -46,7 +46,7 @@ namespace mp {
 			else if ( input->btnDwnRight() && !input->btnDwnLeft() )	// Character should face right
 			{
 				worldDataMutex.lock();
-				character->setIsFacingLeft(false);
+				//character->setIsFacingLeft(false);
 				// Apply slide speed
 				if(character->isTouchingWallRight())
 				{
@@ -142,6 +142,9 @@ namespace mp {
 			character->connectToServer();
 			worldDataMutex.unlock();
 		}*/
+
+		if ( input->btnDwnReload() )
+			character->reload();
 
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);

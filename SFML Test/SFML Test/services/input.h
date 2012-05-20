@@ -38,6 +38,7 @@ namespace mp
 			bool btnDwnJump()		{ return sf::Keyboard::isKeyPressed( btnJump ); }
 			bool btnDwnPrimary()	{ return sf::Mouse::isButtonPressed( btnPrimary ); }
 			bool btnDwnSecondary()	{ return sf::Mouse::isButtonPressed( btnSecondary ); }
+			bool btnDwnReload()		{ return sf::Keyboard::isKeyPressed( btnReload ); }
 
         private:
 			sf::Keyboard::Key btnLeft;
@@ -47,6 +48,7 @@ namespace mp
 			sf::Keyboard::Key btnJump;
 			sf::Mouse::Button btnPrimary;
 			sf::Mouse::Button btnSecondary;
+			sf::Keyboard::Key btnReload;
 
 			KeyLookup* keyLib;
 			
