@@ -108,7 +108,7 @@ namespace mp
 	void WorldView::zoomIn() {
 		std::cout << "zooming in." << std::endl;
 		if (zoomLevel < zoomLevelMax) {
-			camera->zoom(1/1.1);
+			camera->zoom(1.0f/1.1f);
 			zoomLevel++;
 		}
 	}
@@ -228,7 +228,7 @@ namespace mp
 		sunSprite = new sf::Sprite();
 		sunSprite->setTexture(*sunTexture);
 		sunSprite->setPosition(-20, -10);
-		sunSprite->scale(0.01, 0.01);
+		sunSprite->scale(0.01f, 0.01f);
 		layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.
