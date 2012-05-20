@@ -35,10 +35,12 @@ namespace mp
 		gameTitleText->setPosition(20, 20);
 		gameTitleText->setCharacterSize(40);
 
-		guiElements["joinButton"] = new Button(0, 440, 250, 50, "Join game");
-		guiElements["joinButton"]->setFont(*font);
-		guiElements["joinButton"]->setTextPosition(60, 5);
-		guiElements["joinButton"]->setFontColor(sf::Color::Black);
+		Button* joinButton = new Button(0, 440, 250, 50, "Join game");
+		
+		joinButton->setFont(*font);
+		joinButton->setTextPosition(60, 5);
+		joinButton->setFontColor(sf::Color::Black);
+		guiElements["joinButton"] = joinButton;
 
 		guiElements["hostButton"] = new Button(0, 500, 250, 50, "Host game");
 		guiElements["hostButton"]->setFont(*font);
