@@ -183,7 +183,7 @@ namespace mp
 		// Access world data
 		//worldDataMutex.lock();
 
-		for(unsigned int i=0;i<characters.size();i++) {
+		for(unsigned int i = 0; i < characters.size(); i++) {
 			((CharacterView*)characters.at(i))->updateAnimation(elapsed);
 		}
 

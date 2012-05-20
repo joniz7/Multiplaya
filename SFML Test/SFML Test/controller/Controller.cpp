@@ -23,7 +23,7 @@ namespace mp
 		controllers["hostGame"]->addObserver(this);
 		controllers["game"]->addObserver(this);
 		//controllers["worldScreen"]->addObserver(this);
-
+		runGame = false;
 		// Begin at main menu.
 		this->notify(Event::SHOW_MAIN_MENU, 0);
 
