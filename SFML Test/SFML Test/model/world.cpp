@@ -111,6 +111,14 @@ namespace mp
 				reloadStuff();
 
     }
+	
+	////////////////////////////////
+	/// Changes the gravity of the world.
+	/// \param gravity - the new gravity.
+	////////////////////////////////
+	void World::setGravity(const b2Vec2 gravity) {
+		this->world->SetGravity(gravity);
+	}
 
 	void World::deleteBullets()
 	{
