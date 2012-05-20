@@ -39,11 +39,12 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool ResourceHandler::loadTexture(std::string filePath)
     {
-		std::cout<<"Loading "<<filePath<<std::endl;
 		// Check if file already has been loaded
 		for( std::map<std::string,sf::Texture>::iterator it=texMap.begin(); it!=texMap.end(); ++it)
 		   if( (*it).first == (filePath)  )
 			   return true;
+
+		std::cout<<"Loading "<<filePath<<std::endl;
 		// Attempt to load from file
 		sf::Texture temp;
 		if(!temp.loadFromFile(filePath))
@@ -53,7 +54,13 @@ namespace mp
 		}
 		else
 		{
+			std::cout<<"Success!"<<std::endl;
 			texMap[filePath] = temp;
+
+			// For some FUCKING reason we have to load another textore or else the one we just loaded won't work. TODO: FIX THIS SHIT
+			if(temp.loadFromFile("resources/debug/missingtexture.png"))
+				texMap["resources/debug/missingtexture.png"] = temp;
+
 			return true;
 		}
     }
@@ -78,6 +85,7 @@ namespace mp
 		// Check if file exists in memory
 		for( std::map<std::string,sf::Texture>::iterator it=texMap.begin(); it!=texMap.end(); ++it)
 		{
+			//std::cout<<(*it).first<<" = "<<filePath<<std::endl;
 			if( (*it).first == filePath )
 				return &texMap[filePath];	// It did, return pointer
 		}

@@ -23,7 +23,7 @@ namespace mp
 				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title1.jpg");
 			break;
 			case 2:
-				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title3.jpg");
+				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title2.jpg");
 			break;
 		}
 

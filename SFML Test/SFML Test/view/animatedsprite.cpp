@@ -81,7 +81,7 @@ namespace mp
 			);
 
 		setTextureRect(frameRect);
-		setRotation(frame.z+180);
+		setRotation((float)(frame.z+180));
 	}
 
 	////////////////////////////////////////////////////////////

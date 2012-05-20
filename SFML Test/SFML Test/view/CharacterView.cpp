@@ -7,7 +7,8 @@ namespace mp
 		this->character = character;
 
 		sf::Texture* tex = new sf::Texture();
-		tex->loadFromFile("resources/test/testsprite.png");
+
+		tex = ResourceHandler::instance().getTexture("resources/test/testsprite.png");
 
 		this->sprite = new AnimatedSprite(tex,sf::Vector2i(8,3));
 
@@ -78,7 +79,7 @@ namespace mp
 			sprite->playAnimation("wallslide");
 		else if (!character->isGrounded())
 		{
-			if(character->doFlip())
+			if(character->isFlipping())
 				sprite->playAnimation("airroll");
 			else
 				sprite->playAnimation("jump");

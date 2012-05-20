@@ -11,17 +11,21 @@ namespace mp
 		// Create our minion controllers.
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
-	  //  controllers["hostGame"] = new HostGameController();
-		controllers["hostGame"] = new GameController(world, renderWindow, window->getScreen("hostScreen"));
+		controllers["hostGame"] =  new GameController(world, renderWindow, window->getScreen("hostScreen"));
+		//controllers["worldScreen"] =
+		//new HostGameController(renderWindow, window->getScreen("hostScreen"));
 
 		// Add ourselves as observer.
 		controllers["mainScreen"]->addObserver(this);
 		controllers["joinGame"]->addObserver(this);
 		controllers["hostGame"]->addObserver(this);
+		//controllers["worldScreen"]->addObserver(this);
 
 		// Begin at main menu.
 		this->notify(Event::SHOW_MAIN_MENU, 0);
+
 	}
+
 
 	void Controller::notify(Event e, void* object) {
 		std::cout << "Notified! Message: ";

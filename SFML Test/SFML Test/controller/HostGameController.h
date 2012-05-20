@@ -2,6 +2,7 @@
 #define HOSTGAMECONTROLLER_H
 
 #include "IController.h"
+#include "../view/HostGameScreen.h"
 
 namespace mp
 {
@@ -14,6 +15,16 @@ namespace mp
 		protected:
 		private:
 			sf::Event ev;
+						
+			bool gravityTextClicked;
+			bool portTextClicked;
+
+
+			GUIElement* cancelButton;
+			GUIElement* hostButton;
+
+			GUIElement* gravityTextField;
+			GUIElement* portTextField;
 
 	};
 }
