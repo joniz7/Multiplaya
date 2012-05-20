@@ -24,7 +24,7 @@ namespace mp
 	{
 		this->worldData = worldData;
 		this->window = window;
-		this->pixelScale = 1 / 10.0f;
+
 		counter = 0;
 		elapsed = 0;
 
@@ -143,9 +143,9 @@ namespace mp
 	{
 			// Fetch mouse-related things.
 			*mousePosWindow = sf::Mouse::getPosition(*window);
-			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / pixelScale;
+			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / PIXEL_SCALE;
 
-			*mouseSpeed = (*mousePos - *mousePosOld) / pixelScale;
+			*mouseSpeed = (*mousePos - *mousePosOld) / PIXEL_SCALE;
             // Get elapsed time since last frame
             elapsed = clock.getElapsedTime().asSeconds();
             clock.restart();
@@ -234,7 +234,7 @@ namespace mp
 		backgroundTexture->loadFromFile("resources/bg.png");
 		backgroundSprite = new sf::Sprite();
 		backgroundSprite->setTexture(*backgroundTexture);
-		backgroundSprite->setOrigin(screenWidth / 2 * pixelScale, screenHeight / 2 * pixelScale);
+		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
 		backgroundSprite->setPosition(-20, -10);
 		backgroundSprite->scale(0.02f, 0.02f);
 
@@ -266,12 +266,12 @@ namespace mp
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(screenWidth / 2 * pixelScale, screenHeight / 2 *pixelScale);
+		sf::Vector2f halfSize(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 *PIXEL_SCALE);
 
 		// Intialize our camera.
 		this->zoomLevel = 0;	// We start at 0,
 		this->zoomLevelMax = 10;// 10 is our maximum zoomed-in level.
-		camera = new sf::View(center * pixelScale, halfSize * pixelScale);
+		camera = new sf::View(center * PIXEL_SCALE, halfSize * PIXEL_SCALE);
 		camera->zoom( 1.5 );
 
 		// Rotate the view 180 degrees
@@ -398,25 +398,25 @@ namespace mp
 	{
 		sf::Color c(10, 10, 10);
 
-		ground = new sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
+		ground = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
 		ground->setFillColor( c );
-		ground->setOrigin(50 * pixelScale, 2.5f * pixelScale);
-		ground->setPosition(0, -50.0f * pixelScale);
+		ground->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
+		ground->setPosition(0, -50.0f * PIXEL_SCALE);
 
-		ground2 = new sf::RectangleShape( sf::Vector2f(100 * pixelScale, 5 * pixelScale) );
+		ground2 = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
 		ground2->setFillColor( c );
-		ground2->setOrigin(50 * pixelScale, 2.5f * pixelScale);
-		ground2->setPosition(0, 50.0f * pixelScale);
+		ground2->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
+		ground2->setPosition(0, 50.0f * PIXEL_SCALE);
 
-		ground3 = new sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
+		ground3 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
 		ground3->setFillColor( c );
-		ground3->setOrigin(2.5f * pixelScale, 50 * pixelScale);
-		ground3->setPosition(50.0f * pixelScale, 0);
+		ground3->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
+		ground3->setPosition(50.0f * PIXEL_SCALE, 0);
 
-		ground4 = new sf::RectangleShape( sf::Vector2f(5 * pixelScale, 100 * pixelScale) );
+		ground4 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
 		ground4->setFillColor( c );
-		ground4->setOrigin(2.5f * pixelScale, 50 * pixelScale);
-		ground4->setPosition(-50.0f * pixelScale, 0);
+		ground4->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
+		ground4->setPosition(-50.0f * PIXEL_SCALE, 0);
 	}
 
 	void WorldView::updatePositions()
@@ -540,13 +540,13 @@ namespace mp
 		// Calculate camera position (somehwere between character and mouse)
 		b2Vec2 position = worldData->getCurrentCharacter()->getBody()->GetPosition();
 		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
-		//testSpr.setPosition(position.x*pixelScale,position.y*pixelScale);
+		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
 
 		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
 		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
 
-		camera->setCenter(x * pixelScale, y * pixelScale);
+		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
 	}
 
 	////////////////////////////////////////////////////////////
