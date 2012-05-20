@@ -56,6 +56,9 @@ namespace mp
 			void addChain( b2World* world, b2Vec2 vertices[], int length, float friction );
 			void clearPhysics();
 
+			//Does this character exist?
+			bool exists(sf::Int8 clientID);
+
 			// Getters
 			// Get list of all characters
 			std::vector<Character*>* getCharacters(){ return &characters; };
