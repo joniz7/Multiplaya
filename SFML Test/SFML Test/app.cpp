@@ -105,6 +105,12 @@ namespace mp
 	////////////////////////////////////////////////////////////
     int App::exec()
     {
+		
+		// I guess we're loading stuff here
+		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title0.jpg");
+		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title1.jpg");
+		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title3.jpg");
+		
 		// Contains instances of all parts of our program.
 		Container* data = new Container();
 

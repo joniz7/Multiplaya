@@ -14,9 +14,18 @@ namespace mp
 		// Pick one of three background images
 		srand ( time(NULL) );
 		int randomInt = rand() % 3;
-		std::stringstream backgroundFile;
-		backgroundFile << "resources/ui/backgrounds/bg_title" << randomInt << ".jpg";
-		backgroundTexture->loadFromFile( backgroundFile.str() );
+
+		switch(randomInt) {
+			case 0:
+				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title0.jpg");
+			break;
+			case 1:
+				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title1.jpg");
+			break;
+			case 2:
+				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title3.jpg");
+			break;
+		}
 
 		backgroundSprite = new sf::Sprite();
 		backgroundSprite->setTexture(*backgroundTexture);

@@ -11,6 +11,16 @@
 
 namespace mp
 {
+
+	////////////////////////////////////////////////////////////
+	// Returns a pointer to the singleton
+	////////////////////////////////////////////////////////////
+    ResourceHandler& ResourceHandler::instance()
+    {
+		static ResourceHandler instance;
+		return instance;
+    }
+
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
@@ -25,23 +35,22 @@ namespace mp
     }
 
 	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
-    ResourceHandler::~ResourceHandler(){}
-
-	////////////////////////////////////////////////////////////
 	// Load a texture to memory. Returns true upon success.
 	////////////////////////////////////////////////////////////
     bool ResourceHandler::loadTexture(std::string filePath)
     {
+		std::cout<<"Loading "<<filePath<<std::endl;
 		// Check if file already has been loaded
 		for( std::map<std::string,sf::Texture>::iterator it=texMap.begin(); it!=texMap.end(); ++it)
-		   if( (*it).first.compare(filePath)  )
+		   if( (*it).first == (filePath)  )
 			   return true;
 		// Attempt to load from file
 		sf::Texture temp;
 		if(!temp.loadFromFile(filePath))
+		{
+			std::cout<<"Loading "<<filePath<<" FAILED."<<std::endl;
 			return false;
+		}
 		else
 		{
 			texMap[filePath] = temp;
@@ -69,15 +78,20 @@ namespace mp
 		// Check if file exists in memory
 		for( std::map<std::string,sf::Texture>::iterator it=texMap.begin(); it!=texMap.end(); ++it)
 		{
-			if( (*it).first.compare(filePath)  )
+			if( (*it).first == filePath )
 				return &texMap[filePath];	// It did, return pointer
-			else if(doRtLoading) // If not, check if we are allowing real time loading
-			{
-				if (loadTexture(filePath)); // If so, attempt to load texture
-					return getTexture(filePath); // Upon success try to get pointer again (be aware that if loadTexture does not function correctly this may result in an endless loop)
-			}
 		}
-		return &texMap["resources/debug/missingtexture.png"];
+		if(doRtLoading) // If not, check if we are allowing real time loading
+		{
+			std::cout<<"Texture "<<filePath<<" not found in memory, attempting to load..."<<std::endl;
+			if( loadTexture(filePath) );
+				return &texMap[filePath];
+		}
+		else
+		{
+			std::cout<<"Texture "<<filePath<<" not found in memory."<<std::endl;
+			return &texMap["resources/debug/missingtexture.png"];
+		}
     }
 
 	////////////////////////////////////////////////////////////
