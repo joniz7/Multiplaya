@@ -143,6 +143,7 @@
     <ClInclude Include="model\character.h" />
     <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\GameObject.h" />
+    <ClInclude Include="model\ICharacter.h" />
     <ClInclude Include="model\Wall.h" />
     <ClInclude Include="model\world.h" />
     <ClInclude Include="model\worldchain.h" />

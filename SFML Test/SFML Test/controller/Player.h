@@ -21,8 +21,13 @@ namespace mp
 		public:
 			Player();
 			~Player();
+
+
 			void update(const sf::Vector2f &mousePos);
+
+			/// Set the player's current character
 			void setCharacter(Character* character);
+			/// Returns the player's current character
 			Character* getCharacter() { return character; }
 		private:
 			Character* character;

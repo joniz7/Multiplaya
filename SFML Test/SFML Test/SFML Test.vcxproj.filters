@@ -319,6 +319,9 @@
     <ClInclude Include="Event.h">
       <Filter>src\util</Filter>
     </ClInclude>
+    <ClInclude Include="model\ICharacter.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
