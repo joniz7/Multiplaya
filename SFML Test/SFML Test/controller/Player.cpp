@@ -63,14 +63,14 @@ namespace mp {
 			{
 				if ( input->btnDwnLeft() && !input->btnDwnRight() ) {
 					if(character->isGrounded()) {
-						moveLeft(18,50);
+						moveLeft(40,50);
 					} else {
 						moveLeft(18,5);
 					}
 				}
 				else if ( input->btnDwnRight() && !input->btnDwnLeft() ) {
 					if(character->isGrounded()) {
-						moveRight(18,50);
+						moveRight(40,50);
 					} else {
 						moveRight(18,5);
 					}
