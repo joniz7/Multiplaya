@@ -29,7 +29,7 @@ namespace mp
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
-		myIP = "172.16.0.6";
+		myIP = "85.226.172.153";
     }
 
 	void NetworkHandler::exec() 
