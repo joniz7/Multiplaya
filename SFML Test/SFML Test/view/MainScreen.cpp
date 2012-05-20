@@ -18,15 +18,12 @@ namespace mp
 		switch(randomInt) {
 			case 0:
 				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title0.jpg");
-				std::cout<<"FUCK 0"<<std::endl;
 			break;
 			case 1:
 				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title1.jpg");
-				std::cout<<"FUCK 1"<<std::endl;
 			break;
 			case 2:
 				backgroundTexture = ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title2.jpg");
-				std::cout<<"FUCK 2"<<std::endl;
 			break;
 		}
 
