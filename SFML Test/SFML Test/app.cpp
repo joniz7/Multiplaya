@@ -50,6 +50,8 @@ namespace mp
 		
 		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
 		
+		while(!data->networkThreadFinished) {}
+
 		// Run the view's infinite loop
 		sf::Clock clock;
 		while (true)
