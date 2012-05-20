@@ -27,13 +27,14 @@ namespace mp
 			void drawInGameMenu();
 			void drawJoinMenu();
 			void drawHostMenu();
+			void drawGame();
 			void drawSettingsMenu();
 
 
 			Screen* getScreen(std::string string);
 			sf::RenderWindow* getRenderWindow();
 
-			WorldView* getGameWindow() { return (WorldView*) screens["hostScreen"]; }
+			WorldView* getGameWindow() { return (WorldView*) screens["gameScreen"]; }
 		protected:
 		private:
 			sf::RenderWindow* window;

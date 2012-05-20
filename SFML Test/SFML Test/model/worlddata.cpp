@@ -43,7 +43,7 @@ namespace mp
 			case GENERIC_BULLET:
 				bullet->addObserver(this);
 				bullets.push_back(bullet);
-				notifyObservers(BULLET_ADDED, bullet);
+				//notifyObservers(BULLET_ADDED, bullet);
 				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 				return true;
 
