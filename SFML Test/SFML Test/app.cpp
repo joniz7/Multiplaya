@@ -50,6 +50,8 @@ namespace mp
 		
 		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
 		
+		while(!data->networkThreadFinished) {}
+
 		// Run the view's infinite loop
 		sf::Clock clock;
 		while (true)
@@ -114,7 +116,7 @@ namespace mp
 		// Contains instances of all parts of our program.
 		Container* data = new Container();
 
-		// Create and launch the view thread.
+		// Create and launch the game thread.
 		sf::Thread gameThread(&createGameThread, data);
 		gameThread.launch();
 		// Wait here until it's up and running.

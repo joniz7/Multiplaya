@@ -34,27 +34,27 @@ namespace mp
 				{
 					
 					connectButton->click();
-					networkHandler->connectToServer("Jonte");
+					networkHandler->connectToServer("Jonte", ipTextField->getText());
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
 					while(!networkHandler->isConnectedToServer() && elapsed<3) 
 					{
 						elapsed = clock.getElapsedTime().asSeconds();
-						std::cout<<elapsed<<std::endl;
 					}
 
 					if(networkHandler->isConnectedToServer())
 					{
 						networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
-						GameState::getInstance()->setGameState(GameState::HOST_GAME);
+						// Change screen in main controller.
+						notifyObservers(Event::SHOW_HOST, 0);
 					}
 				}
 				
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
-					GameState::getInstance()->setGameState(GameState::MAIN_SCREEN);
+					notifyObservers(Event::SHOW_MAIN_MENU, 0);
 				}
 
 				if ( ipTextField->isMouseOver(mousePos) )

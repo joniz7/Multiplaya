@@ -4,6 +4,7 @@
 // Class header
 
 #include "GameController.h"
+#include "../util/Observable.h"
 
 ////////////////////////////////////////////////////////////
 /// Controller class. Handles input.
@@ -54,7 +55,8 @@ namespace mp
 				getRenderWindow()->close();
 			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape))
 			{
-				GameState::getInstance()->setGameState(GameState::MAIN_SCREEN);
+				// Change screen in main controller.
+				notifyObservers(Event::PAUSE_GAME,0);
 				getRenderWindow()->setMouseCursorVisible(true);
 			}
 
