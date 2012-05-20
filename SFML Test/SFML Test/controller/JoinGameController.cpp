@@ -47,7 +47,7 @@ namespace mp
 						//networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
 						// Change screen in main controller.
-						notifyObservers(Event::SHOW_HOST, 0);
+						notifyObservers(Event::START_GAME, 0);
 					}
 				}
 				
