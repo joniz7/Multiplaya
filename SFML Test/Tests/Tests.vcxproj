@@ -87,6 +87,7 @@
     <ClInclude Include="..\SFML Test\model\ContactListener.h" />
     <ClInclude Include="..\SFML Test\model\Wall.h" />
     <ClInclude Include="..\SFML Test\model\world.h" />
+    <ClInclude Include="..\SFML Test\model\worldchain.h" />
     <ClInclude Include="..\SFML Test\model\worlddata.h" />
     <ClInclude Include="..\SFML Test\services\confighandler.h" />
     <ClInclude Include="..\SFML Test\services\keylookup.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="..\SFML Test\model\ContactListener.cpp" />
     <ClCompile Include="..\SFML Test\model\Wall.cpp" />
     <ClCompile Include="..\SFML Test\model\world.cpp" />
+    <ClCompile Include="..\SFML Test\model\worldchain.cpp" />
     <ClCompile Include="..\SFML Test\model\worlddata.cpp" />
     <ClCompile Include="..\SFML Test\services\confighandler.cpp" />
     <ClCompile Include="..\SFML Test\services\keylookup.cpp" />
