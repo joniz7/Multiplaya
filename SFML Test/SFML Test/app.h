@@ -31,8 +31,8 @@ namespace mp
     {
         public:
            // App(sf::VideoMode mode);
-			App();
-            ~App();
+			App() {};
+			~App(){};
             int exec(); //Main game loop
         private:
 			sf::VideoMode videoMode;
