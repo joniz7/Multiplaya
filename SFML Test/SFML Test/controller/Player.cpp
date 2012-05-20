@@ -143,6 +143,9 @@ namespace mp {
 			worldDataMutex.unlock();
 		}*/
 
+		if ( input->btnDwnReload() )
+			character->reload();
+
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);
 	}
