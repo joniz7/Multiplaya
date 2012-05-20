@@ -128,7 +128,7 @@ namespace mp
 				CharacterFootSensor(bool& grounded, bool& isFlipping);
 				virtual ~CharacterFootSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
-				virtual void onNoCollision(GameObject* crashedWith) {};
+				virtual void onNoCollision(GameObject* crashedWith);
 
 			private:
 				//Character* characterObject;

@@ -261,6 +261,11 @@ namespace mp
 		}
 	}
 
+	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
+		if ( crashedWith->objectType == wall)
+			grounded = false;
+	}
+
 	// Leftside
 	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	{
 		this->objectType = characterLeftSensor;
