@@ -8,6 +8,8 @@ namespace mp
 	{
 		this->hoverEnabled = true;
 		hovering = false;
+		hoverBorderColor = sf::Color::Transparent;
+		hoverBorderThickness = 0;
 	}
 
 	Button::~Button()
