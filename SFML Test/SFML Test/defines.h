@@ -16,12 +16,4 @@ struct BulletData {
 	short damage;
 };
 
-enum Event {
-	BULLET_ADDED,
-	BULLET_DELETED,
-	CHARACTER_ADDED,
-	CHARACTER_DELETED,
-	CONNECT_SERVER
-};
-
 #endif
