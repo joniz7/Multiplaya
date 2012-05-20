@@ -135,13 +135,13 @@ namespace mp {
 			released = true;
 		}
 
-		if ( pressingKeyForConnecting() )
+		/*if ( pressingKeyForConnecting() )
 		{
 			//worldData->notify() bblala
 			worldDataMutex.lock();
 			character->connectToServer();
 			worldDataMutex.unlock();
-		}
+		}*/
 
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);
