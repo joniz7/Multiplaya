@@ -44,7 +44,7 @@ namespace mp
 
 					if(networkHandler->isConnectedToServer())
 					{
-						networkHandler->setIPAddress(ipTextField->getText());
+						//networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
 						// Change screen in main controller.
 						notifyObservers(Event::SHOW_HOST, 0);

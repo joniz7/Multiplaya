@@ -428,6 +428,7 @@ namespace mp
 		worldDataMutex.unlock();
 
 		packet << type << myID << x << y << xvel << yvel << angle;
+		//std::cout << "Sending character data to " << serverIP << std::endl;
 		sender.send(packet, serverIP, 55001);
 	}
 
