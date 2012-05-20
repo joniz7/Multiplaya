@@ -11,7 +11,9 @@ namespace mp
 		// Create our minion controllers.
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
-		controllers["hostGame"] =  new GameController(world, renderWindow, window->getScreen("hostScreen"));
+		controllers["game"] =  new GameController(world, renderWindow, window->getScreen("gameScreen"));
+		controllers["hostGame"] =  new HostGameController(renderWindow, window->getScreen("hostScreen"));
+
 		//controllers["worldScreen"] =
 		//new HostGameController(renderWindow, window->getScreen("hostScreen"));
 
@@ -19,6 +21,7 @@ namespace mp
 		controllers["mainScreen"]->addObserver(this);
 		controllers["joinGame"]->addObserver(this);
 		controllers["hostGame"]->addObserver(this);
+		controllers["game"]->addObserver(this);
 		//controllers["worldScreen"]->addObserver(this);
 
 		// Begin at main menu.
@@ -28,7 +31,6 @@ namespace mp
 
 
 	void Controller::notify(Event e, void* object) {
-		std::cout << "Notified! Message: ";
 		switch (e) {
 			case START_GAME:     startGame();        break;
 			case STOP_GAME:      stopGame();         break;
@@ -45,11 +47,13 @@ namespace mp
 	void Controller::startGame() {
 		// TODO: reset everything here.
 		// Start our ingame music.
+		this->runGame = true;
 		MusicHandler::instance().chooseSong("bg");
 		MusicHandler::instance().play();
 		// TODO: replace with "inGame"
-		this->currentDrawFunction = &Window::drawHostMenu;
-		this->currentController = controllers["hostGame"];
+		this->currentDrawFunction = &Window::drawGame;
+		this->currentController = controllers["game"];
+		
 	}
 	void Controller::stopGame() {
 		this->runGame = false;
@@ -69,9 +73,9 @@ namespace mp
 		};
 	
 	void Controller::resumeGame(){
-		// TODO: replace with "inGame" later.
-		this->currentDrawFunction = &Window::drawHostMenu;
-		this->currentController = controllers["hostGame"];
+		// Set pointers.
+		this->currentDrawFunction = &Window::drawGame;
+		this->currentController = controllers["game"];
 	}
 			
 	void Controller::showMainMenu(){
@@ -90,12 +94,6 @@ namespace mp
 	}
 			
 	void Controller::showHostMenu(){
-		//  --- TODO: remove ---
-		// Start our ingame music.
-		this->runGame = true;
-		MusicHandler::instance().chooseSong("bg");
-		MusicHandler::instance().play();
-		//  --------------------
 		// Set pointers.
 		this->currentDrawFunction = &Window::drawHostMenu;
 		this->currentController = controllers["hostGame"];
@@ -115,7 +113,7 @@ namespace mp
 
 	void Controller::setNetworkHandler(NetworkHandler* network) {
 		MainScreenController* mainScreenController = (MainScreenController*) controllers["mainScreen"];
-		GameController* gameController = (GameController*) controllers["hostGame"];
+		GameController* gameController = (GameController*) controllers["game"];
 		JoinGameController* joinGameController = (JoinGameController*) controllers["joinGame"];
 
 		mainScreenController->setNetworkHandler(network);

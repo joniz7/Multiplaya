@@ -72,6 +72,7 @@ namespace mp
 		Character* c = new Character(this, world, pos, size, clientID);
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
+		std::cout << "Done adding character " << std::endl;
 		return true;
 	}
 
@@ -89,6 +90,20 @@ namespace mp
 				worldDataMutex.unlock();
 			}
 		}
+	}
+
+	bool WorldData::exists(sf::Int8 clientID)
+	{
+		for(int i = 0; i<characters.size(); i++)
+		{
+			Character* character = characters.at(i);
+			if(character->getClientID() == clientID)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 	////////////////////////////////////////////////////////////
 	// Adds a generic body to the world

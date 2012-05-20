@@ -58,17 +58,20 @@ namespace mp
 		{
 			float elapsed = clock.getElapsedTime().asSeconds();
 			// Execute controller statements (this also runs model and view).
-			data->controller->exec();
-			
-			if(elapsed>(1/20.f)) {
+			data->controller->exec();		
+
+			if(elapsed>(1/10.f)) 
+			{
 				clock.restart();
 
-				if(data->network->isServer){
-					data->network->updateAllClients();
-				}
-			
-				if(data->network->isClient) {
+				if(data->network->isClient) 
+				{
 					data->network->sendCharacterDataToServer();
+				}
+
+				if(data->network->isServer)
+				{
+					data->network->updateAllClients();
 				}
 			}
 			

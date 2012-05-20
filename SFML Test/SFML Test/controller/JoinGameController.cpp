@@ -34,7 +34,7 @@ namespace mp
 				{
 					
 					connectButton->click();
-					networkHandler->connectToServer("Jonte", ipTextField->getText());
+					networkHandler->connectToServer("Jonte", "192.168.1.69");
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
 					while(!networkHandler->isConnectedToServer() && elapsed<3) 
@@ -44,10 +44,10 @@ namespace mp
 
 					if(networkHandler->isConnectedToServer())
 					{
-						networkHandler->setIPAddress(ipTextField->getText());
+						//networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
 						// Change screen in main controller.
-						notifyObservers(Event::SHOW_HOST, 0);
+						notifyObservers(Event::START_GAME, 0);
 					}
 				}
 				
@@ -114,9 +114,6 @@ namespace mp
 					// "remove" the possibility to input double dots
 					if (ipTextClicked)
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
-
-					if (portTextClicked)
-						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 				else if (isBackspace(ev))
 				{

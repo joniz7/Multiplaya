@@ -26,6 +26,12 @@ namespace mp
 			GUIElement* gravityTextField;
 			GUIElement* portTextField;
 
+			bool isNumber(sf::Event &ev);
+			bool isBackspace(sf::Event &ev);
+			bool isDot(sf::Event &ev);
+			void removeLastCharacter(GUIElement* element);
+						
+
 	};
 }
 

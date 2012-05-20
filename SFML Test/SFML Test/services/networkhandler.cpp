@@ -68,7 +68,7 @@ namespace mp
 		std::vector<Character*>* characters;
 
 		std::map<sf::Int8, Client>::iterator it;
-		int outputType;
+		int outputType, test;
 
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
@@ -80,10 +80,13 @@ namespace mp
 			//std::cout<<"Receiving data..."<<std::endl;
 			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
+			/*
 			if(isServer)
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
 				{
+					std::cout << "before" << (*it).second.disconnectCounter << std::endl;
+					std::cout << (*it).second.IP << "    " << senderIP << std::endl;
 					if((*it).second.IP == senderIP)
 					{
 						(*it).second.disconnectCounter = 0;
@@ -91,13 +94,15 @@ namespace mp
 					else
 					{
 						(*it).second.disconnectCounter++;
-						if((*it).second.disconnectCounter == 20)
+						if((*it).second.disconnectCounter == 100)
 						{
-							disconnectClient((*it).first);
+							//disconnectClient((*it).first);
 						}
 					}
+					std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
+			*/
 
 			//Tries to read what type of message the packet was
 			if(!(receivedData >> type))
@@ -187,8 +192,9 @@ namespace mp
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
+						test = clientID;
 
-						//setCharacterData(clientID, position, velocity, angle);
+						setCharacterData(clientID, position, velocity, angle);
 						break;
 					//Receive bullet data from a client
 					case 5:
@@ -530,9 +536,12 @@ namespace mp
 	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle)
 	{
 		worldDataMutex.lock();
-		Character* character = worldData->getCharacter(clientID);
-		character->setPosition(position, angle);
-		character->setLinVelocity(velocity);
+		if(worldData->exists(clientID))
+		{
+			Character* character = worldData->getCharacter(clientID);
+			character->setPosition(position, angle);
+			character->setLinVelocity(velocity);
+		}
 		worldDataMutex.unlock();
 	}
 

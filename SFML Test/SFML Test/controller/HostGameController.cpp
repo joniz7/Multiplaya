@@ -31,16 +31,15 @@ namespace mp
 				
 				if( hostButton->isMouseOver(mousePos) )
 				{
-					
 					hostButton->click();
-					notifyObservers(Event::SHOW_HOST, 0);
+					notifyObservers(START_GAME, 0);
 				}
 				
 				
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
-					notifyObservers(Event::SHOW_MAIN_MENU, 0);
+					notifyObservers(SHOW_MAIN_MENU, 0);
 				}
 
 				if ( gravityTextField->isMouseOver(mousePos) )
@@ -88,36 +87,58 @@ namespace mp
 
 			if (ev.type == sf::Event::TextEntered)
 			{
-				/*if (isNumber(ev))
+				if (isNumber(ev))
 				{
 					if (gravityTextClicked)
-						gravityTextField->setText(ipTextField->getText() + ev.text.unicode);
+						gravityTextField->setText(gravityTextField->getText() + ev.text.unicode);
 					if (portTextClicked)
 						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 				else if (isDot(ev))
 				{
 					// "remove" the possibility to input double dots
-					if (ipTextClicked)
-						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
+					if (gravityTextClicked)
+						gravityTextField->setText(gravityTextField->getText() + ev.text.unicode);
 
-					if (portTextClicked)
-						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 				else if (isBackspace(ev))
 				{
-					if (ipTextClicked)
+					if (gravityTextClicked)
 					{
-						removeLastCharacter(ipTextField);
+						removeLastCharacter(gravityTextField);
 					}
 						
 					if (portTextClicked)
 					{
 						removeLastCharacter(portTextField);
 					}	
-				}*/
+				}
 			} // end of textentered
+		}
+	} // end of handeInput
 
+	bool HostGameController::isNumber(sf::Event &ev)
+	{
+		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 );
 	}
+
+	bool HostGameController::isBackspace(sf::Event &ev)
+	{
+		return ev.text.unicode == 8;
 	}
+
+	bool HostGameController::isDot(sf::Event &ev)
+	{
+		return ev.text.unicode == 46;
 	}
+
+	void HostGameController::removeLastCharacter(GUIElement* element)
+	{
+		int textLength = element->getText().getSize();
+		if (textLength > 0)
+		{
+			std::string text = element->getText();
+			element->setText(text.erase(textLength - 1, 1));
+		}
+	}
+}
