@@ -103,6 +103,8 @@
 		<Unit filename="model/character.h" />
 		<Unit filename="model/world.cpp" />
 		<Unit filename="model/world.h" />
+		<Unit filename="model/worldchain.cpp" />
+		<Unit filename="model/worldchain.h" />
 		<Unit filename="model/worlddata.cpp" />
 		<Unit filename="model/worlddata.h" />
 		<Unit filename="services/MusicHandler.cpp" />
@@ -144,6 +146,10 @@
 		<Unit filename="view/HUDSprite.h" />
 		<Unit filename="view/JoinGameScreen.cpp" />
 		<Unit filename="view/JoinGameScreen.h" />
+		<Unit filename="view/Layer.cpp" />
+		<Unit filename="view/Layer.h" />
+		<Unit filename="view/LayerHandler.cpp" />
+		<Unit filename="view/LayerHandler.h" />
 		<Unit filename="view/MainScreen.cpp" />
 		<Unit filename="view/MainScreen.h" />
 		<Unit filename="view/Screen.h" />

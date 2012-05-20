@@ -8,7 +8,7 @@
 #include "../global.h"
 
 ////////////////////////////////////////////////////////////
-/// World data class. Holds all data world class uses for 
+/// World data class. Holds all data world class uses for
 /// easy access from view and network handler
 ////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldData::WorldData() 
+    WorldData::WorldData()
 	{
 		logicFps = 0;
 		// TODO hardcoded. not good !1!
@@ -37,7 +37,7 @@ namespace mp
     bool WorldData::addBullet( Bullet* bullet )
 	{
 		BulletType type = bullet->getType();
-		
+
 		switch(type)
 		{
 			case GENERIC_BULLET:
@@ -144,7 +144,7 @@ namespace mp
 
 	Character* WorldData::getCharacter(sf::Int8 clientID)
 	{
-		for(int i = 0; i < characters.size(); i++)
+		for(unsigned int i = 0; i < characters.size(); i++)
 		{
 			if(characters.at(i)->getClientID() == clientID)
 			{

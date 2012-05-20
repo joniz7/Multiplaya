@@ -34,6 +34,7 @@
 
 #include "Screen.h"
 #include "GUIElements/GUIElement.h"
+#include "LayerHandler.h"
 
 namespace mp
 {
@@ -56,8 +57,12 @@ namespace mp
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
-			void zoom(float factor);
+			void zoom(float zoomFactor);
+			void zoomIn();
+			void zoomOut();
 			sf::View* getCamera() { return camera; }
+
+			void characterMoved(float moved);
 			
 		protected:
     		
@@ -80,13 +85,13 @@ namespace mp
 			HUDSprite* ammoSprite;
 			sf::Text* killsText;
 			sf::Text* deathsText;
-
-			sf::Music* music;
 			
 			mutable sf::RenderWindow* window;
 
 			WorldData* worldData;
 			sf::View* camera;
+			unsigned int zoomLevel;
+			unsigned int zoomLevelMax;
 			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
@@ -153,6 +158,11 @@ namespace mp
 			int counter;
 			float elapsed;
 
+			LayerHandler* layerHandler;
+			sf::Texture* sunTexture;
+			sf::Sprite* sunSprite;
+
+			float characterXPos;
     };
 }
 
