@@ -13,37 +13,36 @@
 #include <list>
 #include <cmath>
 
-// Box2D specific headers
-#include <Box2D.h>
+
 
 #include "bullet.h"
 
+#include "ICharacter.h"
 //Defines
 #include "../defines.h"
 
 #include "../util/Observable.h"
+#include "worlddata.h"
 
-#include "GameObject.h"
 
 namespace mp
 {
 	// Forward class declarations.
-	class Bullet;
 	class WorldData;
 
-    class Character : public GameObject
+    class Character : public ICharacter
     {
         public:
 			Character(WorldData* worldData, b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
             virtual ~Character();
 			void jump();
-			void crouch();
+			void crouch() {};
 			void primaryFire(b2Vec2 &targetPos);
-			void secondaryFire();
+			void secondaryFire() {}
 			void inflictDamage(Bullet* b);
 			void kill();
-			void setInvincible(float duration);
-			void setMovement(int direction);
+			void setInvincible(float duration) {}
+			void setMovement(int direction) {}
 
 			short getHealth() { return health; };
 			short getHealthState();
@@ -128,7 +127,7 @@ namespace mp
 				CharacterFootSensor(bool& grounded, bool& isFlipping);
 				virtual ~CharacterFootSensor() {};
 				virtual void onCollision(GameObject* crashedWith);
-				virtual void onNoCollision(GameObject* crashedWith) {};
+				virtual void onNoCollision(GameObject* crashedWith);
 
 			private:
 				//Character* characterObject;

@@ -8,7 +8,7 @@
 #include "../global.h"
 
 ////////////////////////////////////////////////////////////
-/// World data class. Holds all data world class uses for 
+/// World data class. Holds all data world class uses for
 /// easy access from view and network handler
 ////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    WorldData::WorldData() 
+    WorldData::WorldData()
 	{
 		logicFps = 0;
 		// TODO hardcoded. not good !1!
@@ -37,12 +37,13 @@ namespace mp
     bool WorldData::addBullet( Bullet* bullet )
 	{
 		BulletType type = bullet->getType();
-		
+
 		switch(type)
 		{
 			case GENERIC_BULLET:
+				bullet->addObserver(this);
 				bullets.push_back(bullet);
-				notify(BULLET_ADDED, bullet);
+				notifyObservers(BULLET_ADDED, bullet);
 				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 				return true;
 
@@ -59,7 +60,7 @@ namespace mp
     {
 		std::cout << "Adding character" << std::endl;
 
-		notify(CHARACTER_ADDED, c);
+		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back(c);
 		return true;
     }
@@ -69,7 +70,7 @@ namespace mp
 		std::cout << "Adding character" << std::endl;
 
 		Character* c = new Character(this, world, pos, size, clientID);
-		notify(CHARACTER_ADDED, c);
+		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
 		return true;
 	}
@@ -118,6 +119,13 @@ namespace mp
 		chains.push_back(new WorldChain(world,vertices,length,friction));
 	}
 
+	void WorldData::clearPhysics()
+	{
+		for(std::vector<WorldChain*>::iterator it = chains.begin(); it != chains.end(); ++it)
+			delete((*it));
+		chains.clear();
+	}
+
 	bool WorldData::addBody( b2Body* body  )
     {
 		bodies.push_back( body );
@@ -136,7 +144,7 @@ namespace mp
 			if ( it != bullets.end())
 			{
 				int i = (it - bullets.begin());
-				notify(BULLET_DELETED, (void*) i);
+				notifyObservers(BULLET_DELETED, (void*) i);
 				bullets.erase(bullets.begin() + i);
 			}
 		}
@@ -144,7 +152,7 @@ namespace mp
 
 	Character* WorldData::getCharacter(sf::Int8 clientID)
 	{
-		for(int i = 0; i < characters.size(); i++)
+		for(unsigned int i = 0; i < characters.size(); i++)
 		{
 			if(characters.at(i)->getClientID() == clientID)
 			{
@@ -152,6 +160,18 @@ namespace mp
 			}
 		}
 		return NULL;
+	}
+
+	void WorldData::notify(Event e, void* object)
+	{
+		if (e == BULLET_DELETED)
+		{
+			Bullet* bullet = (Bullet*) object;
+			//bullet should be removed from box2d world after timestep
+			scheduleBulletForDeletion(bullet);
+			// remove bullet from bullets vector in worlddata and view
+			removeBullet(bullet);
+		}
 	}
 
 }

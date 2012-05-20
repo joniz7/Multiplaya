@@ -6,7 +6,7 @@
 #define OBSERVER_H
 
 #include <string>
-#include "../defines.h"
+#include "Event.h"
 
 namespace mp
 {

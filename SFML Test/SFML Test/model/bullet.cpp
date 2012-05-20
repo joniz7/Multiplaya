@@ -23,11 +23,11 @@ namespace mp
 	//
 	// returns true upon success
 	////////////////////////////////////////////////////////////
-    Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
+    Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
 		scheduledForDeletion = false;
 		this->objectType = bullet;
-		this->worldData = worldData;
+
 		this->world = world;
 		// Save bullet data
 		this->type = type;
@@ -92,7 +92,8 @@ namespace mp
 		//std::cout << "explode()" << std::endl;
 		if (!scheduledForDeletion)
 		{
-			worldData->scheduleBulletForDeletion(this);
+			notifyObservers(BULLET_DELETED, this);
+			//worldData->scheduleBulletForDeletion(this);
 			scheduledForDeletion = true;
 		}
 	}
@@ -106,7 +107,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
 		// Remove bullet from worldData (-> from the view).
-		worldData->removeBullet(this);
+		//worldData->removeBullet(this);
 		// remove body from box2d
 		world->DestroyBody(this->body);
 	}

@@ -90,7 +90,7 @@ namespace mp
 				{
 					//Client trying to connect
 					case 1:
-						std::cout<<"type 1"<<std::endl;
+						//std::cout<<"type 1"<<std::endl;
 						//Creates a client from the data
 						if(isServer) 
 						{
@@ -119,7 +119,7 @@ namespace mp
 
 					//Client trying to disconnect
 					case 2:
-						std::cout<<"type 2"<<std::endl;
+						//std::cout<<"type 2"<<std::endl;
 						receivedData >> clientID;
 
 						client = clientMap[clientID];
@@ -131,10 +131,10 @@ namespace mp
 
 					//Receive a text message and send it to all clients
 					case 3:
-						std::cout<<"type 3"<<std::endl;
+						//std::cout<<"type 3"<<std::endl;
 						message.clear();
 						receivedData >> message;
-						std::cout<<"Recieved a message: "<<message<<std::endl;
+						//std::cout<<"Recieved a message: "<<message<<std::endl;
 
 						//If the clientMap is empty there are no clients to send to
 						if(!clientMap.empty())
@@ -149,7 +149,7 @@ namespace mp
 						break;
 					//Receive character data from a client.
 					case 4:
-						std::cout<<"type 4"<<std::endl;
+						//std::cout<<"type 4"<<std::endl;
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
 						test = worldData->getCharacter(0)->getClientID();
 						position.Set(x,y);
@@ -159,7 +159,7 @@ namespace mp
 						break;
 					//Receive bullet data from a client
 					case 5:
-						std::cout<<"type 5"<<std::endl;
+						//std::cout<<"type 5"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//All the bullets in the packet is added to the world
@@ -175,7 +175,7 @@ namespace mp
 						break;
 					//Recieve your ID from the server
 					case 11:
-						std::cout<<"type 11"<<std::endl;
+						//std::cout<<"type 11"<<std::endl;
 						receivedData >> myID;
 						worldDataMutex.lock();
 						worldData->getCharacter(0)->setClientID(myID);
@@ -184,14 +184,14 @@ namespace mp
 						break;
 					//Receive a text message
 					case 12:
-						std::cout<<"type 12"<<std::endl;
+						//std::cout<<"type 12"<<std::endl;
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
 					//Receive character data from the server
 					case 13:
-						std::cout<<"type 13"<<std::endl;
+						//std::cout<<"type 13"<<std::endl;
 						receivedData >> numOfChars;
 
 						for(int i = 0; i<numOfChars; i++)
@@ -205,7 +205,7 @@ namespace mp
 						break;
 					//Receive bullet data from the server
 					case 14:
-						std::cout<<"type 14"<<std::endl;
+						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//The current bullet list is cleared

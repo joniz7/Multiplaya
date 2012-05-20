@@ -25,7 +25,6 @@ namespace mp
 		this->worldData = worldData;
 		// Setup the world properties
 		const b2Vec2 gravity(0, -9.8f * 8);
-		bool doSleep = true;
 		// Create the world
 		world = new b2World(gravity);
 		worldDataMutex.lock();
@@ -46,11 +45,11 @@ namespace mp
 		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
 		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
 
-		
+
 		// Add´test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
 		//worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
-		
+
 		// Load world physics
 		loadMap("resources/maps/test");
 
@@ -101,6 +100,12 @@ namespace mp
 			}
 
 		//}
+
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+			{
+				reloadMap();
+			}
+
     }
 
 	void World::deleteBullets()
@@ -130,24 +135,43 @@ namespace mp
 	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type)
 	{
 		worldDataMutex.lock();
-		worldData->addBullet(new Bullet(type, clientID, world, position, force, worldData));
+		worldData->addBullet(new Bullet(type, clientID, world, position, force));
 		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////
-	// Destructor
+	// Load a map
 	////////////////////////////////////////////////////////////
 	void World::loadMap(const std::string& path)
 	{
-		loadPhysics(path);
-		//loadGraphics(path);
+		currentMap = path;
+		std::cout<<"Loading world physics..."<<std::endl;;
+		loadPhysics(currentMap);
+		std::cout<<std::endl<<"World physics loaded"<<std::endl;
+		//loadGraphics(currentMap);
 	}
 
 	////////////////////////////////////////////////////////////
-	// Destructor
+	// Reload current map
+	////////////////////////////////////////////////////////////
+	void World::reloadMap()
+	{
+		std::cout<<"Reloading world physics..."<<std::endl;;
+		loadPhysics(currentMap);
+		std::cout<<std::endl<<"World physics reloaded"<<std::endl;
+		//loadGraphics(currentMap);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Load map physics
 	////////////////////////////////////////////////////////////
 	void World::loadPhysics(const std::string& path)
 	{
+		// Clear any physics already loaded
+		worldDataMutex.lock();
+		worldData->clearPhysics();
+		worldDataMutex.unlock();
+
 		std::string physicsFile = path;
 		physicsFile.append("/physics.po");
 
@@ -160,7 +184,6 @@ namespace mp
         }
 		else
 		{
-			std::cout<<"Loading world physics"<<std::endl;;
 			std::string line;
 			while(getline(fileReader,line))
             {
@@ -195,14 +218,15 @@ namespace mp
 							vCount++;
 						}
 					}
-
-					worldDataMutex.lock();
-					worldData->addChain(world, vs, vCount, 0.5f);
-					worldDataMutex.unlock();
+					if(vCount>1)
+					{
+						worldDataMutex.lock();
+						worldData->addChain(world, vs, vCount, 0.5f);
+						worldDataMutex.unlock();
+					}
 
 				}
             }
-			std::cout<<std::endl<<"World physics loaded"<<std::endl;
 		}
 		fileReader.close();
 	}

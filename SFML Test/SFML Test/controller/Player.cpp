@@ -15,7 +15,7 @@ namespace mp {
 	{
 	}
 
-	void Player::update(const sf::Vector2f &mousePos) 
+	void Player::update(const sf::Vector2f &mousePos)
 	{
 		checkUserInput(mousePos);
 	}
@@ -61,22 +61,26 @@ namespace mp {
 			// If we're not trying to move in both directions at once
 			if( !(input->btnDwnLeft() && input->btnDwnRight()) )
 			{
-				if ( input->btnDwnLeft() && !input->btnDwnRight() )
-					if(character->isGrounded())
+				if ( input->btnDwnLeft() && !input->btnDwnRight() ) {
+					if(character->isGrounded()) {
 						moveLeft(18,50);
-					else
+					} else {
 						moveLeft(18,5);
-				else if ( input->btnDwnRight() && !input->btnDwnLeft() )
-					if(character->isGrounded())
+					}
+				}
+				else if ( input->btnDwnRight() && !input->btnDwnLeft() ) {
+					if(character->isGrounded()) {
 						moveRight(18,50);
-					else
+					} else {
 						moveRight(18,5);
+					}
+				}
 
 				if (input->btnDwnLeft() || input->btnDwnRight() && character->isGrounded()) {
 					worldDataMutex.lock();
 					character->setWalking(true);
 					worldDataMutex.unlock();
-				} 
+				}
 				else {
 					worldDataMutex.lock();
 					character->setWalking(false);
@@ -85,30 +89,29 @@ namespace mp {
 			}
 		}
 
-		if( !(input->btnDwnLeft() || input->btnDwnRight()) && character->isGrounded() )
-		{
+		if( !(input->btnDwnLeft() || input->btnDwnRight()) && character->isGrounded() ) {
 			// Set linear damping so we stop
 			character->getBody()->SetLinearDamping(10);
 			character->setWalking(false);
 			nullifyLinearDamping = false;
 		}
 
-		if ( input->btnDwnUp() ) 
+		if ( input->btnDwnUp() )
 		{
 			//moveUp();
 		}
-		if ( input->btnDwnDown() ) 
+		if ( input->btnDwnDown() )
 		{
 			moveDown();
 		}
 		if( input->btnDwnPrimary() )
         {
-			b2Vec2 targetPos(mousePos.x, mousePos.y); 
+			b2Vec2 targetPos(mousePos.x, mousePos.y);
 			worldDataMutex.lock();
 			character->primaryFire(targetPos);
 			worldDataMutex.unlock();
         }
-			
+
 		if ( input->btnDwnJump() )
 		{
 			//same as above will be moved to character class
@@ -132,13 +135,13 @@ namespace mp {
 			released = true;
 		}
 
-		if ( pressingKeyForConnecting() )
+		/*if ( pressingKeyForConnecting() )
 		{
 			//worldData->notify() bblala
 			worldDataMutex.lock();
 			character->connectToServer();
 			worldDataMutex.unlock();
-		}
+		}*/
 
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);

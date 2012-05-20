@@ -17,16 +17,16 @@
 //Defines
 #include "../defines.h"
 #include "GameObject.h"
-#include "worlddata.h"
+#include "../util/Observable.h"
 
 namespace mp
 {
 	class WorldData;
 
-    class Bullet : public GameObject
+    class Bullet : public GameObject, public Observable
     {
         public:
-			Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData  );
+			Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force );
             virtual ~Bullet();
 
 			void explode();
@@ -45,7 +45,6 @@ namespace mp
 			b2BodyDef bodyDef;
 			b2Body* body;
 
-			WorldData* worldData;
 			b2World* world;
 
 			bool scheduledForDeletion;

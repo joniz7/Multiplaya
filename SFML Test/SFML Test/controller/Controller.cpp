@@ -4,8 +4,9 @@ namespace mp
 {
 	Controller::Controller(World* world, Window* window)
 	{
-		//ctor
 		this->window = window;
+		this->world = world;
+		this->inGame = false;
 		renderWindow = window->getRenderWindow();
 		
 		// Start our title music.
@@ -19,6 +20,7 @@ namespace mp
 
 		
 	}
+
 
 	Controller::~Controller()
 	{
@@ -36,56 +38,36 @@ namespace mp
 	}
 
 	void Controller::exec()
-	{
+	{													// TODO: change name from HOST_GAME.
+		bool inGame = (GameState::getInstance()->getGameState() == GameState::HOST_GAME);
+
+		// Only if we're ingame, run world simulation.
+		if (inGame) {
+			world->exec();
+		}
+	
 		switch (GameState::getInstance()->getGameState())
 		{
 			case GameState::MAIN_SCREEN:
+				window->drawMainMenu();
 				controllers["mainScreen"]->handleInput();
 			break;
 
 			case GameState::JOIN_GAME:
+				window->drawJoinMenu();
 				controllers["joinGame"]->handleInput();
 			break;
 
+			// When we're ingame:   (TODO: change name from HOST_GAME)
 			case GameState::HOST_GAME:
+				window->drawHostMenu();
 				controllers["hostGame"]->handleInput();
 			break;
 
 			case GameState::SETTINGS_SCREEN:
-
+				window->drawSettingsMenu();
 			break;
+
 		} 	
-	}
-
-	void Controller::initTitleMusic() {
-
-		/*
-		std::string resourcesDir = ConfigHandler::instance().getString("s_resourcesdir");
-		std::cout << "resourcesDir: "<<resourcesDir<<std::endl;
-
-		titleMusic = new sf::Music();
-
-		// Generate random number between 1 and 10.
-		srand ( time(NULL) );
-		int songNumber = rand() % 10 + 1;
-		// generate path to .ogg-file.
-		std::stringstream path;
-		path << resourcesDir << "bgmusic-" << songNumber << ".ogg";
-		// Open it from an audio file.
-		if (!titleMusic->openFromFile(path.str())) {
-			std::cout << "Failed to load titleMusic: "+path.str() << std::endl;
-		}
-		else {
-			std::cout << "Playing song #"<<songNumber<<". Rock on!" << std::endl;
-		}
-
-		 //titleMusic->setPosition(0, 1, 10); // change its 3D position
-		 //titleMusic->setPitch(1);           // increase the pitch
-		 //titleMusic->setVolume(50);         // reduce the volume
-		 titleMusic->setLoop(true);         // make it loop
-		 // Play it
-		 titleMusic->play();
-		 */
-
 	}
 }

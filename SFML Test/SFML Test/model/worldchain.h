@@ -15,6 +15,7 @@ namespace mp
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {};
 		private:
+			b2World* world;
 			b2Body* chainBody;
 	};
 }

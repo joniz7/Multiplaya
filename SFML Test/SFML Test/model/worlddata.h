@@ -37,7 +37,7 @@ namespace mp
 	class Bullet;
 	class Character;
 
-    class WorldData : public Observable
+    class WorldData : public Observable, public Observer
     {
         public:
 			WorldData();
@@ -53,6 +53,7 @@ namespace mp
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
 			void addChain( b2World* world, b2Vec2 vertices[], int length, float friction );
+			void clearPhysics();
 
 			// Getters
 			// Get list of all characters
@@ -87,6 +88,7 @@ namespace mp
 			void setCurrentCharacterId(int id) {currentCharacterId = id;}
 			int getCurrentCharacterId() {return currentCharacterId;}
 
+			virtual void notify(Event e, void* object);
 			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
 		private:
 			int currentCharacterId;

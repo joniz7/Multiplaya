@@ -17,41 +17,21 @@ namespace mp
 		Window* view;
 		NetworkHandler* network;
 
-		bool viewThreadFinished;
-		bool logicThreadFinished;
+		bool gameThreadFinished;
 		bool networkThreadFinished;
 	};
-	
-	////////////////////////////////////////////////////////////
-	/// \brief Initializes the controller/model thread which runs the game logic.
-	/// \param UserData - must be of type Container.
-	////////////////////////////////////////////////////////////
-	void createLogicThread(void* UserData)
-	{
-		// Lock world data so only one thread can access world data at the same time
-		worldDataMutex.lock();
-		std::cout<<"Starting controller/model thread."<<std::endl;
-		// Cast to controller pointer
-		Container* data = static_cast<Container*>(UserData);
-		// Instantiate model and controller.
-		// (Expects worldData and view to already exist)
-		data->model = new World(data->worldData);
-		worldDataMutex.unlock();
-		// We're done, let the main program continue.
-		data->logicThreadFinished = true;
-		data->model->exec();
-	}
 
 	////////////////////////////////////////////////////////////
 	/// Initializes the view thread which renders the graphics.
 	/// \param UserData - must be of type Container.
 	////////////////////////////////////////////////////////////
-	void createViewThread(void* UserData)
+	void createGameThread(void* UserData)
 	{
-		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
-		std::cout<< "Starting view thread."<<std::endl;
-		// Cast to world data pointer
+
+		std::cout<< "Starting game thread."<<std::endl;
+		
+		// Cast to Container pointer.
 		Container* data = static_cast<Container*>(UserData);
 
 		// Instantiate everything!
@@ -59,33 +39,33 @@ namespace mp
 		data->model = new World(data->worldData);
 		data->view = new Window(data->worldData);
 		data->controller = new Controller(data->model, data->view);
-		// We want to observe WorldData.
+		
+		// The view should observe WorldData.
 		data->worldData->addObserver(data->view->getGameWindow());
-		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
-		// Unlock world data
+
 		worldDataMutex.unlock();
+
 		// We're done, let the main program continue.
-		data->viewThreadFinished = true;
+		data->gameThreadFinished = true;
+		
+		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
+		
 		// Run the view's infinite loop
 		sf::Clock clock;
-		
 		while (true)
 		{
 			float elapsed = clock.getElapsedTime().asSeconds();
+			// Execute controller statements (this also runs model and view).
 			data->controller->exec();
-			data->model->exec();
-			data->view->exec();
 			
-			if(elapsed>(1/20.f))
-			{
+			if(elapsed>(1/20.f)) {
 				clock.restart();
-				if(data->network->isServer)
-				{
+
+				if(data->network->isServer){
 					data->network->updateAllClients();
 				}
 			
-				if(data->network->isClient) 
-				{
+				if(data->network->isClient) {
 					data->network->sendCharacterDataToServer();
 				}
 			}
@@ -95,7 +75,7 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Initializes the network thread which handles sending and receiving data.
+	/// Initializes the network thread which handles the sending and receiving of data.
 	/// \param UserData - must be of type Container.
 	////////////////////////////////////////////////////////////
 	void createNetworkThread(void* UserData)
@@ -115,49 +95,29 @@ namespace mp
 		worldDataMutex.unlock();
 		// We're done, let the main program continue.
 		data->networkThreadFinished = true;
+		// Start the network loop.
 		data->network->exec();
 	}
 
 	////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////
-    //App::App(sf::VideoMode mode) { videoMode = mode; }
-	App::App() { }
-
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
-    App::~App(){}
-
-	////////////////////////////////////////////////////////////
-	// Render window execute function. Starts the game threads
-	//
-	// \return Application exit code
+	/// Starts the two game threads.
+	/// \return Application exit code
 	////////////////////////////////////////////////////////////
     int App::exec()
     {
 		// Contains instances of all parts of our program.
 		Container* data = new Container();
 
-		// Create WorldData.
-		//data->worldData = new WorldData();
-
-/*		// Create and launch the logic thread.
-		// Important: depends on viewThread already being launched!
-		sf::Thread logicThread(&createLogicThread, data);
-		logicThread.launch();
-		while(!data->logicThreadFinished) {}
-*/
-
 		// Create and launch the view thread.
-		sf::Thread viewThread(&createViewThread, data);
-		viewThread.launch();
-		while(!data->viewThreadFinished) {}
-
+		sf::Thread gameThread(&createGameThread, data);
+		gameThread.launch();
+		// Wait here until it's up and running.
+		while(!data->gameThreadFinished) {}
 
 		//Create and launch the network thread
 		sf::Thread networkThread(&createNetworkThread, data);
 		networkThread.launch();
+		// Wait here until it's up and running.
 		while(!data->networkThreadFinished) {}
 
         return EXIT_SUCCESS;

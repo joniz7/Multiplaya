@@ -51,7 +51,7 @@ namespace mp
 			std::map<std::string, CharacterAnimation> animationMap;	// Map containing all animations for the animated sprite.
 			sf::Texture* spriteSheet;	// Pointer to sprite sheet.
 			float frameCounter;		// Keeps track of when to frame advance.
-			int frame;	// Keeps track of which frame of an animation currently is being shown
+			unsigned int frame;	// Keeps track of which frame of an animation currently is being shown
 			CharacterAnimation* p_anm;	// Pointer to animation currently playing.
 			sf::Vector2f spriteSize; // The size of each frame.
     };
