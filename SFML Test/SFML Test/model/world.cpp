@@ -111,6 +111,14 @@ namespace mp
 				reloadStuff();
 
     }
+	
+	////////////////////////////////
+	/// Changes the gravity of the world.
+	/// \param gravity - the new gravity.
+	////////////////////////////////
+	void World::setGravity(const b2Vec2 gravity) {
+		this->world->SetGravity(gravity);
+	}
 
 	void World::deleteBullets()
 	{
@@ -172,6 +180,13 @@ namespace mp
 			std::cout<<std::endl<<"Reloading graphics..."<<std::endl;
 			ResourceHandler::instance().reloadAllTextures();
 			std::cout<<"Graphics reloaded"<<std::endl;
+		}
+
+		if( ConfigHandler::instance().getBool("s_refreshsounds") )
+		{
+			std::cout<<std::endl<<"Reloading sounds..."<<std::endl;
+			ResourceHandler::instance().reloadAllSounds();
+			std::cout<<"Sounds reloaded"<<std::endl;
 		}
 
 		std::cout<<std::endl;

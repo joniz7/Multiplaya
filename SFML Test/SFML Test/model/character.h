@@ -23,7 +23,7 @@
 
 #include "../util/Observable.h"
 #include "worlddata.h"
-
+#include "../services/resourcehandler.h"
 
 namespace mp
 {
@@ -121,6 +121,9 @@ namespace mp
 			bool walking;
 			bool wallSliding;
 			bool flipping;
+
+			sf::Sound soundFire;
+			sf::Sound soundReload;
 
 			sf::Int8 clientID;
 

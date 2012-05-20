@@ -115,8 +115,10 @@ namespace mp
 		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title0.jpg");
 		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title1.jpg");
 		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title2.jpg");
-		
 		ResourceHandler::instance().loadTexture("resources/test/testsprite.png");
+
+		ResourceHandler::instance().loadSound("resources/sound/pistol_fire1.ogg");
+		ResourceHandler::instance().loadSound("resources/sound/pistol_reload1.ogg");
 		
 		// Contains instances of all parts of our program.
 		Container* data = new Container();
