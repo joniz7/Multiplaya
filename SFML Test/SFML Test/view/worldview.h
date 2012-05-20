@@ -21,6 +21,7 @@
 #include "CharacterSprite.h"
 // Box2D specific headers
 #include <Box2D.h>
+#include "../defines.h"
 
 // Game specific headers
 #include "BulletView.h"
@@ -50,8 +51,11 @@ namespace mp
         public:
 			WorldView( WorldData* worldData, sf::RenderWindow* window );
 			void exec();
+
+			/// returns sf::View pointing to camera
 			sf::View* getView() { return camera; }
             ~WorldView();
+
 			virtual void notify(Event e, void* object);
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			virtual void update();
@@ -67,7 +71,6 @@ namespace mp
     		
 		private:
 			std::map<std::string, GUIElement*> buttons;
-			float pixelScale;
 
 			// The directory of resource files.
 			std::string resourcesDir;

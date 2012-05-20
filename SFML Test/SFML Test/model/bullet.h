@@ -14,6 +14,8 @@
 // Box2D specific headers
 #include <Box2D.h>
 
+#include <SFML/System.hpp>
+
 //Defines
 #include "../defines.h"
 #include "GameObject.h"

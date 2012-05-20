@@ -84,7 +84,7 @@ namespace mp
 		float32 angle = character->getBody()->GetAngle();
 		
 		//todo define pixelscale globaly
-		sprite->setPosition(position.x * 1 / 10.0f, position.y * 1 / 10.0f);
+		sprite->setPosition(position.x * PIXEL_SCALE, position.y * PIXEL_SCALE);
 		
 		// Check what animation to play.
 		if( character->isWallSliding() )

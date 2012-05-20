@@ -5,6 +5,7 @@
 #define GAME_OBJECT_VIEW_H
 
 #include "../sfml.h"
+#include "../defines.h"
 
 namespace mp
 {
