@@ -24,10 +24,14 @@ namespace mp
 			getScreen()->hover(mousePos);
 
 			
-			if (ev.type == sf::Event::Closed)
-				getRenderWindow()->close();
-			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape))
-				getRenderWindow()->close();
+			if (ev.type == sf::Event::Closed) {
+				// Tell our parent to exit the game.
+				notifyObservers(Event::EXIT_GAME, 0);
+			}
+			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape)) {
+				// Tell our parent to exit the game.
+				notifyObservers(Event::EXIT_GAME, 0);
+			}
 
 			if (ev.type == sf::Event::MouseButtonReleased)
 			{
