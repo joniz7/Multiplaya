@@ -91,6 +91,20 @@ namespace mp
 			}
 		}
 	}
+
+	bool WorldData::exists(sf::Int8 clientID)
+	{
+		for(int i = 0; i<characters.size(); i++)
+		{
+			Character* character = characters.at(i);
+			if(character->getClientID() == clientID)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	////////////////////////////////////////////////////////////
 	// Adds a generic body to the world
 	// returns true upon success

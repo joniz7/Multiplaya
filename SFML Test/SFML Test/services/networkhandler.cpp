@@ -536,9 +536,12 @@ namespace mp
 	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle)
 	{
 		worldDataMutex.lock();
-		Character* character = worldData->getCharacter(clientID);
-		character->setPosition(position, angle);
-		character->setLinVelocity(velocity);
+		if(worldData->exists(clientID))
+		{
+			Character* character = worldData->getCharacter(clientID);
+			character->setPosition(position, angle);
+			character->setLinVelocity(velocity);
+		}
 		worldDataMutex.unlock();
 	}
 
