@@ -59,6 +59,7 @@ namespace mp
 		}
 		else if (e == CHARACTER_ADDED)
 		{
+			std::cout << "Adding character to view" << std::endl;
 			Character* character = (Character*)object;
 			addCharacter(character);
 		}
@@ -95,7 +96,6 @@ namespace mp
 
 	void WorldView::addCharacter(Character* character)
 	{
-		std::cout << "Adding character to view" << std::endl;
 		characters.push_back( new CharacterView( character ) );
 	}
 
