@@ -33,7 +33,9 @@ namespace mp
 		screens["joinGameScreen"] = new JoinGameScreen(resolution);
 		screens["settingsScreen"] = new SettingsScreen(resolution);
 		// will change
-		screens["hostScreen"] = new WorldView(worldData, window);
+		screens["gameScreen"] = new WorldView(worldData, window);
+		screens["hostScreen"] = new HostGameScreen(resolution);
+		
 
 	}
 
@@ -52,12 +54,14 @@ namespace mp
 		this->draw(screens["joinGameScreen"]);
 	}
 	void Window::drawHostMenu() {
-		// TODO should be moved to drawGame() later.
-		screens["hostScreen"]->update();
 		this->draw(screens["hostScreen"]);
 	}
 	void Window::drawSettingsMenu() {
 		this->draw(screens["settingsScreen"]);
+	}
+	void Window::drawGame()	{
+		screens["gameScreen"]->update();
+		this->draw(screens["gameScreen"]);
 	}
 
 	//////////////////////////////////

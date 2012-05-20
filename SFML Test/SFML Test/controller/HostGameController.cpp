@@ -31,16 +31,15 @@ namespace mp
 				
 				if( hostButton->isMouseOver(mousePos) )
 				{
-					
 					hostButton->click();
-					notifyObservers(Event::SHOW_HOST, 0);
+					notifyObservers(START_GAME, 0);
 				}
 				
 				
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
-					notifyObservers(Event::SHOW_MAIN_MENU, 0);
+					notifyObservers(SHOW_MAIN_MENU, 0);
 				}
 
 				if ( gravityTextField->isMouseOver(mousePos) )
