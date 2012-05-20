@@ -554,6 +554,8 @@ namespace mp
 		delete deathsSprite;
 		delete hpSprite;
 		delete ammoSprite;
+		delete killsText;
+		delete deathsText;
 
 		// Destroy debug labels.
 		delete fontGothic;

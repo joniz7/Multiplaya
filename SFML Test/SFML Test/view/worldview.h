@@ -44,7 +44,6 @@ namespace mp
 	class BulletView;
 	class GameObjectView;
 	class HUDSprite;
-	class CharacterSprite; // TODO remove, after sprites has been fully moved to CharacterView.
     
 	class WorldView : public Screen, public Observer
     {
@@ -78,7 +77,6 @@ namespace mp
 			sf::Texture* deathsTexture;
 			
 			// HUD sprites.
-			// TODO: delete in constructor!
 			sf::Sprite* killsSprite;
 			sf::Sprite* deathsSprite;
 			HUDSprite* hpSprite;
@@ -112,10 +110,7 @@ namespace mp
 
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
-			// TODO remove, after sprites has been fully moved to CharacterView.
-			mp::CharacterSprite* characterSprite;
-			sf::Texture* characterTexture;
-
+			
 			sf::Vector2f* mousePosOld;
 			sf::Vector2f* mousePos;
 			sf::Vector2i* mousePosWindow;

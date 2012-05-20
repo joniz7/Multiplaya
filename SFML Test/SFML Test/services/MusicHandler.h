@@ -35,12 +35,12 @@ namespace mp
 			// Currently playing song.
 			sf::Music* currentlyPlaying;
 			// Settings.
-			bool titleMusicEnabled;
+			bool menuMusicEnabled;
 			bool bgMusicEnabled;
 
-			float titleMusicPitch;
+			float menuMusicPitch;
 			float bgMusicPitch;
-			float titleMusicVolume;
+			float menuMusicVolume;
 			float bgMusicVolume;
     };
 }

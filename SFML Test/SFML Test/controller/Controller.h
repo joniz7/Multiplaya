@@ -10,28 +10,38 @@
 #include "../services/confighandler.h"
 #include "../services/MusicHandler.h"
 #include "../util/Observer.h"
+#include "../util/Event.h"
 #include "../model/world.h"
 
 namespace mp
-{					// TODO implement observers?
-	class Controller// : public Observer
+{
+	class Controller : public Observer
 	{
+		// The different states the game can be in.
+		enum State {
+			MAIN_MENU,
+			JOIN_MENU,
+			HOST_MENU,
+			SETTINGS_MENU,
+			INGAME,
+			INGAME_MENU
+		};
+
 
 		public:
 			Controller(World* world, Window* window);
 			virtual ~Controller();
-			// TODO implement observers?
-			//void notify(Event e, void* object); // Observer-stuff
+			void notify(Event e, void* object); // Observer-stuff
 			void exec();
 			void setNetworkHandler(NetworkHandler* network);
 		protected:
 		private:
-			bool inGame;
+			State state;
+			bool runGame;
 			std::map<std::string, IController*> controllers;
 			World* world;
 			Window* window;
 			sf::RenderWindow* renderWindow;
-			sf::Music* titleMusic;
 
 	};
 }

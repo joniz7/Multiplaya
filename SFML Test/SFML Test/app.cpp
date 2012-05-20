@@ -108,7 +108,7 @@ namespace mp
 		// Contains instances of all parts of our program.
 		Container* data = new Container();
 
-		// Create and launch the view thread.
+		// Create and launch the game thread.
 		sf::Thread gameThread(&createGameThread, data);
 		gameThread.launch();
 		// Wait here until it's up and running.

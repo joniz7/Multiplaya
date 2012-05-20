@@ -32,30 +32,28 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	MusicHandler::MusicHandler() {
 		// Fetch settings from config.
-		titleMusicEnabled = ConfigHandler::instance().getBool("m_titlemusicenabled");
+		menuMusicEnabled = ConfigHandler::instance().getBool("m_menumusicenabled");
 		bgMusicEnabled = ConfigHandler::instance().getBool("m_bgmusicenabled");
-		titleMusicPitch = ConfigHandler::instance().getFloat("m_titlemusicpitch");
+		menuMusicPitch = ConfigHandler::instance().getFloat("m_menumusicpitch");
 		bgMusicPitch = ConfigHandler::instance().getFloat("m_bgmusicpitch");
-		titleMusicVolume = ConfigHandler::instance().getFloat("m_titlemusicvolume");
-		bgMusicVolume = ConfigHandler::instance().getFloat("m_titlemusicvolume");
+		menuMusicVolume = ConfigHandler::instance().getFloat("m_menumusicvolume");
+		bgMusicVolume = ConfigHandler::instance().getFloat("m_bgmusicvolume");
 
 		// Nothing is currently playing.
 		currentlyPlaying = NULL;
 
 		std::string resourcesDir = "resources/";
 
-		// Load title music.
-		if (titleMusicEnabled) {
-			sf::Music* titleMusic = new sf::Music();
-			if (!titleMusic->openFromFile(resourcesDir+"music/title.ogg")) {
-				std::cout << "MusicHandler: loading of title.ogg failed!" << std::endl;
+		// Load menu music.
+		if (menuMusicEnabled) {
+			sf::Music* menuMusic = new sf::Music();
+			if (!menuMusic->openFromFile(resourcesDir+"music/menu.ogg")) {
+				std::cout << "MusicHandler: loading of menu.ogg failed!" << std::endl;
 			}
-			titleMusic->setPitch(titleMusicPitch);
-			titleMusic->setVolume(titleMusicVolume);
-			titleMusic->setLoop(true);
-			std::cout << "playSong() 1" << std::endl;
-			songs.insert(std::pair<std::string,sf::Music*>("title",titleMusic) );
-			std::cout << "playSong() 2!" << std::endl;
+			menuMusic->setPitch(menuMusicPitch);
+			menuMusic->setVolume(menuMusicVolume);
+			menuMusic->setLoop(true);
+			songs.insert(std::pair<std::string,sf::Music*>("menu",menuMusic) );
 		}
 		// Load in-game music.
 		if (bgMusicEnabled) {

@@ -30,6 +30,7 @@
 #include "../global.h"
 
 #include "../view/worldview.h"
+#include "../util/Observable.h"
 
 namespace mp
 {

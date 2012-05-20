@@ -113,9 +113,6 @@
     <ClCompile Include="view\Window.cpp">
       <Filter>src\view</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="controller\GameController.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
@@ -265,9 +262,6 @@
     <ClInclude Include="view\Window.h">
       <Filter>src\view</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="controller\GameController.h">
       <Filter>src\controller</Filter>
     </ClInclude>
@@ -316,11 +310,11 @@
     <ClInclude Include="model\worldchain.h">
       <Filter>src\model</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
     <ClInclude Include="model\ICharacter.h">
       <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Event.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,14 +2,14 @@
 #define ICONTROLLER_H
 
 #include <SFML/Graphics.hpp>
-#include "../GameState.h"
+#include "../util/Observable.h"
 
 namespace mp
 {
 	class Screen;
 
 	/// IController interface which all controllers implements
-	class IController
+	class IController : public Observable
 	{
 		public:
 			 IController(sf::RenderWindow* window, Screen* screen);
