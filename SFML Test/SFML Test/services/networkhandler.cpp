@@ -80,7 +80,7 @@ namespace mp
 			//std::cout<<"Receiving data..."<<std::endl;
 			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
-			/*
+			
 			if(isServer)
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
@@ -94,15 +94,15 @@ namespace mp
 					else
 					{
 						(*it).second.disconnectCounter++;
-						if((*it).second.disconnectCounter == 100)
+						if((*it).second.disconnectCounter == 400)
 						{
-							//disconnectClient((*it).first);
+							disconnectClient((*it).first);
 						}
 					}
 					std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
-			*/
+			
 
 			//Tries to read what type of message the packet was
 			if(!(receivedData >> type))
@@ -408,7 +408,14 @@ namespace mp
 
 		std::cout<<client.name<<" has disconnected"<<std::endl;
 
-		clientMap.erase(clientID);
+		std::map<sf::Int8, Client>::iterator it;
+		it = clientMap.find(clientID);
+		
+		/*
+		if(it != clientMap.end())
+			clientMap.erase(it);
+		*/
+
 		removeCharacter(clientID);
 	}
 
@@ -453,7 +460,8 @@ namespace mp
 			yvel = tempCharacter->getLinVelocity().y;
 			angle = tempCharacter->getAngle();
 
-			packet << tempClientID << x << y << xvel << yvel << angle;
+			if(tempClientID != clientID)
+				packet << tempClientID << x << y << xvel << yvel << angle;
 		}
 
 		sender.send(packet, clientMap[clientID].IP, receivePort);
@@ -470,7 +478,7 @@ namespace mp
 		float32 x, y;
 		packet << type << numOfChars;
 
-		for(int i = 0; i<numOfChars; i++)
+		for(int i = 0; i<numOfChars-1; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
 			tempClientID = tempCharacter->getClientID();
@@ -499,7 +507,8 @@ namespace mp
 		
 		for(it = clientMap.begin(); it != clientMap.end(); it++)
 		{
-			sender.send(packet, (*it).second.IP, 55001);
+			if(it != clientMap.end())
+				sender.send(packet, (*it).second.IP, 55001);
 		}
 	}
 
@@ -512,7 +521,8 @@ namespace mp
 
 		for(it = clientMap.begin(); it != clientMap.end(); it++)
 		{
-			sendCharacterDataToClient((*it).first);
+			if(it != clientMap.end())
+				sendCharacterDataToClient((*it).first);
 		}
 	}
 
@@ -568,17 +578,21 @@ namespace mp
 			{
 				connectToServer("testClient");
 			}
-		} else if(e == BULLET_ADDED) 
+		} 
+		else if(e == BULLET_ADDED) 
 		{
-			sendMessageToEveryone("Bullet added to buffer");
+			//sendMessageToEveryone("Bullet added to buffer");
 			//bulletsToSend.push_back((Bullet*)object);
-		} else if(e == BULLET_DELETED) 
+		} 
+		else if(e == BULLET_DELETED) 
 		{
-			sendMessageToEveryone("Bullet deleted");
-		} else if(e == CHARACTER_ADDED)
+			//sendMessageToEveryone("Bullet deleted");
+		} 
+		else if(e == CHARACTER_ADDED)
 		{
 			sendMessageToEveryone("Character deleted");
-		} else if(e == CHARACTER_DELETED)
+		} 
+		else if(e == CHARACTER_DELETED)
 		{
 			sendMessageToEveryone("Bullet deleted");
 		}
