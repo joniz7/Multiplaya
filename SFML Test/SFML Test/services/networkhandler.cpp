@@ -152,8 +152,6 @@ namespace mp
 						std::cout<<"type 4"<<std::endl;
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
 						test = worldData->getCharacter(0)->getClientID();
-						std::cout<<test<<std::endl;
-						std::cout<<clientMap.size()<<std::endl;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
 
