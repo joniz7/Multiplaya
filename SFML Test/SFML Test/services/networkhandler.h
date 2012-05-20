@@ -67,6 +67,8 @@ namespace mp
 			sf::Int8 myID;
 			bool hasConnected;
 			std::vector<Bullet*> bulletsToSend;
+
+			bool sendOutput;
     };
 }
 
