@@ -6,6 +6,7 @@
 #include "worlddata.h"
 
 #include <iostream>
+#include <fstream>
 
 #include "ContactListener.h"
 #include "../global.h"
@@ -23,7 +24,7 @@ namespace mp
     {
 		this->worldData = worldData;
 		// Setup the world properties
-		b2Vec2 gravity(0, -9.8f * 8);
+		const b2Vec2 gravity(0, -9.8f * 8);
 		// Create the world
 		world = new b2World(gravity);
 		worldDataMutex.lock();
@@ -44,9 +45,13 @@ namespace mp
 		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
 		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
 
+
 		// Add´test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
-		worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
+		//worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
+
+		// Load world physics
+		loadMap("resources/maps/test");
 
 		// Unlock world data
 		worldDataMutex.unlock();
@@ -75,7 +80,7 @@ namespace mp
 
 			for(std::vector<Bullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
 				//(*it)->getBody()->ApplyForce( b2Vec2(900000.8f * 8,0), (*it)->getBody()->GetPosition() );
-				(*it)->getBody()->ApplyForce( b2Vec2( 0, 12), (*it)->getBody()->GetPosition());
+				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0), (*it)->getBody()->GetPosition());
 			}
 
 			// Delete bullets, now that we're finished with physics.
@@ -95,6 +100,12 @@ namespace mp
 			}
 
 		//}
+
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+			{
+				reloadMap();
+			}
+
     }
 
 	void World::deleteBullets()
@@ -124,8 +135,100 @@ namespace mp
 	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type)
 	{
 		worldDataMutex.lock();
-		worldData->addBullet(new Bullet(type, clientID, world, position, force, worldData));
+		worldData->addBullet(new Bullet(type, clientID, world, position, force));
 		worldDataMutex.unlock();
+	}
+
+	////////////////////////////////////////////////////////////
+	// Load a map
+	////////////////////////////////////////////////////////////
+	void World::loadMap(const std::string& path)
+	{
+		currentMap = path;
+		std::cout<<"Loading world physics..."<<std::endl;;
+		loadPhysics(currentMap);
+		std::cout<<std::endl<<"World physics loaded"<<std::endl;
+		//loadGraphics(currentMap);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Reload current map
+	////////////////////////////////////////////////////////////
+	void World::reloadMap()
+	{
+		std::cout<<"Reloading world physics..."<<std::endl;;
+		loadPhysics(currentMap);
+		std::cout<<std::endl<<"World physics reloaded"<<std::endl;
+		//loadGraphics(currentMap);
+	}
+
+	////////////////////////////////////////////////////////////
+	// Load map physics
+	////////////////////////////////////////////////////////////
+	void World::loadPhysics(const std::string& path)
+	{
+		// Clear any physics already loaded
+		worldDataMutex.lock();
+		worldData->clearPhysics();
+		worldDataMutex.unlock();
+
+		std::string physicsFile = path;
+		physicsFile.append("/physics.po");
+
+		std::ifstream fileReader;
+		fileReader.open(physicsFile.c_str());
+        if(!fileReader)
+        {
+            std::cout<<"FATAL ERROR: Unable to open physics file for map "<<physicsFile<<std::endl;
+			return;
+        }
+		else
+		{
+			std::string line;
+			while(getline(fileReader,line))
+            {
+				if(!line.empty())
+				{
+					bool search = true;
+					int vCount = 0;
+					b2Vec2 vs[99];
+					while(search)
+					{
+						short pos1 = line.find("(");
+
+						if(pos1==std::string::npos)
+							search = false;
+						else
+						{
+							short pos2 = line.find(")");
+
+							std::string data = line.substr(pos1+1,pos2-(pos1+1));
+
+							int comPos = data.find(",");
+
+							int x = atoi( (data.substr(0,comPos)).c_str() );
+							int y = atoi( (data.substr(comPos+1,pos2-(comPos+1))).c_str() );
+
+							vs[vCount].Set((float)x,(float)y);
+
+							//std::cout<<"Vertex: "<<vCount<<std::endl<<"X: "<<x<<std::endl<<"Y: "<<y<<std::endl;
+
+							std::string temp = line.substr(pos2+1,line.size()-(pos2+1));
+							line = temp;
+							vCount++;
+						}
+					}
+					if(vCount>1)
+					{
+						worldDataMutex.lock();
+						worldData->addChain(world, vs, vCount, 0.5f);
+						worldDataMutex.unlock();
+					}
+
+				}
+            }
+		}
+		fileReader.close();
 	}
 
 	////////////////////////////////////////////////////////////

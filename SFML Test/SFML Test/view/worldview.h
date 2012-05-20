@@ -34,6 +34,7 @@
 
 #include "Screen.h"
 #include "GUIElements/GUIElement.h"
+#include "LayerHandler.h"
 
 namespace mp
 {
@@ -56,8 +57,12 @@ namespace mp
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
 			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
-			void zoom(float factor);
+			void zoom(float zoomFactor);
+			void zoomIn();
+			void zoomOut();
 			sf::View* getCamera() { return camera; }
+
+			void characterMoved(float moved);
 			
 		protected:
     		
@@ -80,13 +85,13 @@ namespace mp
 			HUDSprite* ammoSprite;
 			sf::Text* killsText;
 			sf::Text* deathsText;
-
-			sf::Music* music;
 			
 			mutable sf::RenderWindow* window;
 
 			WorldData* worldData;
 			sf::View* camera;
+			unsigned int zoomLevel;
+			unsigned int zoomLevelMax;
 			
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
@@ -105,8 +110,6 @@ namespace mp
 			sf::RectangleShape* ground3;
 			sf::RectangleShape* ground4;
 
-			sf::Texture* lightTex;
-			sf::Sprite* lightSpr;
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
 			// TODO remove, after sprites has been fully moved to CharacterView.
@@ -120,6 +123,8 @@ namespace mp
 
 			void addBullet(Bullet* bullet);
 			void deleteBullet(int i);
+
+			void addCharacter(Character* character);
 
 			void constructMapGraphics();
 
@@ -153,6 +158,11 @@ namespace mp
 			int counter;
 			float elapsed;
 
+			LayerHandler* layerHandler;
+			sf::Texture* sunTexture;
+			sf::Sprite* sunSprite;
+
+			float characterXPos;
     };
 }
 

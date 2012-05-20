@@ -20,6 +20,9 @@ namespace mp
 		currentClientID = 1;
 		myID = 0;
 
+		isServer = false;
+		isClient = false;
+
 		hasConnected = false;
 
 		receivePort = 55001;
@@ -29,7 +32,11 @@ namespace mp
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
-		myIP = "85.226.172.153";
+		serverIP = serverIP.getLocalAddress();
+		std::cout<<"Your IP is: "<<serverIP<<std::endl;
+
+		clientMap[myID].IP = serverIP;
+		clientMap[myID].name = "host";
     }
 
 	void NetworkHandler::exec() 
@@ -58,6 +65,9 @@ namespace mp
 
 		std::vector<Character*>* characters;
 
+		std::map<sf::Int8, Client>::iterator it;
+		int test;
+
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
 		/// Constantly checks if there are any incoming data packets
@@ -65,7 +75,8 @@ namespace mp
 		while(running) 
 		{
 			//Receives a packet
-			std::cout<<"Receiving data..."<<std::endl;
+			//std::cout<<"Receiving data..."<<std::endl;
+			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
 
 			//Tries to read what type of message the packet was
@@ -79,30 +90,36 @@ namespace mp
 				{
 					//Client trying to connect
 					case 1:
+						//std::cout<<"type 1"<<std::endl;
 						//Creates a client from the data
-						receivedData >> name >> x >> y;
+						if(isServer) 
+						{
+							receivedData >> name >> x >> y;
 	
-						client.IP = senderIP;
-						client.name = name;
+							client.IP = senderIP;
+							client.name = name;
 
-						//adds that client to the clientmap
-						clientMap[currentClientID] = client;
+							//adds that client to the clientmap
+							clientMap[currentClientID] = client;
 
-						std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
+							std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
 
-						position.x = x;
-						position.y = y;
-						size.x = 1.0f;
-						size.y = 2.0f;
+							position.x = x;
+							position.y = y;
+							size.x = 1.0f;
+							size.y = 2.0f;
 
-						model->createCharacter(position, size, currentClientID);
+							model->createCharacter(position, size, currentClientID);
 
-						sendClientID(currentClientID);
-						currentClientID++;
+							sendClientID(currentClientID);
+							sendCharactersToClient(currentClientID);
+							currentClientID++;
+						}
 						break;
 
 					//Client trying to disconnect
 					case 2:
+						//std::cout<<"type 2"<<std::endl;
 						receivedData >> clientID;
 
 						client = clientMap[clientID];
@@ -114,34 +131,37 @@ namespace mp
 
 					//Receive a text message and send it to all clients
 					case 3:
+						//std::cout<<"type 3"<<std::endl;
 						message.clear();
 						receivedData >> message;
-						std::cout<<"Recieved a message: "<<message<<std::endl;
+						//std::cout<<"Recieved a message: "<<message<<std::endl;
 
 						//If the clientMap is empty there are no clients to send to
 						if(!clientMap.empty())
 						{
-							//Loops through the clientMap and sends the message to everyone
-							for(sf::Int8 i = 1; i <= clientMap.size(); i++)
+							for(it = clientMap.begin(); it != clientMap.end(); it++)
 							{
-								client = clientMap[i];
-								sendMessage(message, client.IP);
-								std::cout<<"Message sent to "<<client.IP<<std::endl;
+								sendMessage(message, (*it).second.IP);
+								std::cout<<"Message sent to "<<(*it).second.IP<<std::endl;
 							}
 						}
 
 						break;
 					//Receive character data from a client.
 					case 4:
+						//std::cout<<"type 4"<<std::endl;
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
-
+						test = worldData->getCharacter(0)->getClientID();
+						//std::cout<<test<<std::endl;
+						std::cout<<clientMap.size()<<std::endl;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
 
-						setCharacterData(clientID, position, velocity, angle);
+						//setCharacterData(clientID, position, velocity, angle);
 						break;
 					//Receive bullet data from a client
 					case 5:
+						//std::cout<<"type 5"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//All the bullets in the packet is added to the world
@@ -157,17 +177,23 @@ namespace mp
 						break;
 					//Recieve your ID from the server
 					case 11:
+						//std::cout<<"type 11"<<std::endl;
 						receivedData >> myID;
+						worldDataMutex.lock();
+						worldData->getCharacter(0)->setClientID(myID);
+						worldDataMutex.unlock();
 						hasConnected = true;
 						break;
 					//Receive a text message
 					case 12:
+						//std::cout<<"type 12"<<std::endl;
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
 					//Receive character data from the server
 					case 13:
+						//std::cout<<"type 13"<<std::endl;
 						receivedData >> numOfChars;
 
 						for(int i = 0; i<numOfChars; i++)
@@ -181,6 +207,7 @@ namespace mp
 						break;
 					//Receive bullet data from the server
 					case 14:
+						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//The current bullet list is cleared
@@ -197,6 +224,23 @@ namespace mp
 							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
 						}
 						break;
+					//Receive character data from the server
+					case 15:
+						std::cout<<"type 15"<<std::endl;
+						receivedData >> numOfChars;
+
+						size.Set(1.0f, 2.0f);
+
+						for(int i = 0; i<numOfChars; i++)
+						{
+							receivedData >> clientID >> x >> y;
+							position.Set(x,y);
+
+							model->createCharacter(position, size, clientID);
+
+						}
+						break;
+
 				}
 			}
 		}
@@ -232,7 +276,7 @@ namespace mp
 		sf::Int8 type = 12;
 		packet << type << message;
 
-		sender.send(packet, myIP, receivePort);
+		sender.send(packet, serverIP, receivePort);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -247,7 +291,7 @@ namespace mp
 		sf::Int8 type = 3;
 		packet << type << message;
 
-		sender.send(packet, myIP, 55001);
+		sender.send(packet, serverIP, 55001);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -266,7 +310,7 @@ namespace mp
 
 		packet << type << name << x << y;
 
-		sender.send(packet, myIP, 55001);
+		sender.send(packet, serverIP, 55001);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -286,11 +330,69 @@ namespace mp
 		worldDataMutex.unlock();
 
 		packet << type << myID << x << y << xvel << yvel << angle;
-		sender.send(packet, myIP, 55001);
-
+		sender.send(packet, serverIP, 55001);
 	}
 
-	
+	////////////////////////////////////////////////////////////
+	/// Sends the data of all the character to the specified client
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendCharacterDataToClient(sf::Int8 clientID)
+	{
+		sf::Int8 type = 13, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Packet packet;
+		Character* tempCharacter;
+		float32 x, y, xvel, yvel, angle;
+		packet << type << numOfChars;
+
+		for(int i = 0; i<numOfChars; i++)
+		{
+			tempCharacter = worldData->getCharacter(i);
+			tempClientID = tempCharacter->getClientID();
+			x = tempCharacter->getPosition().x;
+			y = tempCharacter->getPosition().y;
+			xvel = tempCharacter->getLinVelocity().x;
+			yvel = tempCharacter->getLinVelocity().y;
+			angle = tempCharacter->getAngle();
+
+			packet << tempClientID << x << y << xvel << yvel << angle;
+		}
+
+		sender.send(packet, clientMap[clientID].IP, receivePort);
+	}
+
+	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
+	{
+		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Packet packet;
+		Character* tempCharacter;
+		float32 x, y;
+		packet << type << numOfChars;
+
+		for(int i = 0; i<numOfChars; i++)
+		{
+			tempCharacter = worldData->getCharacter(i);
+			tempClientID = tempCharacter->getClientID();
+			x = tempCharacter->getPosition().x;
+			y = tempCharacter->getPosition().y;
+
+			packet << tempClientID << x << y;
+		}
+
+		sender.send(packet, clientMap[clientID].IP, receivePort);
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sends the data of all the character to the all clients
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::updateAllClients()
+	{
+		std::map<sf::Int8, Client>::iterator it;
+
+		for(it = clientMap.begin(); it != clientMap.end(); it++)
+		{
+			sendCharacterDataToClient((*it).first);
+		}
+	}
 
 	////////////////////////////////////////////////////////////
 	/// Sends the client ID to the specified client
@@ -318,6 +420,13 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	void NetworkHandler::setIPAddress(const sf::String IPAddress)
+	{
+		serverIP = IPAddress.toAnsiString();
+	}
+
+
+
 	////////////////////////////////////////////////////////////
 	/// If the notification is connectToServer the client will try
 	/// to connect to the server.
@@ -333,11 +442,12 @@ namespace mp
 			if(!hasConnected)
 			{
 				connectToServer("testClient");
+				std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
 			}
 		} else if(e == BULLET_ADDED) 
 		{
 			sendMessageToEveryone("Bullet added to buffer");
-			bulletsToSend.push_back((Bullet*)object);
+			//bulletsToSend.push_back((Bullet*)object);
 		} else if(e == BULLET_DELETED) 
 		{
 			sendMessageToEveryone("Bullet deleted");

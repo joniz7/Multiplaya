@@ -8,7 +8,6 @@ namespace mp
 		groundBodyDef.position.Set(xPos, yPos);
 
 		b2Body* groundBody = world->CreateBody(&groundBodyDef);
-
 		b2PolygonShape groundBox;
 		groundBox.SetAsBox(width, height);
 

@@ -11,7 +11,7 @@
 #include <cmath>
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/System.hpp>
 
 // Box2D specific headers
 #include <Box2D.h>
@@ -35,6 +35,10 @@ namespace mp
 			void createCharacter(b2Vec2 positions, b2Vec2 size, sf::Int8 clientID);
 			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type);
 			void deleteBullets();
+			void loadMap(const std::string& path);
+			void reloadMap();
+			void loadPhysics(const std::string& path);
+			void reloadPhysics();
         private:
 			WorldData* worldData;
 			b2World* world;
@@ -43,6 +47,7 @@ namespace mp
 			int32 velocityIterations;
 			int32 positionIterations;
 			sf::Clock* clock;
+			std::string currentMap;
 
     };
 }

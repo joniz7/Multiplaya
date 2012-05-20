@@ -3,6 +3,7 @@
 
 #include "IController.h"
 #include "../view/JoinGameScreen.h"
+#include "../services/networkhandler.h"
 #include <iostream>
 
 namespace mp
@@ -13,6 +14,7 @@ namespace mp
 			JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen);
 			virtual ~JoinGameController();
 			void handleInput();
+			void setNetworkHandler(NetworkHandler* network){networkHandler = network;};
 		protected:
 		private:
 			sf::Event ev;
@@ -31,6 +33,10 @@ namespace mp
 
 			GUIElement* ipTextField;
 			GUIElement* portTextField;
+
+			NetworkHandler* networkHandler;
+
+			sf::Clock clock;
 
 	};
 }

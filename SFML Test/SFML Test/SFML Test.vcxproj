@@ -96,8 +96,10 @@
     <ClCompile Include="model\ContactListener.cpp" />
     <ClCompile Include="model\Wall.cpp" />
     <ClCompile Include="model\world.cpp" />
+    <ClCompile Include="model\worldchain.cpp" />
     <ClCompile Include="model\worlddata.cpp" />
     <ClCompile Include="services\confighandler.cpp" />
+    <ClCompile Include="services\input.cpp" />
     <ClCompile Include="services\keylookup.cpp" />
     <ClCompile Include="services\MusicHandler.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
@@ -133,6 +135,7 @@
     <ClInclude Include="controller\MainScreenController.h" />
     <ClInclude Include="controller\Player.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="global.h" />
@@ -140,10 +143,13 @@
     <ClInclude Include="model\character.h" />
     <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\GameObject.h" />
+    <ClInclude Include="model\ICharacter.h" />
     <ClInclude Include="model\Wall.h" />
     <ClInclude Include="model\world.h" />
+    <ClInclude Include="model\worldchain.h" />
     <ClInclude Include="model\worlddata.h" />
     <ClInclude Include="services\confighandler.h" />
+    <ClInclude Include="services\input.h" />
     <ClInclude Include="services\keylookup.h" />
     <ClInclude Include="services\MusicHandler.h" />
     <ClInclude Include="services\networkhandler.h" />

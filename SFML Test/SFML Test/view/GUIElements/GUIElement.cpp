@@ -15,6 +15,10 @@ namespace mp
 	   // alignment = CENTER;
 
 		background = new sf::RectangleShape( sf::Vector2f(float(width), float(height)));
+		borderThickness = 0;
+		background->setOutlineThickness(borderThickness);
+		borderColor = sf::Color::White;
+		background->setOutlineColor(borderColor);
 		background->setPosition(xPos, yPos);
 	}
 

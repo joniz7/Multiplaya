@@ -2,7 +2,7 @@
 #define SCREEN_H
 
 #include <string>
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace mp
 {

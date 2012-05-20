@@ -3,6 +3,7 @@
 namespace mp {
 	Player::Player()
 	{
+		input = new Input();
 	}
 
 	void Player::setCharacter(Character* character)
@@ -14,7 +15,7 @@ namespace mp {
 	{
 	}
 
-	void Player::update(const sf::Vector2f &mousePos) 
+	void Player::update(const sf::Vector2f &mousePos)
 	{
 		checkUserInput(mousePos);
 	}
@@ -24,10 +25,10 @@ namespace mp {
 		bool nullifyLinearDamping = true;	// Determines if we should nullify linear damping at the end of this frame
 		character->setWallSliding(false);
 		// Movement keys are pressed
-		if( pressingKeyForMovingLeft() || pressingKeyForMovingRight() )
+		if( input->btnDwnLeft() || input->btnDwnRight() )
 		{
 			// Left movement key is pressed
-			if ( pressingKeyForMovingLeft() && !pressingKeyForMovingRight() )	// Character should face left
+			if ( input->btnDwnLeft() && !input->btnDwnRight() )	// Character should face left
 			{
 				worldDataMutex.lock();
 				character->setIsFacingLeft(true);
@@ -42,7 +43,7 @@ namespace mp {
 				worldDataMutex.unlock();
 			}
 			// Right movement key is pressed
-			else if ( pressingKeyForMovingRight() && !pressingKeyForMovingLeft() )	// Character should face right
+			else if ( input->btnDwnRight() && !input->btnDwnLeft() )	// Character should face right
 			{
 				worldDataMutex.lock();
 				character->setIsFacingLeft(false);
@@ -58,24 +59,28 @@ namespace mp {
 			}
 
 			// If we're not trying to move in both directions at once
-			if( !(pressingKeyForMovingLeft() && pressingKeyForMovingRight()) )
+			if( !(input->btnDwnLeft() && input->btnDwnRight()) )
 			{
-				if ( pressingKeyForMovingLeft() && !pressingKeyForMovingRight() )
-					if(character->isGrounded())
+				if ( input->btnDwnLeft() && !input->btnDwnRight() ) {
+					if(character->isGrounded()) {
 						moveLeft(18,50);
-					else
+					} else {
 						moveLeft(18,5);
-				else if ( pressingKeyForMovingRight() && !pressingKeyForMovingLeft() )
-					if(character->isGrounded())
+					}
+				}
+				else if ( input->btnDwnRight() && !input->btnDwnLeft() ) {
+					if(character->isGrounded()) {
 						moveRight(18,50);
-					else
+					} else {
 						moveRight(18,5);
+					}
+				}
 
-				if (pressingKeyForMovingLeft() || pressingKeyForMovingRight() && character->isGrounded()) {
+				if (input->btnDwnLeft() || input->btnDwnRight() && character->isGrounded()) {
 					worldDataMutex.lock();
 					character->setWalking(true);
 					worldDataMutex.unlock();
-				} 
+				}
 				else {
 					worldDataMutex.lock();
 					character->setWalking(false);
@@ -84,30 +89,30 @@ namespace mp {
 			}
 		}
 
-		if( !(pressingKeyForMovingLeft() || pressingKeyForMovingRight()) && character->isGrounded() )
-		{
+		if( !(input->btnDwnLeft() || input->btnDwnRight()) && character->isGrounded() ) {
 			// Set linear damping so we stop
 			character->getBody()->SetLinearDamping(10);
+			character->setWalking(false);
 			nullifyLinearDamping = false;
 		}
 
-		if ( pressingKeyForMovingUp() ) 
+		if ( input->btnDwnUp() )
 		{
 			//moveUp();
 		}
-		if ( pressingKeyForMovingDown() ) 
+		if ( input->btnDwnDown() )
 		{
 			moveDown();
 		}
-		if( pressingKeyForPrimaryFire() )
+		if( input->btnDwnPrimary() )
         {
-			b2Vec2 targetPos(mousePos.x, mousePos.y); 
+			b2Vec2 targetPos(mousePos.x, mousePos.y);
 			worldDataMutex.lock();
 			character->primaryFire(targetPos);
 			worldDataMutex.unlock();
         }
-			
-		if ( pressingKeyForJumping() )
+
+		if ( input->btnDwnJump() )
 		{
 			//same as above will be moved to character class
 			if(released)
@@ -130,49 +135,16 @@ namespace mp {
 			released = true;
 		}
 
-		if ( pressingKeyForConnecting() )
+		/*if ( pressingKeyForConnecting() )
 		{
 			//worldData->notify() bblala
 			worldDataMutex.lock();
 			character->connectToServer();
 			worldDataMutex.unlock();
-		}
-		
+		}*/
 
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);
-	}
-
-	bool Player::pressingKeyForJumping()
-	{
-		return sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-	}
-
-	bool Player::pressingKeyForPrimaryFire()
-	{
-		return sf::Mouse::isButtonPressed( sf::Mouse::Right );
-	}
-
-	bool Player::pressingKeyForMovingDown()
-	{
-		return sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-	
-	}
-
-	bool Player::pressingKeyForMovingUp()
-	{
-		return sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-	}
-
-	bool Player::pressingKeyForMovingLeft()
-	{
-		return sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left);	
-	}
-
-
-	bool Player::pressingKeyForMovingRight()
-	{
-		return sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 	}
 
 	bool Player::pressingKeyForConnecting()

@@ -1,11 +1,12 @@
 #include "Layer.h"
+#include <iostream>
 
 namespace mp
 {
 	Layer::Layer(sf::Sprite sprite, const float xSpeed)
 	{
-		this->sprite;
-		this->xSpeed;
+		this->sprite = sprite;
+		this->xSpeed = xSpeed;
 	}
 
 

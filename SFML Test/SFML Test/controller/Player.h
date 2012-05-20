@@ -11,6 +11,7 @@
 #include "../sfml.h"
 #include "../global.h"
 #include "../model/character.h"
+#include "../services/input.h"
 
 
 namespace mp
@@ -20,8 +21,13 @@ namespace mp
 		public:
 			Player();
 			~Player();
+
+
 			void update(const sf::Vector2f &mousePos);
+
+			/// Set the player's current character
 			void setCharacter(Character* character);
+			/// Returns the player's current character
 			Character* getCharacter() { return character; }
 		private:
 			Character* character;
@@ -29,10 +35,10 @@ namespace mp
 			WorldData* worldData;
 			b2World* world;
 
+			Input* input;
+
 			void checkUserInput(const sf::Vector2f &mousePos);
 
-			bool pressingKeyForMovingRight();
-			bool pressingKeyForMovingLeft();
 			bool pressingKeyForMovingUp();
 			bool pressingKeyForMovingDown();
 			bool pressingKeyForPrimaryFire();

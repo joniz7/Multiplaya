@@ -3,6 +3,7 @@
 
 #include "IController.h"
 #include "../view/MainScreen.h"
+#include "../services/networkhandler.h"
 #include <iostream>
 
 namespace mp
@@ -13,12 +14,15 @@ namespace mp
 			MainScreenController(sf::RenderWindow* window, Screen* mainScreen);
 			virtual ~MainScreenController();
 			void handleInput();
+			void setNetworkHandler(NetworkHandler* network){networkHandler = network;};
 		protected:
 		private:
 		sf::Event ev;
 		GUIElement* joinButton;
 		GUIElement* hostButton;
 		GUIElement* exitButton;
+
+		NetworkHandler* networkHandler;
 
 	};
 }

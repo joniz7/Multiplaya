@@ -8,28 +8,32 @@
 #include "JoinGameController.h"
 #include "GameController.h"
 #include "../services/confighandler.h"
-#include "../services/musichandler.h"
+#include "../services/MusicHandler.h"
+#include "../util/Observer.h"
 #include "../model/world.h"
 
 namespace mp
-{
-	class Controller
+{					// TODO implement observers?
+	class Controller// : public Observer
 	{
+
 		public:
 			Controller(World* world, Window* window);
 			virtual ~Controller();
+			// TODO implement observers?
+			//void notify(Event e, void* object); // Observer-stuff
 			void exec();
-			void initTitleMusic();
 			void setNetworkHandler(NetworkHandler* network);
 		protected:
 		private:
-			//std::vector<IController*> controllers;
+			bool inGame;
 			std::map<std::string, IController*> controllers;
+			World* world;
 			Window* window;
 			sf::RenderWindow* renderWindow;
 			sf::Music* titleMusic;
 
-			// sf window reference
 	};
 }
 #endif // CONTROLLER_H
+

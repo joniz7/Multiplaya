@@ -18,15 +18,18 @@ namespace mp
     {
 		worldView = (WorldView*) gameScreen;
 		this->model = model;
-		this->network = NULL; 
+		this->network = NULL;
 		this->currentPlayer = new Player();
-		worldDataMutex.unlock();
-		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
+		
 		worldDataMutex.lock();
+		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
+		worldDataMutex.unlock();
+
+		zoomFactor = 0;
     }
 
 	void GameController::setNetworkHandler(NetworkHandler* network) {
-		this->network = network;	
+		this->network = network;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -35,6 +38,7 @@ namespace mp
     void GameController::handleInput()
     {
 		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());
+
 		currentPlayer->update(mousePos);
 
 		// Wait until setNetworkHandler() is called.
@@ -56,13 +60,15 @@ namespace mp
 
 
 			// Handle zooming of viewport
-			if ( ev.type == sf::Event::MouseWheelMoved )
-			{
-				// TODO set maximum factor to zoom out
-				if( ev.mouseWheel.delta > 0)
-					worldView->zoom(0.9f);
-				else
+			if ( ev.type == sf::Event::MouseWheelMoved ) {
+				if( ev.mouseWheel.delta > 0 && zoomFactor >= -0.7f) {
+					worldView->zoom(1/1.1f);
+					zoomFactor -= 0.1f;
+				}
+				else if (ev.mouseWheel.delta < 0 && zoomFactor <= 0.1f) {
 					worldView->zoom(1.1f);
+					zoomFactor += 0.1f;
+				}
 			}
 		}
     }

@@ -2,7 +2,7 @@
 #define WINDOW_H
 
 #include "../GameState.h"
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "Screen.h"
 #include "MainScreen.h"
@@ -20,6 +20,15 @@ namespace mp
 			Window(WorldData* worldData);
 			virtual ~Window();
 			void exec();
+
+			void draw(Screen* screen);
+			void drawMainMenu();
+			void drawGame();
+			void drawIngameMenu();
+			void drawJoinMenu();
+			void drawHostMenu();
+			void drawSettingsMenu();
+
 
 			Screen* getScreen(std::string string);
 			sf::RenderWindow* getRenderWindow();

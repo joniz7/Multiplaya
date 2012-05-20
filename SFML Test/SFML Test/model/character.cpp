@@ -50,6 +50,7 @@ namespace mp
 
 		bodyDef.position.Set(pos.x, pos.y);
 		b2Body* characterBody = world->CreateBody(&bodyDef);
+
 		this->characterBody = characterBody;
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
@@ -64,7 +65,7 @@ namespace mp
 		fixtureDef.friction = 0.0f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
-		
+
 		// Calculate unique identifying bits for this player.
 		// (This makes us not collide with our own bullets)
 		const short playerBits = short(pow(2.0, clientID + 1));
@@ -92,7 +93,7 @@ namespace mp
 
 
 		//add right sensor fixture
-		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.2f, 0), 0);
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.0f, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
@@ -194,7 +195,7 @@ namespace mp
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force, worldData);
+		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force);
 		worldData->addBullet(bullet);
 	}
 
@@ -246,7 +247,7 @@ namespace mp
 
 	void Character::connectToServer()
 	{
-		worldData->notify(CONNECT_SERVER, 0);
+		worldData->notifyObservers(CONNECT_SERVER, 0);
 	}
 
 	//Foot sensor
@@ -260,17 +261,27 @@ namespace mp
 		}
 	}
 
+	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
+		if ( crashedWith->objectType == wall)
+			grounded = false;
+	}
+
 	// Leftside
-	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	{
+	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	
+	{
 		this->objectType = characterLeftSensor;
 	}
+
 	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall){
+		if ( crashedWith->objectType == wall) {
 			leftSideTouchWall = true;
 		}
 	}
+
 	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
-		leftSideTouchWall = false;
+		if ( crashedWith->objectType == wall) {
+			leftSideTouchWall = false;
+		}
 	}
 
 	// Rightside
@@ -283,7 +294,9 @@ namespace mp
 		}
 	}
 	void Character::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
-		rightSideTouchWall = false;
+		if ( crashedWith->objectType == wall) {
+			rightSideTouchWall = false;
+		}
 	}
 
 

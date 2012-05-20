@@ -11,7 +11,13 @@ namespace mp
 	Window::Window(WorldData* worldData)
 	{
 		//ctor
-		window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya");
+		//window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya");
+
+		if( ConfigHandler::instance().getBool("r_fullscreen") )
+			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya", sf::Style::Fullscreen, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
+		else
+			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya", sf::Style::Titlebar, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
+
 		window->setFramerateLimit(60);
 		// Set window data
         window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
@@ -33,6 +39,38 @@ namespace mp
 
 	// run method that draw different screens depending on state
 
+	void Window::drawMainMenu() {
+		this->draw(screens["mainScreen"]);
+	}
+	void Window::drawGame() {
+		// TODO 	
+	}
+	void Window::drawIngameMenu() {
+		// TODO
+	}
+	void Window::drawJoinMenu() {
+		this->draw(screens["joinGameScreen"]);
+	}
+	void Window::drawHostMenu() {
+		// TODO should be moved to drawGame() later.
+		screens["hostScreen"]->update();
+		this->draw(screens["hostScreen"]);
+	}
+	void Window::drawSettingsMenu() {
+		this->draw(screens["settingsScreen"]);
+	}
+
+	//////////////////////////////////
+	/// Draw the screen to the window.
+	/// \param screen - the screen to be drawn.
+	//////////////////////////////////
+	void Window::draw(Screen* screen) {
+		window->clear();
+		window->draw(*screen);
+		window->display();
+	}
+
+	/* TODO: no longer needed?
 	void Window::exec()
 	{
 
@@ -59,6 +97,8 @@ namespace mp
 
 		window->display();
 	}
+	*/
+
 
 	sf::RenderWindow* Window::getRenderWindow()
 	{

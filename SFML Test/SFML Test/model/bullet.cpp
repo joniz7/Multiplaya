@@ -23,10 +23,11 @@ namespace mp
 	//
 	// returns true upon success
 	////////////////////////////////////////////////////////////
-    Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force, WorldData* worldData )
+    Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
+		scheduledForDeletion = false;
 		this->objectType = bullet;
-		this->worldData = worldData;
+
 		this->world = world;
 		// Save bullet data
 		this->type = type;
@@ -45,7 +46,7 @@ namespace mp
 		circle.m_radius = 0.25f;
 		fixtureDef.shape = &circle;
 		// Set the bullet density to be non-zero, so it will be dynamic.
-		fixtureDef.density = 1.f;
+		fixtureDef.density = 0.01f;
 		// Override the default friction.
 		fixtureDef.friction = 0.0f;
 		// Set restitution
@@ -76,7 +77,7 @@ namespace mp
 		else if (crashedWith->objectType == bullet) {
 			//std::cout << "Collision: bullet <-> bullet" << std::endl;
 		}
-		
+
 		// If we collide with character, explode (we handle the dmg elsewhere).
 		else if (crashedWith->objectType == character) {
 			std::cout << "Collision: bullet <-> character" << std::endl;
@@ -89,11 +90,16 @@ namespace mp
 	///////////////////////////
 	void Bullet::explode() {
 		//std::cout << "explode()" << std::endl;
-		worldData->scheduleBulletForDeletion(this);
+		if (!scheduledForDeletion)
+		{
+			notifyObservers(BULLET_DELETED, this);
+			//worldData->scheduleBulletForDeletion(this);
+			scheduledForDeletion = true;
+		}
 	}
 
 	bool Bullet::operator==(const Bullet* bullet) {
-        return bullet == this; 
+        return bullet == this;
     }
 
 	////////////////////////////////////////////////////////////
@@ -101,7 +107,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
     Bullet::~Bullet() {
 		// Remove bullet from worldData (-> from the view).
-		worldData->removeBullet(this);
+		//worldData->removeBullet(this);
 		// remove body from box2d
 		world->DestroyBody(this->body);
 	}

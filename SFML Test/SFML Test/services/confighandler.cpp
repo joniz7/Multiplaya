@@ -4,25 +4,25 @@
 // Class header
 #include "confighandler.h"
 
-#include<iostream>
-#include<iomanip>
-#include<fstream>
-#include<algorithm>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <algorithm>
+#include <cctype>
 
 
 ////////////////////////////////////////////////////////////
 /// Reads config file and stores data in a map. Singleton.
 ////////////////////////////////////////////////////////////
 
-namespace mp	
+namespace mp
 {
 
 	bool isNumber(const std::string& str)
 	{
-	   for (int i = 0; i < str.length(); i++)
-		   if (!isdigit(str[i])&&!str[i]=='.')
+	   for (unsigned int i = 0; i < str.length(); i++)
+		   if (std::isdigit(str[i])==0&&str[i]!='.')
 			   return false;
-
 	   return true;
 	}
 
@@ -67,9 +67,9 @@ namespace mp
 					std::string data = line.substr(setting.length()+1,std::string::npos);
 					//std::cout<<setting<<": "<<data;
 					// Convert to lower case
-					for(int i=0;i<setting.length();++i)
+					for(unsigned int i=0;i<setting.length();++i)
 						setting[i] = ::tolower(setting[i]);
-					for(int i=0;i<data.length();++i)
+					for(unsigned int i=0;i<data.length();++i)
 						data[i] = ::tolower(data[i]);
 
 					std::cout<<".";
@@ -87,7 +87,9 @@ namespace mp
 							intMap[setting] = atoi(data.c_str());	// Int
 					}
 					else
+					{
 						stringMap[setting] = data;
+					}
 				}
             }
 			std::cout<<std::endl<<"Config read!"<<std::endl;

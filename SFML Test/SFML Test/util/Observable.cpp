@@ -29,7 +29,7 @@ namespace mp
 	///
 	/// @param observer - Class implementing Observer interface
 	////////////////////////////////////////////////////////////
-	void Observable::notify(Event e, void* object) {
+	void Observable::notifyObservers(Event e, void* object) {
 		std::set<Observer*>::iterator it;
 		// Call notify method for every observer
 		for (it = observers.begin(); it != observers.end(); it++) {

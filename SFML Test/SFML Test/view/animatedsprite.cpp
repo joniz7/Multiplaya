@@ -27,7 +27,7 @@ namespace mp
 		frame = 0;
 		frameCounter = 0;
 		p_anm = NULL;
-		setFrame(sf::Vector2i(0,0));
+		setFrame(sf::Vector3i(0,0,0));
     }
 
 	////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Adds an animation to the animation map.
 	////////////////////////////////////////////////////////////
-	void AnimatedSprite::addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector2i> sequence)
+	void AnimatedSprite::addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector3i> sequence)
 	{
 		Animation temp;
 		temp.fps = float(fps);
@@ -71,7 +71,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Sets a specified frame.
 	////////////////////////////////////////////////////////////
-	void AnimatedSprite::setFrame(sf::Vector2i frame)
+	void AnimatedSprite::setFrame(sf::Vector3i frame)
 	{
 		sf::IntRect frameRect(
 			int(spriteSize.x * (frame.x-1)),
@@ -81,6 +81,7 @@ namespace mp
 			);
 
 		setTextureRect(frameRect);
+		setRotation(frame.z+180);
 	}
 
 	////////////////////////////////////////////////////////////
