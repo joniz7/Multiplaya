@@ -34,6 +34,7 @@ namespace mp
 			void explode();
 
 			b2Vec2 getPosition(){return body->GetPosition();};
+			b2Vec2 getLinVelocity(){return body->GetLinearVelocity();};
 			b2BodyDef* getBodyDef(){return &bodyDef;};
 			b2Body* getBody(){return body;};
 			BulletType getType(){return type;};

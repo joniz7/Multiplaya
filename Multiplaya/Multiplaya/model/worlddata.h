@@ -82,6 +82,7 @@ namespace mp
 
 			void scheduleBulletForDeletion(Bullet* bullet);
 			void removeBullet(Bullet* bullet);
+			void removeAllBullets();
 
 			// Setters
 			// Set logic fps

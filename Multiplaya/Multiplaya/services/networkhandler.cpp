@@ -267,7 +267,7 @@ namespace mp
 						receivedData >> numOfBullets;
 
 						//The current bullet list is cleared
-						worldData->getBullets()->clear();
+						worldData->removeAllBullets();
 
 						//And replaced by the new bullets
 						for(int i = 0; i<numOfBullets; i++)
@@ -433,11 +433,11 @@ namespace mp
 		sf::Packet packet;
 
 		worldDataMutex.lock();
-		float32 x = worldData->getCurrentCharacter()->getBody()->GetPosition().x;
-		float32 y = worldData->getCurrentCharacter()->getBody()->GetPosition().y;
-		float32 xvel = worldData->getCurrentCharacter()->getBody()->GetLinearVelocity().x;
-		float32 yvel = worldData->getCurrentCharacter()->getBody()->GetLinearVelocity().y;
-		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
+		float32 x = worldData->getCurrentCharacter()->getPosition().x;
+		float32 y = worldData->getCurrentCharacter()->getPosition().y;
+		float32 xvel = worldData->getCurrentCharacter()->getLinVelocity().x;
+		float32 yvel = worldData->getCurrentCharacter()->getLinVelocity().y;
+		float32 angle = worldData->getCurrentCharacter()->getAngle();
 		worldDataMutex.unlock();
 
 		packet << type << myID << x << y << xvel << yvel << angle;
@@ -477,7 +477,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
+		sf::Int8 type = 14, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
 		sf::Packet packet;
 		Character* tempCharacter;
 		float32 x, y;
@@ -526,8 +526,11 @@ namespace mp
 
 		for(it = clientMap.begin(); it != clientMap.end(); it++)
 		{
-			if(it != clientMap.end())
+			if(it != clientMap.end() && (*it).first != 0)
+			{
 				sendCharacterDataToClient((*it).first);
+				sendBulletDataToClient((*it).first);
+			}
 		}
 	}
 
@@ -542,6 +545,60 @@ namespace mp
 		packet << type << clientID;
 
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sends all the bullets in the world to a specified client
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendBulletDataToClient(sf::Int8 clientID)
+	{
+		sf::Int8 type = 15, tempClientID, numOfBullets = worldData->getBullets()->size();
+		sf::Packet packet;
+		Bullet* tempBullet;
+		float32 x, y, xvel, yvel;
+		packet << type << numOfBullets;
+
+		for(int i = 0; i<numOfBullets; i++)
+		{
+			tempBullet = worldData->getBullet(i);
+			tempClientID = tempBullet->getOwner();
+			x = tempBullet->getPosition().x;
+			y = tempBullet->getPosition().y;
+			xvel = tempBullet->getLinVelocity().x;
+			yvel = tempBullet->getLinVelocity().y;
+
+			packet << tempClientID << x << y << xvel << yvel;
+		}
+		
+		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sends the bullets created by the client to the server
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendBulletDataToServer()
+	{
+		if(bulletsToSend.size()>0)
+		{
+			sf::Int8 type = 5, numOfBullets = bulletsToSend.size();
+			sf::Packet packet;
+			Bullet* tempBullet;
+			float32 x, y, xvel, yvel;
+			packet << type << numOfBullets;
+
+			for(int i = 0; i<numOfBullets; i++)
+			{
+				tempBullet = bulletsToSend.at(i);
+				x = tempBullet->getPosition().x;
+				y = tempBullet->getPosition().y;
+				xvel = tempBullet->getLinVelocity().x;
+				yvel = tempBullet->getLinVelocity().y;
+
+				packet << myID << x << y << xvel << yvel;
+			}
+		
+			sender.send(packet, serverIP, 55001);
+		}
 	}
 
 	////////////////////////////////////////////////////////////
@@ -560,16 +617,28 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	////////////////////////////////////////////////////////////
+	/// Sets the IPAddress of the server
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::setIPAddress(const sf::String IPAddress)
 	{
 		serverIP = IPAddress.toAnsiString();
 	}
 
+	////////////////////////////////////////////////////////////
+	/// Makes the networkhandler a client.
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::setAsClient()
 	{
 		isClient = true;
 	}
 
+
+	////////////////////////////////////////////////////////////
+	/// Makes the networkhandler a server.
+	/// Binds the receiver socket to a specified port so
+	/// a client knows where to send packets.
+	////////////////////////////////////////////////////////////
 	void NetworkHandler::setAsServer()
 	{
 		isServer = true;
@@ -599,7 +668,7 @@ namespace mp
 		else if(e == BULLET_ADDED) 
 		{
 			//sendMessageToEveryone("Bullet added to buffer");
-			//bulletsToSend.push_back((Bullet*)object);
+			bulletsToSend.push_back((Bullet*)object);
 		} 
 		else if(e == BULLET_DELETED) 
 		{
@@ -607,11 +676,11 @@ namespace mp
 		} 
 		else if(e == CHARACTER_ADDED)
 		{
-			sendMessageToEveryone("Character deleted");
+			sendMessageToEveryone("Character added");
 		} 
 		else if(e == CHARACTER_DELETED)
 		{
-			sendMessageToEveryone("Bullet deleted");
+			sendMessageToEveryone("Character deleted");
 		}
 	}
 }
