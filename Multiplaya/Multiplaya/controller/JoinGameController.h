@@ -4,6 +4,7 @@
 #include "IController.h"
 #include "../view/JoinGameScreen.h"
 #include "../services/networkhandler.h"
+#include "../util/TextEventHelper.h"
 #include <iostream>
 
 namespace mp
@@ -21,12 +22,6 @@ namespace mp
 
 			bool ipTextClicked;
 			bool portTextClicked;
-
-			bool isNumber(sf::Event &ev);
-			bool isDot(sf::Event &ev);
-			bool isBackspace(sf::Event &ev);
-
-			void removeLastCharacter(GUIElement* element);
 
 			GUIElement* cancelButton;
 			GUIElement* connectButton;

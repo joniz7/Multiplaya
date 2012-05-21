@@ -3,6 +3,7 @@
 
 #include "IController.h"
 #include "../view/HostGameScreen.h"
+#include "../util/TextEventHelper.h"
 
 namespace mp
 {
@@ -21,17 +22,11 @@ namespace mp
 			bool gravityTextClicked;
 			bool portTextClicked;
 
-
 			GUIElement* cancelButton;
 			GUIElement* hostButton;
 
 			GUIElement* gravityTextField;
 			GUIElement* portTextField;
-
-			bool isNumber(sf::Event &ev);
-			bool isBackspace(sf::Event &ev);
-			bool isDot(sf::Event &ev);
-			void removeLastCharacter(GUIElement* element);
 
 			NetworkHandler* networkHandler;
 						

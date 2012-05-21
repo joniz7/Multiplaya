@@ -107,6 +107,7 @@
     <ClCompile Include="sound\uisound.cpp" />
     <ClCompile Include="sound\worldsound.cpp" />
     <ClCompile Include="util\Observable.cpp" />
+    <ClCompile Include="util\TextEventHelper.cpp" />
     <ClCompile Include="view\animatedsprite.cpp" />
     <ClCompile Include="view\BulletView.cpp" />
     <ClCompile Include="view\CharacterSprite.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="util\Event.h" />
     <ClInclude Include="util\Observable.h" />
     <ClInclude Include="util\Observer.h" />
+    <ClInclude Include="util\TextEventHelper.h" />
     <ClInclude Include="view\animatedsprite.h" />
     <ClInclude Include="view\BulletView.h" />
     <ClInclude Include="view\CharacterSprite.h" />
