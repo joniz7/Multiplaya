@@ -12,8 +12,6 @@
 #include <list>
 #include <cmath>
 #include <algorithm>
-// SFML specific headers
-#include "../sfml.h"
 
 // Box2D specific headers
 #include <Box2D.h>

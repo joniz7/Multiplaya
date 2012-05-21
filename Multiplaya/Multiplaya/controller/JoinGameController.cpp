@@ -31,7 +31,7 @@ namespace mp
 				{
 
 					connectButton->click();
-					networkHandler->connectToServer("Jonte", "192.168.1.69");
+					networkHandler->connectToServer("Jonte", "172.16.0.3");
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
 					while(!networkHandler->isConnectedToServer() && elapsed<3)

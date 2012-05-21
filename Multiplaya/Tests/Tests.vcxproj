@@ -41,9 +41,11 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Box2D\include;$(IncludePath);$(SolutionDir)SFML-2.0\include</IncludePath>
     <LibraryPath>$(SolutionDir)Box2D\lib;$(LibraryPath);$(SolutionDir)SFML-2.0\lib</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\Windows\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\Windows\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

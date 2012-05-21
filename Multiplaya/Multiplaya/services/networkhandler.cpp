@@ -27,10 +27,11 @@ namespace mp
 
 		sendOutput = false;
 
+
 		//Binds the receiving socket to any port
 		if(receiver.bind(sf::UdpSocket::AnyPort) == sf::Socket::Error)
 		{
-			std::cout<<"Error binding to port " << receivePort << std::endl;
+			std::cout<<"Error binding tsdfasdfsao port " << receivePort << std::endl;
 		}
 
 		receivePort = receiver.getLocalPort();
@@ -87,8 +88,8 @@ namespace mp
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
 				{
-					std::cout << "before" << (*it).second.disconnectCounter << std::endl;
-					std::cout << (*it).second.IP << "    " << senderIP << std::endl;
+					//std::cout << "before" << (*it).second.disconnectCounter << std::endl;
+					//std::cout << (*it).second.IP << "    " << senderIP << std::endl;
 					if((*it).second.IP == senderIP)
 					{
 						(*it).second.disconnectCounter = 0;
@@ -98,10 +99,10 @@ namespace mp
 						(*it).second.disconnectCounter++;
 						if((*it).second.disconnectCounter == 400)
 						{
-							disconnectClient((*it).first);
+							//disconnectClient((*it).first);
 						}
 					}
-					std::cout << "after" << (*it).second.disconnectCounter << std::endl;
+					//std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
 			
@@ -126,7 +127,7 @@ namespace mp
 								std::cout<<"type "<<outputType<<std::endl;
 
 							receivedData >> name >> x >> y >> senderLocalPort;
-	
+
 							client.IP = senderIP;
 							client.name = name;
 							client.disconnectCounter = 0;
@@ -387,6 +388,7 @@ namespace mp
 	{
 		serverIP = IPAddress;
 		sf::Int8 type = 1;
+		sf::Int16 port = receivePort;
 		sf::Packet packet;
 
 		worldDataMutex.lock();
@@ -395,7 +397,7 @@ namespace mp
 		float32 y = character->getBody()->GetPosition().y;
 		worldDataMutex.unlock();
 
-		packet << type << name << x << y;
+		packet << type << name << x << y << port;
 
 		std::cout<<"Connecting to server IP "<<serverIP<<" and listening to port: "<<receivePort<<std::endl;
 
@@ -475,13 +477,13 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
 		sf::Packet packet;
 		Character* tempCharacter;
 		float32 x, y;
 		packet << type << numOfChars;
 
-		for(int i = 0; i<numOfChars-1; i++)
+		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
 			tempClientID = tempCharacter->getClientID();
@@ -493,7 +495,7 @@ namespace mp
 				packet << tempClientID << x << y;
 			}
 		}
-
+		std::cout<<"Sending characters to "<<clientMap[clientID].name<<", to port "<<clientMap[clientID].port<<std::endl;
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 	}
 
@@ -571,6 +573,7 @@ namespace mp
 	void NetworkHandler::setAsServer()
 	{
 		isServer = true;
+		receiver.unbind();
 		receiver.bind(55001);
 	}
 
