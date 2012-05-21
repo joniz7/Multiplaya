@@ -51,6 +51,7 @@ namespace mp
 		MusicHandler::instance().chooseSong("bg");
 		MusicHandler::instance().play();
 		// TODO: replace with "inGame"
+		window->getRenderWindow()->setMouseCursorVisible(false);
 		this->currentDrawFunction = &Window::drawGame;
 		this->currentController = controllers["game"];
 		
