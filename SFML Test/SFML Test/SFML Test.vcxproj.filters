@@ -167,6 +167,9 @@
     <ClCompile Include="services\soundhandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
+    <ClCompile Include="util\TextEventHelper.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -324,6 +327,9 @@
     </ClInclude>
     <ClInclude Include="services\soundhandler.h">
       <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="util\TextEventHelper.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

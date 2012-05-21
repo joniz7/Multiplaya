@@ -87,58 +87,34 @@ namespace mp
 
 			if (ev.type == sf::Event::TextEntered)
 			{
-				if (isNumber(ev))
+				if (TextEventHelper::isNumber(ev))
 				{
 					if (gravityTextClicked)
 						gravityTextField->setText(gravityTextField->getText() + ev.text.unicode);
 					if (portTextClicked)
 						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
-				else if (isDot(ev))
+				else if (TextEventHelper::isDot(ev))
 				{
 					// "remove" the possibility to input double dots
 					if (gravityTextClicked)
 						gravityTextField->setText(gravityTextField->getText() + ev.text.unicode);
 
 				}
-				else if (isBackspace(ev))
+				else if (TextEventHelper::isBackspace(ev))
 				{
 					if (gravityTextClicked)
 					{
-						removeLastCharacter(gravityTextField);
+						TextEventHelper::removeLastCharacter(gravityTextField);
 					}
 						
 					if (portTextClicked)
 					{
-						removeLastCharacter(portTextField);
+						TextEventHelper::removeLastCharacter(portTextField);
 					}	
 				}
 			} // end of textentered
 		}
 	} // end of handeInput
 
-	bool HostGameController::isNumber(sf::Event &ev)
-	{
-		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 );
-	}
-
-	bool HostGameController::isBackspace(sf::Event &ev)
-	{
-		return ev.text.unicode == 8;
-	}
-
-	bool HostGameController::isDot(sf::Event &ev)
-	{
-		return ev.text.unicode == 46;
-	}
-
-	void HostGameController::removeLastCharacter(GUIElement* element)
-	{
-		int textLength = element->getText().getSize();
-		if (textLength > 0)
-		{
-			std::string text = element->getText();
-			element->setText(text.erase(textLength - 1, 1));
-		}
-	}
 }

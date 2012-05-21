@@ -102,58 +102,32 @@ namespace mp
 
 			if (ev.type == sf::Event::TextEntered)
 			{
-				if (isNumber(ev))
+				if (TextEventHelper::isNumber(ev))
 				{
 					if (ipTextClicked)
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
 					if (portTextClicked)
 						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
-				else if (isDot(ev))
+				else if (TextEventHelper::isDot(ev))
 				{
 					// "remove" the possibility to input double dots
 					if (ipTextClicked)
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
 				}
-				else if (isBackspace(ev))
+				else if (TextEventHelper::isBackspace(ev))
 				{
 					if (ipTextClicked)
 					{
-						removeLastCharacter(ipTextField);
+						TextEventHelper::removeLastCharacter(ipTextField);
 					}
 						
 					if (portTextClicked)
 					{
-						removeLastCharacter(portTextField);
+						TextEventHelper::removeLastCharacter(portTextField);
 					}	
 				}
 			} // end of textentered
 		} // end of pollEvent loop
 	}
-
-	void JoinGameController::removeLastCharacter(GUIElement* element)
-	{
-		int textLength = element->getText().getSize();
-		if (textLength > 0)
-		{
-			std::string text = element->getText();
-			element->setText(text.erase(textLength - 1, 1));
-		}
-	}
-
-	bool JoinGameController::isNumber(sf::Event &ev)
-	{
-		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 );
-	}
-
-	bool JoinGameController::isDot(sf::Event &ev)
-	{
-		return ev.text.unicode == 46;
-	}
-
-	bool JoinGameController::isBackspace(sf::Event &ev)
-	{
-		return ev.text.unicode == 8;
-	}
-	
 }
