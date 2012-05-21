@@ -21,22 +21,30 @@
 
 //Defines
 #include "../defines.h"
+#include "animatedsprite.h"
+#include "../services/resourcehandler.h"
 
 namespace mp
 {
-    class HUDSprite : public sf::Sprite
+    class HUDSprite : public sf::Drawable
     {
         public:
-			HUDSprite(std::string path, int states);
+			HUDSprite(std::string path, sf::Vector2i dimensions);
             ~HUDSprite();
-			int getWidth() {return (int)spriteSize.x;}
-			int getHeight() {return (int)spriteSize.y;}
+			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+			int getWidth()  {return (int)sprite->getSize().x; }
+			int getHeight() {return (int)sprite->getSize().y; }
+			void setPosition(float x, float y) { sprite->setPosition(x,y); };
+			void update(float elapsed);
 			void setState(int i);	// Change state.
+			void setFrame(sf::Vector3i frame) { sprite->setFrame(frame); };	// Sets a specified frame.
         private:
+			AnimatedSprite* sprite;
 			sf::Texture* spriteSheet; // The texture containing all frames.
-			sf::Vector2i spriteSize; // The size of each frame.
-			int state;	// Keeps track of which state is currently active.
-			int states; // Total amount of states.	
+			std::map<int, sf::Vector3i> states;	// Keeps track of all our states.
+			int state;  // Current state.
+			int numberOfStates; // Total amount of states.	
     };
 }
 

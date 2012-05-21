@@ -53,9 +53,6 @@
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="app.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="model\character.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
@@ -169,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="util\TextEventHelper.cpp">
       <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="app.cpp">
+      <Filter>src\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

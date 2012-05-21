@@ -359,17 +359,21 @@ namespace mp
 
 		//-------- Ammo sprite. ---------
 		// ammo sprite.
-		ammoSprite = new HUDSprite(resourcesDir + "ammo.png", 12);
+		ammoSprite = new HUDSprite(resourcesDir + "ammo.png", sf::Vector2i(1,12));
 		x = 0;
 		y = (HEIGHT) - ammoSprite->getHeight();
+		std::cout << "WorldView: ammoSprite: x: "<<x<<" y:"<<y<<std::endl;
 		ammoSprite->setPosition(float(x),float(y));
+		ammoSprite->setPosition(0,0);
 		//ammoSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 
 		//--------- HP sprite. ---------.
-		hpSprite = new HUDSprite(resourcesDir + "hp.png", 9);
+		hpSprite = new HUDSprite(resourcesDir + "hp.png", sf::Vector2i(1,8));
 		x = (WIDTH)  - hpSprite->getWidth();
 		y = (HEIGHT) - hpSprite->getHeight();
+		std::cout << "WorldView: hpSprite: x: "<<x<<" y:"<<y<<std::endl;
 		hpSprite->setPosition(float(x),float(y));
+		hpSprite->setPosition(0,0);
 		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 		//------------------------------
 
@@ -443,6 +447,7 @@ namespace mp
 
 	void WorldView::updateHUD()
 	{
+		float elapsed = clock.getElapsedTime().asSeconds();
 
 		worldDataMutex.lock();
 
@@ -454,8 +459,10 @@ namespace mp
 		deaths << currentCharacter.getDeaths();
 		deathsText->setString(deaths.str());
 
-		ammoSprite->setState(currentCharacter.getClip());
-		hpSprite->setState(currentCharacter.getHealthState());
+		ammoSprite->update(elapsed);
+		hpSprite->update(elapsed);
+		//ammoSprite->setState(currentCharacter.getClip());
+		//hpSprite->setState(currentCharacter.getHealthState());
 
 		worldDataMutex.unlock();
 	}
