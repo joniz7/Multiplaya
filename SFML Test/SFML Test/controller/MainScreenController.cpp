@@ -45,8 +45,6 @@ namespace mp
 				if ( hostButton->isMouseOver(mousePos) )
 				{
 					hostButton->click();
-					networkHandler->setAsServer();
-					networkHandler->setAsClient();
 					// Change screen in main controller.
 					notifyObservers(SHOW_HOST, 0);
 				}
