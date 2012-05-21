@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{33D5B1A8-EAC1-47C0-ACCE-5D9DC4897AFB}</ProjectGuid>
+    <RootNamespace>SFMLTest</RootNamespace>
+    <ProjectName>Multiplaya</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)Box2D\include;$(IncludePath);$(SolutionDir)SFML-2.0\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(SolutionDir)Box2D\lib;$(LibraryPath);$(SolutionDir)SFML-2.0\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>F:\SFML-2.0 source\include;F:\Box2D\Box2D\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>F:\SFML-2.0 source\lib;F:\Box2D\Box2D\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level2</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SFML-2.0\include;$(SolutionDir)Libraries\Box2D\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Box2D.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\SFML-2.0\lib;$(SolutionDir)Libraries\Box2D\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>Box2D.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>./lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="app.cpp" />
+    <ClCompile Include="controller\Controller.cpp" />
+    <ClCompile Include="controller\GameController.cpp" />
+    <ClCompile Include="controller\HostGameController.cpp" />
+    <ClCompile Include="controller\IController.cpp" />
+    <ClCompile Include="controller\JoinGameController.cpp" />
+    <ClCompile Include="controller\MainScreenController.cpp" />
+    <ClCompile Include="controller\Player.cpp" />
+    <ClCompile Include="global.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="model\bullet.cpp" />
+    <ClCompile Include="model\character.cpp" />
+    <ClCompile Include="model\ContactListener.cpp" />
+    <ClCompile Include="model\Wall.cpp" />
+    <ClCompile Include="model\world.cpp" />
+    <ClCompile Include="model\worldchain.cpp" />
+    <ClCompile Include="model\worlddata.cpp" />
+    <ClCompile Include="services\confighandler.cpp" />
+    <ClCompile Include="services\input.cpp" />
+    <ClCompile Include="services\keylookup.cpp" />
+    <ClCompile Include="services\MusicHandler.cpp" />
+    <ClCompile Include="services\networkhandler.cpp" />
+    <ClCompile Include="services\resourcehandler.cpp" />
+    <ClCompile Include="services\soundhandler.cpp" />
+    <ClCompile Include="sound\sound.cpp" />
+    <ClCompile Include="sound\uisound.cpp" />
+    <ClCompile Include="sound\worldsound.cpp" />
+    <ClCompile Include="util\Observable.cpp" />
+    <ClCompile Include="util\TextEventHelper.cpp" />
+    <ClCompile Include="view\animatedsprite.cpp" />
+    <ClCompile Include="view\BulletView.cpp" />
+    <ClCompile Include="view\CharacterSprite.cpp" />
+    <ClCompile Include="view\CharacterView.cpp" />
+    <ClCompile Include="view\GUIElements\Button.cpp" />
+    <ClCompile Include="view\GUIElements\GUIElement.cpp" />
+    <ClCompile Include="view\GUIElements\TextField.cpp" />
+    <ClCompile Include="view\HostGameScreen.cpp" />
+    <ClCompile Include="view\HUDSprite.cpp" />
+    <ClCompile Include="view\JoinGameScreen.cpp" />
+    <ClCompile Include="view\Layer.cpp" />
+    <ClCompile Include="view\LayerHandler.cpp" />
+    <ClCompile Include="view\MainScreen.cpp" />
+    <ClCompile Include="view\SettingsScreen.cpp" />
+    <ClCompile Include="view\Window.cpp" />
+    <ClCompile Include="view\worldview.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="app.h" />
+    <ClInclude Include="client.h" />
+    <ClInclude Include="controller\Controller.h" />
+    <ClInclude Include="controller\GameController.h" />
+    <ClInclude Include="controller\HostGameController.h" />
+    <ClInclude Include="controller\IController.h" />
+    <ClInclude Include="controller\JoinGameController.h" />
+    <ClInclude Include="controller\MainScreenController.h" />
+    <ClInclude Include="controller\Player.h" />
+    <ClInclude Include="defines.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="model\bullet.h" />
+    <ClInclude Include="model\character.h" />
+    <ClInclude Include="model\ContactListener.h" />
+    <ClInclude Include="model\GameObject.h" />
+    <ClInclude Include="model\ICharacter.h" />
+    <ClInclude Include="model\Wall.h" />
+    <ClInclude Include="model\world.h" />
+    <ClInclude Include="model\worldchain.h" />
+    <ClInclude Include="model\worlddata.h" />
+    <ClInclude Include="services\confighandler.h" />
+    <ClInclude Include="services\input.h" />
+    <ClInclude Include="services\keylookup.h" />
+    <ClInclude Include="services\MusicHandler.h" />
+    <ClInclude Include="services\networkhandler.h" />
+    <ClInclude Include="services\resourcehandler.h" />
+    <ClInclude Include="services\soundhandler.h" />
+    <ClInclude Include="sfml.h" />
+    <ClInclude Include="sound\sound.h" />
+    <ClInclude Include="sound\uisound.h" />
+    <ClInclude Include="sound\worldsound.h" />
+    <ClInclude Include="util\Event.h" />
+    <ClInclude Include="util\Observable.h" />
+    <ClInclude Include="util\Observer.h" />
+    <ClInclude Include="util\TextEventHelper.h" />
+    <ClInclude Include="view\animatedsprite.h" />
+    <ClInclude Include="view\BulletView.h" />
+    <ClInclude Include="view\CharacterSprite.h" />
+    <ClInclude Include="view\CharacterView.h" />
+    <ClInclude Include="view\GameObjectView.h" />
+    <ClInclude Include="view\GUIElements\Button.h" />
+    <ClInclude Include="view\GUIElements\GUIElement.h" />
+    <ClInclude Include="view\GUIElements\TextField.h" />
+    <ClInclude Include="view\HostGameScreen.h" />
+    <ClInclude Include="view\HUDSprite.h" />
+    <ClInclude Include="view\JoinGameScreen.h" />
+    <ClInclude Include="view\Layer.h" />
+    <ClInclude Include="view\LayerHandler.h" />
+    <ClInclude Include="view\MainScreen.h" />
+    <ClInclude Include="view\Screen.h" />
+    <ClInclude Include="view\SettingsScreen.h" />
+    <ClInclude Include="view\Window.h" />
+    <ClInclude Include="view\worldview.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
