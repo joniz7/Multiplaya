@@ -13,7 +13,7 @@
 #include <map>
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/Window.hpp>
 
 namespace mp
 {

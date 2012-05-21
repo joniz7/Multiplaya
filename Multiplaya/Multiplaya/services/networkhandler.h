@@ -43,6 +43,8 @@ namespace mp
 			void sendCharacterDataToServer();
 			void sendCharacterDataToClient(sf::Int8 clientID);
 			void sendCharactersToClient(sf::Int8 clientID);
+			void sendBulletDataToServer();
+			void sendBulletDataToClient(sf::Int8 clientID);
 			void removeCharacter(sf::Int8 clientID);
 			void updateAllClients();
 			void setIPAddress(const sf::String IPAddress);

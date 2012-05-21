@@ -140,9 +140,6 @@
     <ClCompile Include="view\GUIElements\GUIElement.cpp">
       <Filter>src\view\GUIElements</Filter>
     </ClCompile>
-    <ClCompile Include="view\CharacterSprite.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
     <ClCompile Include="services\MusicHandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
@@ -296,9 +293,6 @@
       <Filter>src\view\GUIElements</Filter>
     </ClInclude>
     <ClInclude Include="view\HUDSprite.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="view\CharacterSprite.h">
       <Filter>src\view</Filter>
     </ClInclude>
     <ClInclude Include="services\MusicHandler.h">

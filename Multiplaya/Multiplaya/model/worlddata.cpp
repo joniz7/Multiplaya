@@ -181,6 +181,15 @@ namespace mp
 		}
 	}
 
+	void WorldData::removeAllBullets()
+	{
+		for(int i=0; i<bullets.size(); i++)
+		{
+			removeBullet(bullets.at(i));
+		}
+	}
+
+
 	Character* WorldData::getCharacter(sf::Int8 clientID)
 	{
 		for(unsigned int i = 0; i < characters.size(); i++)

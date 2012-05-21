@@ -8,7 +8,6 @@
 #include "../global.h"
 #include "../model/character.h"
 #include "animatedsprite.h"
-#include "CharacterSprite.h"
 #include "GameObjectView.h"
 #include "../services/resourcehandler.h"
 
