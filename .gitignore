@@ -17,10 +17,10 @@ Multiplaya/Multiplaya/Debug/Unix/obj
 Multiplaya/Multiplaya/Release/Unix/obj
 Multiplaya/Multiplaya.suo
 Multiplaya/Multiplaya/obj/
+Multiplaya/Multiplaya/Debug/
 Multiplaya/Multiplaya/bin/
 Multiplaya/gtest-1.6.0/msvc/gtest/Debug/
 
 Multiplaya/Tests/Debug/
-Multiplaya/Tests/Debug/*
 
 Multiplaya/Multiplaya/resources/test/testsprite.psd
