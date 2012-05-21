@@ -397,9 +397,9 @@ namespace mp
 		float32 y = character->getBody()->GetPosition().y;
 		worldDataMutex.unlock();
 
-		packet << type << name << x << y;
+		packet << type << name << x << y << port;
 
-		std::cout<<"Connecting to server IP "<<serverIP<<" and listening to port: "<<receivePort<<std::endl;
+		std::cout<<"Connecting to server IP "<<serverIP<<" and listening to port: "<<receivePort<< "    or    "<<port<<std::endl;
 
 		sender.send(packet, serverIP, 55001);
 	}
