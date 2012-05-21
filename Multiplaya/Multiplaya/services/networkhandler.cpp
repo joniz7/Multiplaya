@@ -27,6 +27,7 @@ namespace mp
 
 		sendOutput = false;
 
+
 		//Binds the receiving socket to any port
 		if(receiver.bind(sf::UdpSocket::AnyPort) == sf::Socket::Error)
 		{
@@ -58,7 +59,7 @@ namespace mp
 		Client client;
 		std::string name;
 
-		sf::Int8 clientID, numOfChars, numOfBullets, tempSenderPort;
+		sf::Int8 clientID, numOfChars, numOfBullets;
 
 		std::string message;
 
@@ -125,9 +126,7 @@ namespace mp
 							if(sendOutput)
 								std::cout<<"type "<<outputType<<std::endl;
 
-							receivedData >> name >> x >> y >> tempSenderPort;
-	
-							senderLocalPort = tempSenderPort;
+							receivedData >> name >> x >> y >> senderLocalPort;
 
 							client.IP = senderIP;
 							client.name = name;
@@ -388,7 +387,8 @@ namespace mp
 	void NetworkHandler::connectToServer(std::string name, std::string IPAddress)
 	{
 		serverIP = IPAddress;
-		sf::Int8 type = 1, port = receivePort;
+		sf::Int8 type = 1;
+		sf::Int16 port = receivePort;
 		sf::Packet packet;
 
 		worldDataMutex.lock();
@@ -399,7 +399,7 @@ namespace mp
 
 		packet << type << name << x << y << port;
 
-		std::cout<<"Connecting to server IP "<<serverIP<<" and listening to port: "<<receivePort<< "    or    "<<port<<std::endl;
+		std::cout<<"Connecting to server IP "<<serverIP<<" and listening to port: "<<receivePort<<std::endl;
 
 		sender.send(packet, serverIP, 55001);
 	}
