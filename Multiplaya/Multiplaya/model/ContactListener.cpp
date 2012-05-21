@@ -2,9 +2,8 @@
 
 namespace mp {
 
-	ContactListener::ContactListener(WorldData* worldData)
+	ContactListener::ContactListener()
 	{
-		this->worldData = worldData;
 	}
 
 

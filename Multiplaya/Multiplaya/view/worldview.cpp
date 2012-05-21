@@ -81,7 +81,6 @@ namespace mp
 	void WorldView::deleteBullet(int i)
 	{
 		//worldViewMutex.lock();
-
 		BulletView* bullet = (BulletView*) bullets.at(i);
 		bullets.erase(bullets.begin() + i );
 		delete bullet;

@@ -135,7 +135,7 @@ namespace mp
 							//adds that client to the clientmap
 							clientMap[currentClientID] = client;
 
-							std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<senderPort<<std::endl;
+							std::cout<<name<<" has connected with IP: "<<senderIP<<" from port: "<<client.port<<std::endl;
 
 							position.x = x;
 							position.y = y;
@@ -397,7 +397,7 @@ namespace mp
 
 		packet << type << name << x << y;
 
-		std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
+		std::cout<<"Connecting to server IP "<<serverIP<<" and listening to port: "<<receivePort<<std::endl;
 
 		sender.send(packet, serverIP, 55001);
 	}

@@ -5,7 +5,6 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include <string>
 #include "Event.h"
 
 namespace mp
@@ -13,6 +12,8 @@ namespace mp
 	class Observer
 	{
 		public:
+			/// This method will be called when Observable notifies 
+			/// its observers
 			virtual void notify(Event e, void* object) = 0;
 	};
 }
