@@ -13,8 +13,6 @@
 #include <list>
 #include <cmath>
 
-
-
 #include "bullet.h"
 
 #include "ICharacter.h"
