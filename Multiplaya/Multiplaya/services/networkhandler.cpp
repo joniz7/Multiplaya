@@ -99,7 +99,7 @@ namespace mp
 						(*it).second.disconnectCounter++;
 						if((*it).second.disconnectCounter == 400)
 						{
-							disconnectClient((*it).first);
+							//disconnectClient((*it).first);
 						}
 					}
 					//std::cout << "after" << (*it).second.disconnectCounter << std::endl;
@@ -477,13 +477,13 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
 		sf::Packet packet;
 		Character* tempCharacter;
 		float32 x, y;
 		packet << type << numOfChars;
 
-		for(int i = 0; i<numOfChars-1; i++)
+		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
 			tempClientID = tempCharacter->getClientID();
@@ -495,7 +495,7 @@ namespace mp
 				packet << tempClientID << x << y;
 			}
 		}
-
+		std::cout<<"Sending characters to "<<clientMap[clientID].name<<", to port "<<clientMap[clientID].port<<std::endl;
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 	}
 

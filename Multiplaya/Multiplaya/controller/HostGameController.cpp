@@ -30,6 +30,7 @@ namespace mp
 				{
 					hostButton->click();
 					networkHandler->setAsServer();
+					networkHandler->setAsClient();
 					notifyObservers(START_GAME, 0);
 				}
 				
