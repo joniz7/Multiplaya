@@ -27,18 +27,20 @@ namespace mp
 
 		sendOutput = false;
 
-		receivePort = 55001;
-		//Binds the receiving socket to a port
-		if(receiver.bind(receivePort) == sf::Socket::Error)
+		//Binds the receiving socket to any port
+		if(receiver.bind(sf::UdpSocket::AnyPort) == sf::Socket::Error)
 		{
 			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
+
+		receivePort = receiver.getLocalPort();
 
 		serverIP = serverIP.getLocalAddress();
 		std::cout<<"Your IP is: "<<serverIP<<std::endl;
 
 		clientMap[myID].IP = serverIP;
 		clientMap[myID].name = "host";
+		clientMap[myID].port = 55001;
     }
 
 	void NetworkHandler::exec() 
@@ -47,7 +49,7 @@ namespace mp
 		//Data about sender
 		sf::Packet receivedData;
 		sf::IpAddress senderIP;
-		unsigned short senderPort;
+		unsigned short senderPort, senderLocalPort;
 
 		sf::Int8 type;
 
@@ -123,11 +125,12 @@ namespace mp
 							if(sendOutput)
 								std::cout<<"type "<<outputType<<std::endl;
 
-							receivedData >> name >> x >> y;
+							receivedData >> name >> x >> y >> senderLocalPort;
 	
 							client.IP = senderIP;
 							client.name = name;
 							client.disconnectCounter = 0;
+							client.port = senderLocalPort;
 
 							//adds that client to the clientmap
 							clientMap[currentClientID] = client;
@@ -324,7 +327,7 @@ namespace mp
 		sf::Int8 type = 12;
 		packet << type << message;
 
-		sender.send(packet, IP, receivePort);
+		sender.send(packet, IP, 55001);
 	}
 
 
@@ -338,7 +341,7 @@ namespace mp
 		sf::Int8 type = 12;
 		packet << type << message;
 
-		sender.send(packet, serverIP, receivePort);
+		sender.send(packet, serverIP, 55001);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -361,7 +364,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::connectToServer(std::string name)
 	{
-		sf::Int8 type = 1;
+		sf::Int8 type = 1, port = receivePort;
 		sf::Packet packet;
 
 		worldDataMutex.lock();
@@ -370,7 +373,7 @@ namespace mp
 		float32 y = character->getBody()->GetPosition().y;
 		worldDataMutex.unlock();
 
-		packet << type << name << x << y;
+		packet << type << name << x << y << port;
 
 		std::cout<<"Connecting to server IP: "<<serverIP<<std::endl;
 
@@ -464,7 +467,7 @@ namespace mp
 				packet << tempClientID << x << y << xvel << yvel << angle;
 		}
 
-		sender.send(packet, clientMap[clientID].IP, receivePort);
+		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -491,7 +494,7 @@ namespace mp
 			}
 		}
 
-		sender.send(packet, clientMap[clientID].IP, receivePort);
+		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -508,7 +511,7 @@ namespace mp
 		for(it = clientMap.begin(); it != clientMap.end(); it++)
 		{
 			if(it != clientMap.end())
-				sender.send(packet, (*it).second.IP, 55001);
+				sender.send(packet, (*it).second.IP, clientMap[clientID].port);
 		}
 	}
 
@@ -529,14 +532,14 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	/// Sends the client ID to the specified client
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::sendClientID(sf::Int8 ID)
+	void NetworkHandler::sendClientID(sf::Int8 clientID)
 	{
 		sf::Packet packet;
 		sf::Int8 type = 11;
 
-		packet << type << ID;
+		packet << type << clientID;
 
-		sender.send(packet, clientMap[ID].IP, 55001);
+		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -558,6 +561,17 @@ namespace mp
 	void NetworkHandler::setIPAddress(const sf::String IPAddress)
 	{
 		serverIP = IPAddress.toAnsiString();
+	}
+
+	void NetworkHandler::setAsClient()
+	{
+		isClient = true;
+	}
+
+	void NetworkHandler::setAsServer()
+	{
+		isServer = true;
+		receiver.bind(55001);
 	}
 
 

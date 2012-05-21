@@ -46,8 +46,8 @@ namespace mp
 			void removeCharacter(sf::Int8 clientID);
 			void updateAllClients();
 			void setIPAddress(const sf::String IPAddress);
-			void setAsServer(){isServer = true;};
-			void setAsClient(){isClient = true;};
+			void setAsServer();
+			void setAsClient();
 
 			bool isServer, isClient;
 
