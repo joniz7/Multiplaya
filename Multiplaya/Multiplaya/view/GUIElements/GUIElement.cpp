@@ -120,4 +120,13 @@ namespace mp
 		return background;
 	}
 
+	void GUIElement::removeLastCharacter()
+	{
+		int textLength = getText().getSize();
+		if (textLength > 0)
+		{
+			std::string text = getText();
+			setText(text.erase(textLength - 1, 1));
+		}
+	}
 }

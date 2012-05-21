@@ -42,6 +42,9 @@ namespace mp
 
 			void setTextPosition(const float x, const float y);
 
+			/// Removes last character
+			void removeLastCharacter();
+
 		protected:
 			virtual bool mouseInsideHitbox(const sf::Vector2i& mousePos);
 			void setBackgroundAlpha(int alpha);

@@ -111,12 +111,12 @@ namespace mp
 				{
 					if (ipTextField->isClicked())
 					{
-						TextEventHelper::removeLastCharacter(ipTextField);
+						ipTextField->removeLastCharacter();
 					}
 
 					if (portTextField->isClicked())
 					{
-						TextEventHelper::removeLastCharacter(portTextField);
+						portTextField->removeLastCharacter();
 					}
 				}
 			} // end of textentered

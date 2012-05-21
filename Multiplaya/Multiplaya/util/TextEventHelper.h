@@ -17,8 +17,6 @@ namespace mp
 			static bool isBackspace(sf::Event &textEvent);
 			/// Checks if textevent is a dot
 			static bool isDot(sf::Event &textEvent);
-			/// Removes the last character in GUIElement passed
-			static void removeLastCharacter(GUIElement * const element);
 	};
 }
 #endif

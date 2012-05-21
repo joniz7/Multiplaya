@@ -16,14 +16,4 @@ namespace mp
 	{
 		return textEvent.text.unicode == 46;
 	}
-
-	void TextEventHelper::removeLastCharacter(GUIElement* element)
-	{
-		int textLength = element->getText().getSize();
-		if (textLength > 0)
-		{
-			std::string text = element->getText();
-			element->setText(text.erase(textLength - 1, 1));
-		}
-	}
 }
