@@ -10,7 +10,6 @@
 #include "../services/confighandler.h"
 #include "../services/MusicHandler.h"
 #include "../util/Observer.h"
-#include "../util/Event.h"
 #include "../model/world.h"
 
 namespace mp

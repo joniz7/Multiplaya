@@ -6,6 +6,7 @@
 
 namespace mp
 {
+	class NetworkHandler;
 	class HostGameController : public IController
 	{
 		public:

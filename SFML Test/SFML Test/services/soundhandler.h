@@ -16,9 +16,6 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-// Game specific headers
-#include "game.h"
-
 //Defines
 #include "defines.h"
 
