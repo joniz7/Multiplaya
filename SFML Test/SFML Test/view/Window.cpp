@@ -42,7 +42,7 @@ namespace mp
 	// run method that draw different screens depending on state
 
 	void Window::drawMainMenu() {
-		this->draw(screens["mainScreen"]);
+		draw(screens["mainScreen"]);
 	}
 	void Window::drawInGame() {
 		// TODO 	
@@ -51,17 +51,17 @@ namespace mp
 		// TODO
 	}
 	void Window::drawJoinMenu() {
-		this->draw(screens["joinGameScreen"]);
+		draw(screens["joinGameScreen"]);
 	}
 	void Window::drawHostMenu() {
-		this->draw(screens["hostScreen"]);
+		draw(screens["hostScreen"]);
 	}
 	void Window::drawSettingsMenu() {
-		this->draw(screens["settingsScreen"]);
+		draw(screens["settingsScreen"]);
 	}
 	void Window::drawGame()	{
 		screens["gameScreen"]->update();
-		this->draw(screens["gameScreen"]);
+		draw(screens["gameScreen"]);
 	}
 
 	//////////////////////////////////

@@ -28,7 +28,7 @@ namespace mp
 		counter = 0;
 		elapsed = 0;
 
-		layerHandler = new LayerHandler();
+		//layerHandler = new LayerHandler();
 		characterXPos = 0;
 		initialize();
 	}
@@ -151,7 +151,7 @@ namespace mp
             clock.restart();
 
 			// diff
-			layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
+		//	layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
 			characterXPos = worldData->getCharacter(0)->getPosition().x;
 
 			// Every 10th frame:
@@ -205,7 +205,7 @@ namespace mp
             // Render World.
 			drawWorld( window );
 
-			window.draw(*layerHandler);
+		//	window.draw(*layerHandler);
 
 			// Render UI.
 			drawHUD( window );
@@ -244,7 +244,7 @@ namespace mp
 		sunSprite->setTexture(*sunTexture);
 		sunSprite->setPosition(-20, -10);
 		sunSprite->scale(0.01f, 0.01f);
-		layerHandler->addLayer(*sunSprite, -0.05f);
+	//	layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.
 		fontGothic = new sf::Font();

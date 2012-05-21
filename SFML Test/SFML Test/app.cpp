@@ -60,7 +60,7 @@ namespace mp
 			// Execute controller statements (this also runs model and view).
 			data->controller->exec();		
 
-			if(elapsed>(1/10.f)) 
+			if(elapsed > (1 / 10.f)) 
 			{
 				clock.restart();
 
