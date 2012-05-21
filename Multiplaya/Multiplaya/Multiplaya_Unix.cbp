@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Multiplaya_Unix" />
+		<Option platforms="Unix;" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../Debug/Unix/Multiplaya_Unix" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../Debug/Unix/obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../Libraries/Box2DLinux/include" />
+					<Add directory="../Libraries/SFML_Linux64/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-lsfml-audio" />
+					<Add option="-lsfml-network" />
+					<Add option="-lsfml-graphics" />
+					<Add option="-lsfml-window" />
+					<Add option="-lsfml-system" />
+					<Add option="-lBox2D" />
+					<Add library="../Libraries/Box2DLinux/lib/libBox2D.a" />
+					<Add directory="../Libraries/Box2DLinux/lib" />
+					<Add directory="../Libraries/SFML_Linux64/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../Release/Unix/Multiplaya_Unix" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../Release/Unix/obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="../Libraries/Box2DLinux/include" />
+					<Add directory="../Libraries/SFML_Linux64/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lsfml-audio" />
+					<Add option="-lsfml-network" />
+					<Add option="-lsfml-graphics" />
+					<Add option="-lsfml-window" />
+					<Add option="-lsfml-system" />
+					<Add option="-lBox2D" />
+					<Add library="../Libraries/Box2DLinux/lib/libBox2D.a" />
+					<Add directory="../Libraries/Box2DLinux/lib" />
+					<Add directory="../Libraries/SFML_Linux64/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../Libraries/SFML_Linux64/include" />
+			<Add directory="../Libraries/Box2DLinux/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-lsfml-audio" />
+			<Add option="-lsfml-network" />
+			<Add option="-lsfml-graphics" />
+			<Add option="-lsfml-window" />
+			<Add option="-lsfml-system" />
+			<Add option="-lBox2D" />
+			<Add library="../Libraries/Box2DLinux/lib/libBox2D.a" />
+			<Add directory="../Libraries/SFML_Linux64/lib" />
+		</Linker>
+		<Unit filename="app.cpp" />
+		<Unit filename="app.h" />
+		<Unit filename="client.h" />
+		<Unit filename="controller/Controller.cpp" />
+		<Unit filename="controller/Controller.h" />
+		<Unit filename="controller/GameController.cpp" />
+		<Unit filename="controller/GameController.h" />
+		<Unit filename="controller/HostGameController.cpp" />
+		<Unit filename="controller/HostGameController.h" />
+		<Unit filename="controller/IController.cpp" />
+		<Unit filename="controller/IController.h" />
+		<Unit filename="controller/JoinGameController.cpp" />
+		<Unit filename="controller/JoinGameController.h" />
+		<Unit filename="controller/MainScreenController.cpp" />
+		<Unit filename="controller/MainScreenController.h" />
+		<Unit filename="controller/Player.cpp" />
+		<Unit filename="controller/Player.h" />
+		<Unit filename="defines.h" />
+		<Unit filename="global.cpp" />
+		<Unit filename="global.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="model/ContactListener.cpp" />
+		<Unit filename="model/ContactListener.h" />
+		<Unit filename="model/GameObject.h" />
+		<Unit filename="model/ICharacter.h" />
+		<Unit filename="model/Wall.cpp" />
+		<Unit filename="model/Wall.h" />
+		<Unit filename="model/bullet.cpp" />
+		<Unit filename="model/bullet.h" />
+		<Unit filename="model/character.cpp" />
+		<Unit filename="model/character.h" />
+		<Unit filename="model/world.cpp" />
+		<Unit filename="model/world.h" />
+		<Unit filename="model/worldchain.cpp" />
+		<Unit filename="model/worldchain.h" />
+		<Unit filename="model/worlddata.cpp" />
+		<Unit filename="model/worlddata.h" />
+		<Unit filename="services/MusicHandler.cpp" />
+		<Unit filename="services/MusicHandler.h" />
+		<Unit filename="services/confighandler.cpp" />
+		<Unit filename="services/confighandler.h" />
+		<Unit filename="services/input.cpp" />
+		<Unit filename="services/input.h" />
+		<Unit filename="services/keylookup.cpp" />
+		<Unit filename="services/keylookup.h" />
+		<Unit filename="services/networkhandler.cpp" />
+		<Unit filename="services/networkhandler.h" />
+		<Unit filename="services/resourcehandler.cpp" />
+		<Unit filename="services/resourcehandler.h" />
+		<Unit filename="services/soundhandler.cpp" />
+		<Unit filename="services/soundhandler.h" />
+		<Unit filename="sfml.h" />
+		<Unit filename="sound/sound.cpp" />
+		<Unit filename="sound/sound.h" />
+		<Unit filename="sound/uisound.cpp" />
+		<Unit filename="sound/uisound.h" />
+		<Unit filename="sound/worldsound.cpp" />
+		<Unit filename="sound/worldsound.h" />
+		<Unit filename="util/Event.h" />
+		<Unit filename="util/Observable.cpp" />
+		<Unit filename="util/Observable.h" />
+		<Unit filename="util/Observer.h" />
+		<Unit filename="util/TextEventHelper.cpp" />
+		<Unit filename="util/TextEventHelper.h" />
+		<Unit filename="view/BulletView.cpp" />
+		<Unit filename="view/BulletView.h" />
+		<Unit filename="view/CharacterSprite.cpp" />
+		<Unit filename="view/CharacterSprite.h" />
+		<Unit filename="view/CharacterView.cpp" />
+		<Unit filename="view/CharacterView.h" />
+		<Unit filename="view/GUIElements/Button.cpp" />
+		<Unit filename="view/GUIElements/Button.h" />
+		<Unit filename="view/GUIElements/GUIElement.cpp" />
+		<Unit filename="view/GUIElements/GUIElement.h" />
+		<Unit filename="view/GUIElements/TextField.cpp" />
+		<Unit filename="view/GUIElements/TextField.h" />
+		<Unit filename="view/GameObjectView.h" />
+		<Unit filename="view/HUDSprite.cpp" />
+		<Unit filename="view/HUDSprite.h" />
+		<Unit filename="view/HostGameScreen.cpp" />
+		<Unit filename="view/HostGameScreen.h" />
+		<Unit filename="view/JoinGameScreen.cpp" />
+		<Unit filename="view/JoinGameScreen.h" />
+		<Unit filename="view/Layer.cpp" />
+		<Unit filename="view/Layer.h" />
+		<Unit filename="view/LayerHandler.cpp" />
+		<Unit filename="view/LayerHandler.h" />
+		<Unit filename="view/MainScreen.cpp" />
+		<Unit filename="view/MainScreen.h" />
+		<Unit filename="view/Screen.h" />
+		<Unit filename="view/SettingsScreen.cpp" />
+		<Unit filename="view/SettingsScreen.h" />
+		<Unit filename="view/Window.cpp" />
+		<Unit filename="view/Window.h" />
+		<Unit filename="view/animatedsprite.cpp" />
+		<Unit filename="view/animatedsprite.h" />
+		<Unit filename="view/worldview.cpp" />
+		<Unit filename="view/worldview.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
