@@ -23,14 +23,14 @@ namespace mp
 
 			getScreen()->hover(mousePos);
 
-			
+
 			if (ev.type == sf::Event::Closed) {
 				// Tell our parent to exit the game.
-				notifyObservers(Event::EXIT_GAME, 0);
+				notifyObservers(EXIT_GAME, 0);
 			}
 			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape)) {
 				// Tell our parent to exit the game.
-				notifyObservers(Event::EXIT_GAME, 0);
+				notifyObservers(EXIT_GAME, 0);
 			}
 
 			if (ev.type == sf::Event::MouseButtonReleased)
@@ -39,7 +39,7 @@ namespace mp
 				{
 					joinButton->click();
 					// Change screen in main controller.
-					notifyObservers(Event::SHOW_JOIN,0);
+					notifyObservers(SHOW_JOIN,0);
 				}
 
 				if ( hostButton->isMouseOver(mousePos) )
@@ -52,7 +52,7 @@ namespace mp
 				if ( exitButton->isMouseOver(mousePos) )
 				{
 					// Tell main controller to shut everything down.
-					notifyObservers(Event::EXIT_GAME, 0);
+					notifyObservers(EXIT_GAME, 0);
 				}
 				// get button elements and see which hovers
 			}

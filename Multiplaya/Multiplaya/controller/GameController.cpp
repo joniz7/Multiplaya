@@ -21,7 +21,7 @@ namespace mp
 		this->model = model;
 		this->network = NULL;
 		this->currentPlayer = new Player();
-		
+
 		worldDataMutex.lock();
 		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
 		worldDataMutex.unlock();
@@ -56,7 +56,7 @@ namespace mp
 			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape))
 			{
 				// Change screen in main controller.
-				notifyObservers(Event::PAUSE_GAME,0);
+				notifyObservers(PAUSE_GAME,0);
 				getRenderWindow()->setMouseCursorVisible(true);
 			}
 

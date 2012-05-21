@@ -26,15 +26,15 @@ namespace mp
 
 			if (ev.type == sf::Event::MouseButtonReleased)
 			{
-				
+
 				if( connectButton->isMouseOver(mousePos) )
 				{
-					
+
 					connectButton->click();
 					networkHandler->connectToServer("Jonte", "192.168.1.69");
 					clock.restart();
 					elapsed = clock.getElapsedTime().asSeconds();
-					while(!networkHandler->isConnectedToServer() && elapsed<3) 
+					while(!networkHandler->isConnectedToServer() && elapsed<3)
 					{
 						elapsed = clock.getElapsedTime().asSeconds();
 					}
@@ -44,10 +44,10 @@ namespace mp
 						//networkHandler->setIPAddress(ipTextField->getText());
 						networkHandler->setAsClient();
 						// Change screen in main controller.
-						notifyObservers(Event::START_GAME, 0);
+						notifyObservers(START_GAME, 0);
 					}
 				}
-				
+
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
@@ -113,11 +113,11 @@ namespace mp
 					{
 						TextEventHelper::removeLastCharacter(ipTextField);
 					}
-						
+
 					if (portTextField->isClicked())
 					{
 						TextEventHelper::removeLastCharacter(portTextField);
-					}	
+					}
 				}
 			} // end of textentered
 		} // end of pollEvent loop

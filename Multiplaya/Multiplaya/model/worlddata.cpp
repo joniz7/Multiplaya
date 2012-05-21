@@ -78,7 +78,7 @@ namespace mp
 
 	void WorldData::removeCharacter(sf::Int8 ID)
 	{
-		for(int i = 0; i<characters.size(); i++)
+		for(unsigned int i = 0; i<characters.size(); i++)
 		{
 			Character* character = characters.at(i);
 			if(character->getClientID() == ID)
@@ -87,15 +87,15 @@ namespace mp
 				worldDataMutex.lock();
 				characters.erase(characters.begin()+i);
 				worldDataMutex.unlock();
-				
-				
+
+
 			}
 		}
 	}
 
 	bool WorldData::exists(sf::Int8 clientID)
 	{
-		for(int i = 0; i<characters.size(); i++)
+		for(unsigned int i = 0; i<characters.size(); i++)
 		{
 			Character* character = characters.at(i);
 			if(character->getClientID() == clientID)

@@ -25,7 +25,7 @@ namespace mp
 		//controllers["worldScreen"]->addObserver(this);
 
 		// Begin at main menu.
-		this->notify(Event::SHOW_MAIN_MENU, 0);
+		this->notify(SHOW_MAIN_MENU, 0);
 
 	}
 
@@ -41,6 +41,7 @@ namespace mp
 			case SHOW_JOIN:      showJoinMenu();     break;
 			case SHOW_MAIN_MENU: showMainMenu();     break;
 			case SHOW_SETTINGS:  showSettingsMenu(); break;
+			default: break;
 		}
 	}
 
@@ -54,7 +55,7 @@ namespace mp
 		window->getRenderWindow()->setMouseCursorVisible(false);
 		this->currentDrawFunction = &Window::drawGame;
 		this->currentController = controllers["game"];
-		
+
 	}
 	void Controller::stopGame() {
 		this->runGame = false;
@@ -72,13 +73,13 @@ namespace mp
 		this->currentDrawFunction = &Window::drawMainMenu;
 		this->currentController = controllers["mainScreen"];
 		};
-	
+
 	void Controller::resumeGame(){
 		// Set pointers.
 		this->currentDrawFunction = &Window::drawGame;
 		this->currentController = controllers["game"];
 	}
-			
+
 	void Controller::showMainMenu(){
 		// Start our menu music.
 		MusicHandler::instance().chooseSong("menu");
@@ -87,13 +88,13 @@ namespace mp
 		this->currentDrawFunction = &Window::drawMainMenu;
 		this->currentController = controllers["mainScreen"];
 	}
-			
+
 	void Controller::showJoinMenu(){
 		// Set pointers.
 		this->currentDrawFunction = &Window::drawJoinMenu;
 		this->currentController = controllers["joinGame"];
 	}
-			
+
 	void Controller::showHostMenu(){
 		// Set pointers.
 		this->currentDrawFunction = &Window::drawHostMenu;
@@ -128,7 +129,7 @@ namespace mp
 		if (runGame) {
 			world->exec();
 		}
-		
+
 		(window->*currentDrawFunction)(); // Draw screen.
 		currentController->handleInput(); // Handle input.
 	}
