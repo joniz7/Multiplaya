@@ -13,20 +13,14 @@ Multiplaya/Debug/
 Multiplaya/Release/
 Multiplaya/CodeAnalyst/
 
-Multiplaya/Multiplaya/Unix/obj
-Multiplaya/Multiplaya/Debug/
+Multiplaya/Multiplaya/Debug/Unix/obj
+Multiplaya/Multiplaya/Release/Unix/obj
 Multiplaya/Multiplaya.suo
-Multiplaya/Multiplaya/hud.jpg
-Multiplaya/Multiplaya/shit.jpg
 Multiplaya/Multiplaya/obj/
+Multiplaya/Multiplaya/Debug/
 Multiplaya/Multiplaya/bin/
 Multiplaya/gtest-1.6.0/msvc/gtest/Debug/
 
 Multiplaya/Tests/Debug/
-Multiplaya/Tests/Debug/*
-
-Menyer/obj/
-Menyer/bin/
-Menyer/resources/
 
 Multiplaya/Multiplaya/resources/test/testsprite.psd

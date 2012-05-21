@@ -16,7 +16,7 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Removess observer from the set of observers
+	/// Removes observer from the set of observers
 	///
 	/// @param observer - Class implementing Observer interface
 	////////////////////////////////////////////////////////////

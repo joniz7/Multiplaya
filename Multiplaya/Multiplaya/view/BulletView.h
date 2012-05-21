@@ -15,11 +15,13 @@ namespace mp
 {
 	class Bullet;
 
+	/// Class giving a bullet a visual representation
 	class BulletView : public GameObjectView
 	{
 	public:
 		BulletView(Bullet* model);
 		virtual ~BulletView();
+		/// Update sprite position to match bullets position
 		void updatePosition();
 	private:
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

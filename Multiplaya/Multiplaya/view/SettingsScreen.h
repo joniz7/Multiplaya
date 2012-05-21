@@ -14,7 +14,7 @@ namespace mp
 
 			virtual void update() {}
 			bool hover(const sf::Vector2i& mousePos) { return true;}
-			 // int click(const sf::Vector2i& mousePos) { return 0; }
+			
 			virtual GUIElement* getElement(std::string element) { return guiElements[element]; }
 		protected:
 		private:

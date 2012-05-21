@@ -12,12 +12,12 @@ namespace mp {
 	class ContactListener : public b2ContactListener
 	{
 		public:
-			ContactListener(WorldData* worldData);
+			ContactListener();
 			~ContactListener();
 			void BeginContact(b2Contact* contact);
 			void EndContact(b2Contact* contact);
 		private:
-			WorldData* worldData;
+
 	};
 }
 

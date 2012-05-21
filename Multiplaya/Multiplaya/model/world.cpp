@@ -28,7 +28,7 @@ namespace mp
 		// Create the world
 		world = new b2World(gravity);
 		worldDataMutex.lock();
-		world->SetContactListener(new ContactListener(worldData));
+		world->SetContactListener(new ContactListener());
 		worldDataMutex.unlock();
 
 		// World step properties
