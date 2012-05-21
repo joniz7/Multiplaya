@@ -4,6 +4,7 @@
 #include "IController.h"
 #include "../view/HostGameScreen.h"
 #include "../util/TextEventHelper.h"
+#include "../services/networkhandler.h"
 
 namespace mp
 {
