@@ -29,7 +29,7 @@
 		<Cursor position="219" topLine="0" />
 	</File>
 	<File name="model/ContactListener.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="714" topLine="13" />
+		<Cursor position="714" topLine="0" />
 	</File>
 	<File name="model/Wall.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="350" topLine="0" />
@@ -56,7 +56,7 @@
 		<Cursor position="2134" topLine="95" />
 	</File>
 	<File name="model/worlddata.h" open="1" top="0" tabpos="2">
-		<Cursor position="2567" topLine="71" />
+		<Cursor position="2567" topLine="56" />
 	</File>
 	<File name="services/MusicHandler.h" open="0" top="0" tabpos="10">
 		<Cursor position="710" topLine="18" />
