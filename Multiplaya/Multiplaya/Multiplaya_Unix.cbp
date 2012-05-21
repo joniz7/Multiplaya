@@ -8,8 +8,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/SFML_Test_Unix" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="../Debug/Unix/Multiplaya_Unix" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../Debug/Unix/obj" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -30,8 +30,8 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/SFML_Test_Unix" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option output="../Release/Unix/Multiplaya_Unix" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../Release/Unix/obj" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -69,8 +69,6 @@
 			<Add library="../Libraries/Box2DLinux/lib/libBox2D.a" />
 			<Add directory="../Libraries/SFML_Linux64/lib" />
 		</Linker>
-		<Unit filename="GameState.cpp" />
-		<Unit filename="GameState.h" />
 		<Unit filename="app.cpp" />
 		<Unit filename="app.h" />
 		<Unit filename="client.h" />
@@ -89,13 +87,13 @@
 		<Unit filename="controller/Player.cpp" />
 		<Unit filename="controller/Player.h" />
 		<Unit filename="defines.h" />
-		<Unit filename="game.h" />
 		<Unit filename="global.cpp" />
 		<Unit filename="global.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="model/ContactListener.cpp" />
 		<Unit filename="model/ContactListener.h" />
 		<Unit filename="model/GameObject.h" />
+		<Unit filename="model/ICharacter.h" />
 		<Unit filename="model/Wall.cpp" />
 		<Unit filename="model/Wall.h" />
 		<Unit filename="model/bullet.cpp" />
@@ -120,6 +118,8 @@
 		<Unit filename="services/networkhandler.h" />
 		<Unit filename="services/resourcehandler.cpp" />
 		<Unit filename="services/resourcehandler.h" />
+		<Unit filename="services/soundhandler.cpp" />
+		<Unit filename="services/soundhandler.h" />
 		<Unit filename="sfml.h" />
 		<Unit filename="sound/sound.cpp" />
 		<Unit filename="sound/sound.h" />
@@ -127,9 +127,12 @@
 		<Unit filename="sound/uisound.h" />
 		<Unit filename="sound/worldsound.cpp" />
 		<Unit filename="sound/worldsound.h" />
+		<Unit filename="util/Event.h" />
 		<Unit filename="util/Observable.cpp" />
 		<Unit filename="util/Observable.h" />
 		<Unit filename="util/Observer.h" />
+		<Unit filename="util/TextEventHelper.cpp" />
+		<Unit filename="util/TextEventHelper.h" />
 		<Unit filename="view/BulletView.cpp" />
 		<Unit filename="view/BulletView.h" />
 		<Unit filename="view/CharacterSprite.cpp" />
@@ -145,6 +148,8 @@
 		<Unit filename="view/GameObjectView.h" />
 		<Unit filename="view/HUDSprite.cpp" />
 		<Unit filename="view/HUDSprite.h" />
+		<Unit filename="view/HostGameScreen.cpp" />
+		<Unit filename="view/HostGameScreen.h" />
 		<Unit filename="view/JoinGameScreen.cpp" />
 		<Unit filename="view/JoinGameScreen.h" />
 		<Unit filename="view/Layer.cpp" />
