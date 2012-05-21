@@ -7,8 +7,6 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-//Defines
-#include "../sfml.h"
 #include "../global.h"
 #include "../model/character.h"
 #include "../services/input.h"

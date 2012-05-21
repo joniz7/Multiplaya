@@ -18,7 +18,7 @@
 #include <sstream>
 
 #include "CharacterView.h"
-#include "CharacterSprite.h"
+
 // Box2D specific headers
 #include <Box2D.h>
 #include "../defines.h"

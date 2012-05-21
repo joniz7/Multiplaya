@@ -110,7 +110,6 @@
     <ClCompile Include="util\TextEventHelper.cpp" />
     <ClCompile Include="view\animatedsprite.cpp" />
     <ClCompile Include="view\BulletView.cpp" />
-    <ClCompile Include="view\CharacterSprite.cpp" />
     <ClCompile Include="view\CharacterView.cpp" />
     <ClCompile Include="view\GUIElements\Button.cpp" />
     <ClCompile Include="view\GUIElements\GUIElement.cpp" />
@@ -163,7 +162,6 @@
     <ClInclude Include="util\TextEventHelper.h" />
     <ClInclude Include="view\animatedsprite.h" />
     <ClInclude Include="view\BulletView.h" />
-    <ClInclude Include="view\CharacterSprite.h" />
     <ClInclude Include="view\CharacterView.h" />
     <ClInclude Include="view\GameObjectView.h" />
     <ClInclude Include="view\GUIElements\Button.h" />
