@@ -29,6 +29,7 @@ namespace mp
 				if( hostButton->isMouseOver(mousePos) )
 				{
 					hostButton->click();
+					networkHandler->setAsServer();
 					notifyObservers(START_GAME, 0);
 				}
 				

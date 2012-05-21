@@ -30,7 +30,7 @@ namespace mp
 		//Binds the receiving socket to any port
 		if(receiver.bind(sf::UdpSocket::AnyPort) == sf::Socket::Error)
 		{
-			std::cout<<"Error binding to port " << receivePort << std::endl;
+			std::cout<<"Error binding tsdfasdfsao port " << receivePort << std::endl;
 		}
 
 		receivePort = receiver.getLocalPort();
@@ -58,7 +58,7 @@ namespace mp
 		Client client;
 		std::string name;
 
-		sf::Int8 clientID, numOfChars, numOfBullets;
+		sf::Int8 clientID, numOfChars, numOfBullets, tempSenderPort;
 
 		std::string message;
 
@@ -87,8 +87,8 @@ namespace mp
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
 				{
-					std::cout << "before" << (*it).second.disconnectCounter << std::endl;
-					std::cout << (*it).second.IP << "    " << senderIP << std::endl;
+					//std::cout << "before" << (*it).second.disconnectCounter << std::endl;
+					//std::cout << (*it).second.IP << "    " << senderIP << std::endl;
 					if((*it).second.IP == senderIP)
 					{
 						(*it).second.disconnectCounter = 0;
@@ -101,7 +101,7 @@ namespace mp
 							disconnectClient((*it).first);
 						}
 					}
-					std::cout << "after" << (*it).second.disconnectCounter << std::endl;
+					//std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
 			
@@ -125,8 +125,10 @@ namespace mp
 							if(sendOutput)
 								std::cout<<"type "<<outputType<<std::endl;
 
-							receivedData >> name >> x >> y >> senderLocalPort;
+							receivedData >> name >> x >> y >> tempSenderPort;
 	
+							senderLocalPort = tempSenderPort;
+
 							client.IP = senderIP;
 							client.name = name;
 							client.disconnectCounter = 0;
@@ -386,7 +388,7 @@ namespace mp
 	void NetworkHandler::connectToServer(std::string name, std::string IPAddress)
 	{
 		serverIP = IPAddress;
-		sf::Int8 type = 1;
+		sf::Int8 type = 1, port = receivePort;
 		sf::Packet packet;
 
 		worldDataMutex.lock();
@@ -571,6 +573,7 @@ namespace mp
 	void NetworkHandler::setAsServer()
 	{
 		isServer = true;
+		receiver.unbind();
 		receiver.bind(55001);
 	}
 
