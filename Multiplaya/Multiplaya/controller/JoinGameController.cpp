@@ -51,7 +51,7 @@ namespace mp
 				if ( cancelButton->isMouseOver(mousePos) )
 				{
 					cancelButton->click();
-					notifyObservers(Event::SHOW_MAIN_MENU, 0);
+					notifyObservers(SHOW_MAIN_MENU, 0);
 				}
 
 				if ( ipTextField->isMouseOver(mousePos) )

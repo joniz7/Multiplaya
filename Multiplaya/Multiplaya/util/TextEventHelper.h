@@ -6,12 +6,18 @@
 namespace mp 
 {
 	// maybe change name to controller helper
+	
+	/// Class for helping Controller
 	class TextEventHelper
 	{
 		public:
-			static bool isNumber(sf::Event &ev);
-			static bool isBackspace(sf::Event &ev);
-			static bool isDot(sf::Event &ev);
+			/// Checks if textevent is a number
+			static bool isNumber(sf::Event &textEvent);
+			/// Checks if textevent is a backspace
+			static bool isBackspace(sf::Event &textEvent);
+			/// Checks if textevent is a dot
+			static bool isDot(sf::Event &textEvent);
+			/// Removes the last character in GUIElement passed
 			static void removeLastCharacter(GUIElement * const element);
 	};
 }

@@ -2,19 +2,19 @@
 
 namespace mp
 {
-	bool TextEventHelper::isNumber(sf::Event &ev)
+	bool TextEventHelper::isNumber(sf::Event &textEvent)
 	{
-		return (ev.text.unicode >= 48 && ev.text.unicode <= 57 );
+		return (textEvent.text.unicode >= 48 && textEvent.text.unicode <= 57 );
 	}
 
-	bool TextEventHelper::isBackspace(sf::Event &ev)
+	bool TextEventHelper::isBackspace(sf::Event &textEvent)
 	{
-		return ev.text.unicode == 8;
+		return textEvent.text.unicode == 8;
 	}
 
-	bool TextEventHelper::isDot(sf::Event &ev)
+	bool TextEventHelper::isDot(sf::Event &textEvent)
 	{
-		return ev.text.unicode == 46;
+		return textEvent.text.unicode == 46;
 	}
 
 	void TextEventHelper::removeLastCharacter(GUIElement* element)

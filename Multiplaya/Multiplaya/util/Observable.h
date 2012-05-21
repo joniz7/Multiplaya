@@ -1,13 +1,8 @@
-////////////////////////////////////////////////////////////
-/// Observable class.  Holds data supporting the Observer
-///  pattern.
-////////////////////////////////////////////////////////////
 #ifndef OBSERVABLE_H
 #define OBSERVABLE_H
 
 // Other headers
 #include <set>
-#include <string>
 
 // Observer interface
 #include "Observer.h"
