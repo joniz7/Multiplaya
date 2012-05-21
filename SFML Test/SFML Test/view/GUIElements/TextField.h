@@ -13,6 +13,7 @@ namespace mp
 
 			virtual bool isMouseOver(const sf::Vector2i& mousePos);
 			virtual void click();
+			bool isClicked();
 			// set text input to left and middle in height all the time
 
 			void setBorderColorClicked(const sf::Color& color);

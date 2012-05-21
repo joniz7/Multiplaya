@@ -7,11 +7,8 @@ namespace mp
 		//ctor
 		cancelButton = hostScreen->getElement("cancelButton");
 		hostButton = hostScreen->getElement("hostButton");
-		gravityTextField = hostScreen->getElement("gravityTextField");
-		portTextField = hostScreen->getElement("portTextField");
-
-		gravityTextClicked = false;
-		portTextClicked = false;
+		gravityTextField = (TextField*) hostScreen->getElement("gravityTextField");
+		portTextField = (TextField*) hostScreen->getElement("portTextField");
 	}
 
 	HostGameController::~HostGameController()
@@ -45,42 +42,38 @@ namespace mp
 				if ( gravityTextField->isMouseOver(mousePos) )
 				{
 					// lose focus
-					if (portTextClicked)
+					if (portTextField->isClicked())
 					{
 						portTextField->click();
-						portTextClicked = false;
 					}
 
-					if (gravityTextClicked)
+					if (gravityTextField->isClicked())
 					{
 						gravityTextField->click();
-						gravityTextClicked = false;
 					}
 					else
 					{
 						gravityTextField->click();
-						gravityTextClicked = true;
 					}
 				}
 
 				if ( portTextField->isMouseOver(mousePos) )
 				{
 					// if ipTextField is clicked then lose focus..
-					if (gravityTextClicked)
+					if (gravityTextField->isClicked())
 					{
 						gravityTextField->click();
-						gravityTextClicked = false;
+
 					}
 
-					if (portTextClicked)
+					if (portTextField->isClicked())
 					{
 						portTextField->click();
-						portTextClicked = false;
+
 					}
 					else
 					{
 						portTextField->click();
-						portTextClicked = true;
 					}
 				}
 			}
@@ -89,26 +82,26 @@ namespace mp
 			{
 				if (TextEventHelper::isNumber(ev))
 				{
-					if (gravityTextClicked)
+					if (gravityTextField->isClicked())
 						gravityTextField->setText(gravityTextField->getText() + ev.text.unicode);
-					if (portTextClicked)
+					if (portTextField->isClicked())
 						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 				else if (TextEventHelper::isDot(ev))
 				{
 					// "remove" the possibility to input double dots
-					if (gravityTextClicked)
+					if (gravityTextField->isClicked())
 						gravityTextField->setText(gravityTextField->getText() + ev.text.unicode);
 
 				}
 				else if (TextEventHelper::isBackspace(ev))
 				{
-					if (gravityTextClicked)
+					if (gravityTextField->isClicked())
 					{
 						TextEventHelper::removeLastCharacter(gravityTextField);
 					}
 						
-					if (portTextClicked)
+					if (portTextField->isClicked())
 					{
 						TextEventHelper::removeLastCharacter(portTextField);
 					}	

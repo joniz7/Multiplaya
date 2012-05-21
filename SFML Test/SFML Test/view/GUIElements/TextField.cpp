@@ -23,6 +23,11 @@ namespace mp
 		return false;
 	}
 
+	bool TextField::isClicked()
+	{
+		return clicked;
+	}
+
 	void TextField::click()
 	{
 		if (!clicked)

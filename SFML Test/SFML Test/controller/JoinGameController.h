@@ -20,14 +20,11 @@ namespace mp
 		private:
 			sf::Event ev;
 
-			bool ipTextClicked;
-			bool portTextClicked;
-
 			GUIElement* cancelButton;
 			GUIElement* connectButton;
 
-			GUIElement* ipTextField;
-			GUIElement* portTextField;
+			TextField* ipTextField;
+			TextField* portTextField;
 
 			NetworkHandler* networkHandler;
 

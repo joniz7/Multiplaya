@@ -6,11 +6,8 @@ namespace mp
 	{
 		cancelButton = joinGameScreen->getElement("cancelButton");
 		connectButton = joinGameScreen->getElement("connectButton");
-		ipTextField = joinGameScreen->getElement("ipTextField");
-		portTextField = joinGameScreen->getElement("portTextField");
-
-		ipTextClicked = false;
-		portTextClicked = false;
+		ipTextField = (TextField*) joinGameScreen->getElement("ipTextField");
+		portTextField = (TextField*) joinGameScreen->getElement("portTextField");
 	}
 
 	JoinGameController::~JoinGameController()
@@ -60,42 +57,37 @@ namespace mp
 				if ( ipTextField->isMouseOver(mousePos) )
 				{
 					// lose focus
-					if (portTextClicked)
+					if (portTextField->isClicked())
 					{
 						portTextField->click();
-						portTextClicked = false;
 					}
 
-					if (ipTextClicked)
+					if (ipTextField->isClicked())
 					{
 						ipTextField->click();
-						ipTextClicked = false;
 					}
 					else
 					{
 						ipTextField->click();
-						ipTextClicked = true;
 					}
 				}
 
 				if ( portTextField->isMouseOver(mousePos) )
 				{
 					// if ipTextField is clicked then lose focus..
-					if (ipTextClicked)
+					if (ipTextField->isClicked())
 					{
 						ipTextField->click();
-						ipTextClicked = false;
+
 					}
 
-					if (portTextClicked)
+					if (portTextField->isClicked())
 					{
 						portTextField->click();
-						portTextClicked = false;
 					}
 					else
 					{
 						portTextField->click();
-						portTextClicked = true;
 					}
 				}
 			}
@@ -104,25 +96,25 @@ namespace mp
 			{
 				if (TextEventHelper::isNumber(ev))
 				{
-					if (ipTextClicked)
+					if (ipTextField->isClicked())
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
-					if (portTextClicked)
+					if (portTextField->isClicked())
 						portTextField->setText(portTextField->getText() + ev.text.unicode);
 				}
 				else if (TextEventHelper::isDot(ev))
 				{
 					// "remove" the possibility to input double dots
-					if (ipTextClicked)
+					if (ipTextField->isClicked())
 						ipTextField->setText(ipTextField->getText() + ev.text.unicode);
 				}
 				else if (TextEventHelper::isBackspace(ev))
 				{
-					if (ipTextClicked)
+					if (ipTextField->isClicked())
 					{
 						TextEventHelper::removeLastCharacter(ipTextField);
 					}
 						
-					if (portTextClicked)
+					if (portTextField->isClicked())
 					{
 						TextEventHelper::removeLastCharacter(portTextField);
 					}	
