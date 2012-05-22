@@ -11,9 +11,11 @@ namespace mp
 	{
 		public:
 
-			/// Returns element 
-			/// Update the screen, if it contains any moving sprites or such this will be needed
+			/**
+			* Method that updates the screen, if it contains any moving sprites or such this will be needed
+			*/
 			virtual void update() = 0;
+
 
 			/// Tells screen where the mouse is for hover effects
 			virtual void hover (const sf::Vector2i& mousePos);
@@ -22,7 +24,7 @@ namespace mp
 			GUIElement* getGUIElement(std::string name);
 						
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
-		protected:
+
 		private:
 			std::map<std::string, GUIElement*> guiElements;
 
