@@ -23,11 +23,11 @@ namespace mp
 			void update(const sf::Vector2f &mousePos);
 
 			/// Set the player's current character
-			void setCharacter(Character* character) { this->character = character; }
+			void setCharacter(ICharacter* character) { this->character = character; }
 			/// Returns the player's current character
-			Character* getCharacter() { return character; }
+			ICharacter* getCharacter() { return character; }
 		private:
-			Character* character;
+			ICharacter* character;
 			bool released;
 			WorldData* worldData;
 			b2World* world;

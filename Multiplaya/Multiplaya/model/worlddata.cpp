@@ -75,15 +75,13 @@ namespace mp
 	{
 		for(unsigned int i = 0; i<characters.size(); i++)
 		{
-			Character* character = characters.at(i);
+			ICharacter* character = characters.at(i);
 			if(character->getClientID() == ID)
 			{
-				notifyObservers(BULLET_DELETED, (void*) i);
+				notifyObservers(CHARACTER_DELETED, (void*) i);
 				worldDataMutex.lock();
 				characters.erase(characters.begin()+i);
 				worldDataMutex.unlock();
-
-
 			}
 		}
 	}
@@ -92,7 +90,7 @@ namespace mp
 	{
 		for(unsigned int i = 0; i<characters.size(); i++)
 		{
-			Character* character = characters.at(i);
+			ICharacter* character = characters.at(i);
 			if(character->getClientID() == clientID)
 			{
 				return true;
@@ -199,7 +197,7 @@ namespace mp
 	}
 
 
-	Character* WorldData::getCharacter(sf::Int8 clientID)
+	ICharacter* WorldData::getCharacter(sf::Int8 clientID)
 	{
 		for(unsigned int i = 0; i < characters.size(); i++)
 		{

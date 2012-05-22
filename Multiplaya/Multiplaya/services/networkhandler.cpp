@@ -375,7 +375,7 @@ namespace mp
 		sf::Packet packet;
 
 		worldDataMutex.lock();
-		Character* character = worldData->getCurrentCharacter();
+		ICharacter* character = worldData->getCurrentCharacter();
 		float32 x = character->getBody()->GetPosition().x;
 		float32 y = character->getBody()->GetPosition().y;
 		worldDataMutex.unlock();
@@ -398,7 +398,7 @@ namespace mp
 		sf::Packet packet;
 
 		worldDataMutex.lock();
-		Character* character = worldData->getCurrentCharacter();
+		ICharacter* character = worldData->getCurrentCharacter();
 		float32 x = character->getBody()->GetPosition().x;
 		float32 y = character->getBody()->GetPosition().y;
 		worldDataMutex.unlock();
@@ -457,7 +457,7 @@ namespace mp
 	{
 		sf::Int8 type = 13, tempClientID, numOfChars = worldData->getCharacters()->size();
 		sf::Packet packet;
-		Character* tempCharacter;
+		ICharacter* tempCharacter;
 		float32 x, y, xvel, yvel, angle;
 		packet << type << numOfChars;
 
@@ -485,11 +485,11 @@ namespace mp
 	{
 		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
 		sf::Packet packet;
-		Character* tempCharacter;
+		ICharacter* tempCharacter;
 		float32 x, y;
 		packet << type << numOfChars;
 
-		for(int i = 0; i<numOfChars; i++)
+		for(int i = 0; i < numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
 			tempClientID = tempCharacter->getClientID();
@@ -623,7 +623,7 @@ namespace mp
 		worldDataMutex.lock();
 		if(worldData->exists(clientID))
 		{
-			Character* character = worldData->getCharacter(clientID);
+			ICharacter* character = worldData->getCharacter(clientID);
 			character->setPosition(position, angle);
 			character->setLinVelocity(velocity);
 		}

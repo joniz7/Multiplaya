@@ -3,8 +3,8 @@
 namespace mp
 {
 
-	CharacterView::CharacterView(Character* character) {
-		 this->character = character;
+	CharacterView::CharacterView(ICharacter* character) {
+		this->character = character;
 
 		sf::Texture* tex = new sf::Texture();
 

@@ -21,8 +21,8 @@ namespace mp
 	{
 		public:
 			//CharacterView(Character* model, sf::Sprite* sprite);
-			CharacterView(Character* character, CharacterSprite* sprite);
-			CharacterView(Character* character);
+			CharacterView(ICharacter* character, CharacterSprite* sprite);
+			CharacterView(ICharacter* character);
 			~CharacterView();
 			void updateAnimation(float elapsed);
 			void updatePosition();
@@ -31,7 +31,7 @@ namespace mp
 		private:
 			bool facingLeft;
 			
-			Character* character;
+			ICharacter* character;
 			AnimatedSprite* sprite;
 
 	};
