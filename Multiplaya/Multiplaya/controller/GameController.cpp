@@ -11,9 +11,11 @@
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor. Initializes the world.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Creates a new controller for ingame movements.
+	 * @param window the window  to tie the controller to.
+	 * @param hostScreen the actual host screen we're controlling.
+	 */
     GameController::GameController(World* model, sf::RenderWindow* window, Screen* gameScreen) : IController(window, gameScreen)
     {
 		worldView = (WorldView*) gameScreen;
