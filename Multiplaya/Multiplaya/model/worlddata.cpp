@@ -79,7 +79,7 @@ namespace mp
 			Character* character = characters.at(i);
 			if(character->getClientID() == ID)
 			{
-				notifyObservers(CHARACTER_DELETED, (void*) i);
+				notifyObservers(BULLET_DELETED, (void*) i);
 				worldDataMutex.lock();
 				characters.erase(characters.begin()+i);
 				worldDataMutex.unlock();
@@ -162,8 +162,8 @@ namespace mp
     }
 
 	//Schedule bullet object for deletion our next logic iteration.
-	void WorldData::scheduleBulletForDeletion(Bullet* bullet) {
-		bulletsToRemove.push_back(bullet);
+	void WorldData::scheduleForDeletion(DynamicGameObject* object) {
+		deletionList.push_back(object);
 	}
 
 	void WorldData::removeBullet(Bullet* bullet)
@@ -183,9 +183,9 @@ namespace mp
 
 	void WorldData::removeAllBullets()
 	{
-		for(unsigned int i=0; i<bullets.size(); i++)
+		for(unsigned int i = 0; i < bullets.size(); i++)
 		{
-			scheduleBulletForDeletion(bullets.at(i));
+			scheduleForDeletion(bullets.at(i));
 			removeBullet(bullets.at(i));
 		}
 	}
@@ -209,7 +209,7 @@ namespace mp
 		{
 			Bullet* bullet = (Bullet*) object;
 			//bullet should be removed from box2d world after timestep
-			scheduleBulletForDeletion(bullet);
+			scheduleForDeletion(bullet);
 			// remove bullet from bullets vector in worlddata and view
 			removeBullet(bullet);
 		}

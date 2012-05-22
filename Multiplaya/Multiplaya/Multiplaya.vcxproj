@@ -95,6 +95,7 @@
     <ClCompile Include="model\bullet.cpp" />
     <ClCompile Include="model\character.cpp" />
     <ClCompile Include="model\ContactListener.cpp" />
+    <ClCompile Include="model\DynamicGameObject.cpp" />
     <ClCompile Include="model\Wall.cpp" />
     <ClCompile Include="model\world.cpp" />
     <ClCompile Include="model\worldchain.cpp" />

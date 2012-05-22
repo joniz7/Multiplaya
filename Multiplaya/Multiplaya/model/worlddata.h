@@ -57,7 +57,7 @@ namespace mp
 			std::vector<Character*>* getCharacters(){ return &characters; }
 			// Get list of all bullets
 			std::vector<Bullet*>* getBullets(){ return &bullets; }
-			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
+			std::vector<DynamicGameObject*>* getDeletionList() { return &deletionList; }
 			// Get list of all bodies
 			std::vector<b2Body*>* getBodies(){ return &bodies; }
 			// Get list of all world chains
@@ -79,7 +79,7 @@ namespace mp
 			// Get logic fps
 			int getLogicFps(){ return logicFps; }
 
-			void scheduleBulletForDeletion(Bullet* bullet);
+			void scheduleForDeletion(DynamicGameObject* object);
 			void removeBullet(Bullet* bullet);
 			void removeAllBullets();
 
@@ -101,7 +101,7 @@ namespace mp
 			// Vector containing bullets
 			std::vector<Bullet*> bullets;
 			// A queue, containing all bullets scheduled for deletion.
-			std::vector<Bullet*> bulletsToRemove;
+			std::vector<DynamicGameObject*> deletionList;
 			// Vector containing characters
 			std::vector<Character*> characters;
 			std::vector<Wall*> walls;

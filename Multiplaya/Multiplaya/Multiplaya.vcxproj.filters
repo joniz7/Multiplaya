@@ -170,6 +170,9 @@
     <ClCompile Include="controller\PauseScreenController.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
+    <ClCompile Include="model\DynamicGameObject.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
