@@ -225,13 +225,18 @@ namespace mp
 		}
 		else if (e == BULLET_ADDED)
 		{
-			
-			//worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
-			//addBullet(bullet);
-			//worldDataMutex.unlock();
-			
-			notifyObservers(SEND_BULLET, bullet);
+		
+			if(isClient)
+			{
+				notifyObservers(SEND_BULLET, bullet);
+			}
+			else
+			{
+				worldDataMutex.lock();
+				addBullet(bullet);
+				worldDataMutex.unlock();
+			}
 		}
 		else if (e == CONNECT_SERVER)
 		{
