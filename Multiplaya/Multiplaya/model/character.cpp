@@ -78,7 +78,7 @@ namespace mp
 		body->SetFixedRotation(true);
 
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.1f, 0.3f, b2Vec2(0,-2), 0);
+		dynamicBox.SetAsBox(size.x*0.5f, 0.3f, b2Vec2(0,-1.7f), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
@@ -131,14 +131,14 @@ namespace mp
 		else if ( leftSideTouchWall  )
 		{
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
-			body->ApplyLinearImpulse( b2Vec2( -200, 400), body->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2( -300, 400), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
 		else if ( rightSideTouchWall  )
 		{
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
-			body->ApplyLinearImpulse( b2Vec2( 200, 400), body->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2( 300, 400), body->GetPosition());
 			rightSideTouchWall = false;
 			flipping = true;
 		}
