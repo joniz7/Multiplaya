@@ -44,7 +44,7 @@ namespace mp
 
 			/// Removes last character
 			void removeLastCharacter();
-
+			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 		protected:
 			virtual bool mouseInsideHitbox(const sf::Vector2i& mousePos);
 			void setBackgroundAlpha(int alpha);
@@ -63,7 +63,7 @@ namespace mp
 			sf::Color borderColor;
 			float borderThickness;
 
-			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
+
 
 	};
 }

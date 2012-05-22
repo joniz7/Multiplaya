@@ -30,7 +30,10 @@
     <Filter Include="src\controller">
       <UniqueIdentifier>{f3a75e3f-769f-4f7b-aa63-0170847a4b36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\view\GUIElements">
+    <Filter Include="src\view\screens">
+      <UniqueIdentifier>{ea1873f8-77fe-4a10-b9bb-37ed568ee503}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\view\guielements">
       <UniqueIdentifier>{201842e0-08df-4e50-a7c9-f1800b6d50e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -46,9 +49,6 @@
     </ClCompile>
     <ClCompile Include="services\networkhandler.cpp">
       <Filter>src\services</Filter>
-    </ClCompile>
-    <ClCompile Include="view\worldview.cpp">
-      <Filter>src\view</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
@@ -98,15 +98,6 @@
     <ClCompile Include="controller\Player.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
-    <ClCompile Include="view\JoinGameScreen.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
-    <ClCompile Include="view\MainScreen.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
-    <ClCompile Include="view\SettingsScreen.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
     <ClCompile Include="view\Window.cpp">
       <Filter>src\view</Filter>
     </ClCompile>
@@ -129,16 +120,16 @@
       <Filter>src\controller</Filter>
     </ClCompile>
     <ClCompile Include="view\GUIElements\Button.cpp">
-      <Filter>src\view\GUIElements</Filter>
+      <Filter>src\view\guielements</Filter>
     </ClCompile>
     <ClCompile Include="view\GUIElements\TextField.cpp">
-      <Filter>src\view\GUIElements</Filter>
+      <Filter>src\view\guielements</Filter>
     </ClCompile>
     <ClCompile Include="view\HUDSprite.cpp">
       <Filter>src\view</Filter>
     </ClCompile>
     <ClCompile Include="view\GUIElements\GUIElement.cpp">
-      <Filter>src\view\GUIElements</Filter>
+      <Filter>src\view\guielements</Filter>
     </ClCompile>
     <ClCompile Include="services\MusicHandler.cpp">
       <Filter>src\services</Filter>
@@ -155,9 +146,6 @@
     <ClCompile Include="model\worldchain.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
-    <ClCompile Include="view\HostGameScreen.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
     <ClCompile Include="services\soundhandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
@@ -166,6 +154,24 @@
     </ClCompile>
     <ClCompile Include="app.cpp">
       <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\HostGameScreen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\JoinGameScreen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\MainScreen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\Screen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\SettingsScreen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\worldview.cpp">
+      <Filter>src\view\screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +183,6 @@
     </ClInclude>
     <ClInclude Include="model\world.h">
       <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="view\worldview.h">
-      <Filter>src\view</Filter>
     </ClInclude>
     <ClInclude Include="services\networkhandler.h">
       <Filter>src\services</Filter>
@@ -250,18 +253,6 @@
     <ClInclude Include="controller\Player.h">
       <Filter>src\controller</Filter>
     </ClInclude>
-    <ClInclude Include="view\JoinGameScreen.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="view\MainScreen.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="view\Screen.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="view\SettingsScreen.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
     <ClInclude Include="view\Window.h">
       <Filter>src\view</Filter>
     </ClInclude>
@@ -284,13 +275,13 @@
       <Filter>src\controller</Filter>
     </ClInclude>
     <ClInclude Include="view\GUIElements\Button.h">
-      <Filter>src\view\GUIElements</Filter>
+      <Filter>src\view\guielements</Filter>
     </ClInclude>
     <ClInclude Include="view\GUIElements\GUIElement.h">
-      <Filter>src\view\GUIElements</Filter>
+      <Filter>src\view\guielements</Filter>
     </ClInclude>
     <ClInclude Include="view\GUIElements\TextField.h">
-      <Filter>src\view\GUIElements</Filter>
+      <Filter>src\view\guielements</Filter>
     </ClInclude>
     <ClInclude Include="view\HUDSprite.h">
       <Filter>src\view</Filter>
@@ -313,9 +304,6 @@
     <ClInclude Include="model\ICharacter.h">
       <Filter>src\model</Filter>
     </ClInclude>
-    <ClInclude Include="view\HostGameScreen.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
     <ClInclude Include="util\Event.h">
       <Filter>src\util</Filter>
     </ClInclude>
@@ -324,6 +312,24 @@
     </ClInclude>
     <ClInclude Include="util\TextEventHelper.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\HostGameScreen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\JoinGameScreen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\MainScreen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\Screen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\SettingsScreen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\worldview.h">
+      <Filter>src\view\screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

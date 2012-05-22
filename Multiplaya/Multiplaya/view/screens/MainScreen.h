@@ -2,10 +2,10 @@
 #define MAINSCREEN_H
 
 #include "Screen.h"
-#include "GUIElements/Button.h"
-#include "GUIElements/TextField.h"
 #include <map>
-#include "../services/resourcehandler.h"
+#include "../../services/resourcehandler.h"
+#include "../guielements/Button.h"
+#include "../guielements/TextField.h"
 
 namespace mp
 {
@@ -15,11 +15,10 @@ namespace mp
 			MainScreen(const sf::Vector2u &resolution);
 			virtual ~MainScreen();
 
-			virtual bool hover(const sf::Vector2i& mousePos);
-
-			virtual GUIElement* getElement(std::string element);
-
 			virtual void update() {}
+
+
+			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 		protected:
 		private:
 			sf::Font* font;
@@ -28,13 +27,15 @@ namespace mp
 			sf::Sprite* backgroundSprite;
 
 			//float calcBackgroundXScaling();
+			sf::Texture* getRandomBackground(int nrOfBackgrounds);
+			void initBackground(const sf::Vector2u &resolution);
+			void initFont();
+			void initText();
+			void initButtons();
 
 			sf::Text* gameTitleText;
 
-			// move this and getElement to superclass
-			std::map<std::string, GUIElement*> guiElements;
-
-			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
+			
 
 	};
 

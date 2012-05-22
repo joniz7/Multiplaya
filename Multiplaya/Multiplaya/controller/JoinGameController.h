@@ -2,7 +2,7 @@
 #define JOINGAMECONTROLLER_H
 
 #include "IController.h"
-#include "../view/JoinGameScreen.h"
+#include "../view/screens/JoinGameScreen.h"
 #include "../services/networkhandler.h"
 #include "../util/TextEventHelper.h"
 #include <iostream>
@@ -30,6 +30,9 @@ namespace mp
 
 			sf::Clock clock;
 
+			void clickButton(const sf::Vector2i &mousePos);
+			void selectTextField(const sf::Vector2i &mousePos);
+			void handleTextInput(sf::Event &textEvent);
 	};
 }
 

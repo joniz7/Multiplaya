@@ -5,10 +5,10 @@ namespace mp
 	HostGameController::HostGameController(sf::RenderWindow* window, Screen* hostScreen) : IController(window, hostScreen)
 	{
 		//ctor
-		cancelButton = hostScreen->getElement("cancelButton");
-		hostButton = hostScreen->getElement("hostButton");
-		gravityTextField = (TextField*) hostScreen->getElement("gravityTextField");
-		portTextField = (TextField*) hostScreen->getElement("portTextField");
+		cancelButton = hostScreen->getGUIElement("cancelButton");
+		hostButton = hostScreen->getGUIElement("hostButton");
+		gravityTextField = (TextField*) hostScreen->getGUIElement("gravityTextField");
+		portTextField = (TextField*) hostScreen->getGUIElement("portTextField");
 	}
 
 	HostGameController::~HostGameController()

@@ -21,7 +21,7 @@
 #include "../defines.h"
 #include "../controller/Player.h"
 #include "IController.h"
-#include "../view/worldview.h"
+#include "../view/screens/worldview.h"
 
 #include "../model/world.h"
 
@@ -29,7 +29,7 @@
 
 #include "../global.h"
 
-#include "../view/worldview.h"
+#include "../view/screens/worldview.h"
 #include "../util/Observable.h"
 
 namespace mp

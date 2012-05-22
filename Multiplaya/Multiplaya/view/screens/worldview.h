@@ -12,29 +12,29 @@
 #include <vector>
 
 // SFML specific headers
-#include "../sfml.h"
+#include "../../sfml.h"
 
 #include <iostream>
 #include <sstream>
 
-#include "CharacterView.h"
+#include "../CharacterView.h"
 // Box2D specific headers
 #include <Box2D.h>
-#include "../defines.h"
+#include "../../defines.h"
 
 // Game specific headers
-#include "BulletView.h"
-#include "HUDSprite.h"
+#include "../BulletView.h"
+#include "../HUDSprite.h"
 
-#include "../util/Observer.h"
-#include "GameObjectView.h"
+#include "../../util/Observer.h"
+#include "../GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
-#include "../global.h"
+#include "../../global.h"
 
 #include "Screen.h"
-#include "GUIElements/GUIElement.h"
-#include "LayerHandler.h"
+#include "../guielements/GUIElement.h"
+#include "../LayerHandler.h"
 
 namespace mp
 {
@@ -149,7 +149,7 @@ namespace mp
 
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
 
-			virtual bool hover (const sf::Vector2i& mousePos) { return true; }
+			virtual void hover (const sf::Vector2i& mousePos) { }
 
 			void tempLoop();
 

@@ -4,9 +4,9 @@ namespace mp
 {
 	MainScreenController::MainScreenController(sf::RenderWindow* window, Screen* mainScreen) : IController(window, mainScreen)
 	{
-		joinButton = mainScreen->getElement("joinButton");
-		hostButton = mainScreen->getElement("hostButton");
-		exitButton = mainScreen->getElement("exitButton");
+		joinButton = mainScreen->getGUIElement("joinButton");
+		hostButton = mainScreen->getGUIElement("hostButton");
+		exitButton = mainScreen->getGUIElement("exitButton");
 	}
 
 	MainScreenController::~MainScreenController()
@@ -20,9 +20,7 @@ namespace mp
 		while (getRenderWindow()->pollEvent(ev))
 		{
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
-
 			getScreen()->hover(mousePos);
-
 
 			if (ev.type == sf::Event::Closed) {
 				// Tell our parent to exit the game.
@@ -54,8 +52,8 @@ namespace mp
 					// Tell main controller to shut everything down.
 					notifyObservers(EXIT_GAME, 0);
 				}
-				// get button elements and see which hovers
+
 			}
 		}
-	}
+	} // End of handleInput
 }
