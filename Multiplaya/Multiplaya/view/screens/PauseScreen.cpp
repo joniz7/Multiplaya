@@ -48,19 +48,19 @@ namespace mp
 		Button* resumeButton = new Button(0, 500, 300, 50, "Resume game");
 		resumeButton->setFont(*font);
 		resumeButton->setTextPosition(60, 5);
-		resumeButton->setFontColor(sf::Color::Black);
+		resumeButton->setTextColor(sf::Color::Black);
 		setGUIElement("resumeButton", resumeButton);
 
 		Button* disconnectButton = new Button(0, 560, 300, 50, "Disconnect");
 		disconnectButton->setFont(*font);
 		disconnectButton->setTextPosition(60, 5);
-		disconnectButton->setFontColor(sf::Color::Black);
+		disconnectButton->setTextColor(sf::Color::Black);
 		setGUIElement("disconnectButton", disconnectButton);
 
 		Button* exitButton = new Button(0, 620, 300, 50, "Exit game");
 		exitButton->setFont(*font);
 		exitButton->setTextPosition(60, 5);
-		exitButton->setFontColor(sf::Color::Black);
+		exitButton->setTextColor(sf::Color::Black);
 		setGUIElement("exitButton", exitButton);
 	}
 

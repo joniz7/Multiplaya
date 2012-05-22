@@ -59,12 +59,12 @@ namespace mp
 	{
 		Button* hostButton = new Button(40, 100, 200, 60, "Host game");
 		hostButton->setFont(*font);
-		hostButton->setFontColor(sf::Color::Black);
+		hostButton->setTextColor(sf::Color::Black);
 		setGUIElement("hostButton", hostButton);
 
 		Button* cancelButton = new Button(40, 180, 200, 60, "Cancel");
 		cancelButton->setFont(*font);
-		cancelButton->setFontColor(sf::Color::Black);
+		cancelButton->setTextColor(sf::Color::Black);
 		setGUIElement("cancelButton", cancelButton);
 	}
 
@@ -72,15 +72,15 @@ namespace mp
 	{
 		TextField* gravityTextField = new TextField(440, 145, 200, 30);
 		gravityTextField->setBorderColorClicked(sf::Color::Blue);
-		gravityTextField->setFontColor(sf::Color::Black);
-		gravityTextField->setFontSize(20);
+		gravityTextField->setTextColor(sf::Color::Black);
+		gravityTextField->setTextSize(20);
 		gravityTextField->setBorderThicknessClicked(1);
 		setGUIElement("gravityTextField", gravityTextField);
 
 		TextField* portTextField = new TextField(440, 200, 200, 30);
 		portTextField->setBorderColorClicked(sf::Color::Blue);
-		portTextField->setFontColor(sf::Color::Black);
-		portTextField->setFontSize(20);
+		portTextField->setTextColor(sf::Color::Black);
+		portTextField->setTextSize(20);
 		portTextField->setBorderThicknessClicked(1);	
 		setGUIElement("portTextField", portTextField);
 	}

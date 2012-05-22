@@ -39,15 +39,15 @@ namespace mp
 	{
 		TextField* ipTextField = new TextField(400, 100, 200, 30);
 		ipTextField->setBorderColorClicked(sf::Color::Blue);
-		ipTextField->setFontColor(sf::Color::Black);
-		ipTextField->setFontSize(20);
+		ipTextField->setTextColor(sf::Color::Black);
+		ipTextField->setTextSize(20);
 		ipTextField->setBorderThicknessClicked(1);
 		setGUIElement("ipTextField", ipTextField);
 
 		TextField* portTextField = new TextField(400, 145, 200, 30);
 		portTextField->setBorderColorClicked(sf::Color::Blue);
-		portTextField->setFontColor(sf::Color::Black);
-		portTextField->setFontSize(20);
+		portTextField->setTextColor(sf::Color::Black);
+		portTextField->setTextSize(20);
 		portTextField->setBorderThicknessClicked(1);	
 		setGUIElement("portTextField", portTextField);
 	}
@@ -69,12 +69,12 @@ namespace mp
 	{
 		Button* connectButton = new Button(40, 100, 200, 60, "Connect");
 		connectButton->setFont(*font);
-		connectButton->setFontColor(sf::Color::Black);
+		connectButton->setTextColor(sf::Color::Black);
 		setGUIElement("connectButton", connectButton);
 
 		Button* cancelButton = new Button(40, 180, 200, 60, "Cancel");
 		cancelButton->setFont(*font);
-		cancelButton->setFontColor(sf::Color::Black);
+		cancelButton->setTextColor(sf::Color::Black);
 		setGUIElement("cancelButton", cancelButton);
 	}
 
