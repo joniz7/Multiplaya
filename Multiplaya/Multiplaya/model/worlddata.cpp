@@ -59,9 +59,11 @@ namespace mp
     bool WorldData::addCharacter(Character* c)
     {
 		std::cout << "Adding character" << std::endl;
-
-		notifyObservers(CHARACTER_ADDED, c);
+		
+		c->addObserver(this);
 		characters.push_back(c);
+		notifyObservers(CHARACTER_ADDED, c);
+
 		return true;
     }
 
@@ -69,7 +71,8 @@ namespace mp
 	{
 		std::cout << "Adding character" << std::endl;
 
-		Character* c = new Character(this, world, pos, size, clientID);
+		Character* c = new Character(world, pos, size, clientID);
+		c ->addObserver(this);
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
 		std::cout << "Done adding character " << std::endl;
@@ -211,6 +214,15 @@ namespace mp
 			scheduleBulletForDeletion(bullet);
 			// remove bullet from bullets vector in worlddata and view
 			removeBullet(bullet);
+		}
+		else if (e == BULLET_ADDED)
+		{
+			Bullet* bullet = (Bullet*) object;
+			addBullet(bullet);
+		}
+		else if (e == CONNECT_SERVER)
+		{
+			notifyObservers(CONNECT_SERVER, 0);
 		}
 	}
 

@@ -16,9 +16,8 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-    Character::Character(WorldData* worldData, b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
+    Character::Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
     {
-		this->worldData = worldData;
 		this->world = world;
 
 		this->objectType = character;
@@ -205,7 +204,7 @@ namespace mp
 
 		// Create bullet, and add to world.
 		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force);
-		worldData->addBullet(bullet);
+		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
 		//soundFire.play();
@@ -271,7 +270,7 @@ namespace mp
 
 	void Character::connectToServer()
 	{
-		worldData->notifyObservers(CONNECT_SERVER, 0);
+		notifyObservers(CONNECT_SERVER, 0);
 	}
 
 	//Foot sensor

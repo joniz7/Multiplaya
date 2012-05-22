@@ -4,11 +4,12 @@
 #ifndef CHARACTER_VIEW_H
 #define CHARACTER_VIEW_H
 
+#include "GameObjectView.h"
 // Game specific headers
 #include "../global.h"
 #include "../model/character.h"
 #include "animatedsprite.h"
-#include "GameObjectView.h"
+
 #include "../services/resourcehandler.h"
 
 namespace mp
@@ -25,9 +26,11 @@ namespace mp
 			~CharacterView();
 			void updateAnimation(float elapsed);
 			void updatePosition();
+
+			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		private:
 			bool facingLeft;
-			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+			
 			Character* character;
 			AnimatedSprite* sprite;
 
