@@ -52,6 +52,7 @@ namespace mp
 			worldViewMutex.lock();
 			Bullet* bullet = ( Bullet* )object;
 			addBullet(bullet);
+			std::cout<<bullet->getBody()->GetLinearVelocity().x<<std::endl;
 			worldViewMutex.unlock();
 		}
 		else if (e == BULLET_DELETED)

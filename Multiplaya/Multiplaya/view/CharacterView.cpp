@@ -44,6 +44,19 @@ namespace mp
 
 		sprite->addAnimation("walk", 16, true, sequence);
 		sequence.clear();
+
+		sequence.push_back(sf::Vector3i(9,1,0));
+		sequence.push_back(sf::Vector3i(8,1,0));
+		sequence.push_back(sf::Vector3i(7,1,0));
+		sequence.push_back(sf::Vector3i(6,1,0));
+		sequence.push_back(sf::Vector3i(5,1,0));
+		sequence.push_back(sf::Vector3i(4,1,0));
+		sequence.push_back(sf::Vector3i(3,1,0));
+		sequence.push_back(sf::Vector3i(2,1,0));
+		sequence.push_back(sf::Vector3i(1,1,0));
+
+		sprite->addAnimation("walkbackwards", 16, true, sequence);
+		sequence.clear();
 		
 		sequence.push_back(sf::Vector3i(1,2,0));
 		sequence.push_back(sf::Vector3i(2,2,0));
@@ -102,7 +115,12 @@ namespace mp
 		else if (character->isWalking())
 		{
 			if(character->isFocusing())
-				sprite->playAnimation("walk");
+			{
+				if(!character->isBackwards())
+					sprite->playAnimation("walk");
+				else
+					sprite->playAnimation("walkbackwards");
+			}
 			else
 				sprite->playAnimation("run");
 		}

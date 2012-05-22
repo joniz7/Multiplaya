@@ -13,6 +13,8 @@
 #include <list>
 #include <cmath>
 
+#include "../defines.h"
+
 #include "ICharacter.h"
 
 #include "../services/resourcehandler.h"
@@ -79,7 +81,7 @@ namespace mp
 			void isTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
 			bool isTouchingWallRight(){ return rightSideTouchWall; }
 
-			void setWallSliding(bool wS){wallSliding = wS;}
+			void setWallSliding(bool choice){wallSliding = choice;}
 			bool isWallSliding(){ return wallSliding; }
 
 			void setFlipping(bool choice){ flipping = choice; }
@@ -87,6 +89,12 @@ namespace mp
 
 			void setFocusing(bool choice){ focusing = choice; }
 			bool isFocusing(){ return focusing; }
+
+			void setBackwards(bool choice){ backwards = choice; }
+			bool isBackwards(){ return backwards; }
+
+			void setTargetPos(b2Vec2 targetPos){ this->targetPos = b2Vec2(targetPos.x / PIXEL_SCALE, targetPos.y / PIXEL_SCALE) ; }
+			b2Vec2 getTargetPos(){ return targetPos; }
 
 			sf::Int8 getClientID(){ return clientID; } 
 			void setClientID(sf::Int8 ID) { clientID = ID; }
@@ -97,7 +105,7 @@ namespace mp
 			void connectToServer();
 
         private:
-
+			b2Vec2 targetPos;
 			void shoot();
 			void moveY(bool left);
 			void moveX(bool left);
@@ -123,6 +131,8 @@ namespace mp
 			bool walking;
 			bool wallSliding;
 			bool flipping;
+			bool backwards;
+			bool shouldFaceLeft;
 
 			sf::Sound soundFire;
 			sf::Sound soundReload;
