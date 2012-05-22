@@ -46,25 +46,25 @@ namespace mp
 		Button* joinButton = new Button(0, 440, 250, 50, "Join game");
 		joinButton->setFont(*font);
 		joinButton->setTextPosition(60, 5);
-		joinButton->setFontColor(sf::Color::Black);
+		joinButton->setTextColor(sf::Color::Black);
 		setGUIElement("joinButton",joinButton);
 
 		Button* hostButton = new Button(0, 500, 250, 50, "Host game");
 		hostButton->setFont(*font);
 		hostButton->setTextPosition(60, 5);
-		hostButton->setFontColor(sf::Color::Black);
+		hostButton->setTextColor(sf::Color::Black);
 		setGUIElement("hostButton", hostButton);
 
 		Button* settingsButton = new Button(0, 560, 250, 50, "Settings");
 		settingsButton->setFont(*font);
 		settingsButton->setTextPosition(60, 5);
-		settingsButton->setFontColor(sf::Color::Black);
+		settingsButton->setTextColor(sf::Color::Black);
 		setGUIElement("settingsButton", settingsButton);
 
 		Button* exitButton = new Button(0, 620, 250, 50, "Exit game");
 		exitButton->setFont(*font);
 		exitButton->setTextPosition(60, 5);
-		exitButton->setFontColor(sf::Color::Black);
+		exitButton->setTextColor(sf::Color::Black);
 		setGUIElement("exitButton", exitButton);
 	}
 
