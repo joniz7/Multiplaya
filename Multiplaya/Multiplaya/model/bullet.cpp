@@ -30,6 +30,8 @@ namespace mp
 		this->world = world;
 
 		this->owner = owner;
+
+		this->initialForce = force;
 		// Set up body definition
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position.Set(position.x, position.y);

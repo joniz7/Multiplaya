@@ -30,10 +30,12 @@ namespace mp
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {};
 			bool operator == (const Bullet* bullet);
+			b2Vec2 getInitForce(){return initialForce;}
         private:
 
 			sf::Int8 owner;
 			b2BodyDef bodyDef;
+			b2Vec2 initialForce;
 
     };
 }

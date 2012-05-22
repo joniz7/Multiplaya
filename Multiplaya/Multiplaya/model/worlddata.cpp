@@ -226,7 +226,7 @@ namespace mp
 		else if (e == BULLET_ADDED)
 		{
 			Bullet* bullet = (Bullet*) object;
-		
+
 			if(isClient)
 			{
 				notifyObservers(SEND_BULLET, bullet);

@@ -526,7 +526,7 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Sends the data of all the character to the all clients
+	/// Sends the data of all the characters to the all clients
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::updateAllClients()
 	{
@@ -534,6 +534,7 @@ namespace mp
 
 		for(it = clientMap.begin(); it != clientMap.end(); it++)
 		{
+			//We don't want to send data back to the server
 			if(it != clientMap.end() && (*it).first != 0)
 			{
 				worldDataMutex.lock();
@@ -573,11 +574,14 @@ namespace mp
 			for(int i = 0; i<numOfBullets; i++)
 			{
 				tempBullet = worldData->getBullet(i);
-				tempClientID = tempBullet->getOwner();
-				x = tempBullet->getPosition().x;
-				y = tempBullet->getPosition().y;
-				xvel = tempBullet->getLinVelocity().x;
-				yvel = tempBullet->getLinVelocity().y;
+				if(tempBullet->getOwner() != clientID)
+				{
+					tempClientID = tempBullet->getOwner();
+					x = tempBullet->getPosition().x;
+					y = tempBullet->getPosition().y;
+					xvel = tempBullet->getLinVelocity().x;
+					yvel = tempBullet->getLinVelocity().y;
+				}
 
 				packet << tempClientID << x << y << xvel << yvel;
 			}
@@ -687,12 +691,15 @@ namespace mp
 			BufferBullet bullet;
 			bullet.x = tempBullet->getPosition().x;
 			bullet.y = tempBullet->getPosition().y;
-			bullet.xvel = tempBullet->getLinVelocity().x;
-			bullet.yvel = tempBullet->getLinVelocity().y;
-			//bulletsToSend.push_back(bullet);
+			bullet.xvel = tempBullet->getInitForce().x;
+			bullet.yvel = tempBullet->getInitForce().y;
+			bulletsToSend.push_back(bullet);
+
+			std::cout<<"hej"<<tempBullet->getBody()->GetLinearVelocity().x<<tempBullet->getLinVelocity().y<<std::endl;
 
 			sf::Packet packet;
-			packet << 5 << 1 << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
+			sf::Int8 type = 5, id = 1;
+			packet << type << id << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
 			sender.send(packet, serverIP, 55001);
 		} 
 		else if(e == BULLET_DELETED) 
