@@ -14,9 +14,10 @@
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////
+
+	/**
+	 * Creates a new WorldData instance.
+	 */
     WorldData::WorldData()
 	{
 		logicFps = 0;
@@ -31,24 +32,23 @@ namespace mp
 	////////////////////////////////////////////////////////////
     WorldData::~WorldData(){}
 
-	////////////////////////////////////////////////////////////
-	// Adds the supplied bullet to the world.
-	//
-	// returns true upon success.
-	////////////////////////////////////////////////////////////
-    bool WorldData::addBullet( Bullet* bullet )
+	/**
+	 * Adds the supplied bullet to the world.
+	 *
+	 * @param bullet - bullet to add.
+	 */
+    void WorldData::addBullet( Bullet* bullet )
 	{
 		bullet->addObserver(this);
 		bullets.push_back(bullet);
 		notifyObservers(BULLET_ADDED, bullet);
-		return true;
     }
 
-	////////////////////////////////////////////////////////////
-	// Adds a character to the world
-	// returns true upon success
-	////////////////////////////////////////////////////////////
-    bool WorldData::addCharacter(Character* c)
+	/**
+	 * Add the supplied character to the world.
+	 * @param c - character to add.
+	 */
+    void WorldData::addCharacter(Character* c)
     {
 		std::cout << "Adding character" << std::endl;
 		
@@ -56,10 +56,12 @@ namespace mp
 		characters.push_back(c);
 		notifyObservers(CHARACTER_ADDED, c);
 
-		return true;
     }
 
-	bool WorldData::addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
+	/**
+	 * Adds a character to the world.
+	 */
+	void WorldData::addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
 	{
 		std::cout << "Adding character" << std::endl;
 
@@ -68,9 +70,12 @@ namespace mp
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
 		std::cout << "Done adding character " << std::endl;
-		return true;
 	}
 
+	/**
+	 * Removes the character with the specified clientID from the world.
+	 * @param ID - remove character belonging to this player.
+	 */
 	void WorldData::removeCharacter(sf::Int8 ID)
 	{
 		for(unsigned int i = 0; i<characters.size(); i++)
@@ -99,11 +104,11 @@ namespace mp
 
 		return false;
 	}
-	////////////////////////////////////////////////////////////
-	// Adds a generic body to the world
-	// returns true upon success
-	////////////////////////////////////////////////////////////
-    bool WorldData::addBody( b2World* world, b2Vec2 position, b2Vec2 size )
+	
+	/**
+	 * Adds a generic body to the world.
+	 */
+	 void WorldData::addBody( b2World* world, b2Vec2 position, b2Vec2 size )
     {
 		std::cout<<"Added a body"<<std::endl;
 		b2BodyDef bodyDef;
@@ -130,14 +135,19 @@ namespace mp
 		body->SetFixedRotation(true);
 		addBody(body);
 
-		return true;
     }
 
+	/**
+	 * Adds a new wall to the world.
+	 */
 	void WorldData::addWall( b2World* world, float xPos, float yPos, float width, float height )
 	{
 		walls.push_back(new Wall(world, xPos, yPos, width, height));
 	}
 
+	/**
+	 * Adds a new chain to the world.
+	 */
 	void WorldData::addChain( b2World* world, b2Vec2 vertices[], int length, float friction )
 	{
 		chains.push_back(new WorldChain(world,vertices,length,friction));
@@ -152,17 +162,25 @@ namespace mp
 		chains.clear();
 	}
 
-	bool WorldData::addBody( b2Body* body  )
-    {
+	/**
+	 * Adds the supplied body to the world.
+	 */
+	void WorldData::addBody( b2Body* body  ) {
 		bodies.push_back( body );
-		return true;
     }
 
-	//Schedule bullet object for deletion our next logic iteration.
+	/**
+	 * Schedule supplied object for deletion our next logic iteration.
+	 * @param object - object to be deleted.
+	 */
 	void WorldData::scheduleForDeletion(DynamicGameObject* object) {
 		deletionList.push_back(object);
 	}
 
+	/**
+	 * Remove the supplied bullet
+	 * @param bullet - bullet to be removed.
+	 */
 	void WorldData::removeBullet(Bullet* bullet)
 	{
 		worldDataMutex.lock();
@@ -182,7 +200,9 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 	
-
+	/**
+	 * Removes all bullets from the game.
+	 */
 	void WorldData::removeAllBullets()
 	{
 		//worldDataMutex.lock();
@@ -196,7 +216,9 @@ namespace mp
 		//worldDataMutex.unlock();
 	}
 
-
+	/**
+	 * Returns the character with the specified clientID.
+	 */
 	ICharacter* WorldData::getCharacter(sf::Int8 clientID)
 	{
 		for(unsigned int i = 0; i < characters.size(); i++)
@@ -209,6 +231,10 @@ namespace mp
 		return NULL;
 	}
 
+	/**
+	 * Is notified when bullets are removed, added, 
+	 * or when we conenect to a server.
+	 */
 	void WorldData::notify(Event e, void* object)
 	{
 		if (e == BULLET_DELETED)
