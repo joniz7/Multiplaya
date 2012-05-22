@@ -34,6 +34,7 @@ namespace mp
 		this->wallSliding = false;
 		this->flipping = false;
 		this->facingLeft = true;
+		this->focusing = false;
 
 		this->kills  = 0;// Kill stat.
 		this->deaths = 0;// Death stat.
@@ -75,10 +76,8 @@ namespace mp
 		body->SetFixedRotation(true);
 
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3f, 0.5f, b2Vec2(0,-2), 0);
-
+		dynamicBox.SetAsBox(0.1f, 0.3f, b2Vec2(0,-2), 0);
 		fixtureDef.isSensor = true;
-
 		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
 
@@ -131,15 +130,15 @@ namespace mp
 			body->ApplyLinearImpulse( b2Vec2(0, 350), body->GetPosition());
 			setGrounded(false);
 		}
-		else if ( leftSideTouchWall && isWallSliding() )
+		else if ( leftSideTouchWall  )
 		{
-			body->ApplyLinearImpulse( b2Vec2( -300, 350), body->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2( -300, 425), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
-		else if ( rightSideTouchWall && isWallSliding() )
+		else if ( rightSideTouchWall  )
 		{
-			body->ApplyLinearImpulse( b2Vec2( 300, 350), body->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2( 300, 425), body->GetPosition());
 			rightSideTouchWall = false;
 			flipping = true;
 		}
@@ -170,11 +169,14 @@ namespace mp
 
 		// TODO: shouldn't be hardcoded.
 		if (isGrounded()) {
-			maxForce = 40;
+			if(isFocusing())
+				maxForce = 15;
+			else
+				maxForce = 40;
 			forceIteration = 50;
 		} else {
-			maxForce = 18;
-			forceIteration = 5;
+			maxForce = 40;
+			forceIteration = 20;
 		}
 		
 		if (left) { // Are we moving left?

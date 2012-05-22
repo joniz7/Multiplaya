@@ -2,12 +2,10 @@
 #define I_CHARACTER_H_INCLUDED
 
 #include "DynamicGameObject.h"
-
-#include "../util/Observable.h"
+#include "bullet.h"
 
 namespace mp
 {
-	class Bullet;
 	class ICharacter : public DynamicGameObject
 	{
 		public:
@@ -60,10 +58,18 @@ namespace mp
 
 			virtual bool isFlipping() = 0;
 
+			virtual bool isFocusing() = 0;
+			virtual void setFocusing(bool choice) = 0;
+
 			// Should probably return enum instead
 			virtual short getHealthState() = 0;
+			virtual short getHealth() = 0;
 
 			virtual short getClip() = 0;
+
+			virtual bool isShooting() = 0;
+			virtual bool isReloading() = 0;
+
 	};
 }
 #endif

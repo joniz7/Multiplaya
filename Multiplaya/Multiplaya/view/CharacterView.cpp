@@ -10,7 +10,7 @@ namespace mp
 
 		tex = ResourceHandler::instance().getTexture("resources/test/testsprite.png");
 
-		this->sprite = new AnimatedSprite(tex,sf::Vector2i(8,3));
+		this->sprite = new AnimatedSprite(tex,sf::Vector2i(9,3));
 
 		this->sprite->rotate(180);
 		this->sprite->setPosition(0,0);
@@ -20,7 +20,7 @@ namespace mp
 
 		// Add animations
 		std::vector<sf::Vector3i> sequence;
-		sequence.push_back(sf::Vector3i(1,1,0));
+		sequence.push_back(sf::Vector3i(4,3,0));
 		sprite->addAnimation("idle", 9, true, sequence);
 		sequence.clear();
 
@@ -32,14 +32,18 @@ namespace mp
 		sprite->addAnimation("wallslide", 60, true, sequence);
 		sequence.clear();
 
-		/*
+		sequence.push_back(sf::Vector3i(1,1,0));
 		sequence.push_back(sf::Vector3i(2,1,0));
 		sequence.push_back(sf::Vector3i(3,1,0));
 		sequence.push_back(sf::Vector3i(4,1,0));
 		sequence.push_back(sf::Vector3i(5,1,0));
 		sequence.push_back(sf::Vector3i(6,1,0));
 		sequence.push_back(sf::Vector3i(7,1,0));
-		*/		
+		sequence.push_back(sf::Vector3i(8,1,0));
+		sequence.push_back(sf::Vector3i(9,1,0));
+
+		sprite->addAnimation("walk", 16, true, sequence);
+		sequence.clear();
 		
 		sequence.push_back(sf::Vector3i(1,2,0));
 		sequence.push_back(sf::Vector3i(2,2,0));
@@ -50,7 +54,7 @@ namespace mp
 		sequence.push_back(sf::Vector3i(7,2,0));
 		sequence.push_back(sf::Vector3i(8,2,0));
 
-		sprite->addAnimation("walk", 16, true, sequence);
+		sprite->addAnimation("run", 16, true, sequence);
 		sequence.clear();
 
 		sequence.push_back(sf::Vector3i(3,3,40));
@@ -96,7 +100,12 @@ namespace mp
 				sprite->playAnimation("jump");
 		}
 		else if (character->isWalking())
-			sprite->playAnimation("walk");
+		{
+			if(character->isFocusing())
+				sprite->playAnimation("walk");
+			else
+				sprite->playAnimation("run");
+		}
 		else
 			sprite->playAnimation("idle");
 

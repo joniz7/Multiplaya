@@ -5,10 +5,9 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <sfml.h>
 #include <model/worlddata.h>
 
-// Define worldData ^__^
+// Define worldData
 mp::WorldData* worldData;
 b2World* physicsWorld;
 

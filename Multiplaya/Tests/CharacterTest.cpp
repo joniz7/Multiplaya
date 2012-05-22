@@ -7,6 +7,7 @@
 
 //#include <global.h>
 #include <model/worlddata.h>
+#include "model/character.h"
 
 namespace mpt {
 
