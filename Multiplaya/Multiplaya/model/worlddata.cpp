@@ -22,6 +22,8 @@ namespace mp
 		logicFps = 0;
 		// TODO hardcoded. not good !1!
 		currentCharacterId = 0;
+
+		isClient = false;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -190,6 +192,7 @@ namespace mp
 	{
 		for(unsigned int i=0; i<bullets.size(); i++)
 		{
+			scheduleBulletForDeletion(bullets.at(i));
 			removeBullet(bullets.at(i));
 		}
 	}
@@ -211,14 +214,11 @@ namespace mp
 	{
 		if (e == BULLET_DELETED)
 		{
-			if(!isClient)
-			{
-				Bullet* bullet = (Bullet*) object;
-				//bullet should be removed from box2d world after timestep
-				scheduleBulletForDeletion(bullet);
-				// remove bullet from bullets vector in worlddata and view
-				removeBullet(bullet);
-			}
+			Bullet* bullet = (Bullet*) object;
+			//bullet should be removed from box2d world after timestep
+			scheduleBulletForDeletion(bullet);
+			// remove bullet from bullets vector in worlddata and view
+			removeBullet(bullet);
 		}
 		else if (e == BULLET_ADDED)
 		{

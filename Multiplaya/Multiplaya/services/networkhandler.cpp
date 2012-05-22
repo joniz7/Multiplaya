@@ -268,7 +268,10 @@ namespace mp
 						receivedData >> numOfBullets;
 
 						//The current bullet list is cleared
-						worldData->removeAllBullets();
+						if(worldData->getBullets()->size()>0)
+						{
+							worldData->removeAllBullets();
+						}
 
 						//And replaced by the new bullets
 						for(int i = 0; i<numOfBullets; i++)
