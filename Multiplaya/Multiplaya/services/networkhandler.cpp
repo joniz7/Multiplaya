@@ -267,12 +267,13 @@ namespace mp
 						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 
+						worldDataMutex.lock();
 						//The current bullet list is cleared
 						if(worldData->getBullets()->size()>0)
 						{
 							worldData->removeAllBullets();
 						}
-
+						
 						//And replaced by the new bullets
 						for(int i = 0; i<numOfBullets; i++)
 						{
@@ -283,6 +284,7 @@ namespace mp
 
 							model->createBullet(position, velocity, clientID);
 						}
+						worldDataMutex.unlock();
 						break;
 					//Receive characters to create from the server
 					case 15:
@@ -605,7 +607,7 @@ namespace mp
 
 				packet << myID << x << y << xvel << yvel;
 			}
-		
+
 			sender.send(packet, serverIP, 55001);
 		}
 	}

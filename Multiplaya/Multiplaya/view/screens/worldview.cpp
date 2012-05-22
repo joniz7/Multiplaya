@@ -49,13 +49,17 @@ namespace mp
 		// could change to switch case
 		if (e == BULLET_ADDED)
 		{
+			worldViewMutex.lock();
 			Bullet* bullet = ( Bullet* )object;
 			addBullet(bullet);
+			worldViewMutex.unlock();
 		}
 		else if (e == BULLET_DELETED)
 		{
+			worldViewMutex.lock();
 			int i = ( intptr_t )object;
 			deleteBullet(i);
+			worldViewMutex.unlock();
 		}
 		else if (e == CHARACTER_ADDED)
 		{
@@ -72,21 +76,21 @@ namespace mp
 
 	void WorldView::addBullet(Bullet* bullet)
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 		bullets.push_back(  new BulletView( bullet ) );
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	// delete bullet at index i
 	void WorldView::deleteBullet(int i)
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 
 		BulletView* bullet = (BulletView*) bullets.at(i);
 		bullets.erase(bullets.begin() + i );
 		delete bullet;
 
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	/*void WorldView::characterMoved(float moved)
@@ -439,9 +443,9 @@ namespace mp
 
 	void WorldView::updateBulletsPos()
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 		updateVectorPos(bullets);
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::updateCharactersPos()
@@ -530,9 +534,9 @@ namespace mp
 
 	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 		drawVector(bullets, window);
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::drawCharacters(sf::RenderTarget& window) const

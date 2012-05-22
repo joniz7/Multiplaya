@@ -236,7 +236,7 @@ namespace mp
 
 							int comPos = data.find(",");
 
-							int x = atoi( (data.substr(0,comPos)).c_str() );
+							int x = -atoi( (data.substr(0,comPos)).c_str() );
 							int y = atoi( (data.substr(comPos+1,pos2-(comPos+1))).c_str() );
 
 							vs[vCount].Set((float)x,(float)y);
