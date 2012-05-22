@@ -576,14 +576,14 @@ namespace mp
 				tempBullet = worldData->getBullet(i);
 				if(tempBullet->getOwner() != clientID)
 				{
-					tempClientID = tempBullet->getOwner();
-					x = tempBullet->getPosition().x;
-					y = tempBullet->getPosition().y;
-					xvel = tempBullet->getLinVelocity().x;
-					yvel = tempBullet->getLinVelocity().y;
-				}
+				tempClientID = tempBullet->getOwner();
+				x = tempBullet->getPosition().x;
+				y = tempBullet->getPosition().y;
+				xvel = tempBullet->getLinVelocity().x;
+				yvel = tempBullet->getLinVelocity().y;
 
 				packet << tempClientID << x << y << xvel << yvel;
+				}
 			}
 		}
 		
