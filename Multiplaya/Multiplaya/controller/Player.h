@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Player class.  Checks user input and such.
-////////////////////////////////////////////////////////////
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
@@ -14,17 +11,19 @@
 
 namespace mp
 {
+	/**
+	 * A class which represents the local player (handles input).
+	 */
 	class Player
 	{
 		public:
 			Player();
 			~Player();
 
-
 			void update(const sf::Vector2f &mousePos);
 
 			/// Set the player's current character
-			void setCharacter(Character* character);
+			void setCharacter(Character* character) { this->character = character; }
 			/// Returns the player's current character
 			Character* getCharacter() { return character; }
 		private:
@@ -42,11 +41,6 @@ namespace mp
 			bool pressingKeyForPrimaryFire();
 			bool pressingKeyForJumping();
 			bool pressingKeyForConnecting();
-
-			void moveLeft(int maxForce, int forceIteration);
-			void moveRight(int maxForce, int forceIteration);
-			void moveUp();
-			void moveDown();
 
 	};
 }

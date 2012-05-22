@@ -14,19 +14,11 @@
 
 namespace mp
 {
+	/**
+	 * The game's controller, handles everything except the network.
+	 */
 	class Controller : public Observer
 	{
-		// The different states the game can be in.
-		enum State {
-			MAIN_MENU,
-			JOIN_MENU,
-			HOST_MENU,
-			SETTINGS_MENU,
-			INGAME,
-			INGAME_MENU
-		};
-
-
 		public:
 			Controller(World* world, Window* window);
 			virtual ~Controller();
@@ -35,10 +27,9 @@ namespace mp
 			void setNetworkHandler(NetworkHandler* network);
 		protected:
 		private:
-			State state;
-			IController* currentController;		  // Pointer to our active controller.
-			void (Window::*currentDrawFunction)();// Pointer to our active screen.
-			bool runGame;
+			IController* currentController;		  ///< Pointer to our active controller.
+			void (Window::*currentDrawFunction)();///< Pointer to our active screen.
+			bool runGame; ///< Should we run the game simulation?
 			std::map<std::string, IController*> controllers;
 			World* world;
 			Window* window;

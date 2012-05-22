@@ -151,6 +151,61 @@ namespace mp
 		}
 	}
 
+	void Character::moveLeft() {
+		moveX(true);
+	}
+
+	void Character::moveRight() {
+		moveX(false);
+	}
+
+	void Character::moveUp() {
+		moveY(true);
+	}
+
+	void Character::moveDown() {
+		moveY(false);
+	}
+
+	void Character::moveX(bool left) {
+		int maxForce, forceIteration;
+
+		// TODO: shouldn't be hardcoded.
+		if (isGrounded()) {
+			maxForce = 40;
+			forceIteration = 50;
+		} else {
+			maxForce = 18;
+			forceIteration = 5;
+		}
+		
+		if (left) { // Are we moving left?
+			if(characterBody->GetLinearVelocity().x < maxForce) {
+				characterBody->ApplyLinearImpulse( b2Vec2(float(forceIteration), 0), characterBody->GetPosition() );
+			}
+		} else { // Nope. We're moving right (the negative direction).
+			if(characterBody->GetLinearVelocity().x > (-maxForce)) {
+				characterBody->ApplyLinearImpulse( b2Vec2(float(-forceIteration), 0), characterBody->GetPosition() );
+			}
+		}
+	}
+
+	void Character::moveY(bool up) {
+		// TODO: shouldn't be hardcoded.
+		int maxForce = 10;
+		int forceIteration = 5;
+		
+		if (up) { // Are we moving up?
+			if(characterBody->GetLinearVelocity().y < maxForce) {
+				characterBody->ApplyLinearImpulse( b2Vec2(0, forceIteration), characterBody->GetPosition() );
+			}
+		} else { // Nope. We're moving down (the negative direction).
+			if(characterBody->GetLinearVelocity().y > -maxForce) {
+				characterBody->ApplyLinearImpulse( b2Vec2(0, -forceIteration), characterBody->GetPosition() );
+			}
+		}
+	}
+
 	void Character::shoot() {
 		if (--clip <= 0) {
 			this->reload();
