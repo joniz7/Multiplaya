@@ -563,11 +563,20 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendBulletDataToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 14, tempClientID, numOfBullets = worldData->getBullets()->size();
+		sf::Int8 type = 14, tempClientID, numOfBullets = 0;
 		sf::Packet packet;
 		Bullet* tempBullet;
 		float32 x, y, xvel, yvel;
 		packet << type << numOfBullets;
+
+		for(int i = 0; i<worldData->getBullets()->size(); i++)
+		{
+			tempBullet = worldData->getBullet(i);
+			if(tempBullet->getOwner() != clientID)
+			{
+				numOfBullets++;
+			}
+		}
 
 		if(numOfBullets > 0)
 		{
@@ -576,13 +585,13 @@ namespace mp
 				tempBullet = worldData->getBullet(i);
 				if(tempBullet->getOwner() != clientID)
 				{
-				tempClientID = tempBullet->getOwner();
-				x = tempBullet->getPosition().x;
-				y = tempBullet->getPosition().y;
-				xvel = tempBullet->getLinVelocity().x;
-				yvel = tempBullet->getLinVelocity().y;
+					tempClientID = tempBullet->getOwner();
+					x = tempBullet->getPosition().x;
+					y = tempBullet->getPosition().y;
+					xvel = tempBullet->getLinVelocity().x;
+					yvel = tempBullet->getLinVelocity().y;
 
-				packet << tempClientID << x << y << xvel << yvel;
+					packet << tempClientID << x << y << xvel << yvel;
 				}
 			}
 		}
