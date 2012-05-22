@@ -10,7 +10,6 @@ namespace mp
 	// send worlddata in constructor
 	Window::Window(WorldData* worldData)
 	{
-		//ctor
 		//window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya");
 		const std::string WINDOW_TITLE = "Multiplaya";
 		if( ConfigHandler::instance().getBool("r_fullscreen") )
@@ -23,13 +22,9 @@ namespace mp
         window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
         window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
 
-		/*
-		screens.push_back( new MainScreen() );
-		screens.push_back( new JoinGameScreen() );
-		screens.push_back ( new SettingsScreen() );
-		*/
 		sf::Vector2u resolution = window->getSize();
 		screens["mainScreen"] = new MainScreen(resolution);
+		screens["pauseScreen"] = new PauseScreen(resolution);
 		screens["joinGameScreen"] = new JoinGameScreen(resolution);
 		screens["settingsScreen"] = new SettingsScreen(resolution);
 		// will change
@@ -44,11 +39,8 @@ namespace mp
 	void Window::drawMainMenu() {
 		draw(screens["mainScreen"]);
 	}
-	void Window::drawInGame() {
-		// TODO 	
-	}
-	void Window::drawInGameMenu() {
-		// TODO
+	void Window::drawPauseMenu() {
+		draw(screens["pauseScreen"]);
 	}
 	void Window::drawJoinMenu() {
 		draw(screens["joinGameScreen"]);
@@ -87,3 +79,4 @@ namespace mp
 		//dtor
 	}
 }
+

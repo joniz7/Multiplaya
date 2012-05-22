@@ -144,10 +144,10 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type)
+	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID)
 	{
 		worldDataMutex.lock();
-		worldData->addBullet(new Bullet(type, clientID, world, position, force));
+		worldData->addBullet(new Bullet(clientID, world, position, force));
 		worldDataMutex.unlock();
 	}
 

@@ -4,7 +4,6 @@
 // Class header
 
 #include "GameController.h"
-#include "../util/Observable.h"
 
 ////////////////////////////////////////////////////////////
 /// Controller class. Handles input.
@@ -12,9 +11,11 @@
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor. Initializes the world.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Creates a new controller for ingame movements.
+	 * @param window the window  to tie the controller to.
+	 * @param hostScreen the actual host screen we're controlling.
+	 */
     GameController::GameController(World* model, sf::RenderWindow* window, Screen* gameScreen) : IController(window, gameScreen)
     {
 		worldView = (WorldView*) gameScreen;
@@ -33,9 +34,10 @@ namespace mp
 		this->network = network;
 	}
 
-	////////////////////////////////////////////////////////////
-	// The logic loop; updates the game world, runs Box2D etc.
-	////////////////////////////////////////////////////////////
+
+	/**
+	 * Handles input for when we're ingame.
+	 */
     void GameController::handleInput()
     {
 		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());

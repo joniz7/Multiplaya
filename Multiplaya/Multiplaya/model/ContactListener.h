@@ -3,8 +3,6 @@
 
 // Box2D specific headers
 #include <Box2D.h>
-
-#include "worlddata.h"
 #include <iostream>
 #include "GameObject.h"
 

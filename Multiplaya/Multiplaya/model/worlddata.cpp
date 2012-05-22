@@ -22,6 +22,8 @@ namespace mp
 		logicFps = 0;
 		// TODO hardcoded. not good !1!
 		currentCharacterId = 0;
+
+		isClient = false;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -36,20 +38,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBullet( Bullet* bullet )
 	{
-		BulletType type = bullet->getType();
-
-		switch(type)
-		{
-			case GENERIC_BULLET:
-				bullet->addObserver(this);
-				bullets.push_back(bullet);
-				notifyObservers(BULLET_ADDED, bullet);
-				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
-				return true;
-
-				break;
-		}
-		return false;
+		bullet->addObserver(this);
+		bullets.push_back(bullet);
+		notifyObservers(BULLET_ADDED, bullet);
+		//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
+		return true;
     }
 
 	////////////////////////////////////////////////////////////
@@ -181,7 +174,9 @@ namespace mp
 			{
 				int i = (it - bullets.begin());
 				notifyObservers(BULLET_DELETED, (void*) i);
+				worldDataMutex.lock();
 				bullets.erase(bullets.begin() + i);
+				worldDataMutex.unlock();
 			}
 		}
 	}
@@ -190,6 +185,7 @@ namespace mp
 	{
 		for(unsigned int i=0; i<bullets.size(); i++)
 		{
+			scheduleBulletForDeletion(bullets.at(i));
 			removeBullet(bullets.at(i));
 		}
 	}

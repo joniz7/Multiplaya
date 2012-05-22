@@ -14,7 +14,8 @@
 #include <map>
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "confighandler.h"
 

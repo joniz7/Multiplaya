@@ -3,17 +3,17 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "screens/Screen.h"
 #include "screens/MainScreen.h"
+#include "screens/PauseScreen.h"
 #include "screens/JoinGameScreen.h"
 #include "screens/SettingsScreen.h"
 #include "screens/HostGameScreen.h"
 #include "screens/worldview.h"
-#include "../model/worlddata.h"
 
 namespace mp
 {
 	class Screen;
+	class WorldData;
 	class Window
 	{
 		public:
@@ -23,8 +23,7 @@ namespace mp
 
 			void draw(Screen* screen);
 			void drawMainMenu();
-			void drawInGame();
-			void drawInGameMenu();
+			void drawPauseMenu();
 			void drawJoinMenu();
 			void drawHostMenu();
 			void drawGame();

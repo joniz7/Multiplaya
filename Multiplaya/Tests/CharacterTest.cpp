@@ -6,7 +6,6 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <sfml.h>
 #include <model/worlddata.h>
 
 namespace mpt {
@@ -27,8 +26,8 @@ class CharacterTest : public ::testing::Test {
 	// Create world data.
 	worldData = new mp::WorldData();
 
-	testCharacters.push_back( new mp::Character(worldData, physicsWorld, b2Vec2(2.0f,2.0f), b2Vec2(1.0f,1.0f), 0) );
-	testCharacters.push_back( new mp::Character(worldData, physicsWorld, b2Vec2(4.0f,2.0f), b2Vec2(1.0f,1.0f), 1) );
+	testCharacters.push_back( new mp::Character(physicsWorld, b2Vec2(2.0f,2.0f), b2Vec2(1.0f,1.0f), 0) );
+	testCharacters.push_back( new mp::Character(physicsWorld, b2Vec2(4.0f,2.0f), b2Vec2(1.0f,1.0f), 1) );
 
   }
 
@@ -51,12 +50,12 @@ TEST_F(CharacterTest, character_comparisons)
 TEST_F(CharacterTest, character_addition)
 {
 	// Add all our test characters to world.	
-	for(int i=0;i<testCharacters.size(); i++) {
+	for(int i = 0; i < testCharacters.size(); i++) {
 		worldData->addCharacter(testCharacters.at(i));
 	}
 	
 	// Compare previously created character with the one returned from getCharacter().
-	for(int i=0;i<testCharacters.size(); i++) {
+	for(int i = 0; i < testCharacters.size(); i++) {
 		ASSERT_EQ(testCharacters.at(i)->getBody(), worldData->getCharacter(i)->getBody());
 		ASSERT_EQ(testCharacters.at(i)->getClientID(), worldData->getCharacter(i)->getClientID());
 		ASSERT_EQ(testCharacters.at(i)->getClip(), worldData->getCharacter(i)->getClip());

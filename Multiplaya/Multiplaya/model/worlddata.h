@@ -20,13 +20,8 @@
 #include "character.h"
 #include "bullet.h"
 
-//Defines
-#include "../defines.h"
-
 #include "Wall.h"
 #include "worldchain.h"
-
-#include "../util/Observable.h"
 
 namespace mp
 {
@@ -47,7 +42,7 @@ namespace mp
 			void removeCharacter(sf::Int8 ID);
 
 			bool addBullet( Bullet* bullet );
-			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
+			bool addBullet( short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
@@ -97,6 +92,8 @@ namespace mp
 
 			virtual void notify(Event e, void* object);
 			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
+
+			void setAsClient(){isClient = true;};
 		private:
 			int currentCharacterId;
 			// Pointer to corresponding world object
@@ -114,6 +111,8 @@ namespace mp
 
 			// Variable for keeping track of logic thread fps
 			int logicFps;
+
+			bool isClient;
     };
 }
 

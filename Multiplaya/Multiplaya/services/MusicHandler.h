@@ -4,7 +4,7 @@
 #ifndef MUSICHANDLER_H_INCLUDED
 #define MUSICHANDLER_H_INCLUDED
 
-#include "../sfml.h"
+#include <SFML/Audio.hpp>
 #include "confighandler.h"
 
 // Other headers

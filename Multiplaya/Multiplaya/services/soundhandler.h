@@ -11,8 +11,7 @@
 #include <cmath>
 
 // SFML specific headers
-#include "../sfml.h"
-#include "../defines.h"
+#include <SFML/Audio.hpp>
 
 // Box2D specific headers
 #include <Box2D.h>

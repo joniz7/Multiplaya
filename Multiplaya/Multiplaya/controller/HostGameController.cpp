@@ -2,20 +2,24 @@
 
 namespace mp
 {
+	/**
+	 * Creates a new controller for the "host game" screen.
+	 * @param window the window  to tie the controller to.
+	 * @param hostScreen the actual host screen we're controlling.
+	 */
 	HostGameController::HostGameController(sf::RenderWindow* window, Screen* hostScreen) : IController(window, hostScreen)
 	{
-		//ctor
 		cancelButton = hostScreen->getGUIElement("cancelButton");
 		hostButton = hostScreen->getGUIElement("hostButton");
 		gravityTextField = (TextField*) hostScreen->getGUIElement("gravityTextField");
 		portTextField = (TextField*) hostScreen->getGUIElement("portTextField");
 	}
 
-	HostGameController::~HostGameController()
-	{
-		//dtor
-	}
+	HostGameController::~HostGameController() {}
 
+	/**
+	 * Handles input for the "host game" screen.
+	 */
 	void HostGameController::handleInput()
 	{
 		while (getRenderWindow()->pollEvent(ev))

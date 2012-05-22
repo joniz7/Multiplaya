@@ -16,8 +16,6 @@
 #include "bullet.h"
 
 #include "ICharacter.h"
-//Defines
-#include "../defines.h"
 
 #include "../services/resourcehandler.h"
 
@@ -30,6 +28,12 @@ namespace mp
             virtual ~Character();
 			void update();
 			void jump();
+
+			void moveLeft();
+			void moveRight();
+			void moveUp();
+			void moveDown();
+			
 			void crouch() {};
 			void primaryFire(b2Vec2 &targetPos);
 			void secondaryFire() {}
@@ -93,6 +97,10 @@ namespace mp
         private:
 			b2Body* characterBody;
 			b2World* world;
+			
+			void moveY(bool left);
+			void moveX(bool left);
+
 			sf::Clock* shootingTimer;
 			sf::Clock* reloadTimer;
 

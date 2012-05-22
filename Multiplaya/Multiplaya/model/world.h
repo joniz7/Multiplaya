@@ -18,9 +18,6 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-// Defines
-#include "../defines.h"
-
 namespace mp
 {
 	//Forward declaration so World can have a WorldData pointer
@@ -35,7 +32,7 @@ namespace mp
 			b2World* getWorld(){ return world; }
 			WorldData* getWorldData() { return worldData; }
 			void createCharacter(b2Vec2 positions, b2Vec2 size, sf::Int8 clientID);
-			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID, BulletType type);
+			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID);
 			void setGravity(const b2Vec2 gravity);
 			void deleteBullets();
 			void loadMap(const std::string& path);

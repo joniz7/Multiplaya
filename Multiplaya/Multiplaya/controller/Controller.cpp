@@ -2,6 +2,11 @@
 
 namespace mp
 {
+	/**
+	 * Creates a new controller.
+	 * @param world the model to use.
+	 * @param window the view to use.
+	 */
 	Controller::Controller(World* world, Window* window)
 	{
 		this->window = window;
@@ -10,6 +15,7 @@ namespace mp
 
 		// Create our minion controllers.
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
+		controllers["pauseScreen"] =  new PauseScreenController(renderWindow, window->getScreen("pauseScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
 		controllers["game"] =  new GameController(world, renderWindow, window->getScreen("gameScreen"));
 		controllers["hostGame"] =  new HostGameController(renderWindow, window->getScreen("hostScreen"));
@@ -19,6 +25,7 @@ namespace mp
 
 		// Add ourselves as observer.
 		controllers["mainScreen"]->addObserver(this);
+		controllers["pauseScreen"]->addObserver(this);
 		controllers["joinGame"]->addObserver(this);
 		controllers["hostGame"]->addObserver(this);
 		controllers["game"]->addObserver(this);
@@ -29,7 +36,10 @@ namespace mp
 
 	}
 
-
+	/**
+	 * Notify the controller of any state changes.
+	 * This is used to change screens and exit the game.
+	 */
 	void Controller::notify(Event e, void* object) {
 		switch (e) {
 			case START_GAME:     startGame();        break;
@@ -47,15 +57,15 @@ namespace mp
 
 	void Controller::startGame() {
 		// TODO: reset everything here.
+
 		// Start our ingame music.
 		this->runGame = true;
 		MusicHandler::instance().chooseSong("bg");
 		MusicHandler::instance().play();
-		// TODO: replace with "inGame"
+
 		window->getRenderWindow()->setMouseCursorVisible(false);
 		this->currentDrawFunction = &Window::drawGame;
 		this->currentController = controllers["game"];
-
 	}
 	void Controller::stopGame() {
 		this->runGame = false;
@@ -65,13 +75,13 @@ namespace mp
 	}
 	void Controller::exitGame() {
 		this->runGame = false;
-		exit(0); // TODO: exit properly?
+		exit(0);
 	}
 
 	void Controller::pauseGame(){
 		// TODO: replace with "inGameMenu".
-		this->currentDrawFunction = &Window::drawMainMenu;
-		this->currentController = controllers["mainScreen"];
+		this->currentDrawFunction = &Window::drawPauseMenu;
+		this->currentController = controllers["pauseScreen"];
 		};
 
 	void Controller::resumeGame(){
@@ -113,6 +123,9 @@ namespace mp
 		//dtor
 	}
 
+	/**
+	 * Sets which NetworkHandler the game should use.
+	 */
 	void Controller::setNetworkHandler(NetworkHandler* network) {
 		HostGameController* hostGameController = (HostGameController*) controllers["hostGame"];
 		GameController* gameController = (GameController*) controllers["game"];
@@ -123,6 +136,10 @@ namespace mp
 		joinGameController->setNetworkHandler(network);
 	}
 
+	/**
+	 * Runs the whole game.
+	 * Executes game logic, handles input and draws everything to screen.
+	 */
 	void Controller::exec()
 	{
 		// Only if we're ingame, run world simulation.
