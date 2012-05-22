@@ -19,19 +19,14 @@
 //Defines
 #include "../defines.h"
 
-#include "../util/Observable.h"
-#include "worlddata.h"
 #include "../services/resourcehandler.h"
 
 namespace mp
 {
-	// Forward class declarations.
-	class WorldData;
-
     class Character : public ICharacter
     {
         public:
-			Character(WorldData* worldData, b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
+			Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
             virtual ~Character();
 			void update();
 			void jump();
@@ -96,7 +91,6 @@ namespace mp
 			void connectToServer();
 
         private:
-			WorldData* worldData;
 			b2Body* characterBody;
 			b2World* world;
 			sf::Clock* shootingTimer;

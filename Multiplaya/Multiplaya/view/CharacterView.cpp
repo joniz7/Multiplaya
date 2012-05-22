@@ -39,8 +39,8 @@ namespace mp
 		sequence.push_back(sf::Vector3i(5,1,0));
 		sequence.push_back(sf::Vector3i(6,1,0));
 		sequence.push_back(sf::Vector3i(7,1,0));
-		*/
-
+		*/		
+		
 		sequence.push_back(sf::Vector3i(1,2,0));
 		sequence.push_back(sf::Vector3i(2,2,0));
 		sequence.push_back(sf::Vector3i(3,2,0));
@@ -62,7 +62,6 @@ namespace mp
 		sequence.push_back(sf::Vector3i(3,3,260));
 		sequence.push_back(sf::Vector3i(3,3,320));
 		sequence.push_back(sf::Vector3i(3,3,360));
-
 
 		sequence.push_back(sf::Vector3i(1,3,0));
 		sprite->addAnimation("airroll", 40, false, sequence);
@@ -108,7 +107,6 @@ namespace mp
 			facingLeft = character->isFacingLeft();
 		}
 		
-
 		worldDataMutex.unlock();
 	}
 
@@ -118,5 +116,6 @@ namespace mp
 
 	CharacterView::~CharacterView()
 	{
+		delete sprite;
 	}
 }
