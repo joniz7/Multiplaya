@@ -91,6 +91,8 @@ namespace mp
 
 			virtual void notify(Event e, void* object);
 			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
+
+			void setAsClient(){isClient = true;};
 		private:
 			int currentCharacterId;
 			// Pointer to corresponding world object
@@ -108,6 +110,8 @@ namespace mp
 
 			// Variable for keeping track of logic thread fps
 			int logicFps;
+
+			bool isClient;
     };
 }
 

@@ -230,6 +230,7 @@ namespace mp
 						worldData->getCharacter(0)->setClientID(myID);
 						worldDataMutex.unlock();
 						hasConnected = true;
+						worldData->setAsClient();
 						break;
 					//Receive a text message
 					case 12:
@@ -267,7 +268,10 @@ namespace mp
 						receivedData >> numOfBullets;
 
 						//The current bullet list is cleared
-						worldData->removeAllBullets();
+						if(worldData->getBullets()->size()>0)
+						{
+							worldData->removeAllBullets();
+						}
 
 						//And replaced by the new bullets
 						for(int i = 0; i<numOfBullets; i++)
@@ -280,7 +284,7 @@ namespace mp
 							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
 						}
 						break;
-					//Receive character data from the server
+					//Receive characters to create from the server
 					case 15:
 						if(sendOutput)
 								std::cout<<"type "<<outputType<<std::endl;
@@ -477,7 +481,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharactersToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 14, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
+		sf::Int8 type = 15, tempClientID, numOfChars = worldData->getCharacters()->size()-1;
 		sf::Packet packet;
 		Character* tempCharacter;
 		float32 x, y;
@@ -528,8 +532,10 @@ namespace mp
 		{
 			if(it != clientMap.end() && (*it).first != 0)
 			{
+				worldDataMutex.lock();
 				sendCharacterDataToClient((*it).first);
 				sendBulletDataToClient((*it).first);
+				worldDataMutex.unlock();
 			}
 		}
 	}
@@ -552,22 +558,25 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendBulletDataToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 15, tempClientID, numOfBullets = worldData->getBullets()->size();
+		sf::Int8 type = 14, tempClientID, numOfBullets = worldData->getBullets()->size();
 		sf::Packet packet;
 		Bullet* tempBullet;
 		float32 x, y, xvel, yvel;
 		packet << type << numOfBullets;
 
-		for(int i = 0; i<numOfBullets; i++)
+		if(numOfBullets > 0)
 		{
-			tempBullet = worldData->getBullet(i);
-			tempClientID = tempBullet->getOwner();
-			x = tempBullet->getPosition().x;
-			y = tempBullet->getPosition().y;
-			xvel = tempBullet->getLinVelocity().x;
-			yvel = tempBullet->getLinVelocity().y;
+			for(int i = 0; i<numOfBullets; i++)
+			{
+				tempBullet = worldData->getBullet(i);
+				tempClientID = tempBullet->getOwner();
+				x = tempBullet->getPosition().x;
+				y = tempBullet->getPosition().y;
+				xvel = tempBullet->getLinVelocity().x;
+				yvel = tempBullet->getLinVelocity().y;
 
-			packet << tempClientID << x << y << xvel << yvel;
+				packet << tempClientID << x << y << xvel << yvel;
+			}
 		}
 		
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);

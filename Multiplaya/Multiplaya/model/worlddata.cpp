@@ -22,6 +22,8 @@ namespace mp
 		logicFps = 0;
 		// TODO hardcoded. not good !1!
 		currentCharacterId = 0;
+
+		isClient = false;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -179,7 +181,9 @@ namespace mp
 			{
 				int i = (it - bullets.begin());
 				notifyObservers(BULLET_DELETED, (void*) i);
+				worldDataMutex.lock();
 				bullets.erase(bullets.begin() + i);
+				worldDataMutex.unlock();
 			}
 		}
 	}
@@ -188,6 +192,7 @@ namespace mp
 	{
 		for(unsigned int i=0; i<bullets.size(); i++)
 		{
+			scheduleBulletForDeletion(bullets.at(i));
 			removeBullet(bullets.at(i));
 		}
 	}
