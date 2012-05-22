@@ -164,6 +164,12 @@
     <ClCompile Include="app.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="view\screens\PauseScreen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\PauseScreenController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -312,6 +318,12 @@
     </ClInclude>
     <ClInclude Include="view\screens\worldview.h">
       <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\PauseScreen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\PauseScreenController.h">
+      <Filter>src\controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

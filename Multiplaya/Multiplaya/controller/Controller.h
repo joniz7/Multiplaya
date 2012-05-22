@@ -4,6 +4,7 @@
 #include <string>
 #include "../view/Window.h"
 #include "MainScreenController.h"
+#include "PauseScreenController.h"
 #include "HostGameController.h"
 #include "JoinGameController.h"
 #include "GameController.h"
