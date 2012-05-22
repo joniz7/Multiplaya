@@ -152,9 +152,6 @@
     <ClCompile Include="util\TextEventHelper.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="app.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
     <ClCompile Include="view\screens\HostGameScreen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
@@ -172,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="view\screens\worldview.cpp">
       <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="app.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
