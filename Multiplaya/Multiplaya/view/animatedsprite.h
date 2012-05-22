@@ -14,7 +14,7 @@
 #include <map>
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/Graphics.hpp>
 
 //Defines
 #include "../defines.h"

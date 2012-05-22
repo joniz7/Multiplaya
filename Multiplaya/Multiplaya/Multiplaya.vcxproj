@@ -105,9 +105,6 @@
     <ClCompile Include="services\networkhandler.cpp" />
     <ClCompile Include="services\resourcehandler.cpp" />
     <ClCompile Include="services\soundhandler.cpp" />
-    <ClCompile Include="sound\sound.cpp" />
-    <ClCompile Include="sound\uisound.cpp" />
-    <ClCompile Include="sound\worldsound.cpp" />
     <ClCompile Include="util\Observable.cpp" />
     <ClCompile Include="util\TextEventHelper.cpp" />
     <ClCompile Include="view\animatedsprite.cpp" />
@@ -156,9 +153,6 @@
     <ClInclude Include="services\resourcehandler.h" />
     <ClInclude Include="services\soundhandler.h" />
     <ClInclude Include="sfml.h" />
-    <ClInclude Include="sound\sound.h" />
-    <ClInclude Include="sound\uisound.h" />
-    <ClInclude Include="sound\worldsound.h" />
     <ClInclude Include="util\Event.h" />
     <ClInclude Include="util\Observable.h" />
     <ClInclude Include="util\Observer.h" />

@@ -21,6 +21,7 @@
 #include "GameObject.h"
 #include "../util/Observable.h"
 
+
 namespace mp
 {
 	class WorldData;

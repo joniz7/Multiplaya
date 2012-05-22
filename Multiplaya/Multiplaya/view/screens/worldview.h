@@ -12,7 +12,7 @@
 #include <vector>
 
 // SFML specific headers
-#include "../../sfml.h"
+#include <SFML/Graphics.hpp>
 
 #include <iostream>
 #include <sstream>
