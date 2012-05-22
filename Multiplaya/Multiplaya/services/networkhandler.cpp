@@ -608,6 +608,8 @@ namespace mp
 				packet << myID << x << y << xvel << yvel;
 			}
 
+			bulletsToSend.clear();
+
 			sender.send(packet, serverIP, 55001);
 		}
 	}
@@ -676,10 +678,11 @@ namespace mp
 				connectToServer("testClient");
 			}
 		} 
-		else if(e == BULLET_ADDED) 
+		else if(e == SEND_BULLET) 
 		{
 			//sendMessageToEveryone("Bullet added to buffer");
-			bulletsToSend.push_back((Bullet*)object);
+			Bullet* bullet = (Bullet*) object;
+			bulletsToSend.push_back(bullet);
 		} 
 		else if(e == BULLET_DELETED) 
 		{

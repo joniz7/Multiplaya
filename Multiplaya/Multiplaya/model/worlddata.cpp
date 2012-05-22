@@ -41,7 +41,6 @@ namespace mp
 		bullet->addObserver(this);
 		bullets.push_back(bullet);
 		notifyObservers(BULLET_ADDED, bullet);
-		//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 		return true;
     }
 
@@ -224,10 +223,13 @@ namespace mp
 		}
 		else if (e == BULLET_ADDED)
 		{
-			worldDataMutex.lock();
+			
+			//worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
-			addBullet(bullet);
-			worldDataMutex.unlock();
+			//addBullet(bullet);
+			//worldDataMutex.unlock();
+			
+			notifyObservers(SEND_BULLET, bullet);
 		}
 		else if (e == CONNECT_SERVER)
 		{
