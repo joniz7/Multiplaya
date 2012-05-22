@@ -35,6 +35,8 @@ namespace mp
 		this->flipping = false;
 		this->facingLeft = true;
 		this->focusing = false;
+		this->backwards = false;
+		this->shouldFaceLeft = true;
 
 		this->kills  = 0;// Kill stat.
 		this->deaths = 0;// Death stat.
@@ -129,16 +131,19 @@ namespace mp
 		if ( grounded ) {
 			body->ApplyLinearImpulse( b2Vec2(0, 350), body->GetPosition());
 			setGrounded(false);
+			setWalking(false);
 		}
 		else if ( leftSideTouchWall  )
 		{
-			body->ApplyLinearImpulse( b2Vec2( -300, 425), body->GetPosition());
+			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
+			body->ApplyLinearImpulse( b2Vec2( -200, 400), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
 		else if ( rightSideTouchWall  )
 		{
-			body->ApplyLinearImpulse( b2Vec2( 300, 425), body->GetPosition());
+			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
+			body->ApplyLinearImpulse( b2Vec2( 200, 400), body->GetPosition());
 			rightSideTouchWall = false;
 			flipping = true;
 		}
@@ -173,9 +178,12 @@ namespace mp
 				maxForce = 15;
 			else
 				maxForce = 40;
-			forceIteration = 50;
+			forceIteration = 25;
 		} else {
-			maxForce = 40;
+			if(isFocusing())
+				maxForce = 15;
+			else
+				maxForce = 40;
 			forceIteration = 20;
 		}
 		
@@ -243,7 +251,7 @@ namespace mp
 		int speed = 8000;
 		b2Vec2 charPos = body->GetPosition();
 		b2Vec2 charSpeed = body->GetLinearVelocity();
-		targetPos.Set(targetPos.x * 10, targetPos.y * 10); // (Don't ask. It works.)
+		targetPos.Set(targetPos.x / PIXEL_SCALE, targetPos.y / PIXEL_SCALE); // (Don't ask. It works.)
 
 		// We're just about to calculate these two vectors.
 		b2Vec2 gunPosition; // Where the bullet should be placed.
@@ -319,9 +327,51 @@ namespace mp
 	void Character::update()
 	{
 		if( getBody()->GetLinearVelocity().x > 0 )
-			setIsFacingLeft(true);
+			shouldFaceLeft = true;
 		else if( getBody()->GetLinearVelocity().x < 0 )
-			setIsFacingLeft(false);
+			shouldFaceLeft = false;
+
+		if( isFocusing() && !isWallSliding() )
+		{
+			b2Vec2 charPos = body->GetPosition();
+			if(charPos.x<targetPos.x)
+				setIsFacingLeft(true);
+			else
+				setIsFacingLeft(false);
+		}
+		else
+		{
+			if( shouldFaceLeft )
+				setIsFacingLeft(true);
+			else
+				setIsFacingLeft(false);
+		}
+
+		if(facingLeft != shouldFaceLeft)
+			backwards = true;
+		else
+			backwards = false;
+
+		if( isWallSliding() )
+			getBody()->SetLinearDamping(10);
+		else if( !isGrounded() )
+			getBody()->SetLinearDamping(0);
+		else if( isWalking() )
+		{
+			if(isWalking())
+			{
+				if( isFocusing() && abs(getBody()->GetLinearVelocity().x)>15 )
+					getBody()->SetLinearDamping(10);
+				else
+					getBody()->SetLinearDamping(0);
+			}
+			else
+				getBody()->SetLinearDamping(0);
+		}
+		else if( !isGrounded() )
+			getBody()->SetLinearDamping(0);
+		else
+			getBody()->SetLinearDamping(10);
 	}
 
 	void Character::connectToServer()

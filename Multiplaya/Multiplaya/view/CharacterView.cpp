@@ -115,7 +115,12 @@ namespace mp
 		else if (character->isWalking())
 		{
 			if(character->isFocusing())
-				sprite->playAnimation("walk");
+			{
+				if(!character->isBackwards())
+					sprite->playAnimation("walk");
+				else
+					sprite->playAnimation("walkbackwards");
+			}
 			else
 				sprite->playAnimation("run");
 		}
