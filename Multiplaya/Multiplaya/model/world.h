@@ -34,7 +34,7 @@ namespace mp
 			void createCharacter(b2Vec2 positions, b2Vec2 size, sf::Int8 clientID);
 			void createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID);
 			void setGravity(const b2Vec2 gravity);
-			void deleteBullets();
+
 			void loadMap(const std::string& path);
 			void reloadStuff();
 			void loadPhysics(const std::string& path);
@@ -42,6 +42,7 @@ namespace mp
         private:
 			WorldData* worldData;
 			b2World* world;
+			void deleteBox2dObjects();
 			// World step properties
 			float32 timeStep;
 			int32 velocityIterations;

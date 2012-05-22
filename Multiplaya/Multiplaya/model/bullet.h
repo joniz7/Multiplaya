@@ -35,7 +35,6 @@ namespace mp
 			sf::Int8 owner;
 			b2BodyDef bodyDef;
 
-			bool scheduledForDeletion;
     };
 }
 

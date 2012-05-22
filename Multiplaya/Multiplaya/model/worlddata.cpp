@@ -78,7 +78,7 @@ namespace mp
 			Character* character = characters.at(i);
 			if(character->getClientID() == ID)
 			{
-				notifyObservers(CHARACTER_DELETED, (void*) i);
+				notifyObservers(BULLET_DELETED, (void*) i);
 				worldDataMutex.lock();
 				characters.erase(characters.begin()+i);
 				worldDataMutex.unlock();
@@ -161,21 +161,24 @@ namespace mp
     }
 
 	//Schedule bullet object for deletion our next logic iteration.
-	void WorldData::scheduleBulletForDeletion(Bullet* bullet) {
-		bulletsToRemove.push_back(bullet);
+	void WorldData::scheduleForDeletion(DynamicGameObject* object) {
+		deletionList.push_back(object);
 	}
 
 	void WorldData::removeBullet(Bullet* bullet)
 	{
 		worldDataMutex.lock();
 		if (bullets.size() > 0) {
+			// locate bullet in vector
 			std::vector<Bullet*>::iterator it = find(bullets.begin(), bullets.end(), bullet);
 			if ( it != bullets.end())
 			{
+				// get the bullet's index
 				int i = (it - bullets.begin());
+				// tell the view to remove bullet from its list
 				notifyObservers(BULLET_DELETED, (void*) i);
+				// remove from bullet list
 				bullets.erase(bullets.begin() + i);
-
 			}
 		}
 		worldDataMutex.unlock();
@@ -186,11 +189,11 @@ namespace mp
 	{
 		worldDataMutex.lock();
 		Bullet* bullet;
-		for(unsigned int i=0; i<bullets.size(); i++)
+		for(unsigned int i = 0; i < bullets.size(); i++)
 		{
 			bullet = bullets.at(i);
 			removeBullet(bullet);
-			scheduleBulletForDeletion(bullet);
+			scheduleForDeletion(bullet);
 		}
 		worldDataMutex.unlock();
 	}
@@ -214,10 +217,10 @@ namespace mp
 		{
 			worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
-			// remove bullet from bullets vector in worlddata and view
 			removeBullet(bullet);
 			//bullet should be removed from box2d world after timestep
-			//scheduleBulletForDeletion(bullet);
+			scheduleForDeletion(bullet);
+			// remove bullet from bullets vector in worlddata and view
 			worldDataMutex.unlock();
 		}
 		else if (e == BULLET_ADDED)

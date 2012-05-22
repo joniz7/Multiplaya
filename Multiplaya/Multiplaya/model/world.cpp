@@ -90,7 +90,7 @@ namespace mp
 			}
 
 			// Delete bullets, now that we're finished with physics.
-			deleteBullets();
+			deleteBox2dObjects();
 			// Get frame time
 			float elapsed = clock->getElapsedTime().asSeconds();
 			// Save logic fps
@@ -120,18 +120,18 @@ namespace mp
 		this->world->SetGravity(gravity);
 	}
 
-	void World::deleteBullets()
+	void World::deleteBox2dObjects()
 	{
 		worldDataMutex.lock();
-		std::vector<Bullet*>* bulletsToRemove = worldData->getBulletsToRemove();
+		std::vector<DynamicGameObject*>* box2dDeletionList = worldData->getDeletionList();
 		// Check if we have bullets to remove.
-		if (bulletsToRemove->size() > 0) {
-			std::vector<Bullet*>::iterator it;
-			for ( it = bulletsToRemove->begin() ; it != bulletsToRemove->end(); ) {
+		if (box2dDeletionList->size() > 0) {
+			std::vector<DynamicGameObject*>::iterator it;
+			for ( it = box2dDeletionList->begin() ; it != box2dDeletionList->end(); ) {
 				delete *it;
-				it = bulletsToRemove->erase(it);
+				it = box2dDeletionList->erase(it);
 			}
-			bulletsToRemove->clear();
+			box2dDeletionList->clear();
 		}
 		worldDataMutex.unlock();
 	}
@@ -236,7 +236,7 @@ namespace mp
 
 							int comPos = data.find(",");
 
-							int x = atoi( (data.substr(0,comPos)).c_str() );
+							int x = -atoi( (data.substr(0,comPos)).c_str() );
 							int y = atoi( (data.substr(comPos+1,pos2-(comPos+1))).c_str() );
 
 							vs[vCount].Set((float)x,(float)y);

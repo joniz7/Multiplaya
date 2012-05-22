@@ -13,7 +13,14 @@ namespace mp
 	{
 		public:
 			b2Vec2 getLinVelocity(){ return getBody()->GetLinearVelocity();} 
-	protected:
+		protected:
+			DynamicGameObject();
+
+			void scheduleDeletion(Event e);
+
+		private:
+			bool deletionScheduled;
+
 	};
 
 }
