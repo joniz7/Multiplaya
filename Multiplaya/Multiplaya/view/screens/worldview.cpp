@@ -101,11 +101,11 @@ namespace mp
 
 	void WorldView::deleteCharacter(int i)
 	{
-		worldViewMutex.lock();
+		//worldViewMutex.lock();
 		CharacterView* character = (CharacterView*) characters.at(i);
 		characters.erase(characters.begin() + i);
 		delete character;
-		worldViewMutex.unlock();
+		//worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -171,6 +171,13 @@ namespace mp
 			} else {
 				counter++;
 			}
+
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+			{
+				std::cout<<"Updating world geo view"<<std::endl;
+				updateWorldVertices();
+			}
+
 	}
 
 	void WorldView::update()
@@ -300,6 +307,8 @@ namespace mp
 		constructMapGraphics();
 
 		createCharacterViews();
+
+		updateWorldVertices();
 
 		std::cout << "Render window initialized!" << std::endl;
 	}
@@ -472,19 +481,51 @@ namespace mp
 	void WorldView::drawWorld(sf::RenderTarget& window) const
 	{
 		drawEnvironment(window);
+		drawWorldGeo(window);
 		drawCharacters(window);
 		drawBullets(window);
-		// Draw light.
-		//window.draw(*lightSpr, sf::BlendAdd);
+	}
+
+	////////////////////////////////
+	/// Refreshes the vertices representings
+	/// the world physics geo.
+	////////////////////////////////
+	void WorldView::updateWorldVertices()
+	{
+		worldGeo.clear();
+
+		worldDataMutex.lock();
+
+		std::vector<WorldChain*> wee = *worldData->getChains();
+
+		for(std::vector<WorldChain*>::iterator it = wee.begin(); it != wee.end(); ++it)
+		{
+			worldGeo.push_back( new sf::VertexArray() );
+			
+			std::vector<b2Vec2> vertices = *(*it)->getVertices();
+			
+			for(int i=0;i<vertices.size();i++)
+			{
+				worldGeo.back()->append( sf::Vertex( sf::Vector2f( (vertices.at(i).x)*PIXEL_SCALE , (vertices.at(i).y)*PIXEL_SCALE ) ) );
+				worldGeo.back()->setPrimitiveType(sf::LinesStrip);
+			}
+		}
+		worldDataMutex.unlock();
+	}
+
+	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
+	{
+		for(std::vector<sf::VertexArray*>::const_iterator it = worldGeo.begin(); it != worldGeo.end(); ++it)
+			window.draw( (**it) );
 	}
 
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
 		window.draw(*backgroundSprite);
-		window.draw(*ground);
-		window.draw(*ground2);
-		window.draw(*ground3);
-		window.draw(*ground4);
+		//window.draw(*ground);
+		//window.draw(*ground2);
+		//window.draw(*ground3);
+		//window.draw(*ground4);
 	}
 
 	void WorldView::drawBullets(sf::RenderTarget& window) const

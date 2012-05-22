@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <Box2D.h>
 #include <iostream>
+#include <vector>
 
 namespace mp
 {
@@ -13,10 +14,12 @@ namespace mp
 			WorldChain(b2World* world, b2Vec2 vertices[], int length, float friction);
 			~WorldChain();
 			virtual void onCollision(GameObject* crashedWith);
-			virtual void onNoCollision(GameObject* crashedWith) {};
+			virtual void onNoCollision(GameObject* crashedWith){}
+			std::vector<b2Vec2>* getVertices(){ return &verticeList; }
 		private:
 			b2World* world;
 			b2Body* chainBody;
+			std::vector<b2Vec2> verticeList;
 	};
 }
 #endif

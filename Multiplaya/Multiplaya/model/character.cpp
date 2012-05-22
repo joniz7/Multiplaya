@@ -207,7 +207,7 @@ namespace mp
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
-		//soundFire.play();
+		soundFire.play();
 	}
 
 	/////////////////////////////////////////////////
