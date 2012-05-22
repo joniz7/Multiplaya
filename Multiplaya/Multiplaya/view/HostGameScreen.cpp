@@ -11,13 +11,15 @@ namespace mp
 		background->setFillColor( sf::Color(94, 94, 94, 255) );
 		background->setPosition(0, 0);
 
-		guiElements["hostButton"] = new Button(40, 100, 200, 60, "Host game");
-		guiElements["hostButton"]->setFont(*font);
-		guiElements["hostButton"]->setFontColor(sf::Color::Black);
+		Button* hostButton = new Button(40, 100, 200, 60, "Host game");
+		hostButton->setFont(*font);
+		hostButton->setFontColor(sf::Color::Black);
+		setGUIElement("hostButton", hostButton);
 
-		guiElements["cancelButton"] = new Button(40, 180, 200, 60, "Cancel");
-		guiElements["cancelButton"]->setFont(*font);
-		guiElements["cancelButton"]->setFontColor(sf::Color::Black);
+		Button* cancelButton = new Button(40, 180, 200, 60, "Cancel");
+		cancelButton->setFont(*font);
+		cancelButton->setFontColor(sf::Color::Black);
+		setGUIElement("cancelButton", cancelButton);
 
 		screenTitleText = new sf::Text("Host game");
 		screenTitleText->setFont(*font);
@@ -45,7 +47,7 @@ namespace mp
 		gravityTextField->setFontColor(sf::Color::Black);
 		gravityTextField->setFontSize(20);
 		gravityTextField->setBorderThicknessClicked(1);
-		guiElements["gravityTextField"] = gravityTextField;
+		setGUIElement("gravityTextField", gravityTextField);
 
 		portTitleText = new sf::Text("Port");
 		portTitleText->setFont(*font);
@@ -59,24 +61,8 @@ namespace mp
 		portTextField->setFontColor(sf::Color::Black);
 		portTextField->setFontSize(20);
 		portTextField->setBorderThicknessClicked(1);	
-		guiElements["portTextField"] = portTextField;
+		setGUIElement("portTextField", portTextField);
 
-	}
-
-	bool HostGameScreen::hover(const sf::Vector2i& mousePos)
-	{
-		guiElements["hostButton"]->isMouseOver(mousePos);
-		guiElements["cancelButton"]->isMouseOver(mousePos);
-		guiElements["gravityTextField"]->isMouseOver(mousePos);
-		guiElements["portTextField"]->isMouseOver(mousePos);
-
-		return true;
-	}
-
-
-	GUIElement* HostGameScreen::getElement(std::string element)
-	{
-		return guiElements[element];
 	}
 
 	void HostGameScreen::draw(sf::RenderTarget& window, sf::RenderStates states) const
@@ -85,11 +71,8 @@ namespace mp
 		window.draw(*ipTitleText);
 		window.draw(*portTitleText);
 		window.draw(*gravityTitleText);
-		for( std::map<std::string, GUIElement*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
-		{
-		   window.draw(*it->second);
-		}
 		window.draw(*screenTitleText);
+		Screen::draw(window, states);
 	}
 
 	HostGameScreen::~HostGameScreen()

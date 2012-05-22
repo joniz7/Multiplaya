@@ -45,26 +45,28 @@ namespace mp
 		gameTitleText->setCharacterSize(40);
 
 		Button* joinButton = new Button(0, 440, 250, 50, "Join game");
-		
 		joinButton->setFont(*font);
 		joinButton->setTextPosition(60, 5);
 		joinButton->setFontColor(sf::Color::Black);
-		guiElements["joinButton"] = joinButton;
+		setGUIElement("joinButton",joinButton);
 
-		guiElements["hostButton"] = new Button(0, 500, 250, 50, "Host game");
-		guiElements["hostButton"]->setFont(*font);
-		guiElements["hostButton"]->setTextPosition(60, 5);
-		guiElements["hostButton"]->setFontColor(sf::Color::Black);
+		Button* hostButton = new Button(0, 500, 250, 50, "Host game");
+		hostButton->setFont(*font);
+		hostButton->setTextPosition(60, 5);
+		hostButton->setFontColor(sf::Color::Black);
+		setGUIElement("hostButton", hostButton);
 
-		guiElements["settingsButton"] = new Button(0, 560, 250, 50, "Settings");
-		guiElements["settingsButton"]->setFont(*font);
-		guiElements["settingsButton"]->setTextPosition(60, 5);
-		guiElements["settingsButton"]->setFontColor(sf::Color::Black);
+		Button* settingsButton = new Button(0, 560, 250, 50, "Settings");
+		settingsButton->setFont(*font);
+		settingsButton->setTextPosition(60, 5);
+		settingsButton->setFontColor(sf::Color::Black);
+		setGUIElement("settingsButton", settingsButton);
 
-		guiElements["exitButton"] = new Button(0, 620, 250, 50, "Exit game");
-		guiElements["exitButton"]->setFont(*font);
-		guiElements["exitButton"]->setTextPosition(60, 5);
-		guiElements["exitButton"]->setFontColor(sf::Color::Black);
+		Button* exitButton = new Button(0, 620, 250, 50, "Exit game");
+		exitButton->setFont(*font);
+		exitButton->setTextPosition(60, 5);
+		exitButton->setFontColor(sf::Color::Black);
+		setGUIElement("exitButton", exitButton);
 
 	}
 
@@ -84,29 +86,6 @@ namespace mp
 	{
 		window.draw(*backgroundSprite);
 		window.draw(*gameTitleText);
-
-		// iterate ovef buttons map instead
-		// draw buttons
-		for( std::map<std::string, GUIElement*>::const_iterator it = guiElements.begin(); it != guiElements.end(); it++ )
-		{
-		   window.draw(*it->second);
-		}
+		Screen::draw(window, states);
 	}
-
-	bool MainScreen::hover(const sf::Vector2i& mousePos)
-	{
-		// put in a function
-		guiElements["joinButton"]->isMouseOver( mousePos );
-		guiElements["hostButton"]->isMouseOver( mousePos );
-		guiElements["settingsButton"]->isMouseOver( mousePos );
-		guiElements["exitButton"]->isMouseOver( mousePos );
-
-		return true;
-	}
-
-	GUIElement* MainScreen::getElement(std::string element)
-	{
-		return guiElements[element];
-	}
-
 }

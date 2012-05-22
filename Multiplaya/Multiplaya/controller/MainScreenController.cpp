@@ -4,9 +4,9 @@ namespace mp
 {
 	MainScreenController::MainScreenController(sf::RenderWindow* window, Screen* mainScreen) : IController(window, mainScreen)
 	{
-		joinButton = mainScreen->getElement("joinButton");
-		hostButton = mainScreen->getElement("hostButton");
-		exitButton = mainScreen->getElement("exitButton");
+		joinButton = mainScreen->getGUIElement("joinButton");
+		hostButton = mainScreen->getGUIElement("hostButton");
+		exitButton = mainScreen->getGUIElement("exitButton");
 	}
 
 	MainScreenController::~MainScreenController()

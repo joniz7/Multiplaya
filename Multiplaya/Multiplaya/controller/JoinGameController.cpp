@@ -4,10 +4,10 @@ namespace mp
 {
 	JoinGameController::JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen) : IController(window, joinGameScreen)
 	{
-		cancelButton = joinGameScreen->getElement("cancelButton");
-		connectButton = joinGameScreen->getElement("connectButton");
-		ipTextField = (TextField*) joinGameScreen->getElement("ipTextField");
-		portTextField = (TextField*) joinGameScreen->getElement("portTextField");
+		cancelButton = joinGameScreen->getGUIElement("cancelButton");
+		connectButton = joinGameScreen->getGUIElement("connectButton");
+		ipTextField = (TextField*) joinGameScreen->getGUIElement("ipTextField");
+		portTextField = (TextField*) joinGameScreen->getGUIElement("portTextField");
 	}
 
 	JoinGameController::~JoinGameController()

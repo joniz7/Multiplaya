@@ -1,4 +1,5 @@
 #include "GUIElement.h"
+#include <iostream>
 
 namespace mp
 {

@@ -167,6 +167,9 @@
     <ClCompile Include="app.cpp">
       <Filter>src\view</Filter>
     </ClCompile>
+    <ClCompile Include="view\Screen.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">

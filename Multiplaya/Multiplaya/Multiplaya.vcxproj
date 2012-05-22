@@ -122,6 +122,7 @@
     <ClCompile Include="view\Layer.cpp" />
     <ClCompile Include="view\LayerHandler.cpp" />
     <ClCompile Include="view\MainScreen.cpp" />
+    <ClCompile Include="view\Screen.cpp" />
     <ClCompile Include="view\SettingsScreen.cpp" />
     <ClCompile Include="view\Window.cpp" />
     <ClCompile Include="view\worldview.cpp" />

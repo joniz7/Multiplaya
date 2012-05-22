@@ -150,7 +150,7 @@ namespace mp
 
 			void updateVectorPos(std::vector<GameObjectView*>& vector);
 
-			virtual bool hover (const sf::Vector2i& mousePos) { return true; }
+			virtual void hover (const sf::Vector2i& mousePos) { }
 
 			void tempLoop();
 
