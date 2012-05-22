@@ -4,8 +4,8 @@
 #include "Screen.h"
 #include <map>
 #include "../../services/resourcehandler.h"
-#include "../guielements/Button.h"
-#include "../guielements/TextField.h"
+#include "../GUIElements/Button.h"
+#include "../GUIElements/TextField.h"
 
 namespace mp
 {
@@ -35,7 +35,7 @@ namespace mp
 
 			sf::Text* gameTitleText;
 
-			
+
 
 	};
 
