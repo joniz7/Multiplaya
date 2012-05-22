@@ -38,7 +38,6 @@ namespace mp
 			virtual void setWallSliding(bool wS) = 0;
 
 			virtual void setPosition(b2Vec2 position, float32 angle) = 0;
-			virtual void setLinVelocity(b2Vec2 velocity) = 0;
 
 			virtual void reload() = 0;
 

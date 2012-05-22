@@ -12,7 +12,9 @@ namespace mp
 	class DynamicGameObject : public GameObject, public Observable
 	{
 		public:
-			b2Vec2 getLinVelocity(){ return getBody()->GetLinearVelocity();} 
+			b2Vec2 getLinVelocity();
+			void setLinVelocity(b2Vec2 velocity);
+
 		protected:
 			DynamicGameObject();
 

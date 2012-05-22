@@ -21,6 +21,10 @@
 
 namespace mp
 {
+	/**
+	 * A class representing a character.
+	 * Holds data regarding character position, activity etc..
+	 */
     class Character : public ICharacter
     {
         public:
@@ -56,7 +60,6 @@ namespace mp
 			bool isGrounded() { return grounded; }
 
 			bool isShooting();
-			void shoot();
 			
 			bool isReloading();
 			void reload();
@@ -67,8 +70,10 @@ namespace mp
 			void setIsFacingLeft(bool choice) { facingLeft = choice; }
 			bool isFacingLeft() { return facingLeft; }
 
-			void setPosition(b2Vec2 position, float32 angle);
-			void setLinVelocity(b2Vec2 velocity);
+			/// Sets the position of the character in the world.
+			void setPosition(b2Vec2 pos, float32 a) { body->SetTransform(pos, a); }
+			/// Sets the velocity of the character.
+			void setLinVelocity(b2Vec2 v) { body->SetLinearVelocity(v); }
 
 			void setTouchingWallLeft(bool choice){ leftSideTouchWall = choice; }
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }
@@ -101,7 +106,7 @@ namespace mp
 
         private:
 			b2Vec2 targetPos;
-			
+			void shoot();
 			void moveY(bool left);
 			void moveX(bool left);
 
@@ -135,6 +140,9 @@ namespace mp
 			sf::Int8 clientID;
 
 
+		/**
+		 * A sensor which reacts when the character's foot touches something.
+		 */
 		class CharacterFootSensor : public GameObject
 		{
 			public:
@@ -150,6 +158,9 @@ namespace mp
 				bool& isFlipping;
 		};
 
+		/**
+		 * A sensor which reacts when the character's right side touches something.
+		 */
 		class CharacterLeftSensor : public GameObject
 		{
 			public:
@@ -164,6 +175,9 @@ namespace mp
 				bool& leftSideTouchWall;
 		};
 
+		/**
+		 * A sensor which reacts when the character's left side touches something.
+		 */
 		class CharacterRightSensor : public GameObject
 		{
 			public:
