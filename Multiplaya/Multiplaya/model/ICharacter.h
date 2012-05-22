@@ -6,6 +6,12 @@
 
 namespace mp
 {
+	/**
+	 * An interface for characters.
+	 * Holds data about positioning, health etc,
+	 * and is used for manipulating the character
+	 * with methods such as jump() and moveLeft().
+	 */
 	class ICharacter : public DynamicGameObject
 	{
 		public:

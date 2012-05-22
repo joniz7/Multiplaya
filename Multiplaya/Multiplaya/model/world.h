@@ -23,6 +23,12 @@ namespace mp
 	//Forward declaration so World can have a WorldData pointer
 	class WorldData;
 
+	/**
+	 * The model of the game.
+	 * Handles game physics, logic, and a whole lot more.
+	 * Has factories for adding stuff to the world, and an exec() method
+	 * which should be called all the time when the game is running.
+	 */
     class World
     {
         public:
