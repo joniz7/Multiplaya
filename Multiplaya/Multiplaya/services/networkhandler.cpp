@@ -396,7 +396,7 @@ namespace mp
 	{
 		serverIP = IPAddress;
 		sf::Int8 type = 1;
-		sf::Int16 port = receivePort;
+		sf::Uint16 port = receivePort;
 		sf::Packet packet;
 
 		worldDataMutex.lock();
@@ -567,7 +567,6 @@ namespace mp
 		sf::Packet packet;
 		Bullet* tempBullet;
 		float32 x, y, xvel, yvel;
-		packet << type << numOfBullets;
 
 		for(int i = 0; i<worldData->getBullets()->size(); i++)
 		{
@@ -577,6 +576,8 @@ namespace mp
 				numOfBullets++;
 			}
 		}
+
+		packet << type << numOfBullets;
 
 		if(numOfBullets > 0)
 		{
@@ -707,8 +708,8 @@ namespace mp
 			std::cout<<"hej"<<tempBullet->getBody()->GetLinearVelocity().x<<tempBullet->getLinVelocity().y<<std::endl;
 
 			sf::Packet packet;
-			sf::Int8 type = 5, id = 1;
-			packet << type << id << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
+			sf::Int8 type = 5, quantity = 1;
+			packet << type << quantity << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
 			sender.send(packet, serverIP, 55001);
 		} 
 		else if(e == BULLET_DELETED) 
