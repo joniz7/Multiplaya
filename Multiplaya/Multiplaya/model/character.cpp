@@ -132,13 +132,13 @@ namespace mp
 			body->ApplyLinearImpulse( b2Vec2(0, 350), body->GetPosition());
 			setGrounded(false);
 		}
-		else if ( leftSideTouchWall && isWallSliding() )
+		else if ( leftSideTouchWall  )
 		{
 			body->ApplyLinearImpulse( b2Vec2( -300, 425), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
-		else if ( rightSideTouchWall && isWallSliding() )
+		else if ( rightSideTouchWall  )
 		{
 			body->ApplyLinearImpulse( b2Vec2( 300, 425), body->GetPosition());
 			rightSideTouchWall = false;
