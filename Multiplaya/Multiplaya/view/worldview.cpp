@@ -231,7 +231,7 @@ namespace mp
 		float screenHeight = float(window->getSize().y);
 
 		backgroundTexture = new sf::Texture();
-		backgroundTexture->loadFromFile("resources/bg.png");
+		backgroundTexture->loadFromFile("resources/ui/bg.png");
 		backgroundSprite = new sf::Sprite();
 		backgroundSprite->setTexture(*backgroundTexture);
 		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
@@ -290,7 +290,7 @@ namespace mp
 		// Red dot?
 		dotTex = new sf::Texture();
 		dotSpr = new sf::Sprite();
-		if(!dotTex->loadFromFile("resources/reddot.png"))
+		if(!dotTex->loadFromFile("resources/ui/reddot.png"))
 			std::cout << "Failed to load texture: reddot.png" << std::endl;
 		dotSpr->setTexture(*dotTex);
 		dotSpr->setOrigin(32, 32);
@@ -315,7 +315,7 @@ namespace mp
 
 		//------- Create "Kills" sprite. -------
 		killsTexture = new sf::Texture();
-		if (!killsTexture->loadFromFile((resourcesDir+"kills.png"))) {
+		if (!killsTexture->loadFromFile((resourcesDir + "ui/hud/kills.png"))) {
 			std::cout << "Failed to load texture: kills.png" << std::endl;
 		}
 		killsSprite = new sf::Sprite();
@@ -340,7 +340,7 @@ namespace mp
 		//------- Create "Deaths" sprite. -------
 		deathsTexture = new sf::Texture();
 		// Load image file
-		if (!deathsTexture->loadFromFile((resourcesDir+"deaths.png"))) {
+		if (!deathsTexture->loadFromFile((resourcesDir + "ui/hud/deaths.png"))) {
 			std::cout << "Failed to load texture: deaths.png" << std::endl;
 		}
 		deathsSprite = new sf::Sprite();
@@ -360,14 +360,14 @@ namespace mp
 
 		//-------- Ammo sprite. ---------
 		// ammo sprite.
-		ammoSprite = new HUDSprite(resourcesDir + "ammo.png", 12);
+		ammoSprite = new HUDSprite(resourcesDir + "ui/hud/ammo.png", sf::Vector2i(3,4));
 		x = 0;
 		y = (HEIGHT) - ammoSprite->getHeight();
 		ammoSprite->setPosition(float(x),float(y));
 		//ammoSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 
 		//--------- HP sprite. ---------.
-		hpSprite = new HUDSprite(resourcesDir + "hp.png", 9);
+		hpSprite = new HUDSprite(resourcesDir + "ui/hud/hp.png", sf::Vector2i(5,2));
 		x = (WIDTH)  - hpSprite->getWidth();
 		y = (HEIGHT) - hpSprite->getHeight();
 		hpSprite->setPosition(float(x),float(y));
