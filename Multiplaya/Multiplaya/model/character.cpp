@@ -73,9 +73,9 @@ namespace mp
 		b2Fixture* characterBodyFixture = body->CreateFixture(&fixtureDef);
 		characterBodyFixture->SetUserData( this );
 		body->SetFixedRotation(true);
-		// Test code
+
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3f, 0.3f, b2Vec2(0,-2), 0);
+		dynamicBox.SetAsBox(0.3f, 0.5f, b2Vec2(0,-2), 0);
 
 		fixtureDef.isSensor = true;
 
@@ -260,7 +260,7 @@ namespace mp
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
-		soundFire.play();
+		//soundFire.play();
 	}
 
 	/////////////////////////////////////////////////
