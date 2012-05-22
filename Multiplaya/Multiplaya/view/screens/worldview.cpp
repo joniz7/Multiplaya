@@ -434,9 +434,9 @@ namespace mp
 
 	void WorldView::updateBulletsPos()
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 		updateVectorPos(bullets);
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::updateCharactersPos()
@@ -493,9 +493,9 @@ namespace mp
 
 	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 		drawVector(bullets, window);
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::drawCharacters(sf::RenderTarget& window) const

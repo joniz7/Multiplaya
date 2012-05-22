@@ -607,7 +607,7 @@ namespace mp
 
 				packet << myID << x << y << xvel << yvel;
 			}
-		
+
 			sender.send(packet, serverIP, 55001);
 		}
 	}
