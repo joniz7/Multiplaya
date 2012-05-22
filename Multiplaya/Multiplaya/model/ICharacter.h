@@ -6,6 +6,12 @@
 
 namespace mp
 {
+	/**
+	 * An interface for characters.
+	 * Holds data about positioning, health etc,
+	 * and is used for manipulating the character
+	 * with methods such as jump() and moveLeft().
+	 */
 	class ICharacter : public DynamicGameObject
 	{
 		public:
@@ -60,6 +66,9 @@ namespace mp
 			virtual bool isFocusing() = 0;
 			virtual void setFocusing(bool choice) = 0;
 
+			virtual bool isBackwards() = 0;
+			virtual void setBackwards(bool choice) = 0;
+
 			// Should probably return enum instead
 			virtual short getHealthState() = 0;
 			virtual short getHealth() = 0;
@@ -68,6 +77,9 @@ namespace mp
 
 			virtual bool isShooting() = 0;
 			virtual bool isReloading() = 0;
+
+			virtual void setTargetPos(b2Vec2 targetPos) = 0;
+			virtual b2Vec2 getTargetPos() = 0;
 
 	};
 }

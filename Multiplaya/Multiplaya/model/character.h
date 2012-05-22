@@ -13,12 +13,18 @@
 #include <list>
 #include <cmath>
 
+#include "../defines.h"
+
 #include "ICharacter.h"
 
 #include "../services/resourcehandler.h"
 
 namespace mp
 {
+	/**
+	 * A class representing a character.
+	 * Holds data regarding character position, activity etc..
+	 */
     class Character : public ICharacter
     {
         public:
@@ -54,7 +60,6 @@ namespace mp
 			bool isGrounded() { return grounded; }
 
 			bool isShooting();
-			void shoot();
 			
 			bool isReloading();
 			void reload();
@@ -65,7 +70,10 @@ namespace mp
 			void setIsFacingLeft(bool choice) { facingLeft = choice; }
 			bool isFacingLeft() { return facingLeft; }
 
-			void setPosition(b2Vec2 position, float32 angle);
+			/// Sets the position of the character in the world.
+			void setPosition(b2Vec2 pos, float32 a) { body->SetTransform(pos, a); }
+			/// Sets the velocity of the character.
+			void setLinVelocity(b2Vec2 v) { body->SetLinearVelocity(v); }
 
 			void setTouchingWallLeft(bool choice){ leftSideTouchWall = choice; }
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }
@@ -73,7 +81,7 @@ namespace mp
 			void isTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
 			bool isTouchingWallRight(){ return rightSideTouchWall; }
 
-			void setWallSliding(bool wS){wallSliding = wS;}
+			void setWallSliding(bool choice){wallSliding = choice;}
 			bool isWallSliding(){ return wallSliding; }
 
 			void setFlipping(bool choice){ flipping = choice; }
@@ -81,6 +89,12 @@ namespace mp
 
 			void setFocusing(bool choice){ focusing = choice; }
 			bool isFocusing(){ return focusing; }
+
+			void setBackwards(bool choice){ backwards = choice; }
+			bool isBackwards(){ return backwards; }
+
+			void setTargetPos(b2Vec2 targetPos){ this->targetPos = b2Vec2(targetPos.x / PIXEL_SCALE, targetPos.y / PIXEL_SCALE) ; }
+			b2Vec2 getTargetPos(){ return targetPos; }
 
 			sf::Int8 getClientID(){ return clientID; } 
 			void setClientID(sf::Int8 ID) { clientID = ID; }
@@ -91,8 +105,8 @@ namespace mp
 			void connectToServer();
 
         private:
-
-			
+			b2Vec2 targetPos;
+			void shoot();
 			void moveY(bool left);
 			void moveX(bool left);
 
@@ -117,6 +131,8 @@ namespace mp
 			bool walking;
 			bool wallSliding;
 			bool flipping;
+			bool backwards;
+			bool shouldFaceLeft;
 
 			sf::Sound soundFire;
 			sf::Sound soundReload;
@@ -124,6 +140,9 @@ namespace mp
 			sf::Int8 clientID;
 
 
+		/**
+		 * A sensor which reacts when the character's foot touches something.
+		 */
 		class CharacterFootSensor : public GameObject
 		{
 			public:
@@ -139,6 +158,9 @@ namespace mp
 				bool& isFlipping;
 		};
 
+		/**
+		 * A sensor which reacts when the character's right side touches something.
+		 */
 		class CharacterLeftSensor : public GameObject
 		{
 			public:
@@ -153,6 +175,9 @@ namespace mp
 				bool& leftSideTouchWall;
 		};
 
+		/**
+		 * A sensor which reacts when the character's left side touches something.
+		 */
 		class CharacterRightSensor : public GameObject
 		{
 			public:

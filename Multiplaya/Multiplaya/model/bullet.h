@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Bullet
-////////////////////////////////////////////////////////////
 #ifndef BULLET_H_INCLUDED
 #define BULLET_H_INCLUDED
 
@@ -18,6 +15,9 @@ namespace mp
 {
 	class WorldData;
 
+	/**
+	 * A class representing a bullet.
+	 */
     class Bullet : public DynamicGameObject
     {
         public:
@@ -30,10 +30,12 @@ namespace mp
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {};
 			bool operator == (const Bullet* bullet);
+			b2Vec2 getInitForce(){return initialForce;}
         private:
 
 			sf::Int8 owner;
 			b2BodyDef bodyDef;
+			b2Vec2 initialForce;
 
     };
 }

@@ -185,7 +185,7 @@ namespace mp
 
 	void WorldData::removeAllBullets()
 	{
-		worldDataMutex.lock();
+		//worldDataMutex.lock();
 		Bullet* bullet;
 		for(unsigned int i = 0; i < bullets.size(); i++)
 		{
@@ -193,7 +193,7 @@ namespace mp
 			removeBullet(bullet);
 			scheduleForDeletion(bullet);
 		}
-		worldDataMutex.unlock();
+		//worldDataMutex.unlock();
 	}
 
 
@@ -213,27 +213,29 @@ namespace mp
 	{
 		if (e == BULLET_DELETED)
 		{
-			worldDataMutex.lock();
+			//worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
 			removeBullet(bullet);
 			//bullet should be removed from box2d world after timestep
-			scheduleForDeletion(bullet);
+			//this is only done on the server
+			if(!isClient)
+				scheduleForDeletion(bullet);
 			// remove bullet from bullets vector in worlddata and view
-			worldDataMutex.unlock();
+			//worldDataMutex.unlock();
 		}
 		else if (e == BULLET_ADDED)
 		{
 			Bullet* bullet = (Bullet*) object;
-		
+
 			if(isClient)
 			{
 				notifyObservers(SEND_BULLET, bullet);
 			}
 			else
 			{
-				worldDataMutex.lock();
+				//worldDataMutex.lock();
 				addBullet(bullet);
-				worldDataMutex.unlock();
+				//worldDataMutex.unlock();
 			}
 		}
 		else if (e == CONNECT_SERVER)

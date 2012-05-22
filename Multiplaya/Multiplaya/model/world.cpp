@@ -11,15 +11,15 @@
 #include "ContactListener.h"
 #include "../global.h"
 
-////////////////////////////////////////////////////////////
-/// World class. Takes care of game physics and logic
-////////////////////////////////////////////////////////////
+
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor. Initializes the world.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Creates a new World, based on the supplied worldData.
+	 * 
+	 * @param worldData - the data container to use for the world.
+	 */
     World::World(WorldData* worldData)
     {
 		this->worldData = worldData;
@@ -40,12 +40,6 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 
-		//worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
-		//worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
-		//worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
-		//worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
-
-
 		// Add´test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
 		//worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
@@ -58,14 +52,10 @@ namespace mp
 
     }
 
-	////////////////////////////////////////////////////////////
-	// The logic loop; updates the game world, runs Box2D etc.
-	////////////////////////////////////////////////////////////
+	/**
+	 * The logic loop; updates the game world, runs Box2D and everything else.
+	 */
     void World::exec() {
-		// Moved loop to app.
-		//bool running=true;
-		//while(running) {
-
 			clock->restart();
 			// Lock world data so only one thread can access world data at the same time
 			worldDataMutex.lock();
@@ -79,7 +69,6 @@ namespace mp
 			std::vector<Bullet*> bulletVec = *worldData->getBullets();
 
 			for(std::vector<Bullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
-				//(*it)->getBody()->ApplyForce( b2Vec2(900000.8f * 8,0), (*it)->getBody()->GetPosition() );
 				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0.1f), (*it)->getBody()->GetPosition());
 			}
 
@@ -100,31 +89,28 @@ namespace mp
 			worldDataMutex.unlock();
 
 			// Have we finished faster than expected?
-			if(elapsed<(1 / 120.0f))
-			{	// Leave the arena now and rest - you've earned it.
+			if(elapsed<(1 / 120.0f)) {
+				// Leave the arena now and rest - you've earned it.
 				sf::sleep( sf::seconds( (1 / 120.0f)-elapsed ) );
 			}
-
-		//}
-
-			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
-				reloadStuff();
-
     }
 	
-	////////////////////////////////
-	/// Changes the gravity of the world.
-	/// \param gravity - the new gravity.
-	////////////////////////////////
+	/**
+	 * Changes the gravity of the world.
+	 * @param gravity - the new gravity.
+	 */
 	void World::setGravity(const b2Vec2 gravity) {
 		this->world->SetGravity(gravity);
 	}
 
+	/**
+	 * Delete box2D objects which are scheduled for deletion.
+	 */
 	void World::deleteBox2dObjects()
 	{
 		worldDataMutex.lock();
 		std::vector<DynamicGameObject*>* box2dDeletionList = worldData->getDeletionList();
-		// Check if we have bullets to remove.
+		// Check if we have box2d objects to remove.
 		if (box2dDeletionList->size() > 0) {
 			std::vector<DynamicGameObject*>::iterator it;
 			for ( it = box2dDeletionList->begin() ; it != box2dDeletionList->end(); ) {
@@ -136,6 +122,13 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	/**
+	 * A factory for creating a character. 
+	 *
+	 * @param position - where the character should be placed.
+	 * @param size - the size of the character.
+	 * @param clientID - which client the character should belong to.
+	 */
 	void World::createCharacter(b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
 	{
 		//Character* character = ;
@@ -144,6 +137,13 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	/**
+	 * A factory for creating a bullet. 
+	 *
+	 * @param position - where the bullet should be placed.
+	 * @param force - the initial force of the bullet.
+	 * @param clientID - which client the bullet should belong to.
+	 */
 	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID)
 	{
 		worldDataMutex.lock();
@@ -151,9 +151,9 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	////////////////////////////////////////////////////////////
-	// Load a map
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Load a map file.
+	 */
 	void World::loadMap(const std::string& path)
 	{
 		currentMap = path;
@@ -163,9 +163,9 @@ namespace mp
 		//loadGraphics(currentMap);
 	}
 
-	////////////////////////////////////////////////////////////
-	// Reload current map
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Reload the current map.
+	 */
 	void World::reloadStuff()
 	{
 		if( ConfigHandler::instance().getBool("s_refreshphysics") )
@@ -192,9 +192,10 @@ namespace mp
 		std::cout<<std::endl;
 	}
 
-	////////////////////////////////////////////////////////////
-	// Load map physics
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Load the map physics.
+	 * Is called from loadMap()!
+	 */
 	void World::loadPhysics(const std::string& path)
 	{
 		// Clear any physics already loaded
@@ -261,9 +262,9 @@ namespace mp
 		fileReader.close();
 	}
 
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Destructor
+	 */
     World::~World(){}
 
 }

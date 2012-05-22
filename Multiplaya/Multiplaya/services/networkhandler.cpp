@@ -267,7 +267,7 @@ namespace mp
 						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 
-						worldDataMutex.lock();
+						//worldDataMutex.lock();
 						//The current bullet list is cleared
 						if(worldData->getBullets()->size()>0)
 						{
@@ -278,13 +278,16 @@ namespace mp
 						for(int i = 0; i<numOfBullets; i++)
 						{
 							receivedData >> clientID >> x >> y >> xvel >> yvel;
+							if((x != 0 && y != 0) && (xvel != 0 && yvel != 0))
+							{
 
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
 							model->createBullet(position, velocity, clientID);
+							}
 						}
-						worldDataMutex.unlock();
+						//worldDataMutex.unlock();
 						break;
 					//Receive characters to create from the server
 					case 15:
@@ -301,7 +304,6 @@ namespace mp
 							position.Set(x,y);
 
 							model->createCharacter(position, size, clientID);
-
 						}
 						break;
 					//Remove the specified character
@@ -524,7 +526,7 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Sends the data of all the character to the all clients
+	/// Sends the data of all the characters to the all clients
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::updateAllClients()
 	{
@@ -532,6 +534,7 @@ namespace mp
 
 		for(it = clientMap.begin(); it != clientMap.end(); it++)
 		{
+			//We don't want to send data back to the server
 			if(it != clientMap.end() && (*it).first != 0)
 			{
 				worldDataMutex.lock();
@@ -560,24 +563,36 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendBulletDataToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 14, tempClientID, numOfBullets = worldData->getBullets()->size();
+		sf::Int8 type = 14, tempClientID, numOfBullets = 0;
 		sf::Packet packet;
 		Bullet* tempBullet;
 		float32 x, y, xvel, yvel;
 		packet << type << numOfBullets;
+
+		for(int i = 0; i<worldData->getBullets()->size(); i++)
+		{
+			tempBullet = worldData->getBullet(i);
+			if(tempBullet->getOwner() != clientID)
+			{
+				numOfBullets++;
+			}
+		}
 
 		if(numOfBullets > 0)
 		{
 			for(int i = 0; i<numOfBullets; i++)
 			{
 				tempBullet = worldData->getBullet(i);
-				tempClientID = tempBullet->getOwner();
-				x = tempBullet->getPosition().x;
-				y = tempBullet->getPosition().y;
-				xvel = tempBullet->getLinVelocity().x;
-				yvel = tempBullet->getLinVelocity().y;
+				if(tempBullet->getOwner() != clientID)
+				{
+					tempClientID = tempBullet->getOwner();
+					x = tempBullet->getPosition().x;
+					y = tempBullet->getPosition().y;
+					xvel = tempBullet->getLinVelocity().x;
+					yvel = tempBullet->getLinVelocity().y;
 
-				packet << tempClientID << x << y << xvel << yvel;
+					packet << tempClientID << x << y << xvel << yvel;
+				}
 			}
 		}
 		
@@ -593,17 +608,17 @@ namespace mp
 		{
 			sf::Int8 type = 5, numOfBullets = bulletsToSend.size();
 			sf::Packet packet;
-			Bullet* tempBullet;
+			BufferBullet tempBullet;
 			float32 x, y, xvel, yvel;
 			packet << type << numOfBullets;
 
 			for(int i = 0; i<numOfBullets; i++)
 			{
 				tempBullet = bulletsToSend.at(i);
-				x = tempBullet->getPosition().x;
-				y = tempBullet->getPosition().y;
-				xvel = tempBullet->getLinVelocity().x;
-				yvel = tempBullet->getLinVelocity().y;
+				x = tempBullet.x;
+				y = tempBullet.y;
+				xvel = tempBullet.xvel;
+				yvel = tempBullet.yvel;
 
 				packet << myID << x << y << xvel << yvel;
 			}
@@ -681,8 +696,20 @@ namespace mp
 		else if(e == SEND_BULLET) 
 		{
 			//sendMessageToEveryone("Bullet added to buffer");
-			Bullet* bullet = (Bullet*) object;
+			Bullet* tempBullet = (Bullet*) object;
+			BufferBullet bullet;
+			bullet.x = tempBullet->getPosition().x;
+			bullet.y = tempBullet->getPosition().y;
+			bullet.xvel = tempBullet->getInitForce().x;
+			bullet.yvel = tempBullet->getInitForce().y;
 			bulletsToSend.push_back(bullet);
+
+			std::cout<<"hej"<<tempBullet->getBody()->GetLinearVelocity().x<<tempBullet->getLinVelocity().y<<std::endl;
+
+			sf::Packet packet;
+			sf::Int8 type = 5, id = 1;
+			packet << type << id << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
+			sender.send(packet, serverIP, 55001);
 		} 
 		else if(e == BULLET_DELETED) 
 		{

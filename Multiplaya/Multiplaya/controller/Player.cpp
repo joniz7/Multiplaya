@@ -25,7 +25,7 @@ namespace mp {
 
 	void Player::checkUserInput(const sf::Vector2f &mousePos)
 	{
-		bool nullifyLinearDamping = true;	// Determines if we should nullify linear damping at the end of this frame
+		character->setTargetPos( b2Vec2(mousePos.x,mousePos.y) );
 		character->setWallSliding(false);
 		// Movement keys are pressed
 		if( input->btnDwnLeft() || input->btnDwnRight() )
@@ -34,30 +34,16 @@ namespace mp {
 			if ( input->btnDwnLeft() && !input->btnDwnRight() )	// Character should face left
 			{
 				worldDataMutex.lock();
-				//character->setIsFacingLeft(true);
-				// Apply slide speed
 				if(character->isTouchingWallLeft())
-				{
-					nullifyLinearDamping = false;
-					character->getBody()->SetLinearDamping(10);
 					character->setWallSliding(true);
-				}
-
 				worldDataMutex.unlock();
 			}
 			// Right movement key is pressed
 			else if ( input->btnDwnRight() && !input->btnDwnLeft() )	// Character should face right
 			{
 				worldDataMutex.lock();
-				//character->setIsFacingLeft(false);
-				// Apply slide speed
 				if(character->isTouchingWallRight())
-				{
-					nullifyLinearDamping = false;
-					character->getBody()->SetLinearDamping(10);
 					character->setWallSliding(true);
-				}
-
 				worldDataMutex.unlock();
 			}
 
@@ -89,17 +75,16 @@ namespace mp {
 		}
 
 		if( (!(input->btnDwnLeft() || input->btnDwnRight())) && character->isGrounded() ) {
-			// Set linear damping so we stop
-			character->getBody()->SetLinearDamping(10);
 			character->setWalking(false);
-			nullifyLinearDamping = false;
 		}
 
 		if ( input->btnDwnUp() )
 		{
+			/*
 			worldDataMutex.lock();
-			//moveUp();
+			moveUp();
 			worldDataMutex.unlock();
+			*/
 		}
 		if ( input->btnDwnDown() )
 		{
@@ -154,8 +139,10 @@ namespace mp {
 		if ( input->btnDwnReload() )
 			character->reload();
 
+		/*
 		if(nullifyLinearDamping)
 			character->getBody()->SetLinearDamping(0);
+			*/
 	}
 
 	bool Player::pressingKeyForConnecting()
