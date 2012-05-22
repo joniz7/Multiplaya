@@ -230,6 +230,7 @@ namespace mp
 						worldData->getCharacter(0)->setClientID(myID);
 						worldDataMutex.unlock();
 						hasConnected = true;
+						worldData->setAsClient();
 						break;
 					//Receive a text message
 					case 12:

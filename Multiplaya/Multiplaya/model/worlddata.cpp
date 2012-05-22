@@ -211,11 +211,14 @@ namespace mp
 	{
 		if (e == BULLET_DELETED)
 		{
-			Bullet* bullet = (Bullet*) object;
-			//bullet should be removed from box2d world after timestep
-			scheduleBulletForDeletion(bullet);
-			// remove bullet from bullets vector in worlddata and view
-			removeBullet(bullet);
+			if(!isClient)
+			{
+				Bullet* bullet = (Bullet*) object;
+				//bullet should be removed from box2d world after timestep
+				scheduleBulletForDeletion(bullet);
+				// remove bullet from bullets vector in worlddata and view
+				removeBullet(bullet);
+			}
 		}
 		else if (e == BULLET_ADDED)
 		{
