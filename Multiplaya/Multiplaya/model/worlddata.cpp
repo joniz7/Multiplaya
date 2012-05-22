@@ -175,26 +175,32 @@ namespace mp
 
 	void WorldData::removeBullet(Bullet* bullet)
 	{
+		worldDataMutex.lock();
 		if (bullets.size() > 0) {
 			std::vector<Bullet*>::iterator it = find(bullets.begin(), bullets.end(), bullet);
 			if ( it != bullets.end())
 			{
 				int i = (it - bullets.begin());
 				notifyObservers(BULLET_DELETED, (void*) i);
-				worldDataMutex.lock();
 				bullets.erase(bullets.begin() + i);
-				worldDataMutex.unlock();
+
 			}
 		}
+		worldDataMutex.unlock();
 	}
+	
 
 	void WorldData::removeAllBullets()
 	{
+		worldDataMutex.lock();
+		Bullet* bullet;
 		for(unsigned int i=0; i<bullets.size(); i++)
 		{
-			scheduleBulletForDeletion(bullets.at(i));
-			removeBullet(bullets.at(i));
+			bullet = bullets.at(i);
+			removeBullet(bullet);
+			scheduleBulletForDeletion(bullet);
 		}
+		worldDataMutex.unlock();
 	}
 
 
@@ -214,16 +220,20 @@ namespace mp
 	{
 		if (e == BULLET_DELETED)
 		{
+			worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
-			//bullet should be removed from box2d world after timestep
-			scheduleBulletForDeletion(bullet);
 			// remove bullet from bullets vector in worlddata and view
 			removeBullet(bullet);
+			//bullet should be removed from box2d world after timestep
+			//scheduleBulletForDeletion(bullet);
+			worldDataMutex.unlock();
 		}
 		else if (e == BULLET_ADDED)
 		{
+			worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
 			addBullet(bullet);
+			worldDataMutex.unlock();
 		}
 		else if (e == CONNECT_SERVER)
 		{
