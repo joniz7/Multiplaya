@@ -40,10 +40,10 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 
-		worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
-		worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
-		worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
-		worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
+		//worldData->addWall(world, 0.0f, -50.0f, 50.0f, 2.5f);
+		//worldData->addWall(world, 0.0f, 50.0f, 50.0f, 2.5f);
+		//worldData->addWall(world, 50.0f, 0, 2.5f, 50.0f);
+		//worldData->addWall(world, -50.0f, 0, 2.5f, 50.0f);
 
 
 		// Add´test character to the world.
@@ -80,7 +80,7 @@ namespace mp
 
 			for(std::vector<Bullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
 				//(*it)->getBody()->ApplyForce( b2Vec2(900000.8f * 8,0), (*it)->getBody()->GetPosition() );
-				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0), (*it)->getBody()->GetPosition());
+				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0.1f), (*it)->getBody()->GetPosition());
 			}
 
 			std::vector<Character*> characters = *worldData->getCharacters();

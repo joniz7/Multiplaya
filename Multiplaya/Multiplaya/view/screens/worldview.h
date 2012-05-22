@@ -30,6 +30,7 @@
 #include "Screen.h"
 #include "../GUIElements/GUIElement.h"
 #include "../LayerHandler.h"
+#include "../../services/input.h"
 
 namespace mp
 {
@@ -113,6 +114,8 @@ namespace mp
 			sf::Vector2i* mousePosWindow;
 			sf::Vector2f* mouseSpeed;
 
+			std::vector<sf::VertexArray*> worldGeo;
+
 			void addBullet(Bullet* bullet);
 			void deleteBullet(int i);
 
@@ -134,8 +137,11 @@ namespace mp
 			void initHUD();
 			void initMusic();
 
+			void updateWorldVertices();
+
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 			void drawWorld(sf::RenderTarget& window) const;
+			void drawWorldGeo(sf::RenderTarget& window) const;
 			void drawEnvironment(sf::RenderTarget& window) const;
 			void drawBullets(sf::RenderTarget& window) const;
 			void drawCharacters(sf::RenderTarget& window) const;

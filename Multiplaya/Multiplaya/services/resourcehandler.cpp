@@ -62,7 +62,6 @@ namespace mp
 		}
 		else
 		{
-			std::cout<<"Success!"<<std::endl;
 			texMap[filePath] = temp;
 
 			// For some FUCKING reason we have to load another textore or else the one we just loaded won't work. TODO: FIX THIS SHIT
@@ -93,7 +92,6 @@ namespace mp
 		}
 		else
 		{
-			std::cout<<"Success!"<<std::endl;
 			soundMap[filePath] = temp;
 
 			return true;

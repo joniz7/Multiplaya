@@ -48,7 +48,6 @@ namespace mp
 			int32 positionIterations;
 			sf::Clock* clock;
 			std::string currentMap;
-
     };
 }
 

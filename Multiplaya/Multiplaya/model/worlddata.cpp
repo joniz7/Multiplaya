@@ -144,6 +144,8 @@ namespace mp
 	void WorldData::addChain( b2World* world, b2Vec2 vertices[], int length, float friction )
 	{
 		chains.push_back(new WorldChain(world,vertices,length,friction));
+
+
 	}
 
 	void WorldData::clearPhysics()
