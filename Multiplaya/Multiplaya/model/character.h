@@ -26,6 +26,7 @@ namespace mp
         public:
 			Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
             virtual ~Character();
+
 			void update();
 			void jump();
 
@@ -68,7 +69,6 @@ namespace mp
 
 			void setPosition(b2Vec2 position, float32 angle);
 			void setLinVelocity(b2Vec2 velocity);
-			void setClientID(sf::Int8 ID){clientID = ID;};
 
 			void setTouchingWallLeft(bool choice){ leftSideTouchWall = choice; }
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }
@@ -85,9 +85,8 @@ namespace mp
 			void setFocusing(bool choice){ focusing = choice; }
 			bool isFocusing(){ return focusing; }
 
-			float32 getAngle() { return body->GetAngle(); }
-
 			sf::Int8 getClientID(){ return clientID; } 
+			void setClientID(sf::Int8 ID) { clientID = ID; }
 
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {}

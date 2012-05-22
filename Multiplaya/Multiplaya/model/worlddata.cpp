@@ -41,7 +41,6 @@ namespace mp
 		bullet->addObserver(this);
 		bullets.push_back(bullet);
 		notifyObservers(BULLET_ADDED, bullet);
-		//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
 		return true;
     }
 
@@ -76,15 +75,13 @@ namespace mp
 	{
 		for(unsigned int i = 0; i<characters.size(); i++)
 		{
-			Character* character = characters.at(i);
+			ICharacter* character = characters.at(i);
 			if(character->getClientID() == ID)
 			{
-				notifyObservers(BULLET_DELETED, (void*) i);
+				notifyObservers(CHARACTER_DELETED, (void*) i);
 				worldDataMutex.lock();
 				characters.erase(characters.begin()+i);
 				worldDataMutex.unlock();
-
-
 			}
 		}
 	}
@@ -93,7 +90,7 @@ namespace mp
 	{
 		for(unsigned int i = 0; i<characters.size(); i++)
 		{
-			Character* character = characters.at(i);
+			ICharacter* character = characters.at(i);
 			if(character->getClientID() == clientID)
 			{
 				return true;
@@ -200,7 +197,7 @@ namespace mp
 	}
 
 
-	Character* WorldData::getCharacter(sf::Int8 clientID)
+	ICharacter* WorldData::getCharacter(sf::Int8 clientID)
 	{
 		for(unsigned int i = 0; i < characters.size(); i++)
 		{
@@ -226,10 +223,18 @@ namespace mp
 		}
 		else if (e == BULLET_ADDED)
 		{
-			worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
-			addBullet(bullet);
-			worldDataMutex.unlock();
+		
+			if(isClient)
+			{
+				notifyObservers(SEND_BULLET, bullet);
+			}
+			else
+			{
+				worldDataMutex.lock();
+				addBullet(bullet);
+				worldDataMutex.unlock();
+			}
 		}
 		else if (e == CONNECT_SERVER)
 		{
