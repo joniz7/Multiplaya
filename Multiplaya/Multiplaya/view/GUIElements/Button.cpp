@@ -17,22 +17,42 @@ namespace mp
 		//dtor
 	}
 
+	/**
+	* Method that returns color of the border when its being hovered
+	* @return color
+	*/
+	const sf::Color& Button::getHoverBorderColor()
+	{
+		return hoverBorderColor;
+	}
+
+	/**
+	* Method that returns color of the border when it has been clicked
+	* @return color
+	*/
 	void Button::setHoverBorderColor(const sf::Color &color)
 	{
 		hoverBorderColor = color;
 	}
 
-	void Button::setHoverBorderThickness(const float thickness) 
-	{
-		hoverBorderThickness = thickness;
-	}
-
+	/**
+	* Method that returns thickness of button when hovering over it
+	* @return thickness
+	*/
 	float Button::getHoverBorderThickness()
 	{
 		return hoverBorderThickness;
 	}
 
-	// refactor this method like...
+	/**
+	* Set thickness of button when hovering over it
+	* @param thickness
+	*/
+	void Button::setHoverBorderThickness(const float thickness) 
+	{
+		hoverBorderThickness = thickness;
+	}
+
 	bool Button::isMouseOver(const sf::Vector2i& mousePos)
 	{
 		// if mouse is over
@@ -56,7 +76,6 @@ namespace mp
 		}
 		return false;
 	}
-
 
 	void Button::click()
 	{

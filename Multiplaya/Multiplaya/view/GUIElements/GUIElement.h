@@ -6,6 +6,9 @@
 
 namespace mp
 {
+	/**
+	 * Abstract class representing a GUIElement with text inside it
+	 */
 	class GUIElement : public sf::Drawable
 	{
 		public:
