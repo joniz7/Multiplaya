@@ -10,4 +10,12 @@ struct Client{
 	int disconnectCounter;
 };
 
+struct BufferBullet
+{
+	float32 x;
+	float32 y;
+	float32 xvel;
+	float32 yvel;
+};
+
 #endif

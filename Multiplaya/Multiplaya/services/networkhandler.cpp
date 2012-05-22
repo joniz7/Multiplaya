@@ -267,7 +267,7 @@ namespace mp
 						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 
-						worldDataMutex.lock();
+						//worldDataMutex.lock();
 						//The current bullet list is cleared
 						if(worldData->getBullets()->size()>0)
 						{
@@ -278,13 +278,16 @@ namespace mp
 						for(int i = 0; i<numOfBullets; i++)
 						{
 							receivedData >> clientID >> x >> y >> xvel >> yvel;
+							if((x != 0 && y != 0) && (xvel != 0 && yvel != 0))
+							{
 
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
 							model->createBullet(position, velocity, clientID);
+							}
 						}
-						worldDataMutex.unlock();
+						//worldDataMutex.unlock();
 						break;
 					//Receive characters to create from the server
 					case 15:
@@ -301,7 +304,6 @@ namespace mp
 							position.Set(x,y);
 
 							model->createCharacter(position, size, clientID);
-
 						}
 						break;
 					//Remove the specified character
@@ -593,17 +595,17 @@ namespace mp
 		{
 			sf::Int8 type = 5, numOfBullets = bulletsToSend.size();
 			sf::Packet packet;
-			Bullet* tempBullet;
+			BufferBullet tempBullet;
 			float32 x, y, xvel, yvel;
 			packet << type << numOfBullets;
 
 			for(int i = 0; i<numOfBullets; i++)
 			{
 				tempBullet = bulletsToSend.at(i);
-				x = tempBullet->getPosition().x;
-				y = tempBullet->getPosition().y;
-				xvel = tempBullet->getLinVelocity().x;
-				yvel = tempBullet->getLinVelocity().y;
+				x = tempBullet.x;
+				y = tempBullet.y;
+				xvel = tempBullet.xvel;
+				yvel = tempBullet.yvel;
 
 				packet << myID << x << y << xvel << yvel;
 			}
@@ -681,8 +683,17 @@ namespace mp
 		else if(e == SEND_BULLET) 
 		{
 			//sendMessageToEveryone("Bullet added to buffer");
-			Bullet* bullet = (Bullet*) object;
-			bulletsToSend.push_back(bullet);
+			Bullet* tempBullet = (Bullet*) object;
+			BufferBullet bullet;
+			bullet.x = tempBullet->getPosition().x;
+			bullet.y = tempBullet->getPosition().y;
+			bullet.xvel = tempBullet->getLinVelocity().x;
+			bullet.yvel = tempBullet->getLinVelocity().y;
+			//bulletsToSend.push_back(bullet);
+
+			sf::Packet packet;
+			packet << 5 << 1 << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
+			sender.send(packet, serverIP, 55001);
 		} 
 		else if(e == BULLET_DELETED) 
 		{
