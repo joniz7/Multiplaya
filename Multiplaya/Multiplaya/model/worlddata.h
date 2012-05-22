@@ -20,13 +20,8 @@
 #include "character.h"
 #include "bullet.h"
 
-//Defines
-#include "../defines.h"
-
 #include "Wall.h"
 #include "worldchain.h"
-
-#include "../util/Observable.h"
 
 namespace mp
 {
@@ -47,7 +42,7 @@ namespace mp
 			void removeCharacter(sf::Int8 ID);
 
 			bool addBullet( Bullet* bullet );
-			bool addBullet( BulletType type, short owner, b2World* world, b2Vec2 position, b2Vec2 force );
+			bool addBullet( short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			bool addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			bool addBody ( b2Body* body );
 			void addWall( b2World* world, float xPos, float yPos, float width, float height);
@@ -59,21 +54,25 @@ namespace mp
 
 			// Getters
 			// Get list of all characters
-			std::vector<Character*>* getCharacters(){ return &characters; };
+			std::vector<Character*>* getCharacters(){ return &characters; }
 			// Get list of all bullets
-			std::vector<Bullet*>* getBullets(){ return &bullets; };
+			std::vector<Bullet*>* getBullets(){ return &bullets; }
 			std::vector<Bullet*>* getBulletsToRemove() { return &bulletsToRemove; }
 			// Get list of all bodies
-			std::vector<b2Body*>* getBodies(){ return &bodies; };
+			std::vector<b2Body*>* getBodies(){ return &bodies; }
+			// Get list of all world chains
+			std::vector<WorldChain*>* getChains(){ return &chains; }
+			// Get a specific world chains
+			WorldChain* getChain(int i){ return chains.at(i); }
 
 			// Get a specific character
-			Character* getCharacter(int i){ return characters.at(i); };
+			Character* getCharacter(int i){ return characters.at(i); }
 			// Get the character with the specific client ID
 			Character* getCharacter(sf::Int8 clientID);
 			// Get a specific bullet
-			Bullet* getBullet(int i){ return bullets.at(i); };
+			Bullet* getBullet(int i){ return bullets.at(i); }
 			// Get a specific body
-			b2Body* getBody(int i){ return bodies.at(i); };
+			b2Body* getBody(int i){ return bodies.at(i); }
 
 			//b2World* getb2World();
 

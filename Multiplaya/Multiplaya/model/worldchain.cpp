@@ -5,6 +5,10 @@ namespace mp
 	WorldChain::WorldChain(b2World* world, b2Vec2 vertices[], int length, float friction)
 	{
 
+		// Save vertices
+		for(int i=0;i<length;i++)
+			verticeList.push_back(vertices[i]);
+
 		b2ChainShape chain;
 		chain.CreateChain(vertices, length);
 

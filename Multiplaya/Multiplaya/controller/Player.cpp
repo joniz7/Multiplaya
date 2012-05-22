@@ -1,20 +1,23 @@
 #include "Player.h"
 
 namespace mp {
+	/**
+	 * Creates a new "player" instance.
+	 */
 	Player::Player()
 	{
 		input = new Input();
 	}
 
-	void Player::setCharacter(Character* character)
-	{
-		this->character = character;
-	}
-
 	Player::~Player()
 	{
+		delete input;
 	}
 
+	/**
+	 * Fetches input from the user, and updates the character according to the input.
+	 * Handles walking, jumping, and anything else you can think of.
+	 */
 	void Player::update(const sf::Vector2f &mousePos)
 	{
 		checkUserInput(mousePos);
@@ -62,18 +65,14 @@ namespace mp {
 			if( !(input->btnDwnLeft() && input->btnDwnRight()) )
 			{
 				if ( input->btnDwnLeft() && !input->btnDwnRight() ) {
-					if(character->isGrounded()) {
-						moveLeft(40,50);
-					} else {
-						moveLeft(18,5);
-					}
+					worldDataMutex.lock();
+					character->moveLeft();
+					worldDataMutex.unlock();
 				}
 				else if ( input->btnDwnRight() && !input->btnDwnLeft() ) {
-					if(character->isGrounded()) {
-						moveRight(40,50);
-					} else {
-						moveRight(18,5);
-					}
+					worldDataMutex.lock();
+					character->moveRight();
+					worldDataMutex.unlock();
 				}
 
 				if (input->btnDwnLeft() || input->btnDwnRight() && character->isGrounded()) {
@@ -89,7 +88,7 @@ namespace mp {
 			}
 		}
 
-		if( !(input->btnDwnLeft() || input->btnDwnRight()) && character->isGrounded() ) {
+		if( (!(input->btnDwnLeft() || input->btnDwnRight())) && character->isGrounded() ) {
 			// Set linear damping so we stop
 			character->getBody()->SetLinearDamping(10);
 			character->setWalking(false);
@@ -98,11 +97,15 @@ namespace mp {
 
 		if ( input->btnDwnUp() )
 		{
+			worldDataMutex.lock();
 			//moveUp();
+			worldDataMutex.unlock();
 		}
 		if ( input->btnDwnDown() )
 		{
-			moveDown();
+			worldDataMutex.lock();
+			character->moveDown();
+			worldDataMutex.unlock();
 		}
 		if( input->btnDwnPrimary() )
         {
@@ -119,12 +122,6 @@ namespace mp {
 			{
 				worldDataMutex.lock();
 				character->jump();
-				/*
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-					character->getBody()->ApplyLinearImpulse( b2Vec2(40, 0), character->getBody()->GetPosition() );
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-					character->getBody()->ApplyLinearImpulse( b2Vec2(-40, 0), character->getBody()->GetPosition() );
-					*/
 				worldDataMutex.unlock();
 
 				released = false;
@@ -153,42 +150,6 @@ namespace mp {
 	bool Player::pressingKeyForConnecting()
 	{
 		return sf::Keyboard::isKeyPressed(sf::Keyboard::C);
-	}
-
-	void Player::moveLeft(int maxForce, int forceIteration)
-	{
-		worldDataMutex.lock();
-		if(character->getBody()->GetLinearVelocity().x < maxForce) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(float(forceIteration), 0), character->getBody()->GetPosition() );
-		}
-		worldDataMutex.unlock();
-	}
-
-	void Player::moveRight(int maxForce, int forceIteration)
-	{
-		worldDataMutex.lock();
-		if(character->getBody()->GetLinearVelocity().x > -maxForce) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(float(-forceIteration), 0), character->getBody()->GetPosition() );
-		}
-		worldDataMutex.unlock();
-	}
-
-	void Player::moveUp()
-	{
-		worldDataMutex.lock();
-		if(character->getBody()->GetLinearVelocity().y < 10) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(0, 5), character->getBody()->GetPosition() );
-		}
-		worldDataMutex.unlock();
-	}
-
-	void Player::moveDown()
-	{
-		worldDataMutex.lock();
-		if(character->getBody()->GetLinearVelocity().y > -10) {
-			character->getBody()->ApplyLinearImpulse( b2Vec2(0, -5), character->getBody()->GetPosition() );
-		}
-		worldDataMutex.unlock();
 	}
 
 }

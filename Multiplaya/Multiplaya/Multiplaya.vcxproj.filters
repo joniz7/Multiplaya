@@ -65,15 +65,6 @@
     <ClCompile Include="services\confighandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
-    <ClCompile Include="sound\sound.cpp">
-      <Filter>src\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="sound\worldsound.cpp">
-      <Filter>src\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="sound\uisound.cpp">
-      <Filter>src\sound</Filter>
-    </ClCompile>
     <ClCompile Include="services\keylookup.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
@@ -173,6 +164,12 @@
     <ClCompile Include="app.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="view\screens\PauseScreen.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\PauseScreenController.cpp">
+      <Filter>src\controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -207,15 +204,6 @@
     </ClInclude>
     <ClInclude Include="services\confighandler.h">
       <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="sound\sound.h">
-      <Filter>src\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="sound\worldsound.h">
-      <Filter>src\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="sound\uisound.h">
-      <Filter>src\sound</Filter>
     </ClInclude>
     <ClInclude Include="services\keylookup.h">
       <Filter>src\services</Filter>
@@ -330,6 +318,15 @@
     </ClInclude>
     <ClInclude Include="view\screens\worldview.h">
       <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\PauseScreen.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\PauseScreenController.h">
+      <Filter>src\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="model\DynamicGameObject.h">
+      <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

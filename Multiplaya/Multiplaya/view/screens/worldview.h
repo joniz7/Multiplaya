@@ -7,12 +7,11 @@
 // Other headers
 #include <string>
 #include <cstdlib>
-#include <list>
 #include <cmath>
 #include <vector>
 
 // SFML specific headers
-#include "../../sfml.h"
+#include <SFML/Graphics.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -20,14 +19,10 @@
 #include "../CharacterView.h"
 // Box2D specific headers
 #include <Box2D.h>
-#include "../../defines.h"
 
 // Game specific headers
 #include "../BulletView.h"
 #include "../HUDSprite.h"
-
-#include "../../util/Observer.h"
-#include "../GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
 #include "../../global.h"
@@ -35,6 +30,7 @@
 #include "Screen.h"
 #include "../GUIElements/GUIElement.h"
 #include "../LayerHandler.h"
+#include "../../services/input.h"
 
 namespace mp
 {
@@ -118,6 +114,8 @@ namespace mp
 			sf::Vector2i* mousePosWindow;
 			sf::Vector2f* mouseSpeed;
 
+			std::vector<sf::VertexArray*> worldGeo;
+
 			void addBullet(Bullet* bullet);
 			void deleteBullet(int i);
 
@@ -139,8 +137,11 @@ namespace mp
 			void initHUD();
 			void initMusic();
 
+			void updateWorldVertices();
+
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 			void drawWorld(sf::RenderTarget& window) const;
+			void drawWorldGeo(sf::RenderTarget& window) const;
 			void drawEnvironment(sf::RenderTarget& window) const;
 			void drawBullets(sf::RenderTarget& window) const;
 			void drawCharacters(sf::RenderTarget& window) const;

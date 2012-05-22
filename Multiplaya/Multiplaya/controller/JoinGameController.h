@@ -9,12 +9,16 @@
 
 namespace mp
 {
+	/**
+	 * Controls the "Join game" screen.
+	 */
 	class JoinGameController : public IController
 	{
 		public:
 			JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen);
 			virtual ~JoinGameController();
 			void handleInput();
+			/// Sets which NetworkHandler "join game" should use.
 			void setNetworkHandler(NetworkHandler* network){networkHandler = network;};
 		protected:
 		private:

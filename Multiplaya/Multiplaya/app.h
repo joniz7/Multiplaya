@@ -17,10 +17,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "model/world.h"
 #include "model/worlddata.h"
 #include "controller/Controller.h"
-#include "view/screens/worldview.h"
 #include "view/Window.h"
 #include "services/resourcehandler.h"
 

@@ -5,7 +5,7 @@
 #define BULLET_VIEW_H
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/Graphics.hpp>
 
 #include "../global.h"
 #include "GameObjectView.h"

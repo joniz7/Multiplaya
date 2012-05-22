@@ -216,7 +216,7 @@ namespace mp
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
-							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
+							model->createBullet(position, velocity, clientID);
 						}
 						break;
 					//Recieve your ID from the server
@@ -282,7 +282,7 @@ namespace mp
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
-							model->createBullet(position, velocity, clientID, GENERIC_BULLET);
+							model->createBullet(position, velocity, clientID);
 						}
 						worldDataMutex.unlock();
 						break;

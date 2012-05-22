@@ -48,9 +48,7 @@ namespace mp
 		bodyDef.type = b2_dynamicBody;
 
 		bodyDef.position.Set(pos.x, pos.y);
-		b2Body* characterBody = world->CreateBody(&bodyDef);
-
-		this->characterBody = characterBody;
+		body = world->CreateBody(&bodyDef);
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
 		dynamicBox.SetAsBox(size.x, size.y);
@@ -72,28 +70,28 @@ namespace mp
 		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
 
 		// Add the shape to the body.
-		b2Fixture* characterBodyFixture = characterBody->CreateFixture(&fixtureDef);
+		b2Fixture* characterBodyFixture = body->CreateFixture(&fixtureDef);
 		characterBodyFixture->SetUserData( this );
-		characterBody->SetFixedRotation(true);
-		// Test code
+		body->SetFixedRotation(true);
+
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3f, 0.3f, b2Vec2(0,-2), 0);
+		dynamicBox.SetAsBox(0.3f, 0.5f, b2Vec2(0,-2), 0);
 
 		fixtureDef.isSensor = true;
 
-		b2Fixture* footSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
 
 		//add left sensor fixture
 		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
 		fixtureDef.isSensor = true;
-		b2Fixture* leftSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		b2Fixture* leftSensorFixture = body->CreateFixture(&fixtureDef);
 		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
 
 		//add right sensor fixture
 		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.0f, 0), 0);
 		fixtureDef.isSensor = true;
-		b2Fixture* rightSensorFixture = characterBody->CreateFixture(&fixtureDef);
+		b2Fixture* rightSensorFixture = body->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
 
 		soundReload.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_reload1.ogg") );
@@ -130,24 +128,79 @@ namespace mp
 	void Character::jump()
 	{
 		if ( grounded ) {
-			characterBody->ApplyLinearImpulse( b2Vec2(0, 350), characterBody->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2(0, 350), body->GetPosition());
 			setGrounded(false);
 		}
 		else if ( leftSideTouchWall && isWallSliding() )
 		{
-			characterBody->ApplyLinearImpulse( b2Vec2( -300, 350), characterBody->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2( -300, 350), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
 		else if ( rightSideTouchWall && isWallSliding() )
 		{
-			characterBody->ApplyLinearImpulse( b2Vec2( 300, 350), characterBody->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2( 300, 350), body->GetPosition());
 			rightSideTouchWall = false;
 			flipping = true;
 		}
 		else
 		{
 			flipping = true;
+		}
+	}
+
+	void Character::moveLeft() {
+		moveX(true);
+	}
+
+	void Character::moveRight() {
+		moveX(false);
+	}
+
+	void Character::moveUp() {
+		moveY(true);
+	}
+
+	void Character::moveDown() {
+		moveY(false);
+	}
+
+	void Character::moveX(bool left) {
+		int maxForce, forceIteration;
+
+		// TODO: shouldn't be hardcoded.
+		if (isGrounded()) {
+			maxForce = 40;
+			forceIteration = 50;
+		} else {
+			maxForce = 18;
+			forceIteration = 5;
+		}
+		
+		if (left) { // Are we moving left?
+			if(body->GetLinearVelocity().x < maxForce) {
+				body->ApplyLinearImpulse( b2Vec2(float(forceIteration), 0), body->GetPosition() );
+			}
+		} else { // Nope. We're moving right (the negative direction).
+			if(body->GetLinearVelocity().x > (-maxForce)) {
+				body->ApplyLinearImpulse( b2Vec2(float(-forceIteration), 0), body->GetPosition() );
+			}
+		}
+	}
+
+	void Character::moveY(bool up) {
+		// TODO: shouldn't be hardcoded.
+		int maxForce = 10;
+		int forceIteration = 5;
+		
+		if (up) { // Are we moving up?
+			if(body->GetLinearVelocity().y < maxForce) {
+				body->ApplyLinearImpulse( b2Vec2(0, forceIteration), body->GetPosition() );
+			}
+		} else { // Nope. We're moving down (the negative direction).
+			if(body->GetLinearVelocity().y > -maxForce) {
+				body->ApplyLinearImpulse( b2Vec2(0, -forceIteration), body->GetPosition() );
+			}
 		}
 	}
 
@@ -185,8 +238,8 @@ namespace mp
 		else { shoot(); }
 
 		int speed = 8000;
-		b2Vec2 charPos = characterBody->GetPosition();
-		b2Vec2 charSpeed = characterBody->GetLinearVelocity();
+		b2Vec2 charPos = body->GetPosition();
+		b2Vec2 charSpeed = body->GetLinearVelocity();
 		targetPos.Set(targetPos.x * 10, targetPos.y * 10); // (Don't ask. It works.)
 
 		// We're just about to calculate these two vectors.
@@ -203,7 +256,7 @@ namespace mp
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force);
+		Bullet* bullet = new Bullet( 0 , world, gunPosition, force);
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
@@ -325,11 +378,11 @@ namespace mp
 
 	void Character::setPosition(b2Vec2 position, float32 angle)
 	{
-		characterBody->SetTransform(position, angle);
+		body->SetTransform(position, angle);
 	}
 
 	void Character::setLinVelocity(b2Vec2 velocity)
 	{
-		characterBody->SetLinearVelocity(velocity);
+		body->SetLinearVelocity(velocity);
 	}
 }

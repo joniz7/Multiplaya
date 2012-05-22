@@ -2,6 +2,11 @@
 
 namespace mp
 {
+	/**
+	 * Creates a new controller for the "host game" screen.
+	 * @param window the window  to tie the controller to.
+	 * @param hostScreen the actual host screen we're controlling.
+	 */
 	JoinGameController::JoinGameController(sf::RenderWindow* window, Screen* joinGameScreen) : IController(window, joinGameScreen)
 	{
 		cancelButton = joinGameScreen->getGUIElement("cancelButton");
@@ -10,11 +15,11 @@ namespace mp
 		portTextField = (TextField*) joinGameScreen->getGUIElement("portTextField");
 	}
 
-	JoinGameController::~JoinGameController()
-	{
-		//dtor
-	}
+	JoinGameController::~JoinGameController() {}
 
+	/**
+	 * Handles input for the "join game" screen.
+	 */
 	void JoinGameController::handleInput()
 	{
 		while (getRenderWindow()->pollEvent(ev))
