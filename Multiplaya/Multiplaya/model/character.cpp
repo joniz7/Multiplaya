@@ -76,10 +76,8 @@ namespace mp
 		body->SetFixedRotation(true);
 
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3f, 0.5f, b2Vec2(0,-2), 0);
-
+		dynamicBox.SetAsBox(0.1f, 0.3f, b2Vec2(0,-2), 0);
 		fixtureDef.isSensor = true;
-
 		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
 
@@ -100,16 +98,6 @@ namespace mp
 
 		soundReload.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
 		soundFire.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
-
-    }
-
-	/**
-	 * Destructor.
-	 */
-    Character::~Character()
-    {
-		delete shootingTimer;
-		delete reloadTimer;
 
     }
 
@@ -212,7 +200,6 @@ namespace mp
 			}
 		}
 	}
-
 
 	/**
 	 * Moves the character along the Y axis.
@@ -371,6 +358,17 @@ namespace mp
 		notifyObservers(CONNECT_SERVER, 0);
 	}
 
+
+	/**
+	 * Destructor.
+	 */
+    Character::~Character()
+    {
+		delete shootingTimer;
+		delete reloadTimer;
+
+    }
+
 	/**
 	 * Create a new foot sensor.
 	 */
@@ -428,5 +426,4 @@ namespace mp
 			rightSideTouchWall = false;
 		}
 	}
-
 }
