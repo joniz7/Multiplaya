@@ -58,6 +58,9 @@ namespace mp
 
 			virtual bool isFlipping() = 0;
 
+			virtual bool isFocusing() = 0;
+			virtual void setFocusing(bool choice) = 0;
+
 			// Should probably return enum instead
 			virtual short getHealthState() = 0;
 			virtual short getHealth() = 0;
