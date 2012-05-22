@@ -20,13 +20,10 @@
 #include "../CharacterView.h"
 // Box2D specific headers
 #include <Box2D.h>
-#include "../../defines.h"
 
 // Game specific headers
 #include "../BulletView.h"
 #include "../HUDSprite.h"
-
-#include "../GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
 #include "../../global.h"

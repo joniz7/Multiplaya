@@ -16,8 +16,6 @@
 #include "bullet.h"
 
 #include "ICharacter.h"
-//Defines
-#include "../defines.h"
 
 #include "../services/resourcehandler.h"
 

@@ -18,7 +18,6 @@
 
 // Defines
 #include "../services/networkhandler.h"
-#include "../defines.h"
 #include "../controller/Player.h"
 #include "IController.h"
 #include "../view/screens/worldview.h"

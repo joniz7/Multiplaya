@@ -17,7 +17,6 @@
 
 //Defines
 #include "../services/resourcehandler.h"
-#include "../defines.h"
 
 namespace mp
 {

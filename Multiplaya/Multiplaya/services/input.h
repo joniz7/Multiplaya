@@ -17,9 +17,6 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-//Defines
-#include "../defines.h"
-
 #include "confighandler.h"
 #include "keylookup.h"
 

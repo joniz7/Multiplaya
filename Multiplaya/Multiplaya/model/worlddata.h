@@ -20,9 +20,6 @@
 #include "character.h"
 #include "bullet.h"
 
-//Defines
-#include "../defines.h"
-
 #include "Wall.h"
 #include "worldchain.h"
 

@@ -18,9 +18,6 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-// Defines
-#include "../defines.h"
-
 namespace mp
 {
 	//Forward declaration so World can have a WorldData pointer
