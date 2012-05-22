@@ -88,6 +88,7 @@
     <ClCompile Include="controller\IController.cpp" />
     <ClCompile Include="controller\JoinGameController.cpp" />
     <ClCompile Include="controller\MainScreenController.cpp" />
+    <ClCompile Include="controller\PauseScreenController.cpp" />
     <ClCompile Include="controller\Player.cpp" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="main.cpp" />
@@ -119,6 +120,7 @@
     <ClCompile Include="view\screens\HostGameScreen.cpp" />
     <ClCompile Include="view\screens\JoinGameScreen.cpp" />
     <ClCompile Include="view\screens\MainScreen.cpp" />
+    <ClCompile Include="view\screens\PauseScreen.cpp" />
     <ClCompile Include="view\screens\Screen.cpp" />
     <ClCompile Include="view\screens\SettingsScreen.cpp" />
     <ClCompile Include="view\screens\worldview.cpp" />
@@ -133,6 +135,7 @@
     <ClInclude Include="controller\IController.h" />
     <ClInclude Include="controller\JoinGameController.h" />
     <ClInclude Include="controller\MainScreenController.h" />
+    <ClInclude Include="controller\PauseScreenController.h" />
     <ClInclude Include="controller\Player.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="global.h" />
@@ -170,6 +173,7 @@
     <ClInclude Include="view\screens\HostGameScreen.h" />
     <ClInclude Include="view\screens\JoinGameScreen.h" />
     <ClInclude Include="view\screens\MainScreen.h" />
+    <ClInclude Include="view\screens\PauseScreen.h" />
     <ClInclude Include="view\screens\Screen.h" />
     <ClInclude Include="view\screens\SettingsScreen.h" />
     <ClInclude Include="view\screens\worldview.h" />

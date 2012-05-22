@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "screens/MainScreen.h"
+#include "screens/PauseScreen.h"
 #include "screens/JoinGameScreen.h"
 #include "screens/SettingsScreen.h"
 #include "screens/HostGameScreen.h"
@@ -22,8 +23,7 @@ namespace mp
 
 			void draw(Screen* screen);
 			void drawMainMenu();
-			void drawInGame();
-			void drawInGameMenu();
+			void drawPauseMenu();
 			void drawJoinMenu();
 			void drawHostMenu();
 			void drawGame();

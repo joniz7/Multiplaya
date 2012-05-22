@@ -15,6 +15,7 @@ namespace mp
 
 		// Create our minion controllers.
 		controllers["mainScreen"] = new MainScreenController(renderWindow, window->getScreen("mainScreen"));
+		controllers["pauseScreen"] =  new PauseScreenController(renderWindow, window->getScreen("pauseScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
 		controllers["game"] =  new GameController(world, renderWindow, window->getScreen("gameScreen"));
 		controllers["hostGame"] =  new HostGameController(renderWindow, window->getScreen("hostScreen"));
@@ -24,6 +25,7 @@ namespace mp
 
 		// Add ourselves as observer.
 		controllers["mainScreen"]->addObserver(this);
+		controllers["pauseScreen"]->addObserver(this);
 		controllers["joinGame"]->addObserver(this);
 		controllers["hostGame"]->addObserver(this);
 		controllers["game"]->addObserver(this);
@@ -78,8 +80,8 @@ namespace mp
 
 	void Controller::pauseGame(){
 		// TODO: replace with "inGameMenu".
-		this->currentDrawFunction = &Window::drawMainMenu;
-		this->currentController = controllers["mainScreen"];
+		this->currentDrawFunction = &Window::drawPauseMenu;
+		this->currentController = controllers["pauseScreen"];
 		};
 
 	void Controller::resumeGame(){
