@@ -23,8 +23,9 @@ namespace mp
 		virtual ~BulletView();
 		/// Update sprite position to match bullets position
 		void updatePosition();
-	private:
+		
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	private:
 		Bullet* model;
 		sf::RectangleShape* bulletVis;
 	};

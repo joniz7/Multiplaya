@@ -2,8 +2,8 @@
 #define JOIN_GAME_SCREEN_H
 
 #include "Screen.h"
-#include "../guielements/Button.h"
-#include "../guielements/TextField.h"
+#include "../GUIElements/Button.h"
+#include "../GUIElements/TextField.h"
 #include <map>
 
 namespace mp
@@ -33,7 +33,7 @@ namespace mp
 			void initButtons();
 
 
-			
+
 	};
 }
 #endif // JOIN_GAME_SCREEN_H
