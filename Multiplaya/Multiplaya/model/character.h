@@ -80,6 +80,9 @@ namespace mp
 			void setFlipping(bool choice){ flipping = choice; }
 			bool isFlipping(){return flipping;}
 
+			void setFocusing(bool choice){ focusing = choice; }
+			bool isFocusing(){ return focusing; }
+
 			sf::Int8 getClientID(){ return clientID; } 
 			void setClientID(sf::Int8 ID) { clientID = ID; }
 
@@ -107,6 +110,7 @@ namespace mp
 			short kills;
 			short deaths;
 
+			bool focusing;
 			bool facingLeft;
 			bool grounded;
 			bool leftSideTouchWall;
