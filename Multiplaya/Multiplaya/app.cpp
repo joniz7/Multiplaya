@@ -67,7 +67,7 @@ namespace mp
 				if(data->network->isClient) 
 				{
 					data->network->sendCharacterDataToServer();
-					//data->network->sendBulletDataToServer();
+					data->network->sendBulletDataToServer();
 				}
 
 				if(data->network->isServer)
