@@ -24,23 +24,24 @@ namespace mp
 		sprite->addAnimation("idle", 9, true, sequence);
 		sequence.clear();
 
-		sequence.push_back(sf::Vector3i(1,3,0));
+		sequence.push_back(sf::Vector3i(1,2,0));
 		sprite->addAnimation("jump", 60, true, sequence);
 		sequence.clear();
 
-		sequence.push_back(sf::Vector3i(2,3,0));
+		sequence.push_back(sf::Vector3i(2,2,0));
 		sprite->addAnimation("wallslide", 60, true, sequence);
 		sequence.clear();
 
-		/*
+		
 		sequence.push_back(sf::Vector3i(2,1,0));
 		sequence.push_back(sf::Vector3i(3,1,0));
 		sequence.push_back(sf::Vector3i(4,1,0));
 		sequence.push_back(sf::Vector3i(5,1,0));
 		sequence.push_back(sf::Vector3i(6,1,0));
 		sequence.push_back(sf::Vector3i(7,1,0));
-		*/
-
+		sprite->addAnimation("walk", 9, true, sequence);
+		
+		/*
 		sequence.push_back(sf::Vector3i(1,2,0));
 		sequence.push_back(sf::Vector3i(2,2,0));
 		sequence.push_back(sf::Vector3i(3,2,0));
@@ -49,22 +50,23 @@ namespace mp
 		sequence.push_back(sf::Vector3i(6,2,0));
 		sequence.push_back(sf::Vector3i(7,2,0));
 		sequence.push_back(sf::Vector3i(8,2,0));
+		*/
 
-		sprite->addAnimation("walk", 16, true, sequence);
+
 		sequence.clear();
 
-		sequence.push_back(sf::Vector3i(3,3,40));
-		sequence.push_back(sf::Vector3i(3,3,80));
-		sequence.push_back(sf::Vector3i(3,3,120));
-		sequence.push_back(sf::Vector3i(3,3,160));
-		sequence.push_back(sf::Vector3i(3,3,200));
-		sequence.push_back(sf::Vector3i(3,3,240));
-		sequence.push_back(sf::Vector3i(3,3,260));
-		sequence.push_back(sf::Vector3i(3,3,320));
-		sequence.push_back(sf::Vector3i(3,3,360));
+		sequence.push_back(sf::Vector3i(3,2,40));
+		sequence.push_back(sf::Vector3i(3,2,80));
+		sequence.push_back(sf::Vector3i(3,2,120));
+		sequence.push_back(sf::Vector3i(3,2,160));
+		sequence.push_back(sf::Vector3i(3,2,200));
+		sequence.push_back(sf::Vector3i(3,2,240));
+		sequence.push_back(sf::Vector3i(3,2,260));
+		sequence.push_back(sf::Vector3i(3,2,320));
+		sequence.push_back(sf::Vector3i(3,2,360));
 
 
-		sequence.push_back(sf::Vector3i(1,3,0));
+		sequence.push_back(sf::Vector3i(1,2,0));
 		sprite->addAnimation("airroll", 40, false, sequence);
 		sequence.clear();
 
@@ -108,7 +110,6 @@ namespace mp
 			facingLeft = character->isFacingLeft();
 		}
 		
-
 		worldDataMutex.unlock();
 	}
 
@@ -118,5 +119,6 @@ namespace mp
 
 	CharacterView::~CharacterView()
 	{
+		delete sprite;
 	}
 }
