@@ -325,5 +325,8 @@
     <ClInclude Include="controller\PauseScreenController.h">
       <Filter>src\controller</Filter>
     </ClInclude>
+    <ClInclude Include="model\DynamicGameObject.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -51,7 +51,6 @@ namespace mp
 
 			short getClip() { return clip; }
 
-			b2Body* getBody() { return characterBody; }
 			void setGrounded(bool choice) { grounded = choice; }
 			bool isGrounded() { return grounded; }
 
@@ -83,9 +82,7 @@ namespace mp
 			void setFlipping(bool choice){ flipping = choice; }
 			bool isFlipping(){return flipping;}
 
-			b2Vec2 getPosition() { return characterBody->GetPosition(); }
-			float32 getAngle() { return characterBody->GetAngle(); }
-			b2Vec2 getLinVelocity() { return characterBody->GetLinearVelocity(); }
+			float32 getAngle() { return body->GetAngle(); }
 
 			sf::Int8 getClientID(){ return clientID; } 
 
@@ -95,8 +92,7 @@ namespace mp
 			void connectToServer();
 
         private:
-			b2Body* characterBody;
-			b2World* world;
+
 			
 			void moveY(bool left);
 			void moveX(bool left);

@@ -1,15 +1,14 @@
 #ifndef I_CHARACTER_H_INCLUDED
 #define I_CHARACTER_H_INCLUDED
 
-#include "GameObject.h"
-// Box2D specific headers
-#include <Box2D.h>
+#include "DynamicGameObject.h"
+
 #include "../util/Observable.h"
 
 namespace mp
 {
 	class Bullet;
-	class ICharacter : public GameObject, public Observable
+	class ICharacter : public DynamicGameObject
 	{
 		public:
 			virtual void jump() = 0;

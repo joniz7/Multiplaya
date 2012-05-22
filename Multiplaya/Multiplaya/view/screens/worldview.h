@@ -7,7 +7,6 @@
 // Other headers
 #include <string>
 #include <cstdlib>
-#include <list>
 #include <cmath>
 #include <vector>
 
