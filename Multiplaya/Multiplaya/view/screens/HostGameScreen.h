@@ -2,15 +2,15 @@
 #define HOST_GAME_SCREEN_H
 
 #include "Screen.h"
-#include "../guielements/Button.h"
-#include "../guielements/TextField.h"
+#include "../GUIElements/Button.h"
+#include "../GUIElements/TextField.h"
 #include <map>
 
 namespace mp
 {
 	class HostGameScreen : public Screen
 	{
-		public: 
+		public:
 			HostGameScreen(const sf::Vector2u &resolution);
 			virtual ~HostGameScreen();
 
@@ -24,7 +24,7 @@ namespace mp
 
 			sf::Text* gravityTitleText;
 			sf::Text* portTitleText;
-			
+
 
 			sf::Text* screenTitleText;
 			sf::Text* ipTitleText;
@@ -35,7 +35,7 @@ namespace mp
 			void initTextFields();
 			void initButtons();
 
-			
+
 	};
 }
 #endif

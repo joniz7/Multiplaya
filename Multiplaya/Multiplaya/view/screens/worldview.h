@@ -33,7 +33,7 @@
 #include "../../global.h"
 
 #include "Screen.h"
-#include "../guielements/GUIElement.h"
+#include "../GUIElements/GUIElement.h"
 #include "../LayerHandler.h"
 
 namespace mp
@@ -44,7 +44,7 @@ namespace mp
 	class BulletView;
 	class GameObjectView;
 	class HUDSprite;
-    
+
 	class WorldView : public Screen, public Observer
     {
         public:
@@ -65,19 +65,19 @@ namespace mp
 			sf::View* getCamera() { return camera; }
 
 			void characterMoved(float moved);
-			
+
 		protected:
-    		
+
 		private:
 			std::map<std::string, GUIElement*> buttons;
 
 			// The directory of resource files.
 			std::string resourcesDir;
-			
+
 			// HUD textures.
 			sf::Texture* killsTexture;
 			sf::Texture* deathsTexture;
-			
+
 			// HUD sprites.
 			sf::Sprite* killsSprite;
 			sf::Sprite* deathsSprite;
@@ -85,14 +85,14 @@ namespace mp
 			HUDSprite* ammoSprite;
 			sf::Text* killsText;
 			sf::Text* deathsText;
-			
+
 			mutable sf::RenderWindow* window;
 
 			WorldData* worldData;
 			sf::View* camera;
 			unsigned int zoomLevel;
 			unsigned int zoomLevelMax;
-			
+
 			std::vector<GameObjectView*> characters;
 			std::vector<GameObjectView*> bullets;
 			// Clock for frame time counting
@@ -112,7 +112,7 @@ namespace mp
 
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
-			
+
 			sf::Vector2f* mousePosOld;
 			sf::Vector2f* mousePos;
 			sf::Vector2i* mousePosWindow;
@@ -132,7 +132,7 @@ namespace mp
 			void updatePositions();
 			void updateBulletsPos();
 			void updateCharactersPos();
-			
+
 			void createCharacterViews();
 
 			void initialize();

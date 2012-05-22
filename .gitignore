@@ -24,3 +24,6 @@ Multiplaya/gtest-1.6.0/msvc/gtest/Debug/
 Multiplaya/Tests/Debug/
 
 Multiplaya/Multiplaya/resources/test/testsprite.psd
+
+SFML Test/Debug/SFML_Test.exe
+SFML Test/Debug/SFML_Test.ilk

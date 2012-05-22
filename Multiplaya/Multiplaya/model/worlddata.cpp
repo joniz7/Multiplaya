@@ -186,7 +186,7 @@ namespace mp
 
 	void WorldData::removeAllBullets()
 	{
-		for(int i=0; i<bullets.size(); i++)
+		for(unsigned int i=0; i<bullets.size(); i++)
 		{
 			removeBullet(bullets.at(i));
 		}
