@@ -67,6 +67,9 @@ namespace mp
 			virtual bool isShooting() = 0;
 			virtual bool isReloading() = 0;
 
+			virtual void setFocusing(bool choice) = 0;
+			virtual bool isFocusing() = 0;
+
 	};
 }
 #endif

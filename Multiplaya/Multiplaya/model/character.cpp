@@ -76,10 +76,8 @@ namespace mp
 		body->SetFixedRotation(true);
 
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(0.3f, 0.5f, b2Vec2(0,-2), 0);
-
+		dynamicBox.SetAsBox(0.1f, 0.3f, b2Vec2(0,-2), 0);
 		fixtureDef.isSensor = true;
-
 		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
 
