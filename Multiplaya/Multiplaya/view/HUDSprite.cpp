@@ -14,84 +14,64 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	// Constructor
 	////////////////////////////////////////////////////////////
-	HUDSprite::HUDSprite(std::string path, sf::Vector2i dimensions) {
+	HUDSprite::HUDSprite(std::string path, int states) : sf::Sprite() {
 		
-		numberOfStates = 0;
-
 		// Load texture.
 		spriteSheet = new sf::Texture();
-		spriteSheet = ResourceHandler::instance().getTexture(path);
-
-		sprite = new AnimatedSprite(spriteSheet, dimensions);
-		sprite->rotate(180);
-		sprite->setPosition(0,0);
-
-		// Add animation.
-		std::vector<sf::Vector3i> sequence;
-		sequence.push_back(sf::Vector3i(1,1,0));
-		sprite->addAnimation("ammo", 9, true, sequence);
-		sequence.clear();
-
-		// Populate our 'states' map.
-		for (int i=1;i<=dimensions.x;i++) {
-			for (int j=1;j<=dimensions.y;j++) {
-				std::cout << "hej! ("<< j << "," << i <<",0)"<< std::endl;
-				states[0] = sf::Vector3i(j,i,0);
-				numberOfStates++;
-			}
+		if ( !spriteSheet->loadFromFile(path) ) {
+			std::cout << "Failed to load texture: "<< path << std::endl;
 		}
-		std::cout << "numberOfStates: "<<numberOfStates << "." << std::endl;
+		
+		// Set texture.
+		setTexture(*spriteSheet);
+
+		// Calculate the size of a frame.
+		spriteSize.x = spriteSheet->getSize().x / states;
+		spriteSize.y = spriteSheet->getSize().y;
+
+		// Save total number of states.
+		this->states = states;
 		
 		// We start at state 0.
-		//sprite->setFrame( sf::Vector3i(1,1,0) );
+		setState(0);
     }
-
-	void HUDSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-		target.draw(*sprite, states);
-		//window.draw( sf::RectangleShape(sf::Vector2f(300,300)) );
-		//std::cout <<"HUDSprite: x: "<<sprite->getPosition().x << "y:"<<sprite->getPosition().y<<std::endl;
-	}
 
 	////////////////////////////////////////////////////////////
 	/// Sets a specified frame.
 	/// \param state - Minimum value 0.
 	////////////////////////////////////////////////////////////
 	void HUDSprite::setState(int state)
-	{	
-		// If it's the same, do nothing.
-		if (this->state == state) {}
-
-		// Input too big, set to max.
-		else if (state > numberOfStates) {
-			std::cout << "setState("<<state<<"). Too big!"<<std::endl;
-			sprite->setFrame(states[numberOfStates]);
-			this->state = numberOfStates;
-		}
-		// Input too small, set to min.
+	{	// Inputted state is the current one.
+		if (this->state == state) {
+			return;
+		}// Input too big.
+		else if (state > states) {
+			this->setState(states); return;
+		}// Input too small.
 		else if (state < 0) {
-			std::cout << "setState("<<state<<"). Too small!"<<std::endl;
-			sprite->setFrame(states[0]);
-			this->state = 0;
-		}
-		// Input is all good!
+			this->setState(0); return;
+		}// Input is all good!
 		else {
-			std::cout << "setState("<<state<<"). Just enough."<<std::endl;
 			// Set state.
 			this->state = state;
-			// Set correct frame.
-			sprite->setFrame(states[state]);
+			// Create box around our chosen frame.
+			sf::IntRect frameRect(
+				spriteSize.x * (state),
+				0,
+				spriteSize.x,
+				spriteSize.y
+			);
+			// Apply our frame change.
+			setTextureRect(frameRect);
 		}
 	}
 
-	void HUDSprite::update(float elapsed) {
-		this->sprite->update(elapsed);
-	}
 
 	////////////////////////////////////////////////////////////
 	// Destructor
 	////////////////////////////////////////////////////////////
     HUDSprite::~HUDSprite() {
-		//delete spriteSheet;
+		delete spriteSheet;
 	}
 
 }

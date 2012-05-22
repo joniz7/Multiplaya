@@ -14,37 +14,29 @@
 #include <map>
 
 // SFML specific headers
-#include <SFML/Graphics.hpp>
+#include "../sfml.h"
 
 // Box2D specific headers
 #include <Box2D.h>
 
 //Defines
 #include "../defines.h"
-#include "animatedsprite.h"
-#include "../services/resourcehandler.h"
 
 namespace mp
 {
-    class HUDSprite : public sf::Drawable
+    class HUDSprite : public sf::Sprite
     {
         public:
-			HUDSprite(std::string path, sf::Vector2i dimensions);
+			HUDSprite(std::string path, int states);
             ~HUDSprite();
-			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-			int getWidth()  {return (int)sprite->getSize().x; }
-			int getHeight() {return (int)sprite->getSize().y; }
-			void setPosition(float x, float y) { sprite->setPosition(x,y); };
-			void update(float elapsed);
+			int getWidth() {return (int)spriteSize.x;}
+			int getHeight() {return (int)spriteSize.y;}
 			void setState(int i);	// Change state.
-			void setFrame(sf::Vector3i frame) { sprite->setFrame(frame); };	// Sets a specified frame.
         private:
-			AnimatedSprite* sprite;
 			sf::Texture* spriteSheet; // The texture containing all frames.
-			std::map<int, sf::Vector3i> states;	// Keeps track of all our states.
-			int state;  // Current state.
-			int numberOfStates; // Total amount of states.	
+			sf::Vector2i spriteSize; // The size of each frame.
+			int state;	// Keeps track of which state is currently active.
+			int states; // Total amount of states.	
     };
 }
 
