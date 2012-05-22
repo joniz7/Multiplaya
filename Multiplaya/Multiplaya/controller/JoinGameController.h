@@ -2,7 +2,7 @@
 #define JOINGAMECONTROLLER_H
 
 #include "IController.h"
-#include "../view/JoinGameScreen.h"
+#include "../view/screens/JoinGameScreen.h"
 #include "../services/networkhandler.h"
 #include "../util/TextEventHelper.h"
 #include <iostream>

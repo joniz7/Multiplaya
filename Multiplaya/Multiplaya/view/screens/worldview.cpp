@@ -3,13 +3,13 @@
 ////////////////////////////////////////////////////////////
 // Class header
 #include "worldview.h"
-#include "../model/worlddata.h"
+#include "../../model/worlddata.h"
 
-#include "../global.h"
+#include "../../global.h"
 
-#include "../services/confighandler.h"
+#include "../../services/confighandler.h"
 
-#include "animatedsprite.h"
+#include "../animatedsprite.h"
 
 ////////////////////////////////////////////////////////////
 /// World class. Takes care of game physics and logic

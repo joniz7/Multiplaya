@@ -116,16 +116,16 @@
     <ClCompile Include="view\GUIElements\Button.cpp" />
     <ClCompile Include="view\GUIElements\GUIElement.cpp" />
     <ClCompile Include="view\GUIElements\TextField.cpp" />
-    <ClCompile Include="view\HostGameScreen.cpp" />
     <ClCompile Include="view\HUDSprite.cpp" />
-    <ClCompile Include="view\JoinGameScreen.cpp" />
     <ClCompile Include="view\Layer.cpp" />
     <ClCompile Include="view\LayerHandler.cpp" />
-    <ClCompile Include="view\MainScreen.cpp" />
-    <ClCompile Include="view\Screen.cpp" />
-    <ClCompile Include="view\SettingsScreen.cpp" />
+    <ClCompile Include="view\screens\HostGameScreen.cpp" />
+    <ClCompile Include="view\screens\JoinGameScreen.cpp" />
+    <ClCompile Include="view\screens\MainScreen.cpp" />
+    <ClCompile Include="view\screens\Screen.cpp" />
+    <ClCompile Include="view\screens\SettingsScreen.cpp" />
+    <ClCompile Include="view\screens\worldview.cpp" />
     <ClCompile Include="view\Window.cpp" />
-    <ClCompile Include="view\worldview.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
@@ -170,16 +170,16 @@
     <ClInclude Include="view\GUIElements\Button.h" />
     <ClInclude Include="view\GUIElements\GUIElement.h" />
     <ClInclude Include="view\GUIElements\TextField.h" />
-    <ClInclude Include="view\HostGameScreen.h" />
     <ClInclude Include="view\HUDSprite.h" />
-    <ClInclude Include="view\JoinGameScreen.h" />
     <ClInclude Include="view\Layer.h" />
     <ClInclude Include="view\LayerHandler.h" />
-    <ClInclude Include="view\MainScreen.h" />
-    <ClInclude Include="view\Screen.h" />
-    <ClInclude Include="view\SettingsScreen.h" />
+    <ClInclude Include="view\screens\HostGameScreen.h" />
+    <ClInclude Include="view\screens\JoinGameScreen.h" />
+    <ClInclude Include="view\screens\MainScreen.h" />
+    <ClInclude Include="view\screens\Screen.h" />
+    <ClInclude Include="view\screens\SettingsScreen.h" />
+    <ClInclude Include="view\screens\worldview.h" />
     <ClInclude Include="view\Window.h" />
-    <ClInclude Include="view\worldview.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

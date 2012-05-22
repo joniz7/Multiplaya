@@ -2,7 +2,7 @@
 #define MAINSCREENCONTROLLER_H
 
 #include "IController.h"
-#include "../view/MainScreen.h"
+#include "../view/screens/MainScreen.h"
 #include "../services/networkhandler.h"
 #include <iostream>
 

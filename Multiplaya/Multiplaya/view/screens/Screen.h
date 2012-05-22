@@ -3,7 +3,7 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "GUIElements/GUIElement.h"
+#include "../GUIElements/GUIElement.h"
 
 namespace mp
 {

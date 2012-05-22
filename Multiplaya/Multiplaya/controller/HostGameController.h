@@ -2,7 +2,7 @@
 #define HOSTGAMECONTROLLER_H
 
 #include "IController.h"
-#include "../view/HostGameScreen.h"
+#include "../view/screens/HostGameScreen.h"
 #include "../util/TextEventHelper.h"
 #include "../services/networkhandler.h"
 

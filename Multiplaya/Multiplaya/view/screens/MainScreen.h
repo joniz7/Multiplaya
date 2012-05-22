@@ -3,9 +3,9 @@
 
 #include "Screen.h"
 #include <map>
-#include "../services/resourcehandler.h"
-#include "GUIElements/Button.h"
-#include "GUIElements/TextField.h"
+#include "../../services/resourcehandler.h"
+#include "../guielements/Button.h"
+#include "../guielements/TextField.h"
 
 namespace mp
 {

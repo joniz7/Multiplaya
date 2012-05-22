@@ -3,12 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Screen.h"
-#include "MainScreen.h"
-#include "JoinGameScreen.h"
-#include "SettingsScreen.h"
-#include "HostGameScreen.h"
-#include "worldview.h"
+#include "screens/Screen.h"
+#include "screens/MainScreen.h"
+#include "screens/JoinGameScreen.h"
+#include "screens/SettingsScreen.h"
+#include "screens/HostGameScreen.h"
+#include "screens/worldview.h"
 #include "../model/worlddata.h"
 
 namespace mp
