@@ -176,7 +176,9 @@ namespace mp
 			{
 				int i = (it - bullets.begin());
 				notifyObservers(BULLET_DELETED, (void*) i);
+				worldDataMutex.lock();
 				bullets.erase(bullets.begin() + i);
+				worldDataMutex.unlock();
 			}
 		}
 	}
