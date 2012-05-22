@@ -66,7 +66,6 @@ namespace mp
 			bool isFacingLeft() { return facingLeft; }
 
 			void setPosition(b2Vec2 position, float32 angle);
-			void setLinVelocity(b2Vec2 velocity);
 
 			void setTouchingWallLeft(bool choice){ leftSideTouchWall = choice; }
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }

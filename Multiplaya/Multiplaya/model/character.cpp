@@ -382,9 +382,4 @@ namespace mp
 	{
 		body->SetTransform(position, angle);
 	}
-
-	void Character::setLinVelocity(b2Vec2 velocity)
-	{
-		body->SetLinearVelocity(velocity);
-	}
 }
