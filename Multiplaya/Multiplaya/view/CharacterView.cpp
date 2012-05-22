@@ -97,9 +97,7 @@ namespace mp
 		worldDataMutex.lock();
 
 		b2Vec2 position = character->getBody()->GetPosition();
-		float32 angle = character->getBody()->GetAngle();
-		
-		//todo define pixelscale globaly
+		//float32 angle = character->getBody()->GetAngle();
 		sprite->setPosition(position.x * PIXEL_SCALE, position.y * PIXEL_SCALE);
 		
 		// Check what animation to play.

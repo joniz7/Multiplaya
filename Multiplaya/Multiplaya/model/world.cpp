@@ -93,6 +93,10 @@ namespace mp
 				// Leave the arena now and rest - you've earned it.
 				sf::sleep( sf::seconds( (1 / 120.0f)-elapsed ) );
 			}
+
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+				reloadStuff();
+
     }
 	
 	/**
