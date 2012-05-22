@@ -271,7 +271,7 @@ namespace mp
 						//The current bullet list is cleared
 						if(worldData->getBullets()->size()>0)
 						{
-							worldData->removeAllBullets();
+							worldData->removeAllBullets(myID);
 						}
 						
 						//And replaced by the new bullets
@@ -698,18 +698,14 @@ namespace mp
 		{
 			//sendMessageToEveryone("Bullet added to buffer");
 			Bullet* tempBullet = (Bullet*) object;
-			BufferBullet bullet;
-			bullet.x = tempBullet->getPosition().x;
-			bullet.y = tempBullet->getPosition().y;
-			bullet.xvel = tempBullet->getInitForce().x;
-			bullet.yvel = tempBullet->getInitForce().y;
-			bulletsToSend.push_back(bullet);
-
-			std::cout<<"hej"<<tempBullet->getBody()->GetLinearVelocity().x<<tempBullet->getLinVelocity().y<<std::endl;
+			float32 x = tempBullet->getPosition().x;
+			float32 y = tempBullet->getPosition().y;
+			float32 xvel = tempBullet->getInitForce().x;
+			float32 yvel = tempBullet->getInitForce().y;
 
 			sf::Packet packet;
 			sf::Int8 type = 5, quantity = 1;
-			packet << type << quantity << myID << bullet.x << bullet.y << bullet.xvel << bullet.yvel;
+			packet << type << quantity << myID << x << y << xvel << yvel;
 			sender.send(packet, serverIP, 55001);
 		} 
 		else if(e == BULLET_DELETED) 
