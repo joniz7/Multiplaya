@@ -199,11 +199,11 @@ namespace mp
 		
 		if (up) { // Are we moving up?
 			if(body->GetLinearVelocity().y < maxForce) {
-				body->ApplyLinearImpulse( b2Vec2(0, forceIteration), body->GetPosition() );
+				body->ApplyLinearImpulse( b2Vec2(0, (float)forceIteration), body->GetPosition() );
 			}
 		} else { // Nope. We're moving down (the negative direction).
 			if(body->GetLinearVelocity().y > -maxForce) {
-				body->ApplyLinearImpulse( b2Vec2(0, -forceIteration), body->GetPosition() );
+				body->ApplyLinearImpulse( b2Vec2(0, -(float)forceIteration), body->GetPosition() );
 			}
 		}
 	}
@@ -238,7 +238,8 @@ namespace mp
 	void Character::primaryFire(b2Vec2 &targetPos)
 	{
 		if (isReloading()) { return; }
-		if (isShooting()) { return; }
+		else if (isShooting()) { return; }
+		else if (!isFocusing()) { return; }
 		else { shoot(); }
 
 		int speed = 8000;
