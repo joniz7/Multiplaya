@@ -16,4 +16,14 @@ namespace mp
 			deletionScheduled = true; 
 		}		
 	}
+
+	b2Vec2 DynamicGameObject::getLinVelocity()
+	{
+		return getBody()->GetLinearVelocity();
+	}
+
+	void DynamicGameObject::setLinVelocity(b2Vec2 velocity)
+	{
+		getBody()->SetLinearVelocity(velocity);
+	}
 }

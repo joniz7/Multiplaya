@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Bullet
-////////////////////////////////////////////////////////////
 #ifndef BULLET_H_INCLUDED
 #define BULLET_H_INCLUDED
 
@@ -18,6 +15,9 @@ namespace mp
 {
 	class WorldData;
 
+	/**
+	 * A class representing a bullet.
+	 */
     class Bullet : public DynamicGameObject
     {
         public:
