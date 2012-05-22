@@ -29,6 +29,12 @@ namespace mp
 			sf::Text* screenTitleText;
 			sf::Text* ipTitleText;
 
+			void initBackground(const sf::Vector2u &resolution);
+			void initText();
+			void initFont();
+			void initTextFields();
+			void initButtons();
+
 			
 	};
 }

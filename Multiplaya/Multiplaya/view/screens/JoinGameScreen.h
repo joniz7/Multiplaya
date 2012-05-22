@@ -26,6 +26,12 @@ namespace mp
 			sf::Text* ipTitleText;
 			sf::Text* portTitleText;
 
+			void initBackground(const sf::Vector2u &resolution);
+			void initText();
+			void initFont();
+			void initTextFields();
+			void initButtons();
+
 
 			
 	};

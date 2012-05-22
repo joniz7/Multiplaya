@@ -27,6 +27,11 @@ namespace mp
 			sf::Sprite* backgroundSprite;
 
 			//float calcBackgroundXScaling();
+			sf::Texture* getRandomBackground(int nrOfBackgrounds);
+			void initBackground(const sf::Vector2u &resolution);
+			void initFont();
+			void initText();
+			void initButtons();
 
 			sf::Text* gameTitleText;
 
