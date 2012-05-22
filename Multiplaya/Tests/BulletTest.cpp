@@ -6,7 +6,6 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <sfml.h>
 #include <model/worlddata.h>
 
 
@@ -29,11 +28,11 @@ class BulletTest : public ::testing::Test {
 	worldData = new mp::WorldData();
 
 	// Create generic bullets, owner ID 0.
-	testBullets.push_back( new mp::Bullet(GENERIC_BULLET, 0 , physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
-	testBullets.push_back( new mp::Bullet(GENERIC_BULLET,0, physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
+	testBullets.push_back( new mp::Bullet(0 , physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
+	testBullets.push_back( new mp::Bullet(0, physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
 	// Create generic bullets, owner ID 1.
-	testBullets.push_back( new mp::Bullet(GENERIC_BULLET, 1, physicsWorld, b2Vec2(20, 20), b2Vec2(-40, 0)) );
-	testBullets.push_back( new mp::Bullet(GENERIC_BULLET, 1, physicsWorld, b2Vec2(30, 30) , b2Vec2(40, 0))  );
+	testBullets.push_back( new mp::Bullet(1, physicsWorld, b2Vec2(20, 20), b2Vec2(-40, 0)) );
+	testBullets.push_back( new mp::Bullet(1, physicsWorld, b2Vec2(30, 30) , b2Vec2(40, 0))  );
   }
 
   virtual ~BulletTest() {
@@ -49,7 +48,6 @@ TEST_F(BulletTest, bullet_comparisons)
 	ASSERT_EQ(testBullets.at(0)->getBody(), testBullets.at(0)->getBody());
 	ASSERT_EQ(testBullets.at(0)->getOwner(), testBullets.at(0)->getOwner());
 	ASSERT_EQ(testBullets.at(0)->getPosition(), testBullets.at(0)->getPosition());
-	ASSERT_EQ(testBullets.at(0)->getType(), testBullets.at(0)->getType());
 
 }
 
@@ -65,7 +63,6 @@ TEST_F(BulletTest, bullet_addition)
 		ASSERT_EQ(testBullets.at(i)->getBody(), worldData->getBullet(i)->getBody());
 		ASSERT_EQ(testBullets.at(i)->getOwner(), worldData->getBullet(i)->getOwner());
 		ASSERT_EQ(testBullets.at(i)->getPosition(), worldData->getBullet(i)->getPosition());
-		ASSERT_EQ(testBullets.at(i)->getType(), worldData->getBullet(i)->getType());
 	}
 
 	// We have added 4 bullets, so size should be 4.

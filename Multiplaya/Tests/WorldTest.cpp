@@ -6,7 +6,6 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <sfml.h>
 #include <model/worlddata.h>
 #include <model/world.h>
 #include <model/bullet.h>
@@ -42,10 +41,9 @@ TEST_F(WorldTest, bulletFactory) {
 	// Set up properties of a test bullet.
 	b2Vec2 position(2,2);
 	int clientID = 0;
-	BulletType bulletType = GENERIC_BULLET;
 	
 	// Create bullet using World's createBullet() factory.
-	world->createBullet(position, b2Vec2(2,2), clientID, bulletType);
+	world->createBullet(position, b2Vec2(2,2), clientID);
 	
 	// Fetch first bullet from worldData.
 	mp::Bullet* bullet = worldData->getBullet(0);
@@ -62,7 +60,7 @@ TEST_F(WorldTest, characterFactory) {
 	
 	world->createCharacter(position, b2Vec2(1,1), clientID);
 	
-	mp::Character* character = worldData->getCharacter(0);
+	mp::ICharacter* character = worldData->getCharacter(0);
 	
 	// TODO: why does this fail?
 	//ASSERT_EQ(character->getPosition(), position);

@@ -190,9 +190,6 @@
     <ClInclude Include="model\worlddata.h">
       <Filter>src\model</Filter>
     </ClInclude>
-    <ClInclude Include="sfml.h">
-      <Filter>src\includes</Filter>
-    </ClInclude>
     <ClInclude Include="defines.h">
       <Filter>src\includes</Filter>
     </ClInclude>

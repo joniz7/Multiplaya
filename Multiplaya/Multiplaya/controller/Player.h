@@ -5,7 +5,7 @@
 #include <Box2D.h>
 
 #include "../global.h"
-#include "../model/character.h"
+#include "../model/ICharacter.h"
 #include "../services/input.h"
 
 

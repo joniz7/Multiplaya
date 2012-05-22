@@ -157,7 +157,6 @@
     <ClInclude Include="services\networkhandler.h" />
     <ClInclude Include="services\resourcehandler.h" />
     <ClInclude Include="services\soundhandler.h" />
-    <ClInclude Include="sfml.h" />
     <ClInclude Include="util\Event.h" />
     <ClInclude Include="util\Observable.h" />
     <ClInclude Include="util\Observer.h" />
