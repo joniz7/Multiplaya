@@ -7,7 +7,7 @@
 #include "GameObjectView.h"
 // Game specific headers
 #include "../global.h"
-#include "../model/character.h"
+#include "../model/ICharacter.h"
 #include "animatedsprite.h"
 
 #include "../services/resourcehandler.h"
@@ -20,8 +20,6 @@ namespace mp
 	class CharacterView : public GameObjectView
 	{
 		public:
-			//CharacterView(Character* model, sf::Sprite* sprite);
-			CharacterView(ICharacter* character, CharacterSprite* sprite);
 			CharacterView(ICharacter* character);
 			~CharacterView();
 			void updateAnimation(float elapsed);
