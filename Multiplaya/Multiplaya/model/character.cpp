@@ -4,18 +4,18 @@
 // Class header
 #include "character.h"
 
-////////////////////////////////////////////////////////////
-/// Character class. Holds data regarding character
-/// position, activity etc..
-/// Does NOT handle player input etc., see Player class for
-/// that kind of stuff
-////////////////////////////////////////////////////////////
+
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Creates a new character.
+	 * 
+	 * @param world - the physics world the character should belong to.
+	 * @param pos - the position of the character in the world.
+	 * @param size - the size of the character, physics-wise.
+	 * @param clientID - which of the players this character belongs to.
+	 */
     Character::Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
     {
 		this->world = world;
@@ -103,17 +103,19 @@ namespace mp
 
     }
 
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Destructor.
+	 */
     Character::~Character()
     {
+		delete shootingTimer;
+		delete reloadTimer;
 
     }
 
-	////////////////////////////////////////////////////////////
-	// Called when colliding with something.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Called when character collides with something.
+	 */
 	void Character::onCollision(GameObject* crashedWith)
 	{
 		// If we collided with bullet, take damage.
@@ -125,7 +127,10 @@ namespace mp
 		// No other checks neccessary?
 	}
 
-
+	/**
+	 * Makes the character jump.
+	 * Handles wall-jumping as well as regular jumping.
+	 */
 	void Character::jump()
 	{
 		if ( grounded ) {
@@ -150,22 +155,38 @@ namespace mp
 		}
 	}
 
+	/**
+	 * Move the character to the left.
+	 */
 	void Character::moveLeft() {
 		moveX(true);
 	}
 
+	/**
+	 * Move the character to the right.
+	 */
 	void Character::moveRight() {
 		moveX(false);
 	}
 
+	/**
+	 * Move the character upwards.
+	 */
 	void Character::moveUp() {
 		moveY(true);
 	}
 
+	/**
+	 * Move the character downwards.
+	 */
 	void Character::moveDown() {
 		moveY(false);
 	}
 
+	/**
+	 * Moves the character along the X axis.
+	 * @param left - are we going left or right?
+	 */
 	void Character::moveX(bool left) {
 		int maxForce, forceIteration;
 
@@ -192,6 +213,11 @@ namespace mp
 		}
 	}
 
+
+	/**
+	 * Moves the character along the Y axis.
+	 * @param up - are we going up or down?
+	 */
 	void Character::moveY(bool up) {
 		// TODO: shouldn't be hardcoded.
 		int maxForce = 10;
@@ -207,7 +233,10 @@ namespace mp
 			}
 		}
 	}
-
+	/**
+	 * Decreases bullets in clip, reloads if neccessary.
+	 * Note: Private method, call primaryFire() if you want to initiate shooting!
+	 */
 	void Character::shoot() {
 		if (--clip <= 0) {
 			this->reload();
@@ -216,10 +245,14 @@ namespace mp
 			shootingTimer->restart();
 		}
 	}
+
 	bool Character::isShooting() {
 		return (shootingTimer->getElapsedTime().asMilliseconds() < cooldown);
 	}
 
+	/**
+	 * Reloads the character's weapon. Replenishes the character's clip fully.
+	 */
 	void Character::reload() {
 		if(!isReloading())
 		{
@@ -235,6 +268,12 @@ namespace mp
 		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
 	}
 
+	/**
+	 * Fires a bullet towards the specified position.
+	 * Calculates which force to give the bullet using targetPos and character's position.
+	 *
+	 * @param targetPos - where the bullet should fly towards.
+	 */
 	void Character::primaryFire(b2Vec2 &targetPos)
 	{
 		if (isReloading()) { return; }
@@ -267,9 +306,10 @@ namespace mp
 		//soundFire.play();
 	}
 
-	/////////////////////////////////////////////////
-	// Inflicts damage, based on the supplied bullet.
-	/////////////////////////////////////////////////
+	/**
+	 * Inflicts damage, based on the supplied bullet.
+	 * @param b - this was the bullet that hit us.
+	 */
 	void Character::inflictDamage(Bullet* b) {
 		// Should different kinds of bullets inflict different damage?
 		short damage = 10;
@@ -279,10 +319,10 @@ namespace mp
 		this->setHealth(hp);
 	}
 
-	/////////////////////////////////////
-	// Changes the character's health.
-	// If health<1, kills the character.
-	/////////////////////////////////////
+	/**
+	 * Changes the character's health.
+	 * If health<1, kills the character.
+	 */
 	void Character::setHealth(short health) {
 		// Die if HP drops below 1.
 		if (health < 1) {
@@ -297,10 +337,11 @@ namespace mp
 		}
 		std::cout << "health: " << this->health << std::endl;
 	}
-	/////////////////////////////////////
-	/// Returns the character's health level.
-	/// \return a number between 0 and 8.
-	/////////////////////////////////////
+
+	/**
+	 * Returns the character's health level.
+	 * @returns a number between 0 and 8.
+	 */
 	short Character::getHealthState() {
 		int result = (health/10);
 		if ((result == 0) && health>0) {
@@ -314,9 +355,9 @@ namespace mp
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
 
-	////////////////////////////////////////////////////////////
-	// Updates char data
-	////////////////////////////////////////////////////////////
+	/**
+	 * Updates which way the character is facing.
+	 */
 	void Character::update()
 	{
 		if( getBody()->GetLinearVelocity().x > 0 )
@@ -330,63 +371,62 @@ namespace mp
 		notifyObservers(CONNECT_SERVER, 0);
 	}
 
-	//Foot sensor
+	/**
+	 * Create a new foot sensor.
+	 */
 	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded, bool& isFlipping) : grounded(grounded), isFlipping(isFlipping) {
 		this->objectType = characterFootSensor;
 	}
+	/// Reacts when we start colliding with something.
 	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			grounded = true;
 			isFlipping = false;
 		}
 	}
-
+	/// Reacts when we stop colliding with something.
 	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall)
 			grounded = false;
 	}
 
-	// Leftside
+	/**
+	 * Create a new left sensor.
+	 */
 	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	
 	{
 		this->objectType = characterLeftSensor;
 	}
-
+	/// Reacts when we start colliding with something.
 	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			leftSideTouchWall = true;
 		}
 	}
-
+	/// Reacts when we stop colliding with something.
 	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			leftSideTouchWall = false;
 		}
 	}
 
-	// Rightside
+	/**
+	 * Create a new left sensor.
+	 */
 	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall) {
 		this->objectType = characterRightSensor;
 	}
+	/// Reacts when we start colliding with something.
 	void Character::CharacterRightSensor::onCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			rightSideTouchWall = true;
 		}
 	}
+	/// Reacts when we stop colliding with something.
 	void Character::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			rightSideTouchWall = false;
 		}
 	}
 
-
-	void Character::setPosition(b2Vec2 position, float32 angle)
-	{
-		body->SetTransform(position, angle);
-	}
-
-	void Character::setLinVelocity(b2Vec2 velocity)
-	{
-		body->SetLinearVelocity(velocity);
-	}
 }

@@ -10,19 +10,14 @@
 
 namespace mp
 {
-	////////////////////////////////////////////////////////////
-	// Constructor
-	//
-	// type		- Type of bullet. Defined in defines.h
-	// owner	- Local server player id
-	// world	- Pointer to Box2D world
-	// position - Position to spawn bullet
-	// force	- Force to add to bullet force defined in BulletType,
-	//			  usually this is the force vector of the player
-	//			  who fired the bullet.
-	//
-	// returns true upon success
-	////////////////////////////////////////////////////////////
+	/**
+	 * Constructs a new bullet.
+	 *
+	 * @param owner	- Local server player id
+	 * @param world	- Pointer to Box2D world
+	 * @param position - Position to spawn bullet
+	 * @param force	- Force to give to the bullet.
+	 */
     Bullet::Bullet( sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
 		this->objectType = bullet;
@@ -83,9 +78,9 @@ namespace mp
 		}
 	}
 
-	///////////////////////////
-	// Destroy the bullet.
-	///////////////////////////
+	/**
+	 * Destroy the bullet.
+	 */
 	void Bullet::explode() {
 		//std::cout << "explode()" << std::endl;
 		scheduleDeletion(BULLET_DELETED);
@@ -95,12 +90,10 @@ namespace mp
         return bullet == this;
     }
 
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
-    Bullet::~Bullet() {
-		// Remove bullet from worldData (-> from the view).
-		//worldData->removeBullet(this);
+	/**
+	 * Destructor.
+	 */
+	Bullet::~Bullet() {
 		// remove body from box2d
 		world->DestroyBody(this->body);
 	}
