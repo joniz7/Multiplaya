@@ -114,7 +114,18 @@ namespace mp {
 			character->primaryFire(targetPos);
 			worldDataMutex.unlock();
         }
-
+		if( input->btnDwnSecondary() )
+        {
+			worldDataMutex.lock();
+			character->setFocusing(true);
+			worldDataMutex.unlock();
+        }
+		else
+		{
+			worldDataMutex.lock();
+			character->setFocusing(false);
+			worldDataMutex.unlock();
+		}
 		if ( input->btnDwnJump() )
 		{
 			//same as above will be moved to character class

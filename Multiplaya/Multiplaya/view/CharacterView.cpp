@@ -32,14 +32,15 @@ namespace mp
 		sprite->addAnimation("wallslide", 60, true, sequence);
 		sequence.clear();
 
-		/*
 		sequence.push_back(sf::Vector3i(2,1,0));
 		sequence.push_back(sf::Vector3i(3,1,0));
 		sequence.push_back(sf::Vector3i(4,1,0));
 		sequence.push_back(sf::Vector3i(5,1,0));
 		sequence.push_back(sf::Vector3i(6,1,0));
 		sequence.push_back(sf::Vector3i(7,1,0));
-		*/		
+
+		sprite->addAnimation("walk", 10, true, sequence);
+		sequence.clear();
 		
 		sequence.push_back(sf::Vector3i(1,2,0));
 		sequence.push_back(sf::Vector3i(2,2,0));
@@ -50,7 +51,7 @@ namespace mp
 		sequence.push_back(sf::Vector3i(7,2,0));
 		sequence.push_back(sf::Vector3i(8,2,0));
 
-		sprite->addAnimation("walk", 16, true, sequence);
+		sprite->addAnimation("run", 16, true, sequence);
 		sequence.clear();
 
 		sequence.push_back(sf::Vector3i(3,3,40));
@@ -96,7 +97,12 @@ namespace mp
 				sprite->playAnimation("jump");
 		}
 		else if (character->isWalking())
-			sprite->playAnimation("walk");
+		{
+			if(character->isFocusing())
+				sprite->playAnimation("walk");
+			else
+				sprite->playAnimation("run");
+		}
 		else
 			sprite->playAnimation("idle");
 
