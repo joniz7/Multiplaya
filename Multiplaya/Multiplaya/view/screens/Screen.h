@@ -16,8 +16,6 @@ namespace mp
 			*/
 			virtual void update() = 0;
 
-
-			/// Tells screen where the mouse is for hover effects
 			virtual void hover (const sf::Vector2i& mousePos);
 
 			void setGUIElement(std::string name, GUIElement* element);
