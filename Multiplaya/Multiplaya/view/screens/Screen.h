@@ -24,7 +24,6 @@ namespace mp
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 		protected:
 		private:
-			// move this and getElement to superclass
 			std::map<std::string, GUIElement*> guiElements;
 
 	};

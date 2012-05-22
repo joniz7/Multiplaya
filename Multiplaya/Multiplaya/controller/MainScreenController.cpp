@@ -20,9 +20,7 @@ namespace mp
 		while (getRenderWindow()->pollEvent(ev))
 		{
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*getRenderWindow());
-
 			getScreen()->hover(mousePos);
-
 
 			if (ev.type == sf::Event::Closed) {
 				// Tell our parent to exit the game.
@@ -54,8 +52,8 @@ namespace mp
 					// Tell main controller to shut everything down.
 					notifyObservers(EXIT_GAME, 0);
 				}
-				// get button elements and see which hovers
+
 			}
 		}
-	}
+	} // End of handleInput
 }

@@ -30,6 +30,9 @@ namespace mp
 
 			sf::Clock clock;
 
+			void clickButton(const sf::Vector2i &mousePos);
+			void selectTextField(const sf::Vector2i &mousePos);
+			void handleTextInput(sf::Event &textEvent);
 	};
 }
 
