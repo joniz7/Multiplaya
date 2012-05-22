@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "screens/Screen.h"
 #include "screens/MainScreen.h"
 #include "screens/JoinGameScreen.h"
 #include "screens/SettingsScreen.h"

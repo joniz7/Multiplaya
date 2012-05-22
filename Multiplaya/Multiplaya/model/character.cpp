@@ -258,7 +258,7 @@ namespace mp
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet(GENERIC_BULLET, 0 ,world, gunPosition, force);
+		Bullet* bullet = new Bullet( 0 ,world, gunPosition, force);
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound

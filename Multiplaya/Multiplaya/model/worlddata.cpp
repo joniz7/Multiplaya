@@ -38,20 +38,11 @@ namespace mp
 	////////////////////////////////////////////////////////////
     bool WorldData::addBullet( Bullet* bullet )
 	{
-		BulletType type = bullet->getType();
-
-		switch(type)
-		{
-			case GENERIC_BULLET:
-				bullet->addObserver(this);
-				bullets.push_back(bullet);
-				notifyObservers(BULLET_ADDED, bullet);
-				//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
-				return true;
-
-				break;
-		}
-		return false;
+		bullet->addObserver(this);
+		bullets.push_back(bullet);
+		notifyObservers(BULLET_ADDED, bullet);
+		//std::cout<< "Added a bullet. Total count: " << bullets.size() <<std::endl;
+		return true;
     }
 
 	////////////////////////////////////////////////////////////

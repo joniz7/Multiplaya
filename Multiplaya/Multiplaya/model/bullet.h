@@ -17,7 +17,6 @@
 #include <SFML/System.hpp>
 
 //Defines
-#include "../defines.h"
 #include "GameObject.h"
 #include "../util/Observable.h"
 
@@ -29,7 +28,7 @@ namespace mp
     class Bullet : public GameObject, public Observable
     {
         public:
-			Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force );
+			Bullet( sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force );
             virtual ~Bullet();
 
 			void explode();
@@ -38,13 +37,13 @@ namespace mp
 			b2Vec2 getLinVelocity(){return body->GetLinearVelocity();};
 			b2BodyDef* getBodyDef(){return &bodyDef;};
 			b2Body* getBody(){return body;};
-			BulletType getType(){return type;};
+
 			sf::Int8 getOwner(){return owner;};
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {};
 			bool operator == (const Bullet* bullet);
         private:
-			BulletType type;
+
 			sf::Int8 owner;
 			b2BodyDef bodyDef;
 			b2Body* body;

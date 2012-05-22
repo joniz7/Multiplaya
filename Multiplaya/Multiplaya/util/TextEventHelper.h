@@ -1,12 +1,10 @@
 #ifndef TEXT_EVENT_HELPER_H
 #define TEXT_EVENT_HELPER_H
 
-#include "../view/GUIElements/GUIElement.h"
+#include <SFML/Window.hpp>
 
 namespace mp 
-{
-	// maybe change name to controller helper
-	
+{	
 	/// Class for helping Controller
 	class TextEventHelper
 	{

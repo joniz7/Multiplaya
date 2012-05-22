@@ -23,14 +23,13 @@ namespace mp
 	//
 	// returns true upon success
 	////////////////////////////////////////////////////////////
-    Bullet::Bullet( BulletType type, sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
+    Bullet::Bullet( sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
 		scheduledForDeletion = false;
 		this->objectType = bullet;
 
 		this->world = world;
-		// Save bullet data
-		this->type = type;
+
 		this->owner = owner;
 		// Set up body definition
 		bodyDef.type = b2_dynamicBody;

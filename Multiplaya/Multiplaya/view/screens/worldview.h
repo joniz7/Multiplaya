@@ -26,7 +26,6 @@
 #include "../BulletView.h"
 #include "../HUDSprite.h"
 
-#include "../../util/Observer.h"
 #include "../GameObjectView.h"
 
 // Not sure if worldViewMutex should be defined here..
