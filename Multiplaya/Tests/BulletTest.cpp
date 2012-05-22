@@ -29,11 +29,11 @@ class BulletTest : public ::testing::Test {
 	worldData = new mp::WorldData();
 
 	// Create generic bullets, owner ID 0.
-	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0)) );
-	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,0,physicsWorld,b2Vec2(10,10),b2Vec2(-50,0)) );
+	testBullets.push_back( new mp::Bullet(GENERIC_BULLET, 0 , physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
+	testBullets.push_back( new mp::Bullet(GENERIC_BULLET,0, physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
 	// Create generic bullets, owner ID 1.
-	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(20,20),b2Vec2(-40,0)) );
-	testBullets.push_back( new mp::Bullet(BulletType::GENERIC_BULLET,1,physicsWorld,b2Vec2(30,30),b2Vec2(40,0))  );
+	testBullets.push_back( new mp::Bullet(GENERIC_BULLET, 1, physicsWorld, b2Vec2(20, 20), b2Vec2(-40, 0)) );
+	testBullets.push_back( new mp::Bullet(GENERIC_BULLET, 1, physicsWorld, b2Vec2(30, 30) , b2Vec2(40, 0))  );
   }
 
   virtual ~BulletTest() {

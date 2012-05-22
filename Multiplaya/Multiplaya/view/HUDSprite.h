@@ -10,7 +10,7 @@
 #include <map>
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/Graphics.hpp>
 
 // Box2D specific headers
 #include <Box2D.h>

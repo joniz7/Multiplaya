@@ -9,11 +9,11 @@
 #include "screens/SettingsScreen.h"
 #include "screens/HostGameScreen.h"
 #include "screens/worldview.h"
-#include "../model/worlddata.h"
 
 namespace mp
 {
 	class Screen;
+	class WorldData;
 	class Window
 	{
 		public:

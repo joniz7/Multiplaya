@@ -11,7 +11,7 @@
 #include <cmath>
 
 // SFML specific headers
-#include "../sfml.h"
+#include <SFML/Window.hpp>
 
 // Box2D specific headers
 #include <Box2D.h>
@@ -30,7 +30,6 @@
 #include "../global.h"
 
 #include "../view/screens/worldview.h"
-#include "../util/Observable.h"
 
 namespace mp
 {

@@ -4,7 +4,6 @@
 // Class header
 
 #include "GameController.h"
-#include "../util/Observable.h"
 
 ////////////////////////////////////////////////////////////
 /// Controller class. Handles input.

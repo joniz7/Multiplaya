@@ -65,15 +65,6 @@
     <ClCompile Include="services\confighandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
-    <ClCompile Include="sound\sound.cpp">
-      <Filter>src\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="sound\worldsound.cpp">
-      <Filter>src\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="sound\uisound.cpp">
-      <Filter>src\sound</Filter>
-    </ClCompile>
     <ClCompile Include="services\keylookup.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
@@ -207,15 +198,6 @@
     </ClInclude>
     <ClInclude Include="services\confighandler.h">
       <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="sound\sound.h">
-      <Filter>src\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="sound\worldsound.h">
-      <Filter>src\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="sound\uisound.h">
-      <Filter>src\sound</Filter>
     </ClInclude>
     <ClInclude Include="services\keylookup.h">
       <Filter>src\services</Filter>
