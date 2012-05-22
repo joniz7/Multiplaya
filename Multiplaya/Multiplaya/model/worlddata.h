@@ -54,7 +54,10 @@ namespace mp
 
 			// Getters
 			// Get list of all characters
-			std::vector<Character*>* getCharacters(){ return &characters; }
+			std::vector<ICharacter*>* getCharacters(){ return &characters; }
+			// Get a specific character
+			ICharacter* getCharacter(int i){ return characters.at(i); }
+
 			// Get list of all bullets
 			std::vector<Bullet*>* getBullets(){ return &bullets; }
 			std::vector<DynamicGameObject*>* getDeletionList() { return &deletionList; }
@@ -65,10 +68,9 @@ namespace mp
 			// Get a specific world chains
 			WorldChain* getChain(int i){ return chains.at(i); }
 
-			// Get a specific character
-			Character* getCharacter(int i){ return characters.at(i); }
+
 			// Get the character with the specific client ID
-			Character* getCharacter(sf::Int8 clientID);
+			ICharacter* getCharacter(sf::Int8 clientID);
 			// Get a specific bullet
 			Bullet* getBullet(int i){ return bullets.at(i); }
 			// Get a specific body
@@ -91,7 +93,7 @@ namespace mp
 			int getCurrentCharacterId() {return currentCharacterId;}
 
 			virtual void notify(Event e, void* object);
-			Character* getCurrentCharacter() {return characters.at(currentCharacterId);}
+			ICharacter* getCurrentCharacter() {return characters.at(currentCharacterId);}
 
 			void setAsClient(){isClient = true;};
 		private:
@@ -103,7 +105,7 @@ namespace mp
 			// A queue, containing all bullets scheduled for deletion.
 			std::vector<DynamicGameObject*> deletionList;
 			// Vector containing characters
-			std::vector<Character*> characters;
+			std::vector<ICharacter*> characters;
 			std::vector<Wall*> walls;
 			std::vector<WorldChain*> chains;
 			// Vector containing generic Box2D bodies

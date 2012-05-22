@@ -395,7 +395,7 @@ namespace mp
 		worldDataMutex.lock();
 
 		// Fetch character models.
-		std::vector<Character*>* characterModels = worldData->getCharacters();
+		std::vector<ICharacter*>* characterModels = worldData->getCharacters();
 		std::cout<<"Characters: "<<worldData->getCharacters()->size()<<std::endl;
 		// Loop through them,
 		for (unsigned int i=0;i<characterModels->size();i++) {
@@ -457,19 +457,18 @@ namespace mp
 
 	void WorldView::updateHUD()
 	{
-
 		worldDataMutex.lock();
 
-		Character currentCharacter = *worldData->getCurrentCharacter();
+		ICharacter* currentCharacter = worldData->getCurrentCharacter();
 		std::ostringstream kills, deaths; // (convert short->string)
 
-		kills << currentCharacter.getKills();
+		kills << currentCharacter -> getKills();
 		killsText->setString(kills.str());
-		deaths << currentCharacter.getDeaths();
+		deaths << currentCharacter->getDeaths();
 		deathsText->setString(deaths.str());
 
-		ammoSprite->setState(currentCharacter.getClip());
-		hpSprite->setState(currentCharacter.getHealthState());
+		ammoSprite->setState(currentCharacter->getClip());
+		hpSprite->setState(currentCharacter->getHealthState());
 
 		worldDataMutex.unlock();
 	}
