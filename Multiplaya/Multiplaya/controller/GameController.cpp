@@ -33,9 +33,10 @@ namespace mp
 		this->network = network;
 	}
 
-	////////////////////////////////////////////////////////////
-	// The logic loop; updates the game world, runs Box2D etc.
-	////////////////////////////////////////////////////////////
+
+	/**
+	 * Handles input for when we're ingame.
+	 */
     void GameController::handleInput()
     {
 		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());

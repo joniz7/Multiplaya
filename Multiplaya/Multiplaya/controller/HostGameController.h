@@ -8,13 +8,19 @@
 
 namespace mp
 {
+	// Forward declaration.
 	class NetworkHandler;
+
+	/**
+	 * Controls the "Host game" screen.
+	 */
 	class HostGameController : public IController
 	{
 		public:
 			HostGameController(sf::RenderWindow* window, Screen* hostScreen);
 			virtual ~HostGameController();
 			void handleInput();
+			/// Sets which NetworkHandler "host game" should use.
 			void setNetworkHandler(NetworkHandler* network){networkHandler = network;};
 		protected:
 		private:

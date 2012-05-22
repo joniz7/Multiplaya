@@ -37,6 +37,9 @@ namespace mp
 	//Forward declaration so World can have a WorldData pointer
 	class World;
 
+	/**
+	 * The controller for when we're ingame.
+	 */
     class GameController : public IController
     {
         public:
@@ -47,10 +50,9 @@ namespace mp
             
 
         private:
-			World* model;
-			// temporary, better solution will be found!
-			WorldView* worldView;
-			// not sure if all controller classes should own a sf::event instanec
+			World* model; ///< The model for the game.
+			WorldView* worldView; ///< The game's view.
+			// TODO: not sure if all controller classes should own a sf::event instanec
 			sf::Event ev;
 
 			Player* currentPlayer;
