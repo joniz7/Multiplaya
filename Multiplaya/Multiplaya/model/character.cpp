@@ -4,8 +4,6 @@
 // Class header
 #include "character.h"
 
-
-
 namespace mp
 {
 	/**
@@ -38,6 +36,7 @@ namespace mp
 		this->focusing = false;
 		this->backwards = false;
 		this->shouldFaceLeft = true;
+		this->linearDamping = 10;
 
 		this->kills  = 0;// Kill stat.
 		this->deaths = 0;// Death stat.
@@ -128,13 +127,13 @@ namespace mp
 		fixtureDef.shape = &dynamicBox;
 
 		//add left sensor fixture
-		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1.1f, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* leftSensorFixture = body->CreateFixture(&fixtureDef);
 		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
 
 		//add right sensor fixture
-		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.0f, 0), 0);
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.1f, 0), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* rightSensorFixture = body->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
@@ -258,6 +257,7 @@ namespace mp
 			}
 		}
 	}
+
 	/**
 	 * Decreases bullets in clip, reloads if neccessary.
 	 * Note: Private method, call primaryFire() if you want to initiate shooting!
@@ -271,6 +271,7 @@ namespace mp
 		}
 	}
 
+	/// Checks if the character is shooting
 	bool Character::isShooting() {
 		return (shootingTimer->getElapsedTime().asMilliseconds() < cooldown);
 	}
@@ -289,6 +290,8 @@ namespace mp
 			reloadTimer->restart();
 		}
 	}
+
+	/// Checks if the character is reloading.
 	bool Character::isReloading() {
 		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
 	}
@@ -329,7 +332,7 @@ namespace mp
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
-		//soundFire.play();
+		soundFire.play();
 	}
 
 	/**
@@ -376,35 +379,45 @@ namespace mp
 		return result;
 	}
 
+	/// Kills the character
 	void Character::kill()
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
 
-	/**
-	 * Updates the character data.
-	 */
+	/// Updates the character data.	
 	void Character::update()
 	{
+		// Get contact list (contact edges)
 		b2ContactEdge* ce = getBody()->GetContactList();
-
+		// Reset states
 		grounded = false;
-
+		leftSideTouchWall = false;
+		rightSideTouchWall = false;
+		// Loop through contact edges
 		while(ce != NULL)
 		{
+			// Check sensors
 			if (ce->contact->IsTouching())
 			{
 				if( ((CharacterFootSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterFootSensor )
 					grounded = true;
+				if( ((CharacterLeftSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterLeftSensor && ((CharacterLeftSensor*)(ce->contact->GetFixtureA()->GetUserData()))->objectType != character )
+					leftSideTouchWall = true;
+				if( ((CharacterRightSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterRightSensor && ((CharacterRightSensor*)(ce->contact->GetFixtureA()->GetUserData()))->objectType != character )
+					rightSideTouchWall = true;
 			}
-			 ce = ce->next;
+			// Get next contact edge
+			ce = ce->next;
 		}
 
+		// Determine based on character speed what direction we should be facing...
 		if( getBody()->GetLinearVelocity().x > 0 )
 			shouldFaceLeft = true;
 		else if( getBody()->GetLinearVelocity().x < 0 )
 			shouldFaceLeft = false;
 
+		// ...although focusing overrides that by facing the way we're aiming
 		if( isFocusing() && !isWallSliding() )
 		{
 			b2Vec2 charPos = body->GetPosition();
@@ -421,13 +434,15 @@ namespace mp
 				setIsFacingLeft(false);
 		}
 
+		// Determine backwards status (for animation purposes)
 		if(facingLeft != shouldFaceLeft)
 			backwards = true;
 		else
 			backwards = false;
 
+		// Handle linear damping based on what we are doing. When we are moving on the ground or falling through the air, linear damping should be nil.
 		if( isWallSliding() )
-			getBody()->SetLinearDamping(10);
+			getBody()->SetLinearDamping(linearDamping);
 		else if( !isGrounded() )
 			getBody()->SetLinearDamping(0);
 		else if( isWalking() )
@@ -435,7 +450,7 @@ namespace mp
 			if(isWalking())
 			{
 				if( isFocusing() && abs(getBody()->GetLinearVelocity().x)>15 )
-					getBody()->SetLinearDamping(10);
+					getBody()->SetLinearDamping(linearDamping);
 				else
 					getBody()->SetLinearDamping(0);
 			}
@@ -445,18 +460,10 @@ namespace mp
 		else if( !isGrounded() )
 			getBody()->SetLinearDamping(0);
 		else
-			getBody()->SetLinearDamping(10);
+			getBody()->SetLinearDamping(linearDamping);
 	}
 
-	void Character::connectToServer()
-	{
-		notifyObservers(CONNECT_SERVER, 0);
-	}
-
-
-	/**
-	 * Destructor.
-	 */
+	/// Destructor.	
     Character::~Character()
     {
 		delete shootingTimer;
@@ -464,27 +471,17 @@ namespace mp
 
     }
 
-	/**
-	 * Create a new foot sensor.
-	 */
+	/// Create a new foot sensor.
 	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded, bool& isFlipping) : grounded(grounded), isFlipping(isFlipping) {
 		this->objectType = characterFootSensor;
 	}
 	/// Reacts when we start colliding with something.
 	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
-		/*
-		if ( crashedWith->objectType == wall) {
-			grounded = true;
-			isFlipping = false;
-		}
-		*/
+
 	}
 	/// Reacts when we stop colliding with something.
 	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
-		/*
-		if ( crashedWith->objectType == wall)
-			grounded = false;
-		*/
+
 	}
 
 	/**
@@ -496,20 +493,14 @@ namespace mp
 	}
 	/// Reacts when we start colliding with something.
 	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall) {
-			leftSideTouchWall = true;
-		}
+
 	}
 	/// Reacts when we stop colliding with something.
 	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall) {
-			leftSideTouchWall = false;
-		}
+
 	}
 
-	/**
-	 * Create a new left sensor.
-	 */
+	/// Create a new left sensor.
 	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall) {
 		this->objectType = characterRightSensor;
 	}

@@ -120,6 +120,7 @@ namespace mp
 			short maxHealth;
 			short cooldown;
 			short reloadTime;
+			short linearDamping;
 			
 			short clip;
 			short clipSize;

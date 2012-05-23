@@ -63,8 +63,8 @@ namespace mp
 			texMap[filePath] = temp;
 
 			// For some FUCKING reason we have to load another textore or else the one we just loaded won't work. TODO: FIX THIS SHIT
-			if(temp.loadFromFile("resources/debug/missingtexture.png"))
-				texMap["resources/debug/missingtexture.png"] = temp;
+			//if(temp.loadFromFile("resources/debug/missingtexture.png"))
+			//	texMap["resources/debug/missingtexture.png"] = temp;
 
 			return true;
 		}
