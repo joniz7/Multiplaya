@@ -2,7 +2,7 @@
 #define I_CHARACTER_H_INCLUDED
 
 #include "DynamicGameObject.h"
-#include "bullet.h"
+#include "gameobjects/StandardBullet.h"
 
 namespace mp
 {
@@ -22,7 +22,7 @@ namespace mp
 			virtual void primaryFire(b2Vec2 &targetPos) = 0;
 			virtual void secondaryFire() = 0;
 
-			virtual void inflictDamage(Bullet* b) = 0;
+			virtual void inflictDamage(IBullet* b) = 0;
 			virtual void kill() = 0;
 
 			virtual void setInvincible(float duration) = 0;
@@ -31,7 +31,7 @@ namespace mp
 			virtual sf::Int8 getClientID() = 0;
 			virtual void setClientID(sf::Int8 ID) = 0;
 
-			float32 getAngle() { return body->GetAngle(); }
+			float32 getAngle() { return getBody()->GetAngle(); }
 
 			virtual void update() = 0;
 

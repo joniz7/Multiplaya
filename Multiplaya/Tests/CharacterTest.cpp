@@ -7,7 +7,7 @@
 
 //#include <global.h>
 #include <model/WorldData.h>
-#include "model/Character.h"
+#include "model/ICharacter.h"
 
 namespace mpt {
 
@@ -17,7 +17,7 @@ class CharacterTest : public ::testing::Test {
 	mp::WorldData* worldData;
 	b2World* physicsWorld;
 
-	std::vector<mp::Character*> testCharacters;
+	std::vector<mp::ICharacter*> testCharacters;
 
   CharacterTest() {
 	// Setup the world properties.
@@ -27,8 +27,8 @@ class CharacterTest : public ::testing::Test {
 	// Create world data.
 	worldData = new mp::WorldData();
 
-	testCharacters.push_back( new mp::Character(physicsWorld, b2Vec2(2.0f,2.0f), b2Vec2(1.0f,1.0f), 0) );
-	testCharacters.push_back( new mp::Character(physicsWorld, b2Vec2(4.0f,2.0f), b2Vec2(1.0f,1.0f), 1) );
+	testCharacters.push_back( new mp::DefaultCharacter(physicsWorld, b2Vec2(2.0f,2.0f), b2Vec2(1.0f,1.0f), 0) );
+	testCharacters.push_back( new mp::DefaultCharacter(physicsWorld, b2Vec2(4.0f,2.0f), b2Vec2(1.0f,1.0f), 1) );
 
   }
 

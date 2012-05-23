@@ -1,20 +1,17 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 // Class header
-#include "character.h"
+#include "DefaultCharacter.h"
 
 namespace mp
 {
 	/**
-	 * Creates a new character.
+	 * Creates a new DefaultCharacter.
 	 * 
 	 * @param world - the physics world the character should belong to.
 	 * @param pos - the position of the character in the world.
 	 * @param size - the size of the character, physics-wise.
 	 * @param clientID - which of the players this character belongs to.
 	 */
-    Character::Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
+    DefaultCharacter::DefaultCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
     {
 		this->world = world;
 		this->bodySize = size;
@@ -62,7 +59,7 @@ namespace mp
 	/**
 	 * Called when character collides with something.
 	 */
-	void Character::setClientID(sf::Int8 ID) {
+	void DefaultCharacter::setClientID(sf::Int8 ID) {
 		this->clientID = ID;
 		createBody(body->GetPosition());
 	}
@@ -70,18 +67,18 @@ namespace mp
 	/**
 	 * Called when character collides with something.
 	 */
-	void Character::onCollision(GameObject* crashedWith)
+	void DefaultCharacter::onCollision(GameObject* crashedWith)
 	{
 		// If we collided with bullet, take damage.
 		if (crashedWith->objectType == bullet) {
-			std::cout << "Collision: Character <-> bullet" << std::endl;
-			Bullet* b = static_cast<Bullet*>( crashedWith );
+			std::cout << "Collision: DefaultCharacter <-> bullet" << std::endl;
+			IBullet* b = static_cast<IBullet*>( crashedWith );
 			inflictDamage(b);
 		}
 		// No other checks neccessary?
 	}
 
-	void Character::createBody(b2Vec2 position) {
+	void DefaultCharacter::createBody(b2Vec2 position) {
 
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
@@ -147,7 +144,7 @@ namespace mp
 	 * Makes the character jump.
 	 * Handles wall-jumping as well as regular jumping.
 	 */
-	void Character::jump()
+	void DefaultCharacter::jump()
 	{
 		if ( grounded ) {
 			body->ApplyLinearImpulse( b2Vec2(0, 450), body->GetPosition());
@@ -185,28 +182,28 @@ namespace mp
 	/**
 	 * Move the character to the left.
 	 */
-	void Character::moveLeft() {
+	void DefaultCharacter::moveLeft() {
 		moveX(true);
 	}
 
 	/**
 	 * Move the character to the right.
 	 */
-	void Character::moveRight() {
+	void DefaultCharacter::moveRight() {
 		moveX(false);
 	}
 
 	/**
 	 * Move the character upwards.
 	 */
-	void Character::moveUp() {
+	void DefaultCharacter::moveUp() {
 		moveY(true);
 	}
 
 	/**
 	 * Move the character downwards.
 	 */
-	void Character::moveDown() {
+	void DefaultCharacter::moveDown() {
 		moveY(false);
 	}
 
@@ -214,7 +211,7 @@ namespace mp
 	 * Moves the character along the X axis.
 	 * @param left - are we going left or right?
 	 */
-	void Character::moveX(bool left) {
+	void DefaultCharacter::moveX(bool left) {
 		int maxForce, forceIteration;
 
 		// TODO: shouldn't be hardcoded.
@@ -247,7 +244,7 @@ namespace mp
 	 * Moves the character along the Y axis.
 	 * @param up - are we going up or down?
 	 */
-	void Character::moveY(bool up) {
+	void DefaultCharacter::moveY(bool up) {
 		// TODO: shouldn't be hardcoded.
 		int maxForce = 10;
 		int forceIteration = 5;
@@ -267,7 +264,7 @@ namespace mp
 	 * Decreases bullets in clip, reloads if neccessary.
 	 * Note: Private method, call primaryFire() if you want to initiate shooting!
 	 */
-	void Character::shoot() {
+	void DefaultCharacter::shoot() {
 		if (--clip <= 0) {
 			this->reload();
 		}
@@ -277,14 +274,14 @@ namespace mp
 	}
 
 	/// Checks if the character is shooting
-	bool Character::isShooting() {
+	bool DefaultCharacter::isShooting() {
 		return (shootingTimer->getElapsedTime().asMilliseconds() < cooldown);
 	}
 
 	/**
 	 * Reloads the character's weapon. Replenishes the character's clip fully.
 	 */
-	void Character::reload() {
+	void DefaultCharacter::reload() {
 		if(!isReloading())
 		{
 			// Fill our magazine.
@@ -297,7 +294,7 @@ namespace mp
 	}
 
 	/// Checks if the character is reloading.
-	bool Character::isReloading() {
+	bool DefaultCharacter::isReloading() {
 		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
 	}
 
@@ -307,7 +304,7 @@ namespace mp
 	 *
 	 * @param targetPos - where the bullet should fly towards.
 	 */
-	void Character::primaryFire(b2Vec2 &targetPos)
+	void DefaultCharacter::primaryFire(b2Vec2 &targetPos)
 	{
 		if (isReloading()) { return; }
 		else if (isShooting()) { return; }
@@ -333,7 +330,7 @@ namespace mp
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet( clientID , world, gunPosition, force);
+		IBullet* bullet = new StandardBullet( clientID , world, gunPosition, force);
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
@@ -344,7 +341,7 @@ namespace mp
 	 * Inflicts damage, based on the supplied bullet.
 	 * @param b - this was the bullet that hit us.
 	 */
-	void Character::inflictDamage(Bullet* b) {
+	void DefaultCharacter::inflictDamage(IBullet* b) {
 		// Should different kinds of bullets inflict different damage?
 		short damage = 10;
 
@@ -357,7 +354,7 @@ namespace mp
 	 * Changes the character's health.
 	 * If health<1, kills the character.
 	 */
-	void Character::setHealth(short health) {
+	void DefaultCharacter::setHealth(short health) {
 		// Die if HP drops below 1.
 		if (health < 1) {
 			this->health = 0;
@@ -376,7 +373,7 @@ namespace mp
 	 * Returns the character's health level.
 	 * @returns a number between 0 and 8.
 	 */
-	short Character::getHealthState() {
+	short DefaultCharacter::getHealthState() {
 		int result = (health/10);
 		if ((result == 0) && health>0) {
 			result = 1;
@@ -385,13 +382,13 @@ namespace mp
 	}
 
 	/// Kills the character
-	void Character::kill()
+	void DefaultCharacter::kill()
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
 
 	/// Updates the character data.	
-	void Character::update()
+	void DefaultCharacter::update()
 	{
 		// Get contact list (contact edges)
 		b2ContactEdge* ce = getBody()->GetContactList();
@@ -469,7 +466,7 @@ namespace mp
 	}
 
 	/// Destructor.	
-    Character::~Character()
+    DefaultCharacter::~DefaultCharacter()
     {
 		delete shootingTimer;
 		delete reloadTimer;
@@ -477,46 +474,46 @@ namespace mp
     }
 
 	/// Create a new foot sensor.
-	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded, bool& isFlipping) : grounded(grounded), isFlipping(isFlipping) {
+	DefaultCharacter::CharacterFootSensor::CharacterFootSensor(bool& grounded, bool& isFlipping) : grounded(grounded), isFlipping(isFlipping) {
 		this->objectType = characterFootSensor;
 	}
 	/// Reacts when we start colliding with something.
-	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
+	void DefaultCharacter::CharacterFootSensor::onCollision(GameObject* crashedWith) {
 
 	}
 	/// Reacts when we stop colliding with something.
-	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
+	void DefaultCharacter::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
 
 	}
 
 	/**
 	 * Create a new left sensor.
 	 */
-	Character::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	
+	DefaultCharacter::CharacterLeftSensor::CharacterLeftSensor(bool& leftSideTouchWall) : leftSideTouchWall(leftSideTouchWall)	
 	{
 		this->objectType = characterLeftSensor;
 	}
 	/// Reacts when we start colliding with something.
-	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
+	void DefaultCharacter::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
 
 	}
 	/// Reacts when we stop colliding with something.
-	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
+	void DefaultCharacter::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
 
 	}
 
 	/// Create a new left sensor.
-	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall) {
+	DefaultCharacter::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall) {
 		this->objectType = characterRightSensor;
 	}
 	/// Reacts when we start colliding with something.
-	void Character::CharacterRightSensor::onCollision(GameObject* crashedWith) {
+	void DefaultCharacter::CharacterRightSensor::onCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			rightSideTouchWall = true;
 		}
 	}
 	/// Reacts when we stop colliding with something.
-	void Character::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
+	void DefaultCharacter::CharacterRightSensor::onNoCollision(GameObject* crashedWith) {
 		if ( crashedWith->objectType == wall) {
 			rightSideTouchWall = false;
 		}

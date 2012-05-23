@@ -50,7 +50,7 @@ namespace mp
 		if (e == BULLET_ADDED)
 		{
 			worldViewMutex.lock();
-			Bullet* bullet = ( Bullet* )object;
+			IBullet* bullet = ( IBullet* )object;
 			addBullet(bullet);
 			std::cout<<bullet->getBody()->GetLinearVelocity().x<<std::endl;
 			worldViewMutex.unlock();
@@ -65,7 +65,7 @@ namespace mp
 		else if (e == CHARACTER_ADDED)
 		{
 			std::cout << "Adding character to view" << std::endl;
-			Character* character = (Character*)object;
+			ICharacter* character = (ICharacter*)object;
 			addCharacter(character);
 		}
 		else if (e == CHARACTER_DELETED)
@@ -75,7 +75,7 @@ namespace mp
 		}
 	}
 
-	void WorldView::addBullet(Bullet* bullet)
+	void WorldView::addBullet(IBullet* bullet)
 	{
 		worldViewMutex.lock();
 		bullets.push_back(  new BulletView( bullet ) );
@@ -99,7 +99,7 @@ namespace mp
 		layerHandler->update(moved);
 	}*/
 
-	void WorldView::addCharacter(Character* character)
+	void WorldView::addCharacter(ICharacter* character)
 	{
 		characters.push_back( new CharacterView( character ) );
 	}
