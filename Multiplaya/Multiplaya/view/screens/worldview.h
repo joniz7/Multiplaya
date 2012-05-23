@@ -44,15 +44,15 @@ namespace mp
     {
         public:
 			WorldView( WorldData* worldData, sf::RenderWindow* window );
-			void exec();
 
 			/// returns sf::View pointing to camera
 			sf::View* getView() { return camera; }
             ~WorldView();
 
+			void update();
+
 			virtual void notify(Event e, void* object);
 			CharacterView* getCharacter(int i) { return (CharacterView*) characters.at(i); }
-			virtual void update();
 			virtual GUIElement* getElement(std::string element) { return buttons[element]; }
 			void zoom(float zoomFactor);
 			void zoomIn();
