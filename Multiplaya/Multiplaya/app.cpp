@@ -56,6 +56,7 @@ namespace mp
 
 		ResourceHandler::instance().loadSound("resources/sound/pistol_fire1.ogg");
 		ResourceHandler::instance().loadSound("resources/sound/pistol_reload1.ogg");
+		ResourceHandler::instance().loadSound("resources/sound/char_jump.ogg");
 		
 		// Contains instances of all parts of our program.
 		Container* data = new Container();

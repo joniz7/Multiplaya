@@ -84,7 +84,6 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="controller\Controller.cpp" />
     <ClCompile Include="controller\GameController.cpp" />
-    <ClCompile Include="controller\HostGameController.cpp" />
     <ClCompile Include="controller\IController.cpp" />
     <ClCompile Include="controller\JoinGameController.cpp" />
     <ClCompile Include="controller\MainScreenController.cpp" />
@@ -118,7 +117,6 @@
     <ClCompile Include="view\HUDSprite.cpp" />
     <ClCompile Include="view\Layer.cpp" />
     <ClCompile Include="view\LayerHandler.cpp" />
-    <ClCompile Include="view\screens\HostGameScreen.cpp" />
     <ClCompile Include="view\screens\JoinGameScreen.cpp" />
     <ClCompile Include="view\screens\MainScreen.cpp" />
     <ClCompile Include="view\screens\PauseScreen.cpp" />
@@ -132,7 +130,6 @@
     <ClInclude Include="client.h" />
     <ClInclude Include="controller\Controller.h" />
     <ClInclude Include="controller\GameController.h" />
-    <ClInclude Include="controller\HostGameController.h" />
     <ClInclude Include="controller\IController.h" />
     <ClInclude Include="controller\JoinGameController.h" />
     <ClInclude Include="controller\MainScreenController.h" />
@@ -171,7 +168,6 @@
     <ClInclude Include="view\HUDSprite.h" />
     <ClInclude Include="view\Layer.h" />
     <ClInclude Include="view\LayerHandler.h" />
-    <ClInclude Include="view\screens\HostGameScreen.h" />
     <ClInclude Include="view\screens\JoinGameScreen.h" />
     <ClInclude Include="view\screens\MainScreen.h" />
     <ClInclude Include="view\screens\PauseScreen.h" />
