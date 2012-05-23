@@ -1,16 +1,8 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 // Class header
 #include "worlddata.h"
 #include "world.h"
 
 #include "../global.h"
-
-////////////////////////////////////////////////////////////
-/// World data class. Holds all data world class uses for
-/// easy access from view and network handler
-////////////////////////////////////////////////////////////
 
 namespace mp
 {
@@ -27,9 +19,9 @@ namespace mp
 		isClient = false;
 	}
 
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Destructor.
+	 */
     WorldData::~WorldData(){}
 
 	/**
@@ -148,15 +140,11 @@ namespace mp
 	/**
 	 * Adds a new chain to the world.
 	 */
-	void WorldData::addChain( b2World* world, b2Vec2 vertices[], int length, float friction )
-	{
+	void WorldData::addChain( b2World* world, b2Vec2 vertices[], int length, float friction ) {
 		chains.push_back(new WorldChain(world,vertices,length,friction));
-
-
 	}
 
-	void WorldData::clearPhysics()
-	{
+	void WorldData::clearPhysics() {
 		for(std::vector<WorldChain*>::iterator it = chains.begin(); it != chains.end(); ++it)
 			delete((*it));
 		chains.clear();
@@ -165,7 +153,7 @@ namespace mp
 	/**
 	 * Adds the supplied body to the world.
 	 */
-	void WorldData::addBody( b2Body* body  ) {
+	void WorldData::addBody( b2Body* body ) {
 		bodies.push_back( body );
     }
 
@@ -178,7 +166,7 @@ namespace mp
 	}
 
 	/**
-	 * Remove the supplied bullet
+	 * Remove the supplied bullet.
 	 * @param bullet - bullet to be removed.
 	 */
 	void WorldData::removeBullet(Bullet* bullet)
@@ -199,20 +187,21 @@ namespace mp
 		}
 		worldDataMutex.unlock();
 	}
-	
 
-	
 	/**
-	 * Removes all bullets from the game.
+	 * Removes all bullets from the game, except the ones 
+	 * belonging to the player with clientID.
+	 *
+	 * @param clientID - the client whose bullets should be exempt from deleting.
 	 */
 	void WorldData::removeAllBullets(sf::Int8 clientID)
 	{
-		//worldDataMutex.lock();
+		worldDataMutex.lock();
 		Bullet* bullet;
 		int test1, test2;
 		std::cout<<"kommer jag hit?"<<std::endl;
-		for(unsigned int i = 0; i < bullets.size(); i++)
-		{
+		for(unsigned int i = 0; i < bullets.size(); i++) {
+
 			bullet = bullets.at(i);
 			test1 = clientID, test2 = bullet->getOwner();
 			std::cout<<test1<<"     "<<test2<<std::endl;
@@ -222,7 +211,7 @@ namespace mp
 				scheduleForDeletion(bullet);
 			}
 		}
-		//worldDataMutex.unlock();
+		worldDataMutex.unlock();
 	}
 
 	/**
@@ -230,10 +219,8 @@ namespace mp
 	 */
 	ICharacter* WorldData::getCharacter(sf::Int8 clientID)
 	{
-		for(unsigned int i = 0; i < characters.size(); i++)
-		{
-			if(characters.at(i)->getClientID() == clientID)
-			{
+		for(unsigned int i = 0; i < characters.size(); i++) {
+			if(characters.at(i)->getClientID() == clientID) {
 				return characters.at(i);
 			}
 		}
@@ -246,8 +233,7 @@ namespace mp
 	 */
 	void WorldData::notify(Event e, void* object)
 	{
-		if (e == BULLET_DELETED)
-		{
+		if (e == BULLET_DELETED) {
 			//worldDataMutex.lock();
 			Bullet* bullet = (Bullet*) object;
 			removeBullet(bullet);
@@ -258,20 +244,18 @@ namespace mp
 			// remove bullet from bullets vector in worlddata and view
 			//worldDataMutex.unlock();
 		}
-		else if (e == BULLET_ADDED)
-		{
+		else if (e == BULLET_ADDED) {
+
 			Bullet* bullet = (Bullet*) object;
 
-			if(isClient)
-			{
-				//notifyObservers(SEND_BULLET, bullet);
+			if(isClient) {
+				notifyObservers(SEND_BULLET, bullet);
 			}
 			//worldDataMutex.lock();
 			addBullet(bullet);
 			//worldDataMutex.unlock();
 		}
-		else if (e == CONNECT_SERVER)
-		{
+		else if (e == CONNECT_SERVER) {
 			notifyObservers(CONNECT_SERVER, 0);
 		}
 	}

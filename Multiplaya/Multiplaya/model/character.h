@@ -98,7 +98,7 @@ namespace mp
 			b2Vec2 getTargetPos(){ return targetPos; }
 
 			sf::Int8 getClientID(){ return clientID; } 
-			void setClientID(sf::Int8 ID) { clientID = ID; }
+			void setClientID(sf::Int8 ID);
 
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {}
@@ -106,10 +106,12 @@ namespace mp
 			void connectToServer();
 
         private:
+			b2Vec2 bodySize;
 			b2Vec2 targetPos;
 			void shoot();
 			void moveY(bool left);
 			void moveX(bool left);
+			void createBody(b2Vec2 position);
 
 			sf::Clock* shootingTimer;
 			sf::Clock* reloadTimer;
@@ -118,6 +120,7 @@ namespace mp
 			short maxHealth;
 			short cooldown;
 			short reloadTime;
+			short linearDamping;
 			
 			short clip;
 			short clipSize;
