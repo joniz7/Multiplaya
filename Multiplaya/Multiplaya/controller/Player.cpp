@@ -96,6 +96,7 @@ namespace mp {
         {
 			b2Vec2 targetPos(mousePos.x, mousePos.y);
 			worldDataMutex.lock();
+			character->setFocusing(true);
 			character->primaryFire(targetPos);
 			worldDataMutex.unlock();
         }
