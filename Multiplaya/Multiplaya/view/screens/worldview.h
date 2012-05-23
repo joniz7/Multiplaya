@@ -16,11 +16,12 @@
 #include <iostream>
 #include <sstream>
 
-#include "../CharacterView.h"
+
 // Box2D specific headers
 #include <Box2D.h>
 
 // Game specific headers
+#include "../CharacterView.h"
 #include "../BulletView.h"
 #include "../HUDSprite.h"
 
@@ -119,10 +120,10 @@ namespace mp
 
 			std::vector<sf::VertexArray*> worldGeo;
 
-			void addBullet(Bullet* bullet);
+			void addBullet(IBullet* bullet);
 			void deleteBullet(int i);
 
-			void addCharacter(Character* character);
+			void addCharacter(ICharacter* character);
 			void deleteCharacter(int i);
 
 

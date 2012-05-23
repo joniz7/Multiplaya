@@ -14,7 +14,7 @@
 
 namespace mp
 {
-	class Character;
+	class ICharacter;
 	class CharacterSprite;
 
 	/**

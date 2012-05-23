@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-/// Character class. Holds data regarding character
+/// DefaultCharacter class. Holds data regarding character
 /// position, activity etc..
 /// Does NOT handle player input etc., see Player class for
 /// that kind of stuff
@@ -13,12 +13,13 @@
 #include <list>
 #include <cmath>
 
-#include "../includes/Defines.h"
-#include "../includes/Global.h"
+#include "../../includes/Defines.h"
+#include "../../includes/Global.h"
 
-#include "ICharacter.h"
+#include "../ICharacter.h"
+#include "../IBullet.h"
 
-#include "../services/resourcehandler.h"
+#include "../../services/resourcehandler.h"
 
 namespace mp
 {
@@ -26,11 +27,11 @@ namespace mp
 	 * A class representing a character.
 	 * Holds data regarding character position, activity etc..
 	 */
-    class Character : public ICharacter
+    class DefaultCharacter : public ICharacter
     {
         public:
-			Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
-            virtual ~Character();
+			DefaultCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
+            virtual ~DefaultCharacter();
 
 			void update();
 			void jump();
@@ -43,7 +44,7 @@ namespace mp
 			void crouch() {};
 			void primaryFire(b2Vec2 &targetPos);
 			void secondaryFire() {}
-			void inflictDamage(Bullet* b);
+			void inflictDamage(IBullet* b);
 			void kill();
 			void setInvincible(float duration) {}
 			void setMovement(int direction) {}

@@ -7,7 +7,7 @@ namespace mp
 	 * 
 	 * @param model - the bullet model we're representing.
 	 */
-	BulletView::BulletView(Bullet* model)
+	BulletView::BulletView(IBullet* model)
 	{
 		this->model = model;
 		bulletVis = new sf::RectangleShape( sf::Vector2f(0.25f * PIXEL_SCALE, 1.5f * PIXEL_SCALE) );

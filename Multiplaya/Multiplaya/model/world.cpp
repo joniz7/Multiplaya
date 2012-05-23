@@ -66,9 +66,9 @@ namespace mp
 			world->ClearForces();
 
 			// Nullify bullet gravity		-9.8f * 8
-			std::vector<Bullet*> bulletVec = *worldData->getBullets();
+			std::vector<IBullet*> bulletVec = *worldData->getBullets();
 
-			for(std::vector<Bullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
+			for(std::vector<IBullet*>::iterator it = bulletVec.begin(); it != bulletVec.end(); ++it) {
 				(*it)->getBody()->ApplyForce( b2Vec2( 0, 0.1f), (*it)->getBody()->GetPosition());
 			}
 
@@ -135,7 +135,6 @@ namespace mp
 	 */
 	void World::createCharacter(b2Vec2 position, b2Vec2 size, sf::Int8 clientID)
 	{
-		//Character* character = ;
 		worldDataMutex.lock();
 		worldData->addCharacter( world, position, size, clientID );
 		worldDataMutex.unlock();
@@ -151,7 +150,7 @@ namespace mp
 	void World::createBullet(b2Vec2 position, b2Vec2 force, sf::Int8 clientID)
 	{
 		worldDataMutex.lock();
-		worldData->addBullet(new Bullet(clientID, world, position, force));
+		worldData->addBullet(new StandardBullet(clientID, world, position, force));
 		worldDataMutex.unlock();
 	}
 

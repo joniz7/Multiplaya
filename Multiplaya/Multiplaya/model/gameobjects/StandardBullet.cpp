@@ -2,7 +2,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 // Class header
-#include "bullet.h"
+#include "StandardBullet.h"
 
 ////////////////////////////////////////////////////////////
 /// Bullet
@@ -18,13 +18,12 @@ namespace mp
 	 * @param position - Position to spawn bullet
 	 * @param force	- Force to give to the bullet.
 	 */
-    Bullet::Bullet( sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
+    StandardBullet::StandardBullet( sf::Int8 owner, b2World* world, b2Vec2 position, b2Vec2 force )
     {
 		this->objectType = bullet;
-
 		this->world = world;
-
 		this->owner = owner;
+		this->damage = 5;
 
 		this->initialForce = force;
 		// Set up body definition
@@ -60,7 +59,7 @@ namespace mp
 		body->ApplyForce( force, body->GetPosition() );
 	}
 
-	void Bullet::onCollision(GameObject* crashedWith)
+	void StandardBullet::onCollision(GameObject* crashedWith)
 	{
 		// If we collide with wall, explode.
 		if (crashedWith->objectType == wall) {
@@ -83,19 +82,15 @@ namespace mp
 	/**
 	 * Destroy the bullet.
 	 */
-	void Bullet::explode() {
+	void StandardBullet::explode() {
 		//std::cout << "explode()" << std::endl;
 		scheduleDeletion(BULLET_DELETED);
 	}
 
-	bool Bullet::operator==(const Bullet* bullet) {
-        return bullet == this;
-    }
-
 	/**
 	 * Destructor.
 	 */
-	Bullet::~Bullet() {
+	StandardBullet::~StandardBullet() {
 		// remove body from box2d
 		world->DestroyBody(this->body);
 	}
