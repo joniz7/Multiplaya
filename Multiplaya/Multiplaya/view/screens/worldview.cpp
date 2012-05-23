@@ -136,7 +136,6 @@ namespace mp
 		y = int(killsSprite->getPosition().y + (float(HEIGHT)/18.0f));
 		killsText->setPosition(float(x), float(y));
 
-
 		//------- Create "Deaths" sprite. -------
 		deathsTexture = new sf::Texture();
 		// Load image file
@@ -277,18 +276,6 @@ namespace mp
 		this->mousePosWindow = mousePosWindow;
 	}
 
-	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-		// Set world view so we can render the world in world coordinates
-		window.setView(*camera);
-		// Render World.
-		drawEnvironment(window);
-		drawWorldGeo(window);
-		drawCharacters(window);
-		drawBullets(window);
-		// Render UI.
-		drawHUD( window );			
-	}
-
 	// Fetches all character models,
 	// and creates their corresponding views.
 	void WorldView::createCharacterViews() {
@@ -307,12 +294,17 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	// better name
-	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
-	{
-		std::vector<GameObjectView*>::const_iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ )
-			window.draw(**it);
+	
+	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+		// Set world view so we can render the world in world coordinates
+		window.setView(*camera);
+		// Render World.
+		drawEnvironment(window);
+		drawWorldGeo(window);
+		drawCharacters(window);
+		drawBullets(window);
+		// Render UI.
+		drawHUD( window );			
 	}
 
 	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
@@ -359,6 +351,14 @@ namespace mp
 			window.draw(*renderFpsTxt);
 			window.draw(*logicFpsTxt);
 		}
+	}
+
+	// better name
+	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
+	{
+		std::vector<GameObjectView*>::const_iterator it;
+		for ( it = vector.begin() ; it < vector.end(); it++ )
+			window.draw(**it);
 	}
 
 	void WorldView::update()
