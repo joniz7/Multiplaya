@@ -26,19 +26,19 @@ namespace mp
 	   return true;
 	}
 
-	////////////////////////////////////////////////////////////
-	// Returns a pointer to the singleton
-	////////////////////////////////////////////////////////////
+	/**
+	 * Returns a pointer to the singleton.
+	 */
     ConfigHandler& ConfigHandler::instance()
     {
 		static ConfigHandler instance;
 		return instance;
     }
 
-	////////////////////////////////////////////////////////////
-	// Constructor. Loads the config file and saves settings to
-	// memory.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Constructor. Loads the config file and saves settings to
+	 * memory.
+	 */
 	ConfigHandler::ConfigHandler()
 	{
 		configPath="config.cfg";

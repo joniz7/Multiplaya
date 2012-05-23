@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 // Class header
 #include "MusicHandler.h"
 
@@ -9,27 +6,21 @@
 #include<fstream>
 #include<algorithm>
 
-
-////////////////////////////////////////////////////////////
-/// Singleton class for handling music playback.
-////////////////////////////////////////////////////////////
-
 namespace mp	
 {
 
-	////////////////////////////////////////////////////////////
-	// Returns a pointer to the singleton.
-	////////////////////////////////////////////////////////////
-    MusicHandler& MusicHandler::instance()
-    {
+	/**
+	 * Returns a pointer to the singleton.
+	 */
+    MusicHandler& MusicHandler::instance() {
 		static MusicHandler instance;
 		return instance;
     }
 
-	////////////////////////////////////////////////////////////
-	/// Constructor. Loads settings from config,
-	///               and loads music files from filesystem.
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Constructor. Loads settings from config,
+	 * and loads music files from filesystem.
+	 */
 	MusicHandler::MusicHandler() {
 		// Fetch settings from config.
 		menuMusicEnabled = ConfigHandler::instance().getBool("m_menumusicenabled");
@@ -69,9 +60,9 @@ namespace mp
 		
 	}
 
-	//////////////////////////////////////
-	/// Play the current song.
-	//////////////////////////////////////
+	/**
+	 * Play the current song.
+	 */
 	void MusicHandler::play() {
 		// If we have chosen a song,
 		if (currentlyPlaying != NULL) {
@@ -80,9 +71,9 @@ namespace mp
 		}
 	}
 
-	//////////////////////////////////////
-	/// Pause the current song.
-	//////////////////////////////////////
+	/**
+	 * Pause the current song.
+	 */
 	void MusicHandler::pause() {
 		// If we have chosen a song,
 		if (currentlyPlaying != NULL) {
@@ -91,9 +82,9 @@ namespace mp
 		}
 	}
 
-	//////////////////////////////////////
-	/// Play the song with the given name.
-	//////////////////////////////////////
+	/**
+	 * Select the song with the given name.
+	 */
 	void MusicHandler::chooseSong(std::string name) {
 		// If the name exists in map,
 		if(songs.find(name) != songs.end()) {
@@ -106,6 +97,9 @@ namespace mp
 		}
 	}
 
+	/**
+	 * Destructor. Destroys all created music objects.
+	 */
 	MusicHandler::~MusicHandler() {
 
 		currentlyPlaying = NULL;

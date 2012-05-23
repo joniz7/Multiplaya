@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Class description
-////////////////////////////////////////////////////////////
 #ifndef CONFIGHANDLER_H_INCLUDED
 #define CONFIGHANDLER_H_INCLUDED
 
@@ -13,13 +10,21 @@
 
 namespace mp
 {
+	/**
+	 * A singleton class, which reads data from a configuration file
+	 * and stores it in a map for easy access from anywhere in the program.
+	 */
     class ConfigHandler
     {
         public:
 			static ConfigHandler& instance();
+			/// Returns the boolean value associated whith the inputted string.
 			bool getBool(std::string s) {return boolMap[s];};
+			/// Returns the integer value associated whith the inputted string.
 			int getInt(std::string s) {return intMap[s];};
+			/// Returns the floating point value associated whith the inputted string.
 			float getFloat(std::string s) {return floatMap[s];};
+			/// Returns the string value associated whith the inputted string.
 			std::string getString(std::string s) {return stringMap[s];};
         private:
 			// Singleton stuff

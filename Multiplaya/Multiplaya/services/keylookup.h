@@ -1,7 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Class for translating config key codes to SFML keys and
-/// mouse buttons.
-////////////////////////////////////////////////////////////
 #ifndef KEYLOOKUP_H_INCLUDED
 #define KEYLOOKUP_H_INCLUDED
 
@@ -17,6 +13,10 @@
 
 namespace mp
 {
+	/**
+	 * Class for translating config key codes to SFML keys and
+	 * mouse buttons.
+	 */
     class KeyLookup
     {
         public:

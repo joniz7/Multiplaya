@@ -17,6 +17,9 @@
 
 namespace mp
 {
+	/**
+	 * Singleton class for handling music playback.
+	 */
     class MusicHandler {
         public:
 			static MusicHandler& instance();

@@ -10,9 +10,10 @@
 
 namespace mp	
 {
-	////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Creates a new instance of the Input class.
+	 * Loads keys from the config file.
+	 */
     Input::Input()
     {
 		keyLib = new KeyLookup();

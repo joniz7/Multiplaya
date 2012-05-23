@@ -4,26 +4,23 @@
 // Class header
 #include "resourcehandler.h"
 
-////////////////////////////////////////////////////////////
-/// Class for managing loading and distribution of resources
-/// such as textures, sounds etc.
-////////////////////////////////////////////////////////////
+
 
 namespace mp
 {
 
-	////////////////////////////////////////////////////////////
-	// Returns a pointer to the singleton
-	////////////////////////////////////////////////////////////
+	/**
+	 * Returns a pointer to the singleton.
+	 */
     ResourceHandler& ResourceHandler::instance()
     {
 		static ResourceHandler instance;
 		return instance;
     }
 
-	////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Constructor. Creates a new resource handler.
+	 */
     ResourceHandler::ResourceHandler()
     {
 		// Set default values
@@ -42,9 +39,10 @@ namespace mp
 		*/
     }
 
-	////////////////////////////////////////////////////////////
-	// Load a texture to memory. Returns true upon success.
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Loads a texture to memory.
+	 * @returns true upon success.
+	 */
     bool ResourceHandler::loadTexture(std::string filePath)
     {
 		// Check if file already has been loaded
@@ -72,9 +70,10 @@ namespace mp
 		}
     }
 
-	////////////////////////////////////////////////////////////
-	// Load a sound to memory. Returns true upon success.
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Loads a sound to memory.
+	 * @returns true upon success.
+	 */
     bool ResourceHandler::loadSound(std::string filePath)
     {
 		// Check if file already has been loaded
@@ -98,9 +97,9 @@ namespace mp
 		}
     }
 
-	////////////////////////////////////////////////////////////
-	// Given a string vector loads several textures.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Given a string vector, loads several textures.
+	 */
     void ResourceHandler::loadTextures(std::vector<std::string> pathVec)
     {
 		// Iterate through vector and load all files
@@ -108,11 +107,11 @@ namespace mp
 			loadTexture(pathVec[i]);
 	}
 
-	////////////////////////////////////////////////////////////
-	// Fetches a texture pointer. If texture is not present in
-	// memory and doRtLoading is set to true, attempt to load
-	// the texture.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Fetches a texture pointer. If texture is not present in
+	 * memory and doRtLoading is set to true, attempt to load
+	 * the texture.
+	 */
 	sf::Texture* ResourceHandler::getTexture(std::string filePath)
     {
 		// Check if file exists in memory
@@ -135,11 +134,11 @@ namespace mp
 		}
     }
 
-	////////////////////////////////////////////////////////////
-	// Fetches a sound pointer. If sound is not present in
-	// memory and doRtLoading is set to true, attempt to load
-	// the sound.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Fetches a sound pointer. If sound is not present in
+	 * memory and doRtLoading is set to true, attempt to load
+	 * the sound.
+	 */
 	sf::SoundBuffer* ResourceHandler::getSound(std::string filePath)
     {
 		// Check if file exists in memory
@@ -162,10 +161,10 @@ namespace mp
 		}
     }
 
-	////////////////////////////////////////////////////////////
-	// Reloads a texture stored in memory. Returns true upon
-	// success.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Reloads a texture stored in memory.
+	 * @returns true upon success.
+	 */
 	bool ResourceHandler::reloadTexture(std::string filePath)
     {
 		// Check if file exists in memory
@@ -178,9 +177,9 @@ namespace mp
 		return false;	// It didn't
     }
 
-	////////////////////////////////////////////////////////////
-	// Reloads all textures stored in memory.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Reloads all textures stored in memory.
+	 */
 	void ResourceHandler::reloadAllTextures()
     {
 		// Iterate through map and reload every texture
@@ -188,9 +187,9 @@ namespace mp
 			(*it).second.loadFromFile((*it).first);
     }
 
-	////////////////////////////////////////////////////////////
-	// Reloads all sounds stored in memory.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Reloads all sounds stored in memory.
+	 */
 	void ResourceHandler::reloadAllSounds()
     {
 		// Iterate through map and reload every texture
