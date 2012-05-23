@@ -47,13 +47,6 @@ namespace mp
 					notifyObservers(RESUME_GAME,0);
 				}
 
-				if ( disconnectButton->isMouseOver(mousePos) )
-				{
-					disconnectButton->click();
-					// Change screen in main controller.
-					notifyObservers(SHOW_MAIN_MENU, 0); // TODO event DISCONNECT ?
-				}
-
 				if ( exitButton->isMouseOver(mousePos) )
 				{
 					// Tell main controller to shut everything down.
