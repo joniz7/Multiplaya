@@ -28,15 +28,16 @@ namespace mp
 		public:
 			CharacterView(ICharacter* character);
 			~CharacterView();
-			void updateAnimation(float elapsed);
-			void updatePosition();
 
+			void update();
 			virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		private:
 			bool facingLeft;
 			
 			ICharacter* character;
 			AnimatedSprite* sprite;
+
+			void updateAnimation(float elapsed);
 
 	};
 }

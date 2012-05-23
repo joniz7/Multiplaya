@@ -36,7 +36,7 @@ namespace mp
 	 * Updates the position of this bulletView.
 	 * Fetches the position and velocity from our bullet model.
 	 */
-	void BulletView::updatePosition()
+	void BulletView::update()
 	{
 		worldDataMutex.lock();
 		const b2Vec2& position = model->getBody()->GetPosition();

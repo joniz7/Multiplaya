@@ -26,7 +26,7 @@ namespace mp
 		BulletView(IBullet* model);
 		virtual ~BulletView();
 		/// Update sprite position to match bullets position
-		void updatePosition();
+		void update();
 		
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	private:

@@ -135,27 +135,23 @@ namespace mp
 	void WorldView::update()
 	{
 
-		tempLoop();
-
-		// Fetch mouse-related things.
-			dotSpr->setPosition(mousePosWindow.x, mousePosWindow.y);
-
 		updateFpsCounters();
 		updateCamera();
-		// Set sight position
-	
+		updateSightPos();
+;
 		// Access world data
 		worldDataMutex.lock();
-
-		for(unsigned int i = 0; i < characters.size(); i++) {
-			( (CharacterView*) characters.at(i) )->updateAnimation( (float) (1.0f / 60.0f) );
-		}
-
-		updatePositions();
+		updateBullets();
+		updateCharacters();
 		updateHUD();
 
 		// Unlock world data mutex
 		worldDataMutex.unlock();
+	}
+
+	void WorldView::updateSightPos()
+	{
+		dotSpr->setPosition( (float) mousePosWindow.x, (float) mousePosWindow.y);
 	}
 
 	void WorldView::updateFpsCounters()
@@ -176,15 +172,6 @@ namespace mp
 			counter = 0;
 		} else
 			counter++;
-	}
-
-	void WorldView::tempLoop()
-	{
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
-		{
-			std::cout<<"Updating world geo view"<<std::endl;
-			updateWorldVertices();
-		}
 	}
 
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
@@ -365,22 +352,16 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::updatePositions()
-	{
-		updateBulletsPos();
-		updateCharactersPos();
-	}
-
-	void WorldView::updateBulletsPos()
+	void WorldView::updateBullets()
 	{
 		worldViewMutex.lock();
-		updateVectorPos(bullets);
+		updateVector(bullets);
 		worldViewMutex.unlock();
 	}
 
-	void WorldView::updateCharactersPos()
+	void WorldView::updateCharacters()
 	{
-		updateVectorPos(characters);
+		updateVector(characters);
 	}
 
 	void WorldView::updateHUD()
@@ -490,13 +471,11 @@ namespace mp
 		}
 	}
 
-
-	// better name maybe
-	void WorldView::updateVectorPos(std::vector<GameObjectView*>& vector)
+	void WorldView::updateVector(std::vector<GameObjectView*>& vector)
 	{
 		std::vector<GameObjectView*>::iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ ) {
-			(*it)->updatePosition();
+			(*it)->update();
 		}
 	}
 
@@ -508,7 +487,6 @@ namespace mp
 		const float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
 		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
-
 
 		sf::Vector2f mousePos = window->convertCoords(mousePosWindow, *getCamera());
 

@@ -65,6 +65,12 @@ namespace mp
 				getRenderWindow()->setMouseCursorVisible(true);
 			}
 
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+		{
+			std::cout<<"Updating world geo view"<<std::endl;
+			((WorldView*)getScreen())->updateWorldVertices();
+		}
+
 
 			// Handle zooming of viewport
 			if ( ev.type == sf::Event::MouseWheelMoved ) {
