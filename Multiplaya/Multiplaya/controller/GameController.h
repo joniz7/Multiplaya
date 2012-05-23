@@ -26,7 +26,7 @@
 
 #include <iostream>
 
-#include "../global.h"
+#include "../includes/Global.h"
 
 #include "../view/screens/worldview.h"
 

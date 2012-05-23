@@ -587,7 +587,7 @@ namespace mp
 		Bullet* tempBullet;
 		float32 x, y, xvel, yvel;
 
-		for(int i = 0; i<worldData->getBullets()->size(); i++)
+		for(unsigned int i = 0; i<worldData->getBullets()->size(); i++)
 		{
 			tempBullet = worldData->getBullet(i);
 			if(tempBullet->getOwner() != clientID)

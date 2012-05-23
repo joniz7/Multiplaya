@@ -6,7 +6,7 @@
 
 #include "GameObjectView.h"
 // Game specific headers
-#include "../global.h"
+#include "../includes/Global.h"
 #include "../model/ICharacter.h"
 #include "animatedsprite.h"
 

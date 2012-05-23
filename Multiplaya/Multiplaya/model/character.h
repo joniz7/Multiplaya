@@ -13,8 +13,8 @@
 #include <list>
 #include <cmath>
 
-#include "../defines.h"
-#include "../global.h"
+#include "../includes/Defines.h"
+#include "../includes/Global.h"
 
 #include "ICharacter.h"
 

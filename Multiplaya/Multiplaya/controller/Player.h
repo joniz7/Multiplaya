@@ -4,7 +4,7 @@
 // Box2D specific headers
 #include <Box2D.h>
 
-#include "../global.h"
+#include "../includes/Global.h"
 #include "../model/ICharacter.h"
 #include "../services/input.h"
 
