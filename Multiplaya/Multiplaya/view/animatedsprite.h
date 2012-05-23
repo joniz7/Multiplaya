@@ -17,7 +17,7 @@
 #include <SFML/Graphics.hpp>
 
 //Defines
-#include "../defines.h"
+#include "../Defines.h"
 
 namespace mp
 {

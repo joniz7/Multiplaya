@@ -129,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
-    <ClInclude Include="client.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="controller\Controller.h" />
     <ClInclude Include="controller\GameController.h" />
     <ClInclude Include="controller\HostGameController.h" />
@@ -138,7 +138,7 @@
     <ClInclude Include="controller\MainScreenController.h" />
     <ClInclude Include="controller\PauseScreenController.h" />
     <ClInclude Include="controller\Player.h" />
-    <ClInclude Include="defines.h" />
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="model\bullet.h" />
     <ClInclude Include="model\character.h" />
