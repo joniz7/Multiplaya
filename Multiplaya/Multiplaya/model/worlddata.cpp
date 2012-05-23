@@ -205,7 +205,7 @@ namespace mp
 	/**
 	 * Removes all bullets from the game.
 	 */
-void WorldData::removeAllBullets(sf::Int8 clientID)
+	void WorldData::removeAllBullets(sf::Int8 clientID)
 	{
 		//worldDataMutex.lock();
 		Bullet* bullet;
@@ -264,7 +264,7 @@ void WorldData::removeAllBullets(sf::Int8 clientID)
 
 			if(isClient)
 			{
-				notifyObservers(SEND_BULLET, bullet);
+				//notifyObservers(SEND_BULLET, bullet);
 			}
 			//worldDataMutex.lock();
 			addBullet(bullet);

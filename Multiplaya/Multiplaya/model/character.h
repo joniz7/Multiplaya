@@ -56,13 +56,18 @@ namespace mp
 
 			short getClip() { return clip; }
 
-			void setGrounded(bool choice) { grounded = choice; }
-			bool isGrounded() { return grounded; }
-
 			bool isShooting();
 			
 			bool isReloading();
-			void reload();
+			void reload();	
+
+			/// Sets the position of the character in the world.
+			void setPosition(b2Vec2 pos, float32 a) { body->SetTransform(pos, a); }
+			/// Sets the velocity of the character.
+			void setLinVelocity(b2Vec2 v) { body->SetLinearVelocity(v); }
+
+			void setGrounded(bool choice) { grounded = choice; }
+			bool isGrounded() { return grounded; }
 
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
@@ -70,15 +75,10 @@ namespace mp
 			void setIsFacingLeft(bool choice) { facingLeft = choice; }
 			bool isFacingLeft() { return facingLeft; }
 
-			/// Sets the position of the character in the world.
-			void setPosition(b2Vec2 pos, float32 a) { body->SetTransform(pos, a); }
-			/// Sets the velocity of the character.
-			void setLinVelocity(b2Vec2 v) { body->SetLinearVelocity(v); }
-
 			void setTouchingWallLeft(bool choice){ leftSideTouchWall = choice; }
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }
 
-			void isTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
+			void setTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
 			bool isTouchingWallRight(){ return rightSideTouchWall; }
 
 			void setWallSliding(bool choice){wallSliding = choice;}

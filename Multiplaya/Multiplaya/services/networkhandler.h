@@ -56,7 +56,7 @@ namespace mp
 			virtual void notify(Event e, void* object);
         private:
 			
-			void setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle);
+			void setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle, bool grounded, bool walking, bool facingLeft, bool touchingLeftWall, bool touchingRightWall, bool wallSliding, bool flipping);
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;

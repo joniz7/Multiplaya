@@ -73,6 +73,8 @@ namespace mp
 		std::map<sf::Int8, Client>::iterator it;
 		int outputType, test;
 
+		bool grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping;
+
 		////////////////////////////////////////////////////////////
 		/// Main loop of network handler.
 		/// Constantly checks if there are any incoming data packets
@@ -193,12 +195,12 @@ namespace mp
 								std::cout<<"type "<<outputType<<std::endl;
 
 						//std::cout<<"type 4"<<std::endl;
-						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
+						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle >> grounded >> walking >> facingLeft >>  touchingLeftWall >> touchingRightWall >> wallSliding >> flipping;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
 						test = clientID;
 
-						setCharacterData(clientID, position, velocity, angle);
+						setCharacterData(clientID, position, velocity, angle, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
 						break;
 					//Receive bullet data from a client
 					case 5:
@@ -252,11 +254,11 @@ namespace mp
 
 						for(int i = 0; i<numOfChars; i++)
 						{
-							receivedData >> clientID >> x >> y >> xvel >> yvel >> angle;
+							receivedData >> clientID >> x >> y >> xvel >> yvel >> angle >> grounded >> walking >> facingLeft >>  touchingLeftWall >> touchingRightWall >> wallSliding >> flipping;
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
-							setCharacterData(clientID, position, velocity, angle);
+							setCharacterData(clientID, position, velocity, angle, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
 						}
 						break;
 					//Receive bullet data from the server
@@ -266,25 +268,27 @@ namespace mp
 
 						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
-
-						//worldDataMutex.lock();
-						//The current bullet list is cleared
-						if(worldData->getBullets()->size()>0)
+						if(numOfBullets > 0)
 						{
-							worldData->removeAllBullets(myID);
-						}
-						
-						//And replaced by the new bullets
-						for(int i = 0; i<numOfBullets; i++)
-						{
-							receivedData >> clientID >> x >> y >> xvel >> yvel;
-							if((x != 0 && y != 0) && (xvel != 0 && yvel != 0))
+							//worldDataMutex.lock();
+							//The current bullet list is cleared
+							if(worldData->getBullets()->size()>0)
 							{
+								worldData->removeAllBullets(myID);
+							}
+						
+							//And replaced by the new bullets
+							for(int i = 0; i<numOfBullets; i++)
+							{
+								receivedData >> clientID >> x >> y >> xvel >> yvel;
+								if((x != 0 && y != 0) && (xvel != 0 && yvel != 0))
+								{
 
-							position.Set(x,y);
-							velocity.Set(xvel, yvel);
+								position.Set(x,y);
+								velocity.Set(xvel, yvel);
 
-							model->createBullet(position, velocity, clientID);
+								model->createBullet(position, velocity, clientID);
+								}
 							}
 						}
 						//worldDataMutex.unlock();
@@ -446,9 +450,16 @@ namespace mp
 		float32 xvel = worldData->getCurrentCharacter()->getLinVelocity().x;
 		float32 yvel = worldData->getCurrentCharacter()->getLinVelocity().y;
 		float32 angle = worldData->getCurrentCharacter()->getAngle();
+		bool grounded = worldData->getCurrentCharacter()->isGrounded();
+		bool walking = worldData->getCurrentCharacter()->isWalking();
+		bool facingLeft = worldData->getCurrentCharacter()->isFacingLeft();
+		bool touchingLeftWall = worldData->getCurrentCharacter()->isTouchingWallLeft();
+		bool touchingRightWall = worldData->getCurrentCharacter()->isTouchingWallRight();
+		bool wallSliding = worldData->getCurrentCharacter()->isWallSliding();
+		bool flipping = worldData->getCurrentCharacter()->isFlipping();
 		worldDataMutex.unlock();
 
-		packet << type << myID << x << y << xvel << yvel << angle;
+		packet << type << myID << x << y << xvel << yvel << angle << grounded << walking << facingLeft <<  touchingLeftWall << touchingRightWall << wallSliding << flipping;
 		sender.send(packet, serverIP, 55001);
 	}
 
@@ -461,6 +472,7 @@ namespace mp
 		sf::Packet packet;
 		ICharacter* tempCharacter;
 		float32 x, y, xvel, yvel, angle;
+		bool grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping;
 		packet << type << numOfChars;
 
 		for(int i = 0; i<numOfChars; i++)
@@ -472,9 +484,16 @@ namespace mp
 			xvel = tempCharacter->getLinVelocity().x;
 			yvel = tempCharacter->getLinVelocity().y;
 			angle = tempCharacter->getAngle();
+			grounded = tempCharacter->isGrounded();
+			walking = tempCharacter->isWalking();
+			facingLeft = tempCharacter->isFacingLeft();
+			touchingLeftWall = tempCharacter->isTouchingWallLeft();
+			touchingRightWall = tempCharacter->isTouchingWallRight();
+			wallSliding = tempCharacter->isWallSliding();
+			flipping = tempCharacter->isFlipping();
 
 			if(tempClientID != clientID)
-				packet << tempClientID << x << y << xvel << yvel << angle;
+				packet << tempClientID << x << y << xvel << yvel << angle << grounded << walking << facingLeft <<  touchingLeftWall << touchingRightWall << wallSliding << flipping;
 		}
 
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
@@ -634,7 +653,7 @@ namespace mp
 	/// Updates the position, linear velocity and angle of the specified
 	/// character
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle)
+	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle, bool grounded, bool walking, bool facingLeft, bool touchingWallLeft, bool touchingWallRight, bool wallSliding, bool flipping)
 	{
 		worldDataMutex.lock();
 		if(worldData->exists(clientID))
@@ -642,6 +661,13 @@ namespace mp
 			ICharacter* character = worldData->getCharacter(clientID);
 			character->setPosition(position, angle);
 			character->setLinVelocity(velocity);
+			character->setGrounded(grounded);
+			character->setWalking(walking);
+			character->setIsFacingLeft(facingLeft);
+			character->setTouchingWallLeft(touchingWallLeft);
+			character->setTouchingWallRight(touchingWallRight);
+			character->setWallSliding(wallSliding);
+			character->setFlipping(flipping);
 		}
 		worldDataMutex.unlock();
 	}
