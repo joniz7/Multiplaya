@@ -34,7 +34,7 @@
       <UniqueIdentifier>{343e8df0-ce33-4790-9725-4365f5d0eb74}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\model\gameobjects">
-      <UniqueIdentifier>{72331523-442a-459d-b5c9-8faa08a42024}</UniqueIdentifier>
+      <UniqueIdentifier>{7df07e17-9544-44e5-8c43-6b0cc736a10a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +78,6 @@
       <Filter>src\view\screens</Filter>
     </ClCompile>
     <ClCompile Include="view\screens\Screen.cpp">
-      <Filter>src\view\screens</Filter>
-    </ClCompile>
-    <ClCompile Include="view\screens\worldview.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
     <ClCompile Include="view\screens\PauseScreen.cpp">
@@ -146,6 +143,9 @@
     <ClCompile Include="App.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="view\screens\WorldView.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
     <ClCompile Include="model\gameobjects\DefaultCharacter.cpp">
       <Filter>src\model\gameobjects</Filter>
     </ClCompile>
@@ -200,9 +200,6 @@
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="view\screens\Screen.h">
-      <Filter>src\view\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="view\screens\worldview.h">
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="view\screens\PauseScreen.h">
@@ -280,14 +277,17 @@
     <ClInclude Include="App.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="model\IBullet.h">
-      <Filter>src\model</Filter>
+    <ClInclude Include="view\screens\WorldView.h">
+      <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="model\gameobjects\DefaultCharacter.h">
-      <Filter>src\model\gameobjects</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="model\gameobjects\StandardBullet.h">
-      <Filter>src\model\gameobjects</Filter>
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="model\IBullet.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

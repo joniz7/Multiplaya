@@ -655,7 +655,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle, bool grounded, bool walking, bool facingLeft, bool touchingWallLeft, bool touchingWallRight, bool wallSliding, bool flipping)
 	{
-		//worldDataMutex.lock();
+		worldDataMutex.lock();
 		if(worldData->exists(clientID))
 		{
 			ICharacter* character = worldData->getCharacter(clientID);
@@ -669,7 +669,7 @@ namespace mp
 			character->setWallSliding(wallSliding);
 			character->setFlipping(flipping);
 		}
-		//worldDataMutex.unlock();
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////

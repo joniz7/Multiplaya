@@ -117,7 +117,7 @@
     <ClCompile Include="view\screens\MainScreen.cpp" />
     <ClCompile Include="view\screens\PauseScreen.cpp" />
     <ClCompile Include="view\screens\Screen.cpp" />
-    <ClCompile Include="view\screens\worldview.cpp" />
+    <ClCompile Include="view\screens\WorldView.cpp" />
     <ClCompile Include="view\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +164,7 @@
     <ClInclude Include="view\screens\MainScreen.h" />
     <ClInclude Include="view\screens\PauseScreen.h" />
     <ClInclude Include="view\screens\Screen.h" />
-    <ClInclude Include="view\screens\worldview.h" />
+    <ClInclude Include="view\screens\WorldView.h" />
     <ClInclude Include="view\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

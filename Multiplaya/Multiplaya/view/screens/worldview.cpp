@@ -28,8 +28,6 @@ namespace mp
 		counter = 0;
 		elapsed = 0;
 
-		//layerHandler = new LayerHandler();
-		characterXPos = 0;
 		initialize();
 	}
 
@@ -52,7 +50,6 @@ namespace mp
 			worldViewMutex.lock();
 			IBullet* bullet = ( IBullet* )object;
 			addBullet(bullet);
-			std::cout<<bullet->getBody()->GetLinearVelocity().x<<std::endl;
 			worldViewMutex.unlock();
 		}
 		else if (e == BULLET_DELETED)
@@ -77,30 +74,18 @@ namespace mp
 
 	void WorldView::addBullet(IBullet* bullet)
 	{
-		worldViewMutex.lock();
 		bullets.push_back(  new BulletView( bullet ) );
-		worldViewMutex.unlock();
 	}
 
 	// delete bullet at index i
 	void WorldView::deleteBullet(int i)
 	{
-		worldViewMutex.lock();
-
 		BulletView* bullet = (BulletView*) bullets.at(i);
 		bullets.erase(bullets.begin() + i );
 		delete bullet;
-
-		worldViewMutex.unlock();
 	}
 
-	/*void WorldView::characterMoved(float moved)
-	{
-		layerHandler->update(moved);
-	}*/
-
-	void WorldView::addCharacter(ICharacter* character)
-	{
+	void WorldView::addCharacter(ICharacter* character) {
 		characters.push_back( new CharacterView( character ) );
 	}
 
@@ -126,7 +111,6 @@ namespace mp
 	/// not already at our maximum zoomed-in level.
 	/////////////////////////////////
 	void WorldView::zoomIn() {
-		std::cout << "zooming in." << std::endl;
 		if (zoomLevel < zoomLevelMax) {
 			camera->zoom(1.0f/1.1f);
 			zoomLevel++;
@@ -144,67 +128,63 @@ namespace mp
 		}
 	}
 
-	void WorldView::tempLoop()
+	void WorldView::setMousePos(const sf::Vector2i& mousePosWindow)
 	{
-			// Fetch mouse-related things.
-			*mousePosWindow = sf::Mouse::getPosition(*window);
-			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / PIXEL_SCALE;
-
-			*mouseSpeed = (*mousePos - *mousePosOld) / PIXEL_SCALE;
-
-			// diff
-			//	layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
-			characterXPos = worldData->getCharacter(0)->getPosition().x;
-
-
-			// Every 10th frame:
-			if(counter == 10) {
-				int renderFps = (int)(1 / elapsed);
-
-				worldDataMutex.lock();
-				int logicFps = worldData->getLogicFps();
-				worldDataMutex.unlock();
-
-				std::string renderFpsString = convertInt(renderFps);
-				renderFpsTxt->setString("Render fps: " + renderFpsString);
-				std::string logicFpsString = convertInt(logicFps);
-				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
-
-				counter = 0;
-			} else {
-				counter++;
-			}
-
-			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
-			{
-				std::cout<<"Updating world geo view"<<std::endl;
-				updateWorldVertices();
-			}
-
+		this->mousePosWindow = mousePosWindow;
 	}
-
 	void WorldView::update()
 	{
 
 		tempLoop();
-		calculateCam();
 
+		// Fetch mouse-related things.
+			dotSpr->setPosition(mousePosWindow.x, mousePosWindow.y);
 
+		updateFpsCounters();
+		updateCamera();
+		// Set sight position
+	
 		// Access world data
 		worldDataMutex.lock();
 
-		for(unsigned int i=0;i<characters.size();i++) {
-			((CharacterView*)characters.at(i))->updateAnimation( (float)(1.0f/60.0f) );
+		for(unsigned int i = 0; i < characters.size(); i++) {
+			( (CharacterView*) characters.at(i) )->updateAnimation( (float) (1.0f / 60.0f) );
 		}
 
 		updatePositions();
 		updateHUD();
-		//layerHandler->update(1);
-
 
 		// Unlock world data mutex
 		worldDataMutex.unlock();
+	}
 
+	void WorldView::updateFpsCounters()
+	{
+		// Every 10th frame:
+		if(counter == 10) {
+			int renderFps = (int)(1 / elapsed);
+
+			worldDataMutex.lock();
+			int logicFps = worldData->getLogicFps();
+			worldDataMutex.unlock();
+
+			std::string renderFpsString = convertInt(renderFps);
+			renderFpsTxt->setString("Render fps: " + renderFpsString);
+			std::string logicFpsString = convertInt(logicFps);
+			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
+
+			counter = 0;
+		} else
+			counter++;
+	}
+
+	void WorldView::tempLoop()
+	{
+		if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+		{
+			std::cout<<"Updating world geo view"<<std::endl;
+			updateWorldVertices();
+		}
 	}
 
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
@@ -218,12 +198,7 @@ namespace mp
 			//	window.draw(*layerHandler);
 
 			// Render UI.
-			drawHUD( window );
-			
-
-			// Save mouse position for next frame
-			*mousePosOld = *mousePos;
-			
+			drawHUD( window );			
 	}
 
 	//////////////////////////////
@@ -249,14 +224,6 @@ namespace mp
 		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
 		backgroundSprite->setPosition(-20, -10);
 		backgroundSprite->scale(0.02f, 0.02f);
-
-		sunTexture = new sf::Texture();
-		sunTexture->loadFromFile("resources/sun.jpg");
-		sunSprite = new sf::Sprite();
-		sunSprite->setTexture(*sunTexture);
-		sunSprite->setPosition(-20, -10);
-		sunSprite->scale(0.01f, 0.01f);
-	//	layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.
 		fontGothic = new sf::Font();
@@ -289,13 +256,6 @@ namespace mp
 		// Rotate the view 180 degrees
 		camera->setRotation(180);
 
-		//------------------
-		// Instantiate stuff.
-		mousePos = new sf::Vector2f(0,0);
-		mousePosWindow = new sf::Vector2i(0,0);
-		mousePosOld = new sf::Vector2f(0,0);
-		mouseSpeed = new sf::Vector2f(0,0);
-
 		// Initialize the HUD.
 		this->initHUD();
 
@@ -307,9 +267,6 @@ namespace mp
 		dotSpr->setTexture(*dotTex);
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5f, 0.5f);
-
-		//instantiate map graphics
-		constructMapGraphics();
 
 		createCharacterViews();
 
@@ -325,7 +282,7 @@ namespace mp
 	void WorldView::initHUD() {
 		const int WIDTH = window->getSize().x;
 		const int HEIGHT = window->getSize().y;
-		int x,y;
+		int x, y;
 
 		//------- Create "Kills" sprite. -------
 		killsTexture = new sf::Texture();
@@ -408,36 +365,8 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::constructMapGraphics()
-	{
-		sf::Color c(10, 10, 10);
-
-		ground = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
-		ground->setFillColor( c );
-		ground->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
-		ground->setPosition(0, -50.0f * PIXEL_SCALE);
-
-		ground2 = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
-		ground2->setFillColor( c );
-		ground2->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
-		ground2->setPosition(0, 50.0f * PIXEL_SCALE);
-
-		ground3 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
-		ground3->setFillColor( c );
-		ground3->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
-		ground3->setPosition(50.0f * PIXEL_SCALE, 0);
-
-		ground4 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
-		ground4->setFillColor( c );
-		ground4->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
-		ground4->setPosition(-50.0f * PIXEL_SCALE, 0);
-	}
-
 	void WorldView::updatePositions()
 	{
-		// Set sight position
-		dotSpr->setPosition(float(mousePosWindow->x), float(mousePosWindow->y));
-
 		updateBulletsPos();
 		updateCharactersPos();
 	}
@@ -451,9 +380,7 @@ namespace mp
 
 	void WorldView::updateCharactersPos()
 	{
-		//worldViewMutex.lock();
 		updateVectorPos(characters);
-		//worldViewMutex.unlock();
 	}
 
 	void WorldView::updateHUD()
@@ -526,10 +453,6 @@ namespace mp
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
 		window.draw(*backgroundSprite);
-		//window.draw(*ground);
-		//window.draw(*ground2);
-		//window.draw(*ground3);
-		//window.draw(*ground4);
 	}
 
 	void WorldView::drawBullets(sf::RenderTarget& window) const
@@ -541,9 +464,7 @@ namespace mp
 
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
-		//worldViewMutex.lock();
 		drawVector(characters, window);
-		//worldViewMutex.unlock();
 	}
 
 	void WorldView::drawHUD(sf::RenderTarget& window) const {
@@ -579,7 +500,7 @@ namespace mp
 		}
 	}
 
-	void WorldView::calculateCam()
+	void WorldView::updateCamera()
 	{
 		worldDataMutex.lock();
 		// Calculate camera position (somehwere between character and mouse)
@@ -588,8 +509,11 @@ namespace mp
 		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
 
-		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
-		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
+
+		sf::Vector2f mousePos = window->convertCoords(mousePosWindow, *getCamera());
+
+		float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
+		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
 		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
 	}
@@ -626,19 +550,8 @@ namespace mp
 		delete backgroundTexture;
 		delete backgroundSprite;
 
-		// TODO: This (as well as their creation) should be dynamic.
-		delete ground;
-		delete ground2;
-		delete ground3;
-		delete ground4;
-
 		delete dotTex;
 		delete dotSpr;
-
-		delete mousePosOld;
-		delete mousePos;
-		delete mousePosWindow;
-		delete mouseSpeed;
     }
 
 }
