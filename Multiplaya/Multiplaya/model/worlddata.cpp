@@ -58,6 +58,7 @@ namespace mp
 		std::cout << "Adding character" << std::endl;
 
 		ICharacter* c = new DefaultCharacter(world, pos, size, clientID);
+		
 		c ->addObserver(this);
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
@@ -225,7 +226,8 @@ namespace mp
 	 */
 	void WorldData::notify(Event e, void* object)
 	{
-		if (e == BULLET_DELETED) {
+		if (e == BULLET_DELETED) 
+		{
 			//worldDataMutex.lock();
 			IBullet* bullet = (IBullet*) object;
 			removeBullet(bullet);
@@ -236,19 +238,30 @@ namespace mp
 			// remove bullet from bullets vector in worlddata and view
 			//worldDataMutex.unlock();
 		}
-		else if (e == BULLET_ADDED) {
+		else if (e == BULLET_ADDED) 
+		{
 
 			IBullet* bullet = (IBullet*) object;
 
-			if(isClient) {
+			if(isClient) 
+			{
 				notifyObservers(SEND_BULLET, bullet);
 			}
 			//worldDataMutex.lock();
 			addBullet(bullet);
 			//worldDataMutex.unlock();
 		}
-		else if (e == CONNECT_SERVER) {
+		else if (e == CONNECT_SERVER) 
+		{
 			notifyObservers(CONNECT_SERVER, 0);
+		}
+		else if(e == CHARACTER_DIED)
+		{
+			notifyObservers(CHARACTER_DIED, object);
+		}
+		else if(e == CHARACTER_KILLED)
+		{
+			notifyObservers(CHARACTER_KILLED, object);
 		}
 	}
 

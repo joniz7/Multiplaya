@@ -55,6 +55,8 @@ namespace mp
 
 			short getKills()  { return kills; }
 			short getDeaths() { return deaths; }
+			void setKills(short kills){this->kills = kills;}
+			void setDeaths(short deaths){this->deaths = deaths;}
 
 			short getClip() { return clip; }
 
@@ -147,10 +149,6 @@ namespace mp
 			bool flipping;
 			bool backwards;
 			bool shouldFaceLeft;
-
-			sf::Sound soundFire;
-			sf::Sound soundReload;
-			sf::Sound soundJump;
 
 			sf::Int8 clientID;
 
