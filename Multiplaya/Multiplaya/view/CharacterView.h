@@ -17,6 +17,12 @@ namespace mp
 	class Character;
 	class CharacterSprite;
 
+	/**
+	 * The visual representation of a character.
+	 *
+	 * Is tied to an ICharacter, which we poll continuously
+	 * for its position and its state (walking, jumping etc).
+	 */
 	class CharacterView : public GameObjectView
 	{
 		public:
