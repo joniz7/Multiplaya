@@ -46,15 +46,6 @@ namespace mp
 		this->reloadTimer = new sf::Clock();
 
 		createBody(pos);
-
-		soundReload.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_reload1.ogg") );
-		soundFire.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_fire1.ogg") );
-		soundJump.setBuffer( *ResourceHandler::instance().getSound("resources/sound/char_jump.ogg") );
-
-		soundReload.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
-		soundFire.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
-		soundJump.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
-
     }
 
 	/**
@@ -155,7 +146,6 @@ namespace mp
 		}
 		else if ( leftSideTouchWall  )
 		{
-			soundJump.play();
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
 			if(wallSliding)
 				body->ApplyLinearImpulse( b2Vec2( -300, 550), body->GetPosition());
@@ -166,7 +156,6 @@ namespace mp
 		}
 		else if ( rightSideTouchWall  )
 		{
-			soundJump.play();
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
 			if(wallSliding)
 				body->ApplyLinearImpulse( b2Vec2( 300, 550), body->GetPosition());
@@ -288,8 +277,6 @@ namespace mp
 		{
 			// Fill our magazine.
 			this->clip = clipSize;
-			// Play the sound
-			soundReload.play();
 			// Force the user to wait >:)
 			reloadTimer->restart();
 		}
@@ -334,9 +321,6 @@ namespace mp
 		// Create bullet, and add to world.
 		IBullet* bullet = new StandardBullet( clientID , world, gunPosition, force);
 		notifyObservers(BULLET_ADDED, bullet);
-
-		// Play the sound
-		soundFire.play();
 	}
 
 	/**
