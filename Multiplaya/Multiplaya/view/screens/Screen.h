@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include "../GUIElements/GUIElement.h"
 
+
+using namespace guielements;
 namespace mp
 {
 	class Screen : public sf::Drawable

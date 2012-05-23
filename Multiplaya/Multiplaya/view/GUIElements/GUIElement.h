@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-namespace mp
+namespace guielements
 {
 	/**
 	 * Abstract class representing a GUIElement with text inside it

@@ -1,7 +1,7 @@
 #include "GUIElement.h"
 #include <iostream>
 
-namespace mp
+namespace guielements
 {
 	/**
 	* Create a new GUIElement 

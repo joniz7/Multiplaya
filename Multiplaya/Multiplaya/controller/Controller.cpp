@@ -43,7 +43,6 @@ namespace mp
 			case RESUME_GAME:    resumeGame();       break;
 			case SHOW_JOIN:      showJoinMenu();     break;
 			case SHOW_MAIN_MENU: showMainMenu();     break;
-			case SHOW_SETTINGS:  showSettingsMenu(); break;
 			default: break;
 		}
 	}
@@ -96,12 +95,6 @@ namespace mp
 		// Set pointers.
 		this->currentDrawFunction = &Window::drawJoinMenu;
 		this->currentController = controllers["joinGame"];
-	}
-
-	void Controller::showSettingsMenu(){
-		// Set pointers.
-		//this->currentDrawFunction = &Window::drawSettingsMenu;
-		//this->currentController   = controllers["settingsScreen"];
 	}
 
 

@@ -31,7 +31,7 @@ namespace mp
 
 	void JoinGameScreen::initTextFields()
 	{
-		TextField* ipTextField = new TextField(400, 100, 200, 30);
+		guielements::TextField* ipTextField = new guielements::TextField(400, 100, 200, 30);
 		ipTextField->setBorderColorClicked(sf::Color::Blue);
 		ipTextField->setTextColor(sf::Color::Black);
 		ipTextField->setTextSize(20);
