@@ -323,6 +323,10 @@ namespace mp
 						for(int i = 0; i<numOfChars; i++)
 						{
 							receivedData >> clientID >> health >> kills >> deaths;
+							if(clientID == myID)
+							{
+								std::cout <<"new health: "<<health<<"  new kills: "<<kills<<"  new deaths: "<<deaths<<std::endl;
+							}
 							setCharacterData(clientID, health, kills, deaths);
 						}
 						break;
@@ -485,7 +489,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendCharacterDataToClient(sf::Int8 clientID)
 	{
-		sf::Int8 type = 13, tempClientID, numOfChars = worldData->getCharacters()->size();
+		sf::Int8 type = 13, numOfChars = worldData->getCharacters()->size();
 		sf::Packet packet;
 		ICharacter* tempCharacter;
 		float32 x, y, xvel, yvel, angle;
@@ -495,7 +499,7 @@ namespace mp
 		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
-			if(tempClientID != clientID)
+			if(tempCharacter->getClientID() != clientID)
 			{
 				packet << tempCharacter->getClientID();
 				packet << tempCharacter->getPosition().x;
@@ -521,13 +525,18 @@ namespace mp
 
 		packet << type << numOfChars;
 
+		sf::Int8 health, kills, deaths;
 		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
-			packet << tempCharacter->getHealth();
-			packet << tempCharacter->getKills();
-			packet << tempCharacter->getDeaths();
+			packet << tempCharacter->getClientID();
+			health = tempCharacter->getHealth();
+			kills = clientMap[tempCharacter->getClientID()].kills;
+			deaths = clientMap[tempCharacter->getClientID()].deaths;
+			packet << health << kills << deaths;
 		}
+
+		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 	}
 
 
