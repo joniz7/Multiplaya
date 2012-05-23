@@ -62,7 +62,7 @@ namespace mp
 			else
 				portTextField->click();
 		}
-	}
+	} 
 
 	void JoinGameController::clickButton(const sf::Vector2i &mousePos)
 	{

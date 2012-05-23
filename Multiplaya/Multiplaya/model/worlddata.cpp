@@ -207,7 +207,7 @@ namespace mp
 	 */
 	void WorldData::removeAllBullets(sf::Int8 clientID)
 	{
-		//worldDataMutex.lock();
+		worldDataMutex.lock();
 		Bullet* bullet;
 		int test1, test2;
 		std::cout<<"kommer jag hit?"<<std::endl;
@@ -222,7 +222,7 @@ namespace mp
 				scheduleForDeletion(bullet);
 			}
 		}
-		//worldDataMutex.unlock();
+		worldDataMutex.unlock();
 	}
 
 	/**
@@ -264,7 +264,7 @@ namespace mp
 
 			if(isClient)
 			{
-				//notifyObservers(SEND_BULLET, bullet);
+				notifyObservers(SEND_BULLET, bullet);
 			}
 			//worldDataMutex.lock();
 			addBullet(bullet);
