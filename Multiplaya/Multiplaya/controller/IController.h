@@ -24,6 +24,8 @@ namespace mp
 			Screen* getScreen();
 			/// returns pointer to renderwindow
 			sf::RenderWindow* getRenderWindow();
+
+			
 		protected:
 		private:
 			sf::RenderWindow* window;

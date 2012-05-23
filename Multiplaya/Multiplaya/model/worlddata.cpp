@@ -200,18 +200,27 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 	
+
+	
 	/**
 	 * Removes all bullets from the game.
 	 */
-	void WorldData::removeAllBullets()
+	void WorldData::removeAllBullets(sf::Int8 clientID)
 	{
 		//worldDataMutex.lock();
 		Bullet* bullet;
+		int test1, test2;
+		std::cout<<"kommer jag hit?"<<std::endl;
 		for(unsigned int i = 0; i < bullets.size(); i++)
 		{
 			bullet = bullets.at(i);
-			removeBullet(bullet);
-			scheduleForDeletion(bullet);
+			test1 = clientID, test2 = bullet->getOwner();
+			std::cout<<test1<<"     "<<test2<<std::endl;
+			if(bullet->getOwner() != clientID)
+			{
+				removeBullet(bullet);
+				scheduleForDeletion(bullet);
+			}
 		}
 		//worldDataMutex.unlock();
 	}
@@ -255,14 +264,11 @@ namespace mp
 
 			if(isClient)
 			{
-				notifyObservers(SEND_BULLET, bullet);
+				//notifyObservers(SEND_BULLET, bullet);
 			}
-			else
-			{
-				//worldDataMutex.lock();
-				addBullet(bullet);
-				//worldDataMutex.unlock();
-			}
+			//worldDataMutex.lock();
+			addBullet(bullet);
+			//worldDataMutex.unlock();
 		}
 		else if (e == CONNECT_SERVER)
 		{
