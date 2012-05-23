@@ -112,7 +112,6 @@ namespace mp
 	/// not already at our maximum zoomed-in level.
 	/////////////////////////////////
 	void WorldView::zoomIn() {
-		std::cout << "zooming in." << std::endl;
 		if (zoomLevel < zoomLevelMax) {
 			camera->zoom(1.0f/1.1f);
 			zoomLevel++;
@@ -130,52 +129,27 @@ namespace mp
 		}
 	}
 
-	void WorldView::tempLoop()
+	void WorldView::setMousePos(const sf::Vector2i& mousePosWindow)
 	{
-			// Fetch mouse-related things.
-			*mousePosWindow = sf::Mouse::getPosition(*window);
-			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / PIXEL_SCALE;
-
-			*mouseSpeed = (*mousePos - *mousePosOld) / PIXEL_SCALE;
-
-			// Every 10th frame:
-			if(counter == 10) {
-				int renderFps = (int)(1 / elapsed);
-
-				worldDataMutex.lock();
-				int logicFps = worldData->getLogicFps();
-				worldDataMutex.unlock();
-
-				std::string renderFpsString = convertInt(renderFps);
-				renderFpsTxt->setString("Render fps: " + renderFpsString);
-				std::string logicFpsString = convertInt(logicFps);
-				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
-
-				counter = 0;
-			} else {
-				counter++;
-			}
-
-			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
-			{
-				std::cout<<"Updating world geo view"<<std::endl;
-				updateWorldVertices();
-			}
-
+		this->mousePosWindow = mousePosWindow;
 	}
-
 	void WorldView::update()
 	{
 
 		tempLoop();
-		calculateCam();
 
+		// Fetch mouse-related things.
+			dotSpr->setPosition(mousePosWindow.x, mousePosWindow.y);
 
+		updateFpsCounters();
+		updateCamera();
+		// Set sight position
+	
 		// Access world data
 		worldDataMutex.lock();
 
-		for(unsigned int i=0;i<characters.size();i++) {
-			((CharacterView*)characters.at(i))->updateAnimation( (float)(1.0f/60.0f) );
+		for(unsigned int i = 0; i < characters.size(); i++) {
+			( (CharacterView*) characters.at(i) )->updateAnimation( (float) (1.0f / 60.0f) );
 		}
 
 		updatePositions();
@@ -183,7 +157,35 @@ namespace mp
 
 		// Unlock world data mutex
 		worldDataMutex.unlock();
+	}
 
+	void WorldView::updateFpsCounters()
+	{
+		// Every 10th frame:
+		if(counter == 10) {
+			int renderFps = (int)(1 / elapsed);
+
+			worldDataMutex.lock();
+			int logicFps = worldData->getLogicFps();
+			worldDataMutex.unlock();
+
+			std::string renderFpsString = convertInt(renderFps);
+			renderFpsTxt->setString("Render fps: " + renderFpsString);
+			std::string logicFpsString = convertInt(logicFps);
+			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
+
+			counter = 0;
+		} else
+			counter++;
+	}
+
+	void WorldView::tempLoop()
+	{
+		if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+		{
+			std::cout<<"Updating world geo view"<<std::endl;
+			updateWorldVertices();
+		}
 	}
 
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
@@ -197,12 +199,7 @@ namespace mp
 			//	window.draw(*layerHandler);
 
 			// Render UI.
-			drawHUD( window );
-			
-
-			// Save mouse position for next frame
-			*mousePosOld = *mousePos;
-			
+			drawHUD( window );			
 	}
 
 	//////////////////////////////
@@ -260,13 +257,6 @@ namespace mp
 		// Rotate the view 180 degrees
 		camera->setRotation(180);
 
-		//------------------
-		// Instantiate stuff.
-		mousePos = new sf::Vector2f(0,0);
-		mousePosWindow = new sf::Vector2i(0,0);
-		mousePosOld = new sf::Vector2f(0,0);
-		mouseSpeed = new sf::Vector2f(0,0);
-
 		// Initialize the HUD.
 		this->initHUD();
 
@@ -293,7 +283,7 @@ namespace mp
 	void WorldView::initHUD() {
 		const int WIDTH = window->getSize().x;
 		const int HEIGHT = window->getSize().y;
-		int x,y;
+		int x, y;
 
 		//------- Create "Kills" sprite. -------
 		killsTexture = new sf::Texture();
@@ -378,9 +368,6 @@ namespace mp
 
 	void WorldView::updatePositions()
 	{
-		// Set sight position
-		dotSpr->setPosition(float(mousePosWindow->x), float(mousePosWindow->y));
-
 		updateBulletsPos();
 		updateCharactersPos();
 	}
@@ -514,7 +501,7 @@ namespace mp
 		}
 	}
 
-	void WorldView::calculateCam()
+	void WorldView::updateCamera()
 	{
 		worldDataMutex.lock();
 		// Calculate camera position (somehwere between character and mouse)
@@ -523,8 +510,11 @@ namespace mp
 		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
 
-		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
-		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
+
+		sf::Vector2f mousePos = window->convertCoords(mousePosWindow, *getCamera());
+
+		float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
+		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
 		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
 	}
@@ -563,11 +553,6 @@ namespace mp
 
 		delete dotTex;
 		delete dotSpr;
-
-		delete mousePosOld;
-		delete mousePos;
-		delete mousePosWindow;
-		delete mouseSpeed;
     }
 
 }

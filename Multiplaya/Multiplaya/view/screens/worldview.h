@@ -59,6 +59,8 @@ namespace mp
 			void zoomOut();
 			sf::View* getCamera() { return camera; }
 
+			void setMousePos(const sf::Vector2i& mousePos);
+
 			void characterMoved(float moved);
 
 			void resetClock(){
@@ -111,10 +113,7 @@ namespace mp
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
 
-			sf::Vector2f* mousePosOld;
-			sf::Vector2f* mousePos;
-			sf::Vector2i* mousePosWindow;
-			sf::Vector2f* mouseSpeed;
+			sf::Vector2i mousePosWindow;
 
 			std::vector<sf::VertexArray*> worldGeo;
 
@@ -124,12 +123,7 @@ namespace mp
 			void addCharacter(Character* character);
 			void deleteCharacter(int i);
 
-			void calculateCam();
-			void updateHUD();
 
-			void updatePositions();
-			void updateBulletsPos();
-			void updateCharactersPos();
 
 			void createCharacterViews();
 
@@ -137,7 +131,7 @@ namespace mp
 			void initHUD();
 			void initMusic();
 
-			void updateWorldVertices();
+
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 			void drawWorld(sf::RenderTarget& window) const;
@@ -153,6 +147,15 @@ namespace mp
 			virtual void hover (const sf::Vector2i& mousePos) { }
 
 			void tempLoop();
+			void updateFpsCounters();
+
+			void updateCamera();
+			void updateHUD();
+
+			void updatePositions();
+			void updateBulletsPos();
+			void updateCharactersPos();
+			void updateWorldVertices();
 
 			int counter;
 			float elapsed;
