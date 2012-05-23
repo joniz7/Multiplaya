@@ -77,9 +77,6 @@
     <ClCompile Include="view\screens\Screen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
-    <ClCompile Include="view\screens\SettingsScreen.cpp">
-      <Filter>src\view\screens</Filter>
-    </ClCompile>
     <ClCompile Include="view\screens\worldview.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
@@ -203,9 +200,6 @@
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="view\screens\Screen.h">
-      <Filter>src\view\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="view\screens\SettingsScreen.h">
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="view\screens\worldview.h">

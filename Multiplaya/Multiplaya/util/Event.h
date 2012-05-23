@@ -14,7 +14,6 @@ enum Event {
 	RESUME_GAME,
 	SHOW_JOIN,
 	SHOW_MAIN_MENU,
-	SHOW_SETTINGS,
 	// Game mechanics events
 	BULLET_ADDED,
 	BULLET_DELETED,

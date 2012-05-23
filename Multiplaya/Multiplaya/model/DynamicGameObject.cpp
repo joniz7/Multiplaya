@@ -17,7 +17,7 @@ namespace mp
 		}		
 	}
 
-	const b2Vec2& DynamicGameObject::getLinVelocity()
+	b2Vec2 DynamicGameObject::getLinVelocity()
 	{
 		return getBody()->GetLinearVelocity();
 	}

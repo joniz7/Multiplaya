@@ -42,8 +42,6 @@ namespace mp
 			void resumeGame();
 			void showMainMenu();
 			void showJoinMenu();
-			void showSettingsMenu();
-
 	};
 }
 #endif // CONTROLLER_H
