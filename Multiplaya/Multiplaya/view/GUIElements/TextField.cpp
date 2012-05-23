@@ -1,7 +1,7 @@
 #include "TextField.h"
 #include <iostream>
 
-namespace mp
+namespace guielements
 {
 	TextField::TextField(const float xPos, const float yPos, const int width, const int height) : GUIElement(xPos, yPos, width, height)
 	{

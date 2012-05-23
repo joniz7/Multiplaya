@@ -25,7 +25,7 @@
 #include "../HUDSprite.h"
 
 // Not sure if worldViewMutex should be defined here..
-#include "../../global.h"
+#include "../../includes/Global.h"
 
 #include "Screen.h"
 #include "../GUIElements/GUIElement.h"

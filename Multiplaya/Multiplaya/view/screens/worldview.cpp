@@ -5,7 +5,7 @@
 #include "worldview.h"
 #include "../../model/worlddata.h"
 
-#include "../../global.h"
+#include "../../includes/Global.h"
 
 #include "../../services/confighandler.h"
 

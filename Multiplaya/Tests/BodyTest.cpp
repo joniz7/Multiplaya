@@ -6,7 +6,7 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <model/worlddata.h>
+#include <model/WorldData.h>
 
 namespace mpt {
 

@@ -3,7 +3,7 @@
 
 #include "GUIElement.h"
 
-namespace mp
+namespace guielements
 {
 	/**
 	 * Class representing a text field

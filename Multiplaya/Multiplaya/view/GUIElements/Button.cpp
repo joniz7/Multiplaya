@@ -1,6 +1,6 @@
 #include "Button.h"
 
-namespace mp
+namespace guielements
 {
 	// just set size and text, let user set background color and such via methods
 	Button::Button(const float xPos, const float yPos, const int width, const int height,

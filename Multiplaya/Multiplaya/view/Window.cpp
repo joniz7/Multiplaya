@@ -31,10 +31,7 @@ namespace mp
 	void Window::drawJoinMenu() {
 		draw(screens["joinGameScreen"]);
 	}
-	/// Draw the settings menu
-	void Window::drawSettingsMenu() {
-		draw(screens["settingsScreen"]);
-	}
+
 	/// Draw the game screen
 	void Window::drawGame()	{
 		screens["gameScreen"]->update();
@@ -73,7 +70,6 @@ namespace mp
 		screens["mainScreen"] = new MainScreen(resolution);
 		screens["pauseScreen"] = new PauseScreen(resolution);
 		screens["joinGameScreen"] = new JoinGameScreen(resolution);
-		screens["settingsScreen"] = new SettingsScreen(resolution);
 		screens["gameScreen"] = new WorldView(worldData, window);
 	}
 

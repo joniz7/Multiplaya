@@ -6,10 +6,10 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <model/worlddata.h>
-#include <model/world.h>
-#include <model/bullet.h>
-#include <model/character.h>
+#include <model/WorldData.h>
+#include <model/World.h>
+#include <model/Bullet.h>
+#include <model/Character.h>
 
 namespace mpt {
 
