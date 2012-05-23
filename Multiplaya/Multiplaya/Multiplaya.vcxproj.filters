@@ -89,9 +89,6 @@
     <ClCompile Include="controller\IController.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
-    <ClCompile Include="model\ContactListener.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
     <ClCompile Include="model\DynamicGameObject.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
@@ -146,10 +143,13 @@
     <ClCompile Include="view\screens\WorldView.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
-    <ClCompile Include="model\gameobjects\DefaultCharacter.cpp">
-      <Filter>src\model\gameobjects</Filter>
+    <ClCompile Include="services\ContactListener.cpp">
+      <Filter>src\services</Filter>
     </ClCompile>
     <ClCompile Include="model\gameobjects\StandardBullet.cpp">
+      <Filter>src\model\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="model\gameobjects\DefaultCharacter.cpp">
       <Filter>src\model\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -207,9 +207,6 @@
     </ClInclude>
     <ClInclude Include="controller\PauseScreenController.h">
       <Filter>src\controller</Filter>
-    </ClInclude>
-    <ClInclude Include="model\ContactListener.h">
-      <Filter>src\model</Filter>
     </ClInclude>
     <ClInclude Include="model\DynamicGameObject.h">
       <Filter>src\model</Filter>
@@ -288,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="model\IBullet.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="services\ContactListener.h">
+      <Filter>src\services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

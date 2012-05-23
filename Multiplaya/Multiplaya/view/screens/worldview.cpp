@@ -132,47 +132,6 @@ namespace mp
 	{
 		this->mousePosWindow = mousePosWindow;
 	}
-	void WorldView::update()
-	{
-
-		updateFpsCounters();
-		updateCamera();
-		updateSightPos();
-;
-		// Access world data
-		worldDataMutex.lock();
-		updateBullets();
-		updateCharacters();
-		updateHUD();
-
-		// Unlock world data mutex
-		worldDataMutex.unlock();
-	}
-
-	void WorldView::updateSightPos()
-	{
-		dotSpr->setPosition( (float) mousePosWindow.x, (float) mousePosWindow.y);
-	}
-
-	void WorldView::updateFpsCounters()
-	{
-		// Every 10th frame:
-		if(counter == 10) {
-			int renderFps = (int)(1 / elapsed);
-
-			worldDataMutex.lock();
-			int logicFps = worldData->getLogicFps();
-			worldDataMutex.unlock();
-
-			std::string renderFpsString = convertInt(renderFps);
-			renderFpsTxt->setString("Render fps: " + renderFpsString);
-			std::string logicFpsString = convertInt(logicFps);
-			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
-
-			counter = 0;
-		} else
-			counter++;
-	}
 
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 		
@@ -262,7 +221,7 @@ namespace mp
 		std::cout << "Render window initialized!" << std::endl;
 	}
 
-
+	
 	/////////////////////////////////
 	/// Initializes all HUD elements.
 	/////////////////////////////////
@@ -343,42 +302,12 @@ namespace mp
 		std::vector<ICharacter*>* characterModels = worldData->getCharacters();
 		std::cout<<"Characters: "<<worldData->getCharacters()->size()<<std::endl;
 		// Loop through them,
-		for (unsigned int i=0;i<characterModels->size();i++) {
+		for (unsigned int i = 0; i < characterModels->size(); i++) {
 			// create for each one a visual representation,
 			CharacterView* view = new CharacterView(characterModels->at(i));
 			// and add it to our list of CharacterViews.
 			this->characters.push_back( view );
 		}
-		worldDataMutex.unlock();
-	}
-
-	void WorldView::updateBullets()
-	{
-		worldViewMutex.lock();
-		updateVector(bullets);
-		worldViewMutex.unlock();
-	}
-
-	void WorldView::updateCharacters()
-	{
-		updateVector(characters);
-	}
-
-	void WorldView::updateHUD()
-	{
-		worldDataMutex.lock();
-
-		ICharacter* currentCharacter = worldData->getCurrentCharacter();
-		std::ostringstream kills, deaths; // (convert short->string)
-
-		kills << currentCharacter -> getKills();
-		killsText->setString(kills.str());
-		deaths << currentCharacter->getDeaths();
-		deathsText->setString(deaths.str());
-
-		ammoSprite->setState(currentCharacter->getClip());
-		hpSprite->setState(currentCharacter->getHealthState());
-
 		worldDataMutex.unlock();
 	}
 
@@ -396,33 +325,6 @@ namespace mp
 		drawWorldGeo(window);
 		drawCharacters(window);
 		drawBullets(window);
-	}
-
-	////////////////////////////////
-	/// Refreshes the vertices representings
-	/// the world physics geo.
-	////////////////////////////////
-	void WorldView::updateWorldVertices()
-	{
-		worldGeo.clear();
-
-		worldDataMutex.lock();
-
-		std::vector<WorldChain*> wee = *worldData->getChains();
-
-		for(std::vector<WorldChain*>::iterator it = wee.begin(); it != wee.end(); ++it)
-		{
-			worldGeo.push_back( new sf::VertexArray() );
-			
-			std::vector<b2Vec2> vertices = *(*it)->getVertices();
-			
-			for(int i=0;i<vertices.size();i++)
-			{
-				worldGeo.back()->append( sf::Vertex( sf::Vector2f( (vertices.at(i).x)*PIXEL_SCALE , (vertices.at(i).y)*PIXEL_SCALE ) ) );
-				worldGeo.back()->setPrimitiveType(sf::LinesStrip);
-			}
-		}
-		worldDataMutex.unlock();
 	}
 
 	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
@@ -471,6 +373,74 @@ namespace mp
 		}
 	}
 
+	void WorldView::update()
+	{
+		updateFpsCounters();
+		updateCamera();
+		updateSightPos();
+
+		// Access world data
+		worldDataMutex.lock();
+		updateBullets();
+		updateCharacters();
+		updateHUD();
+
+		// Unlock world data mutex
+		worldDataMutex.unlock();
+	}
+
+	void WorldView::updateSightPos()
+	{
+		dotSpr->setPosition( (float) mousePosWindow.x, (float) mousePosWindow.y);
+	}
+
+	void WorldView::updateFpsCounters()
+	{
+		// Every 10th frame:
+		if(counter == 10) {
+			int renderFps = (int)(1 / elapsed);
+
+			worldDataMutex.lock();
+			int logicFps = worldData->getLogicFps();
+			worldDataMutex.unlock();
+
+			std::string renderFpsString = convertInt(renderFps);
+			renderFpsTxt->setString("Render fps: " + renderFpsString);
+			std::string logicFpsString = convertInt(logicFps);
+			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
+
+			counter = 0;
+		} else
+			counter++;
+	}
+
+	////////////////////////////////
+	/// Refreshes the vertices representings
+	/// the world physics geo.
+	////////////////////////////////
+	void WorldView::updateWorldVertices()
+	{
+		worldGeo.clear();
+
+		worldDataMutex.lock();
+
+		std::vector<WorldChain*> wee = *worldData->getChains();
+
+		for(std::vector<WorldChain*>::iterator it = wee.begin(); it != wee.end(); ++it)
+		{
+			worldGeo.push_back( new sf::VertexArray() );
+			
+			std::vector<b2Vec2> vertices = *(*it)->getVertices();
+			
+			for(int i=0;i<vertices.size();i++)
+			{
+				worldGeo.back()->append( sf::Vertex( sf::Vector2f( (vertices.at(i).x)*PIXEL_SCALE , (vertices.at(i).y)*PIXEL_SCALE ) ) );
+				worldGeo.back()->setPrimitiveType(sf::LinesStrip);
+			}
+		}
+		worldDataMutex.unlock();
+	}
+
 	void WorldView::updateVector(std::vector<GameObjectView*>& vector)
 	{
 		std::vector<GameObjectView*>::iterator it;
@@ -494,6 +464,36 @@ namespace mp
 		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
 		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
+	}
+
+	void WorldView::updateBullets()
+	{
+		worldViewMutex.lock();
+		updateVector(bullets);
+		worldViewMutex.unlock();
+	}
+
+	void WorldView::updateCharacters()
+	{
+		updateVector(characters);
+	}
+
+	void WorldView::updateHUD()
+	{
+		worldDataMutex.lock();
+
+		ICharacter* currentCharacter = worldData->getCurrentCharacter();
+		std::ostringstream kills, deaths; // (convert short->string)
+
+		kills << currentCharacter -> getKills();
+		killsText->setString(kills.str());
+		deaths << currentCharacter->getDeaths();
+		deathsText->setString(deaths.str());
+
+		ammoSprite->setState(currentCharacter->getClip());
+		hpSprite->setState(currentCharacter->getHealthState());
+
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////

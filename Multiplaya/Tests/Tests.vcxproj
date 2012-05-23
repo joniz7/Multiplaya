@@ -84,17 +84,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Multiplaya\includes\Global.h" />
-    <ClInclude Include="..\Multiplaya\model\Bullet.h" />
-    <ClInclude Include="..\Multiplaya\model\Character.h" />
-    <ClInclude Include="..\Multiplaya\model\ContactListener.h" />
     <ClInclude Include="..\Multiplaya\model\DynamicGameObject.h" />
     <ClInclude Include="..\Multiplaya\model\GameObject.h" />
     <ClInclude Include="..\Multiplaya\model\ICharacter.h" />
-    <ClInclude Include="..\Multiplaya\model\Wall.h" />
     <ClInclude Include="..\Multiplaya\model\World.h" />
     <ClInclude Include="..\Multiplaya\model\WorldChain.h" />
     <ClInclude Include="..\Multiplaya\model\WorldData.h" />
     <ClInclude Include="..\Multiplaya\services\ConfigHandler.h" />
+    <ClInclude Include="..\Multiplaya\services\ContactListener.h" />
     <ClInclude Include="..\Multiplaya\services\Input.h" />
     <ClInclude Include="..\Multiplaya\services\KeyLookup.h" />
     <ClInclude Include="..\Multiplaya\services\MusicHandler.h" />
@@ -108,15 +105,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Multiplaya\includes\Global.cpp" />
-    <ClCompile Include="..\Multiplaya\model\Bullet.cpp" />
-    <ClCompile Include="..\Multiplaya\model\Character.cpp" />
-    <ClCompile Include="..\Multiplaya\model\ContactListener.cpp" />
     <ClCompile Include="..\Multiplaya\model\DynamicGameObject.cpp" />
-    <ClCompile Include="..\Multiplaya\model\Wall.cpp" />
+    <ClCompile Include="..\Multiplaya\model\gameobjects\DefaultCharacter.cpp" />
+    <ClCompile Include="..\Multiplaya\model\gameobjects\StandardBullet.cpp" />
     <ClCompile Include="..\Multiplaya\model\World.cpp" />
     <ClCompile Include="..\Multiplaya\model\WorldChain.cpp" />
     <ClCompile Include="..\Multiplaya\model\WorldData.cpp" />
     <ClCompile Include="..\Multiplaya\services\ConfigHandler.cpp" />
+    <ClCompile Include="..\Multiplaya\services\ContactListener.cpp" />
     <ClCompile Include="..\Multiplaya\services\Input.cpp" />
     <ClCompile Include="..\Multiplaya\services\KeyLookup.cpp" />
     <ClCompile Include="..\Multiplaya\services\MusicHandler.cpp" />

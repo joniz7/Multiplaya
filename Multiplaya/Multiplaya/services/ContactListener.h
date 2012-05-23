@@ -4,7 +4,7 @@
 // Box2D specific headers
 #include <Box2D.h>
 #include <iostream>
-#include "GameObject.h"
+#include "../model/GameObject.h"
 
 namespace mp {
 
