@@ -148,10 +148,6 @@ namespace mp
 			bool backwards;
 			bool shouldFaceLeft;
 
-			sf::Sound soundFire;
-			sf::Sound soundReload;
-			sf::Sound soundJump;
-
 			sf::Int8 clientID;
 
 
