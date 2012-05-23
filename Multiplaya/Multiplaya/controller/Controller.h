@@ -5,7 +5,6 @@
 #include "../view/Window.h"
 #include "MainScreenController.h"
 #include "PauseScreenController.h"
-#include "HostGameController.h"
 #include "JoinGameController.h"
 #include "GameController.h"
 #include "../services/confighandler.h"
@@ -43,7 +42,6 @@ namespace mp
 			void resumeGame();
 			void showMainMenu();
 			void showJoinMenu();
-			void showHostMenu();
 			void showSettingsMenu();
 
 	};

@@ -24,7 +24,6 @@ namespace mp
 
 			sf::Text* screenTitleText;
 			sf::Text* ipTitleText;
-			sf::Text* portTitleText;
 
 			void initBackground(const sf::Vector2u &resolution);
 			void initText();

@@ -7,7 +7,6 @@
 #include "screens/PauseScreen.h"
 #include "screens/JoinGameScreen.h"
 #include "screens/SettingsScreen.h"
-#include "screens/HostGameScreen.h"
 #include "screens/worldview.h"
 
 namespace mp
@@ -23,7 +22,6 @@ namespace mp
 			void drawMainMenu();
 			void drawPauseMenu();
 			void drawJoinMenu();
-			void drawHostMenu();
 			void drawGame();
 			void drawSettingsMenu();
 

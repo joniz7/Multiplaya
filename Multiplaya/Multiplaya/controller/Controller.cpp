@@ -18,18 +18,12 @@ namespace mp
 		controllers["pauseScreen"] =  new PauseScreenController(renderWindow, window->getScreen("pauseScreen"));
 		controllers["joinGame"] = new JoinGameController(renderWindow, window->getScreen("joinGameScreen"));
 		controllers["game"] =  new GameController(world, renderWindow, window->getScreen("gameScreen"));
-		controllers["hostGame"] =  new HostGameController(renderWindow, window->getScreen("hostScreen"));
-
-		//controllers["worldScreen"] =
-		//new HostGameController(renderWindow, window->getScreen("hostScreen"));
 
 		// Add ourselves as observer.
 		controllers["mainScreen"]->addObserver(this);
 		controllers["pauseScreen"]->addObserver(this);
 		controllers["joinGame"]->addObserver(this);
-		controllers["hostGame"]->addObserver(this);
 		controllers["game"]->addObserver(this);
-		//controllers["worldScreen"]->addObserver(this);
 		runGame = false;
 		// Begin at main menu.
 		this->notify(SHOW_MAIN_MENU, 0);
@@ -47,7 +41,6 @@ namespace mp
 			case EXIT_GAME:      exitGame();         break;
 			case PAUSE_GAME:     pauseGame();        break;
 			case RESUME_GAME:    resumeGame();       break;
-			case SHOW_HOST:      showHostMenu();     break;
 			case SHOW_JOIN:      showJoinMenu();     break;
 			case SHOW_MAIN_MENU: showMainMenu();     break;
 			case SHOW_SETTINGS:  showSettingsMenu(); break;
@@ -105,12 +98,6 @@ namespace mp
 		this->currentController = controllers["joinGame"];
 	}
 
-	void Controller::showHostMenu(){
-		// Set pointers.
-		this->currentDrawFunction = &Window::drawHostMenu;
-		this->currentController = controllers["hostGame"];
-	}
-
 	void Controller::showSettingsMenu(){
 		// Set pointers.
 		//this->currentDrawFunction = &Window::drawSettingsMenu;
@@ -127,12 +114,13 @@ namespace mp
 	 * Sets which NetworkHandler the game should use.
 	 */
 	void Controller::setNetworkHandler(NetworkHandler* network) {
-		HostGameController* hostGameController = (HostGameController*) controllers["hostGame"];
-		GameController* gameController = (GameController*) controllers["game"];
-		JoinGameController* joinGameController = (JoinGameController*) controllers["joinGame"];
+		MainScreenController* mainScreenController = (MainScreenController*) controllers["mainScreen"];
+		mainScreenController->setNetworkHandler(network);
 
-		hostGameController->setNetworkHandler(network);
+		GameController* gameController = (GameController*) controllers["game"];
 		gameController->setNetworkHandler(network);
+
+		JoinGameController* joinGameController = (JoinGameController*) controllers["joinGame"];
 		joinGameController->setNetworkHandler(network);
 	}
 
