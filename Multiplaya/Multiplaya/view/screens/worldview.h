@@ -136,7 +136,6 @@ namespace mp
 
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
-			void drawWorld(sf::RenderTarget& window) const;
 			void drawWorldGeo(sf::RenderTarget& window) const;
 			void drawEnvironment(sf::RenderTarget& window) const;
 			void drawBullets(sf::RenderTarget& window) const;
@@ -152,8 +151,6 @@ namespace mp
 
 			void updateCamera();
 			void updateHUD();
-			void updateBullets();
-			void updateCharacters();
 			void updateSightPos();
 
 
