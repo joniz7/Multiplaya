@@ -17,7 +17,6 @@ namespace mp
 
 		sf::Vector2u resolution = window->getSize();
 		initScreens(worldData);		
-
 	}
 
 	/// Draw the main menu
@@ -31,10 +30,6 @@ namespace mp
 	/// Draw join menu
 	void Window::drawJoinMenu() {
 		draw(screens["joinGameScreen"]);
-	}
-	/// Draw the host menu
-	void Window::drawHostMenu() {
-		draw(screens["hostScreen"]);
 	}
 	/// Draw the settings menu
 	void Window::drawSettingsMenu() {
@@ -78,7 +73,6 @@ namespace mp
 		screens["joinGameScreen"] = new JoinGameScreen(resolution);
 		screens["settingsScreen"] = new SettingsScreen(resolution);
 		screens["gameScreen"] = new WorldView(worldData, window);
-		screens["hostScreen"] = new HostGameScreen(resolution);
 	}
 
 	void Window::initRenderWindow(const std::string screenTitle)

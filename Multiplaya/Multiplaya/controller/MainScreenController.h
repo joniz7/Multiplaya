@@ -3,6 +3,7 @@
 
 #include "IController.h"
 #include "../view/screens/MainScreen.h"
+#include "../services/networkhandler.h"
 #include <iostream>
 
 namespace mp
@@ -16,8 +17,11 @@ namespace mp
 			MainScreenController(sf::RenderWindow* window, Screen* mainScreen);
 			virtual ~MainScreenController();
 			void handleInput();
+			/// Sets which NetworkHandler "join game" should use.
+			void setNetworkHandler(NetworkHandler* network){networkHandler = network;}
 		protected:
 		private:
+		NetworkHandler* networkHandler;
 		sf::Event ev;
 		GUIElement* joinButton;
 		GUIElement* hostButton;
