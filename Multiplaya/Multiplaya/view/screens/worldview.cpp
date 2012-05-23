@@ -28,8 +28,6 @@ namespace mp
 		counter = 0;
 		elapsed = 0;
 
-		//layerHandler = new LayerHandler();
-		characterXPos = 0;
 		initialize();
 	}
 
@@ -77,27 +75,16 @@ namespace mp
 
 	void WorldView::addBullet(Bullet* bullet)
 	{
-		worldViewMutex.lock();
 		bullets.push_back(  new BulletView( bullet ) );
-		worldViewMutex.unlock();
 	}
 
 	// delete bullet at index i
 	void WorldView::deleteBullet(int i)
 	{
-		worldViewMutex.lock();
-
 		BulletView* bullet = (BulletView*) bullets.at(i);
 		bullets.erase(bullets.begin() + i );
 		delete bullet;
-
-		worldViewMutex.unlock();
 	}
-
-	/*void WorldView::characterMoved(float moved)
-	{
-		layerHandler->update(moved);
-	}*/
 
 	void WorldView::addCharacter(Character* character)
 	{
@@ -152,11 +139,6 @@ namespace mp
 
 			*mouseSpeed = (*mousePos - *mousePosOld) / PIXEL_SCALE;
 
-			// diff
-			//	layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
-			characterXPos = worldData->getCharacter(0)->getPosition().x;
-
-
 			// Every 10th frame:
 			if(counter == 10) {
 				int renderFps = (int)(1 / elapsed);
@@ -199,8 +181,6 @@ namespace mp
 
 		updatePositions();
 		updateHUD();
-		//layerHandler->update(1);
-
 
 		// Unlock world data mutex
 		worldDataMutex.unlock();
@@ -249,14 +229,6 @@ namespace mp
 		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
 		backgroundSprite->setPosition(-20, -10);
 		backgroundSprite->scale(0.02f, 0.02f);
-
-		sunTexture = new sf::Texture();
-		sunTexture->loadFromFile("resources/sun.jpg");
-		sunSprite = new sf::Sprite();
-		sunSprite->setTexture(*sunTexture);
-		sunSprite->setPosition(-20, -10);
-		sunSprite->scale(0.01f, 0.01f);
-	//	layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.
 		fontGothic = new sf::Font();
@@ -307,9 +279,6 @@ namespace mp
 		dotSpr->setTexture(*dotTex);
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5f, 0.5f);
-
-		//instantiate map graphics
-		constructMapGraphics();
 
 		createCharacterViews();
 
@@ -408,31 +377,6 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::constructMapGraphics()
-	{
-		sf::Color c(10, 10, 10);
-
-		ground = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
-		ground->setFillColor( c );
-		ground->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
-		ground->setPosition(0, -50.0f * PIXEL_SCALE);
-
-		ground2 = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
-		ground2->setFillColor( c );
-		ground2->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
-		ground2->setPosition(0, 50.0f * PIXEL_SCALE);
-
-		ground3 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
-		ground3->setFillColor( c );
-		ground3->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
-		ground3->setPosition(50.0f * PIXEL_SCALE, 0);
-
-		ground4 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
-		ground4->setFillColor( c );
-		ground4->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
-		ground4->setPosition(-50.0f * PIXEL_SCALE, 0);
-	}
-
 	void WorldView::updatePositions()
 	{
 		// Set sight position
@@ -451,9 +395,7 @@ namespace mp
 
 	void WorldView::updateCharactersPos()
 	{
-		//worldViewMutex.lock();
 		updateVectorPos(characters);
-		//worldViewMutex.unlock();
 	}
 
 	void WorldView::updateHUD()
@@ -526,10 +468,6 @@ namespace mp
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
 		window.draw(*backgroundSprite);
-		//window.draw(*ground);
-		//window.draw(*ground2);
-		//window.draw(*ground3);
-		//window.draw(*ground4);
 	}
 
 	void WorldView::drawBullets(sf::RenderTarget& window) const
@@ -541,9 +479,7 @@ namespace mp
 
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
-		//worldViewMutex.lock();
 		drawVector(characters, window);
-		//worldViewMutex.unlock();
 	}
 
 	void WorldView::drawHUD(sf::RenderTarget& window) const {
@@ -625,12 +561,6 @@ namespace mp
 		// Background.
 		delete backgroundTexture;
 		delete backgroundSprite;
-
-		// TODO: This (as well as their creation) should be dynamic.
-		delete ground;
-		delete ground2;
-		delete ground3;
-		delete ground4;
 
 		delete dotTex;
 		delete dotSpr;

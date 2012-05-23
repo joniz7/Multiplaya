@@ -108,11 +108,6 @@ namespace mp
 			sf::Texture* backgroundTexture;
 			sf::Sprite* backgroundSprite;
 
-			sf::RectangleShape* ground;
-			sf::RectangleShape* ground2;
-			sf::RectangleShape* ground3;
-			sf::RectangleShape* ground4;
-
 			sf::Texture* dotTex;
 			sf::Sprite* dotSpr;
 
@@ -128,8 +123,6 @@ namespace mp
 
 			void addCharacter(Character* character);
 			void deleteCharacter(int i);
-
-			void constructMapGraphics();
 
 			void calculateCam();
 			void updateHUD();
@@ -163,10 +156,6 @@ namespace mp
 
 			int counter;
 			float elapsed;
-			sf::Texture* sunTexture;
-			sf::Sprite* sunSprite;
-
-			float characterXPos;
     };
 }
 
