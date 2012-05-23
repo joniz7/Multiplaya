@@ -55,8 +55,9 @@ namespace mp
 
 			virtual void notify(Event e, void* object);
         private:
-			
-			void setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle, bool grounded, bool walking, bool facingLeft, bool touchingLeftWall, bool touchingRightWall, bool wallSliding, bool flipping);
+			void setCharacterData(sf::Int8 clientID, short health, short kills, short deaths);
+			void setCharacterMoveData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle);
+			void setCharacterAnimation(sf::Int8 clientID, bool grounded, bool walking, bool facingLeft, bool touchingLeftWall, bool touchingRightWall, bool wallSliding, bool flipping);
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;
@@ -68,7 +69,7 @@ namespace mp
 			unsigned short receivePort;
 			sf::Int8 myID;
 			bool hasConnected;
-			std::vector<BufferBullet> bulletsToSend;
+//			std::vector<BufferBullet> bulletsToSend;
 
 			bool sendOutput;
     };

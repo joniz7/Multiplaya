@@ -17,7 +17,7 @@ namespace mp
     {
 		this->worldData = worldData;
 		this->model = model;
-		currentClientID = 1;
+		currentClientID = 2;
 		myID = 0;
 
 		isServer = false;
@@ -200,7 +200,9 @@ namespace mp
 						velocity.Set(xvel, yvel);
 						test = clientID;
 
-						setCharacterData(clientID, position, velocity, angle, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
+						setCharacterMoveData(clientID, position, velocity, angle);
+						setCharacterAnimation(clientID, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
+
 						break;
 					//Receive bullet data from a client
 					case 5:
@@ -258,7 +260,8 @@ namespace mp
 							position.Set(x,y);
 							velocity.Set(xvel, yvel);
 
-							setCharacterData(clientID, position, velocity, angle, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
+							setCharacterMoveData(clientID, position, velocity, angle);
+							setCharacterAnimation(clientID, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
 						}
 						break;
 					//Receive bullet data from the server
@@ -310,8 +313,22 @@ namespace mp
 							model->createCharacter(position, size, clientID);
 						}
 						break;
-					//Remove the specified character
+					//Receive health, kills and deaths from server
 					case 16:
+					{
+						receivedData >> numOfChars;
+
+						short health, kills, deaths;
+
+						for(int i = 0; i<numOfChars; i++)
+						{
+							receivedData >> clientID >> health >> kills >> deaths;
+							setCharacterData(clientID, health, kills, deaths);
+						}
+						break;
+					}
+					//Remove the specified character
+					case 17:
 						if(sendOutput)
 								std::cout<<"type "<<outputType<<std::endl;
 
@@ -478,26 +495,42 @@ namespace mp
 		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
-			tempClientID = tempCharacter->getClientID();
-			x = tempCharacter->getPosition().x;
-			y = tempCharacter->getPosition().y;
-			xvel = tempCharacter->getLinVelocity().x;
-			yvel = tempCharacter->getLinVelocity().y;
-			angle = tempCharacter->getAngle();
-			grounded = tempCharacter->isGrounded();
-			walking = tempCharacter->isWalking();
-			facingLeft = tempCharacter->isFacingLeft();
-			touchingLeftWall = tempCharacter->isTouchingWallLeft();
-			touchingRightWall = tempCharacter->isTouchingWallRight();
-			wallSliding = tempCharacter->isWallSliding();
-			flipping = tempCharacter->isFlipping();
-
 			if(tempClientID != clientID)
-				packet << tempClientID << x << y << xvel << yvel << angle << grounded << walking << facingLeft <<  touchingLeftWall << touchingRightWall << wallSliding << flipping;
+			{
+				packet << tempCharacter->getClientID();
+				packet << tempCharacter->getPosition().x;
+				packet << tempCharacter->getPosition().y;
+				packet << tempCharacter->getLinVelocity().x;
+				packet << tempCharacter->getLinVelocity().y;
+				packet << tempCharacter->getAngle();
+				packet << tempCharacter->isGrounded();
+				packet << tempCharacter->isWalking();
+				packet << tempCharacter->isFacingLeft();
+				packet << tempCharacter->isTouchingWallLeft();
+				packet << tempCharacter->isTouchingWallRight();
+				packet << tempCharacter->isWallSliding();
+				packet << tempCharacter->isFlipping();
+			}
 		}
 
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+
+		type = 16;
+
+		packet.clear();
+
+		packet << type << numOfChars;
+
+		for(int i = 0; i<numOfChars; i++)
+		{
+			tempCharacter = worldData->getCharacter(i);
+			packet << tempCharacter->getHealth();
+			packet << tempCharacter->getKills();
+			packet << tempCharacter->getDeaths();
+		}
 	}
+
+
 
 	////////////////////////////////////////////////////////////
 	/// Sends all characters to a client and tells it to create them
@@ -624,6 +657,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::sendBulletDataToServer()
 	{
+		/*
 		if(bulletsToSend.size()>0)
 		{
 			sf::Int8 type = 5, numOfBullets = bulletsToSend.size();
@@ -647,13 +681,29 @@ namespace mp
 
 			sender.send(packet, serverIP, 55001);
 		}
+		*/
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Updates the position, linear velocity and angle of the specified
-	/// character
+	/// Sets general data about the character.
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle, bool grounded, bool walking, bool facingLeft, bool touchingWallLeft, bool touchingWallRight, bool wallSliding, bool flipping)
+	void NetworkHandler::setCharacterData(sf::Int8 clientID, short health, short kills, short deaths)
+	{
+		worldDataMutex.lock();
+		if(worldData->exists(clientID))
+		{
+			ICharacter* character = worldData->getCharacter(clientID);
+			character->setHealth(health);
+			character->setKills(kills);
+			character->setDeaths(deaths);
+		}
+		worldDataMutex.unlock();
+	}
+	////////////////////////////////////////////////////////////
+	/// Updates the position, linear velocity and angle of the specified character.
+	/// Data that is used to move the character.
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::setCharacterMoveData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle)
 	{
 		worldDataMutex.lock();
 		if(worldData->exists(clientID))
@@ -661,6 +711,19 @@ namespace mp
 			ICharacter* character = worldData->getCharacter(clientID);
 			character->setPosition(position, angle);
 			character->setLinVelocity(velocity);
+		}
+		worldDataMutex.unlock();
+	}
+
+	////////////////////////////////////////////////////////////
+	/// Sets what animation the character is playing.
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::setCharacterAnimation(sf::Int8 clientID, bool grounded, bool walking, bool facingLeft, bool touchingWallLeft, bool touchingWallRight, bool wallSliding, bool flipping)
+	{
+		worldDataMutex.lock();
+		if(worldData->exists(clientID))
+		{
+			ICharacter* character = worldData->getCharacter(clientID);
 			character->setGrounded(grounded);
 			character->setWalking(walking);
 			character->setIsFacingLeft(facingLeft);
@@ -745,6 +808,16 @@ namespace mp
 		else if(e == CHARACTER_DELETED)
 		{
 			sendMessageToEveryone("Character deleted");
+		}
+		else if(e == CHARACTER_DIED)
+		{
+			ICharacter* character = (ICharacter*)object;
+			clientMap[character->getClientID()].deaths++;
+		}
+		else if(e == CHARACTER_KILLED)
+		{
+			IBullet* bullet = (IBullet*)object;
+			clientMap[bullet->getOwner()].kills++;
 		}
 	}
 }
