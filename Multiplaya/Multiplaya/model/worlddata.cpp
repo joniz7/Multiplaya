@@ -3,7 +3,7 @@
 #include "world.h"
 
 #include "../includes/Global.h"
-#include "gameobjects/DefaultCharacter.h"
+
 namespace mp
 {
 
@@ -58,6 +58,7 @@ namespace mp
 		std::cout << "Adding character" << std::endl;
 
 		ICharacter* c = new DefaultCharacter(world, pos, size, clientID);
+		
 		c ->addObserver(this);
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );

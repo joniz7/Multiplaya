@@ -277,9 +277,6 @@
     <ClInclude Include="view\screens\WorldView.h">
       <Filter>src\view\screens</Filter>
     </ClInclude>
-    <ClInclude Include="model\IBullet.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="services\ContactListener.h">
       <Filter>src\services</Filter>
     </ClInclude>
@@ -288,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="model\gameobjects\StandardBullet.h">
       <Filter>src\model\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="model\IBullet.h">
+      <Filter>src\model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
