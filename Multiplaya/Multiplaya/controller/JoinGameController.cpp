@@ -69,7 +69,7 @@ namespace mp
 		if( connectButton->isMouseOver(mousePos) )
 		{
 			connectButton->click();
-			networkHandler->connectToServer("Jonte", "172.16.0.3");
+			networkHandler->connectToServer("Jonte", "129.16.187.42");
 
 			clock.restart();
 			float elapsed = clock.getElapsedTime().asSeconds();
