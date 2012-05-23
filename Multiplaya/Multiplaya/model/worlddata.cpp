@@ -3,7 +3,7 @@
 #include "world.h"
 
 #include "../includes/Global.h"
-
+#include "gameobjects/DefaultCharacter.h"
 namespace mp
 {
 
@@ -29,7 +29,7 @@ namespace mp
 	 *
 	 * @param bullet - bullet to add.
 	 */
-    void WorldData::addBullet( Bullet* bullet )
+    void WorldData::addBullet( IBullet* bullet )
 	{
 		bullet->addObserver(this);
 		bullets.push_back(bullet);
@@ -40,7 +40,7 @@ namespace mp
 	 * Add the supplied character to the world.
 	 * @param c - character to add.
 	 */
-    void WorldData::addCharacter(Character* c)
+    void WorldData::addCharacter(ICharacter* c)
     {
 		std::cout << "Adding character" << std::endl;
 		
@@ -57,7 +57,7 @@ namespace mp
 	{
 		std::cout << "Adding character" << std::endl;
 
-		Character* c = new Character(world, pos, size, clientID);
+		ICharacter* c = new DefaultCharacter(world, pos, size, clientID);
 		c ->addObserver(this);
 		notifyObservers(CHARACTER_ADDED, c);
 		characters.push_back( c );
@@ -130,14 +130,6 @@ namespace mp
     }
 
 	/**
-	 * Adds a new wall to the world.
-	 */
-	void WorldData::addWall( b2World* world, float xPos, float yPos, float width, float height )
-	{
-		walls.push_back(new Wall(world, xPos, yPos, width, height));
-	}
-
-	/**
 	 * Adds a new chain to the world.
 	 */
 	void WorldData::addChain( b2World* world, b2Vec2 vertices[], int length, float friction ) {
@@ -169,12 +161,12 @@ namespace mp
 	 * Remove the supplied bullet.
 	 * @param bullet - bullet to be removed.
 	 */
-	void WorldData::removeBullet(Bullet* bullet)
+	void WorldData::removeBullet(IBullet* bullet)
 	{
 		worldDataMutex.lock();
 		if (bullets.size() > 0) {
 			// locate bullet in vector
-			std::vector<Bullet*>::iterator it = find(bullets.begin(), bullets.end(), bullet);
+			std::vector<IBullet*>::iterator it = find(bullets.begin(), bullets.end(), bullet);
 			if ( it != bullets.end())
 			{
 				// get the bullet's index
@@ -197,7 +189,7 @@ namespace mp
 	void WorldData::removeAllBullets(sf::Int8 clientID)
 	{
 		worldDataMutex.lock();
-		Bullet* bullet;
+		IBullet* bullet;
 		int test1, test2;
 		std::cout<<"kommer jag hit?"<<std::endl;
 		for(unsigned int i = 0; i < bullets.size(); i++) {
@@ -236,7 +228,7 @@ namespace mp
 		if (e == BULLET_DELETED) 
 		{
 			//worldDataMutex.lock();
-			Bullet* bullet = (Bullet*) object;
+			IBullet* bullet = (IBullet*) object;
 			removeBullet(bullet);
 			//bullet should be removed from box2d world after timestep
 			//this is only done on the server
@@ -248,7 +240,7 @@ namespace mp
 		else if (e == BULLET_ADDED) 
 		{
 
-			Bullet* bullet = (Bullet*) object;
+			IBullet* bullet = (IBullet*) object;
 
 			if(isClient) 
 			{

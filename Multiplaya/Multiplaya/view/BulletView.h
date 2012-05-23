@@ -9,11 +9,11 @@
 
 #include "../includes/Global.h"
 #include "GameObjectView.h"
-#include "../model/bullet.h"
+#include "../model/gameobjects/StandardBullet.h"
 
 namespace mp
 {
-	class Bullet;
+	class IBullet;
 
 	/**
 	 * The visual representation of a bullet.
@@ -23,14 +23,14 @@ namespace mp
 	class BulletView : public GameObjectView
 	{
 	public:
-		BulletView(Bullet* model);
+		BulletView(IBullet* model);
 		virtual ~BulletView();
 		/// Update sprite position to match bullets position
-		void updatePosition();
+		void update();
 		
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	private:
-		Bullet* model;
+		IBullet* model;
 		sf::RectangleShape* bulletVis;
 	};
 }

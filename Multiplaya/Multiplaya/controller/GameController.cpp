@@ -30,7 +30,8 @@ namespace mp
 		zoomFactor = 0;
     }
 
-	void GameController::setNetworkHandler(NetworkHandler* network) {
+	void GameController::setNetworkHandler(NetworkHandler* network) 
+	{
 		this->network = network;
 	}
 
@@ -40,8 +41,10 @@ namespace mp
 	 */
     void GameController::handleInput()
     {
-		sf::Vector2f mousePos = getRenderWindow()->convertCoords(sf::Mouse::getPosition(*getRenderWindow()), *worldView->getCamera());
+		sf::Vector2i mousePosWindow = sf::Mouse::getPosition(*getRenderWindow());
+		((WorldView*)getScreen())->setMousePos(mousePosWindow);
 
+		sf::Vector2f mousePos = getRenderWindow()->convertCoords(mousePosWindow, *worldView->getCamera());
 		currentPlayer->update(mousePos);
 
 		// Wait until setNetworkHandler() is called.
@@ -61,6 +64,12 @@ namespace mp
 				notifyObservers(PAUSE_GAME,0);
 				getRenderWindow()->setMouseCursorVisible(true);
 			}
+
+			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
+		{
+			std::cout<<"Updating world geo view"<<std::endl;
+			((WorldView*)getScreen())->updateWorldVertices();
+		}
 
 
 			// Handle zooming of viewport

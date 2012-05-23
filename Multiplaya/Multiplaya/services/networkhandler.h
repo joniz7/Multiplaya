@@ -69,7 +69,7 @@ namespace mp
 			unsigned short receivePort;
 			sf::Int8 myID;
 			bool hasConnected;
-			std::vector<BufferBullet> bulletsToSend;
+//			std::vector<BufferBullet> bulletsToSend;
 
 			bool sendOutput;
     };

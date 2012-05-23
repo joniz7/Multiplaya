@@ -17,18 +17,17 @@
 #include <Box2D.h>
 
 // Game specific headers
-#include "character.h"
-#include "bullet.h"
+#include "gameobjects/DefaultCharacter.h"
+#include "gameobjects/StandardBullet.h"
 
-#include "Wall.h"
 #include "worldchain.h"
 
 namespace mp
 {
 	//Forward declarations.
 	//class World;
-	class Bullet;
-	class Character;
+	class IBullet;
+	class ICharacter;
 
 	/**
 	 * Holds all model data related to the game.
@@ -41,11 +40,11 @@ namespace mp
             ~WorldData();
 
 			//Adders
-			void addCharacter(Character* c);
+			void addCharacter(ICharacter* c);
 			void addCharacter(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID);
 			void removeCharacter(sf::Int8 ID);
 
-			void addBullet( Bullet* bullet );
+			void addBullet( IBullet* bullet );
 			void addBullet( short owner, b2World* world, b2Vec2 position, b2Vec2 force );
 			void addBody( b2World* world, b2Vec2 position, b2Vec2 size );
 			void addBody ( b2Body* body );
@@ -63,7 +62,7 @@ namespace mp
 			ICharacter* getCharacter(int i){ return characters.at(i); }
 
 			/// Get list of all bullets.
-			std::vector<Bullet*>* getBullets(){ return &bullets; }
+			std::vector<IBullet*>* getBullets(){ return &bullets; }
 			std::vector<DynamicGameObject*>* getDeletionList() { return &deletionList; }
 			/// Get list of all bodies.
 			std::vector<b2Body*>* getBodies(){ return &bodies; }
@@ -76,7 +75,7 @@ namespace mp
 			/// Get the character with the specific client ID
 			ICharacter* getCharacter(sf::Int8 clientID);
 			/// Get a specific bullet.
-			Bullet* getBullet(int i){ return bullets.at(i); }
+			IBullet* getBullet(int i){ return bullets.at(i); }
 			/// Get a specific body.
 			b2Body* getBody(int i){ return bodies.at(i); }
 
@@ -86,7 +85,7 @@ namespace mp
 			int getLogicFps(){ return logicFps; }
 
 			void scheduleForDeletion(DynamicGameObject* object);
-			void removeBullet(Bullet* bullet);
+			void removeBullet(IBullet* bullet);
 			void removeAllBullets(sf::Int8 clientID);
 
 			// Setters
@@ -107,12 +106,11 @@ namespace mp
 			// Pointer to corresponding world object
 			//World* world;
 			// Vector containing bullets
-			std::vector<Bullet*> bullets;
+			std::vector<IBullet*> bullets;
 			// A queue, containing all bullets scheduled for deletion.
 			std::vector<DynamicGameObject*> deletionList;
 			// Vector containing characters
 			std::vector<ICharacter*> characters;
-			std::vector<Wall*> walls;
 			std::vector<WorldChain*> chains;
 			// Vector containing generic Box2D bodies
 			std::vector<b2Body*> bodies;

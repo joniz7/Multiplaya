@@ -28,203 +28,7 @@ namespace mp
 		counter = 0;
 		elapsed = 0;
 
-		//layerHandler = new LayerHandler();
-		characterXPos = 0;
 		initialize();
-	}
-
-	////////////////////////////////////////////////////////////
-	// Safely convert int to string. TODO: Should be moved to
-	// util class and included instead.
-	////////////////////////////////////////////////////////////
-	std::string convertInt(int number)
-	{
-	   std::stringstream ss;//create a stringstream
-	   ss << number;//add number to the stream
-	   return ss.str();//return a string with the contents of the stream
-	}
-
-	void WorldView::notify(Event e, void* object)
-	{
-		// could change to switch case
-		if (e == BULLET_ADDED)
-		{
-			worldViewMutex.lock();
-			Bullet* bullet = ( Bullet* )object;
-			addBullet(bullet);
-			worldViewMutex.unlock();
-		}
-		else if (e == BULLET_DELETED)
-		{
-			worldViewMutex.lock();
-			int i = ( intptr_t )object;
-			deleteBullet(i);
-			worldViewMutex.unlock();
-		}
-		else if (e == CHARACTER_ADDED)
-		{
-			std::cout << "Adding character to view" << std::endl;
-			Character* character = (Character*)object;
-			addCharacter(character);
-		}
-		else if (e == CHARACTER_DELETED)
-		{
-			int i = ( intptr_t )object;
-			deleteCharacter(i);
-		}
-	}
-
-	void WorldView::addBullet(Bullet* bullet)
-	{
-		worldViewMutex.lock();
-		bullets.push_back(  new BulletView( bullet ) );
-		worldViewMutex.unlock();
-	}
-
-	// delete bullet at index i
-	void WorldView::deleteBullet(int i)
-	{
-		worldViewMutex.lock();
-
-		BulletView* bullet = (BulletView*) bullets.at(i);
-		bullets.erase(bullets.begin() + i );
-		delete bullet;
-
-		worldViewMutex.unlock();
-	}
-
-	/*void WorldView::characterMoved(float moved)
-	{
-		layerHandler->update(moved);
-	}*/
-
-	void WorldView::addCharacter(Character* character)
-	{
-		worldViewMutex.lock();
-		characters.push_back( new CharacterView( character ) );
-		worldViewMutex.unlock();
-	}
-
-	void WorldView::deleteCharacter(int i)
-	{
-		worldViewMutex.lock();
-		CharacterView* character = (CharacterView*) characters.at(i);
-		characters.erase(characters.begin() + i);
-		delete character;
-		worldViewMutex.unlock();
-	}
-
-	/////////////////////////////////
-	/// Changes the zoom of the camera.
-	/// \param zoomFactor - how much we should zoom.
-	/////////////////////////////////
-	void WorldView::zoom(float zoomFactor) {
-		camera->zoom(zoomFactor);
-	}
-
-	/////////////////////////////////
-	/// Zooms the camera in, if we're
-	/// not already at our maximum zoomed-in level.
-	/////////////////////////////////
-	void WorldView::zoomIn() {
-		std::cout << "zooming in." << std::endl;
-		if (zoomLevel < zoomLevelMax) {
-			camera->zoom(1.0f/1.1f);
-			zoomLevel++;
-		}
-	}
-
-	/////////////////////////////////
-	/// Zooms the camera out, unless we're at
-	/// our maximum zoomed-out level (where we started).
-	/////////////////////////////////
-	void WorldView::zoomOut() {
-		if (zoomLevel > 0) {
-			camera->zoom(1.1f);
-			zoomLevel--;
-		}
-	}
-
-	void WorldView::tempLoop()
-	{
-			// Fetch mouse-related things.
-			*mousePosWindow = sf::Mouse::getPosition(*window);
-			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / PIXEL_SCALE;
-
-			*mouseSpeed = (*mousePos - *mousePosOld) / PIXEL_SCALE;
-
-			// diff
-			//	layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
-			characterXPos = worldData->getCharacter(0)->getPosition().x;
-
-
-			// Every 10th frame:
-			if(counter == 10) {
-				int renderFps = (int)(1 / elapsed);
-
-				worldDataMutex.lock();
-				int logicFps = worldData->getLogicFps();
-				worldDataMutex.unlock();
-
-				std::string renderFpsString = convertInt(renderFps);
-				renderFpsTxt->setString("Render fps: " + renderFpsString);
-				std::string logicFpsString = convertInt(logicFps);
-				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
-
-				counter = 0;
-			} else {
-				counter++;
-			}
-
-			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
-			{
-				std::cout<<"Updating world geo view"<<std::endl;
-				updateWorldVertices();
-			}
-
-	}
-
-	void WorldView::update()
-	{
-
-		tempLoop();
-		calculateCam();
-
-
-		// Access world data
-		worldDataMutex.lock();
-
-		for(unsigned int i=0;i<characters.size();i++) {
-			((CharacterView*)characters.at(i))->updateAnimation( (float)(1.0f/60.0f) );
-		}
-
-		updatePositions();
-		updateHUD();
-		//layerHandler->update(1);
-
-
-		// Unlock world data mutex
-		worldDataMutex.unlock();
-
-	}
-
-	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-		
-			// Set world view so we can render the world in world coordinates
-			window.setView(*camera);
-			
-            // Render World.
-			drawWorld( window );
-
-			//	window.draw(*layerHandler);
-
-			// Render UI.
-			drawHUD( window );
-			
-
-			// Save mouse position for next frame
-			*mousePosOld = *mousePos;
-			
 	}
 
 	//////////////////////////////
@@ -250,14 +54,6 @@ namespace mp
 		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
 		backgroundSprite->setPosition(-20, -10);
 		backgroundSprite->scale(0.02f, 0.02f);
-
-		sunTexture = new sf::Texture();
-		sunTexture->loadFromFile("resources/sun.jpg");
-		sunSprite = new sf::Sprite();
-		sunSprite->setTexture(*sunTexture);
-		sunSprite->setPosition(-20, -10);
-		sunSprite->scale(0.01f, 0.01f);
-	//	layerHandler->addLayer(*sunSprite, -0.05f);
 
 		// Load font file.
 		fontGothic = new sf::Font();
@@ -290,13 +86,6 @@ namespace mp
 		// Rotate the view 180 degrees
 		camera->setRotation(180);
 
-		//------------------
-		// Instantiate stuff.
-		mousePos = new sf::Vector2f(0,0);
-		mousePosWindow = new sf::Vector2i(0,0);
-		mousePosOld = new sf::Vector2f(0,0);
-		mouseSpeed = new sf::Vector2f(0,0);
-
 		// Initialize the HUD.
 		this->initHUD();
 
@@ -309,9 +98,6 @@ namespace mp
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5f, 0.5f);
 
-		//instantiate map graphics
-		constructMapGraphics();
-
 		createCharacterViews();
 
 		updateWorldVertices();
@@ -319,14 +105,13 @@ namespace mp
 		std::cout << "Render window initialized!" << std::endl;
 	}
 
-
-	/////////////////////////////////
+		/////////////////////////////////
 	/// Initializes all HUD elements.
 	/////////////////////////////////
 	void WorldView::initHUD() {
 		const int WIDTH = window->getSize().x;
 		const int HEIGHT = window->getSize().y;
-		int x,y;
+		int x, y;
 
 		//------- Create "Kills" sprite. -------
 		killsTexture = new sf::Texture();
@@ -350,7 +135,6 @@ namespace mp
 		x = int(killsSprite->getPosition().x + (float(WIDTH)/12.5f));
 		y = int(killsSprite->getPosition().y + (float(HEIGHT)/18.0f));
 		killsText->setPosition(float(x), float(y));
-
 
 		//------- Create "Deaths" sprite. -------
 		deathsTexture = new sf::Texture();
@@ -388,7 +172,108 @@ namespace mp
 		hpSprite->setPosition(float(x),float(y));
 		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
 		//------------------------------
+	}
 
+	////////////////////////////////////////////////////////////
+	// Safely convert int to string. TODO: Should be moved to
+	// util class and included instead.
+	////////////////////////////////////////////////////////////
+	std::string convertInt(int number)
+	{
+	   std::stringstream ss;//create a stringstream
+	   ss << number;//add number to the stream
+	   return ss.str();//return a string with the contents of the stream
+	}
+
+	void WorldView::notify(Event e, void* object)
+	{
+		// could change to switch case
+		if (e == BULLET_ADDED)
+		{
+			worldViewMutex.lock();
+			IBullet* bullet = ( IBullet* )object;
+			addBullet(bullet);
+			worldViewMutex.unlock();
+		}
+		else if (e == BULLET_DELETED)
+		{
+			worldViewMutex.lock();
+			int i = ( intptr_t )object;
+			deleteBullet(i);
+			worldViewMutex.unlock();
+		}
+		else if (e == CHARACTER_ADDED)
+		{
+			std::cout << "Adding character to view" << std::endl;
+			ICharacter* character = (ICharacter*)object;
+			addCharacter(character);
+		}
+		else if (e == CHARACTER_DELETED)
+		{
+			int i = ( intptr_t )object;
+			deleteCharacter(i);
+		}
+	}
+
+	void WorldView::addBullet(IBullet* bullet)
+	{
+		bullets.push_back(  new BulletView( bullet ) );
+	}
+
+	// delete bullet at index i
+	void WorldView::deleteBullet(int i)
+	{
+		BulletView* bullet = (BulletView*) bullets.at(i);
+		bullets.erase(bullets.begin() + i );
+		delete bullet;
+	}
+
+	void WorldView::addCharacter(ICharacter* character) {
+		characters.push_back( new CharacterView( character ) );
+	}
+
+	void WorldView::deleteCharacter(int i)
+	{
+		//worldViewMutex.lock();
+		CharacterView* character = (CharacterView*) characters.at(i);
+		characters.erase(characters.begin() + i);
+		delete character;
+		//worldViewMutex.unlock();
+	}
+
+	/////////////////////////////////
+	/// Changes the zoom of the camera.
+	/// \param zoomFactor - how much we should zoom.
+	/////////////////////////////////
+	void WorldView::zoom(float zoomFactor) {
+		camera->zoom(zoomFactor);
+	}
+
+	/////////////////////////////////
+	/// Zooms the camera in, if we're
+	/// not already at our maximum zoomed-in level.
+	/////////////////////////////////
+	void WorldView::zoomIn() {
+		if (zoomLevel < zoomLevelMax) {
+			camera->zoom(1.0f/1.1f);
+			zoomLevel++;
+		}
+	}
+
+	/////////////////////////////////
+	/// Zooms the camera out, unless we're at
+	/// our maximum zoomed-out level (where we started).
+	/////////////////////////////////
+	void WorldView::zoomOut() {
+		if (zoomLevel > 0) {
+			camera->zoom(1.1f);
+			zoomLevel--;
+		}
+	}
+
+	void WorldView::setMousePos(const sf::Vector2i& mousePosWindow)
+	{
+		this->mousePosWindow = mousePosWindow;
 	}
 
 	// Fetches all character models,
@@ -400,7 +285,7 @@ namespace mp
 		std::vector<ICharacter*>* characterModels = worldData->getCharacters();
 		std::cout<<"Characters: "<<worldData->getCharacters()->size()<<std::endl;
 		// Loop through them,
-		for (unsigned int i=0;i<characterModels->size();i++) {
+		for (unsigned int i = 0; i < characterModels->size(); i++) {
 			// create for each one a visual representation,
 			CharacterView* view = new CharacterView(characterModels->at(i));
 			// and add it to our list of CharacterViews.
@@ -409,70 +294,63 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::constructMapGraphics()
-	{
-		sf::Color c(10, 10, 10);
-
-		ground = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
-		ground->setFillColor( c );
-		ground->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
-		ground->setPosition(0, -50.0f * PIXEL_SCALE);
-
-		ground2 = new sf::RectangleShape( sf::Vector2f(100 * PIXEL_SCALE, 5 * PIXEL_SCALE) );
-		ground2->setFillColor( c );
-		ground2->setOrigin(50 * PIXEL_SCALE, 2.5f * PIXEL_SCALE);
-		ground2->setPosition(0, 50.0f * PIXEL_SCALE);
-
-		ground3 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
-		ground3->setFillColor( c );
-		ground3->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
-		ground3->setPosition(50.0f * PIXEL_SCALE, 0);
-
-		ground4 = new sf::RectangleShape( sf::Vector2f(5 * PIXEL_SCALE, 100 * PIXEL_SCALE) );
-		ground4->setFillColor( c );
-		ground4->setOrigin(2.5f * PIXEL_SCALE, 50 * PIXEL_SCALE);
-		ground4->setPosition(-50.0f * PIXEL_SCALE, 0);
+	
+	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+		// Set world view so we can render the world in world coordinates
+		window.setView(*camera);
+		// Render World.
+		drawEnvironment(window);
+		drawWorldGeo(window);
+		drawCharacters(window);
+		drawBullets(window);
+		// Render UI.
+		drawHUD( window );			
 	}
 
-	void WorldView::updatePositions()
+	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
 	{
-		// Set sight position
-		dotSpr->setPosition(float(mousePosWindow->x), float(mousePosWindow->y));
-
-		updateBulletsPos();
-		updateCharactersPos();
+		for(std::vector<sf::VertexArray*>::const_iterator it = worldGeo.begin(); it != worldGeo.end(); ++it)
+			window.draw( (**it) );
 	}
 
-	void WorldView::updateBulletsPos()
+	void WorldView::drawEnvironment(sf::RenderTarget& window) const
+	{
+		window.draw(*backgroundSprite);
+	}
+
+	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
 		worldViewMutex.lock();
-		updateVectorPos(bullets);
+		drawVector(bullets, window);
 		worldViewMutex.unlock();
 	}
 
-	void WorldView::updateCharactersPos()
+	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
-		//worldViewMutex.lock();
-		updateVectorPos(characters);
-		//worldViewMutex.unlock();
+		drawVector(characters, window);
 	}
 
-	void WorldView::updateHUD()
-	{
-		worldDataMutex.lock();
+	void WorldView::drawHUD(sf::RenderTarget& window) const {
+		// Set default view so we can render the ui in window coordinates
+		window.setView(this->window->getDefaultView());
+		window.draw(*dotSpr);
+		// Draw hud
+		if(ConfigHandler::instance().getBool("r_drawhud")) {
+			window.draw(*killsSprite);
+			window.draw(*killsText);
 
-		ICharacter* currentCharacter = worldData->getCurrentCharacter();
-		std::ostringstream kills, deaths; // (convert short->string)
+			window.draw(*deathsSprite);
+			window.draw(*deathsText);
 
-		kills << currentCharacter -> getKills();
-		killsText->setString(kills.str());
-		deaths << currentCharacter->getDeaths();
-		deathsText->setString(deaths.str());
-
-		ammoSprite->setState(currentCharacter->getClip());
-		hpSprite->setState(currentCharacter->getHealthState());
-
-		worldDataMutex.unlock();
+			window.draw(*ammoSprite);
+			window.draw(*hpSprite);
+		}
+		// Draw debug labels
+		if(ConfigHandler::instance().getBool("s_debugmode"))
+		{
+			window.draw(*renderFpsTxt);
+			window.draw(*logicFpsTxt);
+		}
 	}
 
 	// better name
@@ -483,12 +361,45 @@ namespace mp
 			window.draw(**it);
 	}
 
-	void WorldView::drawWorld(sf::RenderTarget& window) const
+	void WorldView::update()
 	{
-		drawEnvironment(window);
-		drawWorldGeo(window);
-		drawCharacters(window);
-		drawBullets(window);
+		updateFpsCounters();
+		updateCamera();
+		updateSightPos();
+
+		// Access world data
+		worldDataMutex.lock();
+		updateVector(bullets);
+		updateVector(characters);
+		updateHUD();
+
+		// Unlock world data mutex
+		worldDataMutex.unlock();
+	}
+
+	void WorldView::updateSightPos()
+	{
+		dotSpr->setPosition( (float) mousePosWindow.x, (float) mousePosWindow.y);
+	}
+
+	void WorldView::updateFpsCounters()
+	{
+		// Every 10th frame:
+		if(counter == 10) {
+			int renderFps = (int)(1 / elapsed);
+
+			worldDataMutex.lock();
+			int logicFps = worldData->getLogicFps();
+			worldDataMutex.unlock();
+
+			std::string renderFpsString = convertInt(renderFps);
+			renderFpsTxt->setString("Render fps: " + renderFpsString);
+			std::string logicFpsString = convertInt(logicFps);
+			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
+
+			counter = 0;
+		} else
+			counter++;
 	}
 
 	////////////////////////////////
@@ -518,69 +429,17 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
-	{
-		for(std::vector<sf::VertexArray*>::const_iterator it = worldGeo.begin(); it != worldGeo.end(); ++it)
-			window.draw( (**it) );
-	}
-
-	void WorldView::drawEnvironment(sf::RenderTarget& window) const
-	{
-		window.draw(*backgroundSprite);
-		//window.draw(*ground);
-		//window.draw(*ground2);
-		//window.draw(*ground3);
-		//window.draw(*ground4);
-	}
-
-	void WorldView::drawBullets(sf::RenderTarget& window) const
+	void WorldView::updateVector(std::vector<GameObjectView*>& vector)
 	{
 		worldViewMutex.lock();
-		drawVector(bullets, window);
+		std::vector<GameObjectView*>::iterator it;
+		for ( it = vector.begin() ; it < vector.end(); it++ ) {
+			(*it)->update();
+		}
 		worldViewMutex.unlock();
 	}
 
-	void WorldView::drawCharacters(sf::RenderTarget& window) const
-	{
-		//worldViewMutex.lock();
-		drawVector(characters, window);
-		//worldViewMutex.unlock();
-	}
-
-	void WorldView::drawHUD(sf::RenderTarget& window) const {
-		// Set default view so we can render the ui in window coordinates
-		window.setView(this->window->getDefaultView());
-		window.draw(*dotSpr);
-		// Draw hud
-		if(ConfigHandler::instance().getBool("r_drawhud")) {
-			window.draw(*killsSprite);
-			window.draw(*killsText);
-
-			window.draw(*deathsSprite);
-			window.draw(*deathsText);
-
-			window.draw(*ammoSprite);
-			window.draw(*hpSprite);
-		}
-		// Draw debug labels
-		if(ConfigHandler::instance().getBool("s_debugmode"))
-		{
-			window.draw(*renderFpsTxt);
-			window.draw(*logicFpsTxt);
-		}
-	}
-
-
-	// better name maybe
-	void WorldView::updateVectorPos(std::vector<GameObjectView*>& vector)
-	{
-		std::vector<GameObjectView*>::iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ ) {
-			(*it)->updatePosition();
-		}
-	}
-
-	void WorldView::calculateCam()
+	void WorldView::updateCamera()
 	{
 		worldDataMutex.lock();
 		// Calculate camera position (somehwere between character and mouse)
@@ -589,10 +448,30 @@ namespace mp
 		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
 
-		float x = (((position.x + mousePos->x) / 2 + position.x) / 2 + position.x) / 2;
-		float y = (((position.y + mousePos->y) / 2 + position.y) / 2 + position.y) / 2;
+		sf::Vector2f mousePos = window->convertCoords(mousePosWindow, *getCamera());
+
+		float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
+		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
 		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
+	}
+
+	void WorldView::updateHUD()
+	{
+		worldDataMutex.lock();
+
+		ICharacter* currentCharacter = worldData->getCurrentCharacter();
+		std::ostringstream kills, deaths; // (convert short->string)
+
+		kills << currentCharacter -> getKills();
+		killsText->setString(kills.str());
+		deaths << currentCharacter->getDeaths();
+		deathsText->setString(deaths.str());
+
+		ammoSprite->setState(currentCharacter->getClip());
+		hpSprite->setState(currentCharacter->getHealthState());
+
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -627,19 +506,8 @@ namespace mp
 		delete backgroundTexture;
 		delete backgroundSprite;
 
-		// TODO: This (as well as their creation) should be dynamic.
-		delete ground;
-		delete ground2;
-		delete ground3;
-		delete ground4;
-
 		delete dotTex;
 		delete dotSpr;
-
-		delete mousePosOld;
-		delete mousePos;
-		delete mousePosWindow;
-		delete mouseSpeed;
     }
 
 }

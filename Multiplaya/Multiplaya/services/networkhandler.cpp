@@ -68,7 +68,7 @@ namespace mp
 		b2Vec2 position, size, velocity;
 		float32 x,y,xvel,yvel,angle;
 
-		std::vector<Character*>* characters;
+		std::vector<ICharacter*>* characters;
 
 		std::map<sf::Int8, Client>::iterator it;
 		int outputType, test;
@@ -617,7 +617,7 @@ namespace mp
 	{
 		sf::Int8 type = 14, tempClientID, numOfBullets = 0;
 		sf::Packet packet;
-		Bullet* tempBullet;
+		IBullet* tempBullet;
 		float32 x, y, xvel, yvel;
 
 		for(unsigned int i = 0; i<worldData->getBullets()->size(); i++)
@@ -786,7 +786,7 @@ namespace mp
 		else if(e == SEND_BULLET) 
 		{
 			//sendMessageToEveryone("Bullet added to buffer");
-			Bullet* tempBullet = (Bullet*) object;
+			IBullet* tempBullet = (IBullet*) object;
 			float32 x = tempBullet->getPosition().x;
 			float32 y = tempBullet->getPosition().y;
 			float32 xvel = tempBullet->getInitForce().x;
@@ -816,7 +816,7 @@ namespace mp
 		}
 		else if(e == CHARACTER_KILLED)
 		{
-			Bullet* bullet = (Bullet*)object;
+			IBullet* bullet = (IBullet*)object;
 			clientMap[bullet->getOwner()].kills++;
 		}
 	}

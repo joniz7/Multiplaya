@@ -7,7 +7,7 @@ namespace mp
 	 * 
 	 * @param model - the bullet model we're representing.
 	 */
-	BulletView::BulletView(Bullet* model)
+	BulletView::BulletView(IBullet* model)
 	{
 		this->model = model;
 		bulletVis = new sf::RectangleShape( sf::Vector2f(0.25f * PIXEL_SCALE, 1.5f * PIXEL_SCALE) );
@@ -36,7 +36,7 @@ namespace mp
 	 * Updates the position of this bulletView.
 	 * Fetches the position and velocity from our bullet model.
 	 */
-	void BulletView::updatePosition()
+	void BulletView::update()
 	{
 		const b2Vec2& position = model->getBody()->GetPosition();
 		const b2Vec2& v = model->getBody()->GetLinearVelocity();

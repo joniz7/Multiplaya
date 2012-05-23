@@ -91,15 +91,14 @@
     <ClCompile Include="controller\Player.cpp" />
     <ClCompile Include="includes\Global.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="model\Bullet.cpp" />
-    <ClCompile Include="model\Character.cpp" />
-    <ClCompile Include="model\ContactListener.cpp" />
     <ClCompile Include="model\DynamicGameObject.cpp" />
-    <ClCompile Include="model\Wall.cpp" />
+    <ClCompile Include="model\gameobjects\DefaultCharacter.cpp" />
+    <ClCompile Include="model\gameobjects\StandardBullet.cpp" />
     <ClCompile Include="model\World.cpp" />
     <ClCompile Include="model\WorldChain.cpp" />
     <ClCompile Include="model\WorldData.cpp" />
     <ClCompile Include="services\ConfigHandler.cpp" />
+    <ClCompile Include="services\ContactListener.cpp" />
     <ClCompile Include="services\Input.cpp" />
     <ClCompile Include="services\KeyLookup.cpp" />
     <ClCompile Include="services\MusicHandler.cpp" />
@@ -118,7 +117,7 @@
     <ClCompile Include="view\screens\MainScreen.cpp" />
     <ClCompile Include="view\screens\PauseScreen.cpp" />
     <ClCompile Include="view\screens\Screen.cpp" />
-    <ClCompile Include="view\screens\worldview.cpp" />
+    <ClCompile Include="view\screens\WorldView.cpp" />
     <ClCompile Include="view\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,17 +132,17 @@
     <ClInclude Include="includes\Client.h" />
     <ClInclude Include="includes\Defines.h" />
     <ClInclude Include="includes\Global.h" />
-    <ClInclude Include="model\Bullet.h" />
-    <ClInclude Include="model\Character.h" />
-    <ClInclude Include="model\ContactListener.h" />
     <ClInclude Include="model\DynamicGameObject.h" />
     <ClInclude Include="model\GameObject.h" />
+    <ClInclude Include="model\gameobjects\DefaultCharacter.h" />
+    <ClInclude Include="model\gameobjects\StandardBullet.h" />
+    <ClInclude Include="model\IBullet.h" />
     <ClInclude Include="model\ICharacter.h" />
-    <ClInclude Include="model\Wall.h" />
     <ClInclude Include="model\World.h" />
     <ClInclude Include="model\WorldChain.h" />
     <ClInclude Include="model\WorldData.h" />
     <ClInclude Include="services\ConfigHandler.h" />
+    <ClInclude Include="services\ContactListener.h" />
     <ClInclude Include="services\Input.h" />
     <ClInclude Include="services\KeyLookup.h" />
     <ClInclude Include="services\MusicHandler.h" />
@@ -165,7 +164,7 @@
     <ClInclude Include="view\screens\MainScreen.h" />
     <ClInclude Include="view\screens\PauseScreen.h" />
     <ClInclude Include="view\screens\Screen.h" />
-    <ClInclude Include="view\screens\worldview.h" />
+    <ClInclude Include="view\screens\WorldView.h" />
     <ClInclude Include="view\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

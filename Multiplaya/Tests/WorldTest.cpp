@@ -8,8 +8,8 @@
 //#include <global.h>
 #include <model/WorldData.h>
 #include <model/World.h>
-#include <model/Bullet.h>
-#include <model/Character.h>
+#include <model/gameobjects/StandardBullet.h>
+#include <model/ICharacter.h>
 
 namespace mpt {
 
@@ -46,7 +46,7 @@ TEST_F(WorldTest, bulletFactory) {
 	world->createBullet(position, b2Vec2(2,2), clientID);
 	
 	// Fetch first bullet from worldData.
-	mp::Bullet* bullet = worldData->getBullet(0);
+	mp::IBullet* bullet = worldData->getBullet(0);
 	
 	ASSERT_EQ(bullet->getPosition(), position);
 	ASSERT_EQ(bullet->getOwner(), clientID);

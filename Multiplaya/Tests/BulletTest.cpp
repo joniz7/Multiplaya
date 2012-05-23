@@ -17,7 +17,7 @@ class BulletTest : public ::testing::Test {
 	mp::WorldData* worldData;
 	b2World* physicsWorld;
 
-	std::vector<mp::Bullet*> testBullets;
+	std::vector<mp::IBullet*> testBullets;
 
   BulletTest() {
 	// Setup the world properties.
@@ -28,11 +28,11 @@ class BulletTest : public ::testing::Test {
 	worldData = new mp::WorldData();
 
 	// Create generic bullets, owner ID 0.
-	testBullets.push_back( new mp::Bullet(0 , physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
-	testBullets.push_back( new mp::Bullet(0, physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
+	testBullets.push_back( new mp::StandardBullet(0 , physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
+	testBullets.push_back( new mp::StandardBullet(0, physicsWorld, b2Vec2(10, 10), b2Vec2(-50, 0)) );
 	// Create generic bullets, owner ID 1.
-	testBullets.push_back( new mp::Bullet(1, physicsWorld, b2Vec2(20, 20), b2Vec2(-40, 0)) );
-	testBullets.push_back( new mp::Bullet(1, physicsWorld, b2Vec2(30, 30) , b2Vec2(40, 0))  );
+	testBullets.push_back( new mp::StandardBullet(1, physicsWorld, b2Vec2(20, 20), b2Vec2(-40, 0)) );
+	testBullets.push_back( new mp::StandardBullet(1, physicsWorld, b2Vec2(30, 30) , b2Vec2(40, 0))  );
   }
 
   virtual ~BulletTest() {

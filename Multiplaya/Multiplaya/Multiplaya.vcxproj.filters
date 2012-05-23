@@ -33,6 +33,9 @@
     <Filter Include="src\services">
       <UniqueIdentifier>{343e8df0-ce33-4790-9725-4365f5d0eb74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\model\gameobjects">
+      <UniqueIdentifier>{7df07e17-9544-44e5-8c43-6b0cc736a10a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,9 +80,6 @@
     <ClCompile Include="view\screens\Screen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
-    <ClCompile Include="view\screens\worldview.cpp">
-      <Filter>src\view\screens</Filter>
-    </ClCompile>
     <ClCompile Include="view\screens\PauseScreen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
@@ -89,19 +89,7 @@
     <ClCompile Include="controller\IController.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
-    <ClCompile Include="model\Bullet.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="model\Character.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="model\ContactListener.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
     <ClCompile Include="model\DynamicGameObject.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="model\Wall.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
     <ClCompile Include="model\World.cpp">
@@ -151,6 +139,18 @@
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="view\screens\WorldView.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="services\ContactListener.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="model\gameobjects\StandardBullet.cpp">
+      <Filter>src\model\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="model\gameobjects\DefaultCharacter.cpp">
+      <Filter>src\model\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,23 +202,11 @@
     <ClInclude Include="view\screens\Screen.h">
       <Filter>src\view\screens</Filter>
     </ClInclude>
-    <ClInclude Include="view\screens\worldview.h">
-      <Filter>src\view\screens</Filter>
-    </ClInclude>
     <ClInclude Include="view\screens\PauseScreen.h">
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="controller\PauseScreenController.h">
       <Filter>src\controller</Filter>
-    </ClInclude>
-    <ClInclude Include="model\Bullet.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\Character.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\ContactListener.h">
-      <Filter>src\model</Filter>
     </ClInclude>
     <ClInclude Include="model\DynamicGameObject.h">
       <Filter>src\model</Filter>
@@ -227,9 +215,6 @@
       <Filter>src\model</Filter>
     </ClInclude>
     <ClInclude Include="model\ICharacter.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\Wall.h">
       <Filter>src\model</Filter>
     </ClInclude>
     <ClInclude Include="model\World.h">
@@ -288,6 +273,21 @@
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\WorldView.h">
+      <Filter>src\view\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="model\IBullet.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="services\ContactListener.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="model\gameobjects\DefaultCharacter.h">
+      <Filter>src\model\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="model\gameobjects\StandardBullet.h">
+      <Filter>src\model\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
