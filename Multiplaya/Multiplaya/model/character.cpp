@@ -140,14 +140,20 @@ namespace mp
 		else if ( leftSideTouchWall  )
 		{
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
-			body->ApplyLinearImpulse( b2Vec2( -300, 400), body->GetPosition());
+			if(wallSliding)
+				body->ApplyLinearImpulse( b2Vec2( -300, 550), body->GetPosition());
+			else
+				body->ApplyLinearImpulse( b2Vec2( -300, 300), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
 		else if ( rightSideTouchWall  )
 		{
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
-			body->ApplyLinearImpulse( b2Vec2( 300, 400), body->GetPosition());
+			if(wallSliding)
+				body->ApplyLinearImpulse( b2Vec2( 300, 550), body->GetPosition());
+			else
+				body->ApplyLinearImpulse( b2Vec2( 300, 300), body->GetPosition());
 			rightSideTouchWall = false;
 			flipping = true;
 		}
