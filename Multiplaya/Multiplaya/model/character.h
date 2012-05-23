@@ -140,6 +140,7 @@ namespace mp
 
 			sf::Sound soundFire;
 			sf::Sound soundReload;
+			sf::Sound soundJump;
 
 			sf::Int8 clientID;
 
