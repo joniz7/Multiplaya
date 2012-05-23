@@ -1,15 +1,11 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 // Class header
 #include "app.h"
 
-////////////////////////////////////////////////////////////
-/// Application class. Manages the program.
-////////////////////////////////////////////////////////////
 namespace mp
 {
-	// Contains instances of all parts of our program.
+	/**
+	 * Contains instances of all parts of our program.
+	 */
 	struct Container {
 		World* model;
 		WorldData* worldData;
@@ -21,15 +17,16 @@ namespace mp
 		bool networkThreadFinished;
 	};
 
-	////////////////////////////////////////////////////////////
-	/// Initializes the view thread which renders the graphics.
-	/// \param UserData - must be of type Container.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Initializes the game thread. Performs world simulation
+	 * and draws everything to screen.
+	 * @param UserData - must be of type Container.
+	 */
 	void createGameThread(void* UserData)
 	{
 		worldDataMutex.lock();
 
-		std::cout<< "Starting game thread."<<std::endl;
+		std::cout<< "Starting game thread... "<<std::endl;
 		
 		// Cast to Container pointer.
 		Container* data = static_cast<Container*>(UserData);
@@ -48,11 +45,12 @@ namespace mp
 		// We're done, let the main program continue.
 		data->gameThreadFinished = true;
 		
-		std::cout<<std::endl<<"View thread up and running!"<<std::endl;
+		std::cout<<std::endl<<"Game thread up and running!"<<std::endl;
 		
+		// Wait here, until network thread is done.
 		while(!data->networkThreadFinished) {}
 
-		// Run the view's infinite loop
+		// Run the main loop of the program.
 		sf::Clock clock;
 		while (true)
 		{
@@ -80,10 +78,10 @@ namespace mp
 
 	}
 
-	////////////////////////////////////////////////////////////
-	/// Initializes the network thread which handles the sending and receiving of data.
-	/// \param UserData - must be of type Container.
-	////////////////////////////////////////////////////////////
+	/** 
+	 * Initializes the network thread, which handles the sending and receiving of data.
+	 * @param UserData - must be of type Container.
+	 */
 	void createNetworkThread(void* UserData)
 	{
 		// Lock world data so only one thread can access world data at the same time
@@ -105,14 +103,14 @@ namespace mp
 		data->network->exec();
 	}
 
-	////////////////////////////////////////////////////////////
-	/// Starts the two game threads.
-	/// \return Application exit code
-	////////////////////////////////////////////////////////////
+	/**
+	 * Starts the two game threads.
+	 * @return Application exit code
+	 */
     int App::exec()
     {
 		
-		// I guess we're loading stuff here
+		// Nothing to see here. Just loading some resources.
 		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title0.jpg");
 		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title1.jpg");
 		ResourceHandler::instance().loadTexture("resources/ui/backgrounds/bg_title2.jpg");
@@ -130,7 +128,7 @@ namespace mp
 		// Wait here until it's up and running.
 		while(!data->gameThreadFinished) {}
 
-		//Create and launch the network thread
+		//Create and launch the network thread.
 		sf::Thread networkThread(&createNetworkThread, data);
 		networkThread.launch();
 		// Wait here until it's up and running.

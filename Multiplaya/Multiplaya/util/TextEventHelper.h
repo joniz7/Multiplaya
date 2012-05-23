@@ -5,7 +5,10 @@
 
 namespace mp 
 {	
-	/// Class for helping Controller
+	/**
+	 * A helper class for UI controllers.
+	 * Provides methods for checking input easily.
+	 */
 	class TextEventHelper
 	{
 		public:

@@ -9,10 +9,10 @@
 
 namespace mp 
 {
-	////////////////////////////////////////////////////////////
-	/// Observable class.  Holds data supporting the Observer
-	///  pattern.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Observable class.  Holds data supporting the Observer
+	 *  pattern.
+	 */
 	class Observable
 	{
 		public:

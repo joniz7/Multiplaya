@@ -1,7 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Observer interface. Contains method that will be called
-/// from Observable
-////////////////////////////////////////////////////////////
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
@@ -9,6 +5,11 @@
 
 namespace mp
 {
+	/**
+	 * Observer interface. Classes that implement this interface
+	 * can register themselves as Observers of other classes,
+	 * and recieves events they send to the notify() method.
+	 */
 	class Observer
 	{
 		public:
