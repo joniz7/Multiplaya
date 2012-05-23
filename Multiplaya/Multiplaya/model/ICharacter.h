@@ -89,6 +89,10 @@ namespace mp
 			virtual void setTargetPos(b2Vec2 targetPos) = 0;
 			virtual b2Vec2 getTargetPos() = 0;
 
+			virtual void setHealth(short health) = 0;
+			virtual void setKills(short kills) = 0;
+			virtual void setDeaths(short deaths) = 0;
+
 	};
 }
 #endif

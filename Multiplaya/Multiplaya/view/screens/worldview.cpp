@@ -100,16 +100,18 @@ namespace mp
 
 	void WorldView::addCharacter(Character* character)
 	{
+		worldViewMutex.lock();
 		characters.push_back( new CharacterView( character ) );
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::deleteCharacter(int i)
 	{
-		//worldViewMutex.lock();
+		worldViewMutex.lock();
 		CharacterView* character = (CharacterView*) characters.at(i);
 		characters.erase(characters.begin() + i);
 		delete character;
-		//worldViewMutex.unlock();
+		worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////

@@ -118,8 +118,6 @@ namespace mp
 	 */
 	void CharacterView::updatePosition()
 	{
-		worldDataMutex.lock();
-
 		b2Vec2 position = character->getBody()->GetPosition();
 		//float32 angle = character->getBody()->GetAngle();
 		sprite->setPosition(position.x * PIXEL_SCALE, position.y * PIXEL_SCALE);
@@ -160,8 +158,6 @@ namespace mp
 			sprite->scale(-1,1);
 			facingLeft = character->isFacingLeft();
 		}
-		
-		worldDataMutex.unlock();
 	}
 
 	/**

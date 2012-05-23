@@ -388,6 +388,7 @@ namespace mp
 	void Character::kill()
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
+		notifyObservers(CHARACTER_DIED, this);
 	}
 
 	/// Updates the character data.	
