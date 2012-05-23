@@ -2,7 +2,11 @@
 
 namespace mp 
 {
-
+	/**
+	 * Create a new BulletView, associated to the supplied bullet.
+	 * 
+	 * @param model - the bullet model we're representing.
+	 */
 	BulletView::BulletView(Bullet* model)
 	{
 		this->model = model;
@@ -13,16 +17,25 @@ namespace mp
 		bulletVis->setOutlineColor(sf::Color::Black);
 	}
 
-
+	/**
+	 * Destructor.
+	 */
 	BulletView::~BulletView()
 	{
 		delete bulletVis;
 	}
 
+	/**
+	 * Draws the bullet to the screen.
+	 */
 	void BulletView::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		target.draw(*bulletVis, states);
 	}
 
+	/**
+	 * Updates the position of this bulletView.
+	 * Fetches the position and velocity from our bullet model.
+	 */
 	void BulletView::updatePosition()
 	{
 		worldDataMutex.lock();

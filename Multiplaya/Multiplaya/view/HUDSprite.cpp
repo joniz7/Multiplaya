@@ -5,8 +5,9 @@ namespace mp {
 
 	/**
 	 * Creates a new HUDSprite.
-	 * @param path the path to the image of the sprite.
-	 * @param dimensions the dimensions of the sprite sheet.
+	 * 
+	 * @param path - the path to the image of the sprite.
+	 * @param dimensions - the dimensions of the sprite sheet.
 	 */
 	HUDSprite::HUDSprite(std::string path, sf::Vector2i dimensions)		   
 		: sf::Sprite() {

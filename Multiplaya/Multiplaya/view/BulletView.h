@@ -15,7 +15,11 @@ namespace mp
 {
 	class Bullet;
 
-	/// Class giving a bullet a visual representation
+	/**
+	 * The visual representation of a bullet.
+	 * Is tied to a Bullet, which we poll continuously
+	 * for its position.
+	 */
 	class BulletView : public GameObjectView
 	{
 	public:
