@@ -14,6 +14,7 @@
 #include <cmath>
 
 #include "../defines.h"
+#include "../global.h"
 
 #include "ICharacter.h"
 

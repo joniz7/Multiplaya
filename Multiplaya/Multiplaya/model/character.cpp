@@ -77,11 +77,20 @@ namespace mp
 		characterBodyFixture->SetUserData( this );
 		body->SetFixedRotation(true);
 
+		b2CircleShape circleShape;
+
+		circleShape.m_radius = size.x*0.75f;
+		circleShape.m_p.Set(0, -size.y);
+
+		fixtureDef.shape = &circleShape;
+
 		//add foot sensor fixture
 		dynamicBox.SetAsBox(size.x*0.5f, 0.3f, b2Vec2(0,-1.7f), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
+
+		fixtureDef.shape = &dynamicBox;
 
 		//add left sensor fixture
 		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
@@ -124,7 +133,7 @@ namespace mp
 	void Character::jump()
 	{
 		if ( grounded ) {
-			body->ApplyLinearImpulse( b2Vec2(0, 350), body->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2(0, 450), body->GetPosition());
 			setGrounded(false);
 			setWalking(false);
 		}
@@ -352,10 +361,24 @@ namespace mp
 	}
 
 	/**
-	 * Updates which way the character is facing.
+	 * Updates the character data.
 	 */
 	void Character::update()
 	{
+		b2ContactEdge* ce = getBody()->GetContactList();
+
+		grounded = false;
+
+		while(ce != NULL)
+		{
+			if (ce->contact->IsTouching())
+			{
+				if( ((CharacterFootSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterFootSensor )
+					grounded = true;
+			}
+			 ce = ce->next;
+		}
+
 		if( getBody()->GetLinearVelocity().x > 0 )
 			shouldFaceLeft = true;
 		else if( getBody()->GetLinearVelocity().x < 0 )
@@ -428,15 +451,19 @@ namespace mp
 	}
 	/// Reacts when we start colliding with something.
 	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
+		/*
 		if ( crashedWith->objectType == wall) {
 			grounded = true;
 			isFlipping = false;
 		}
+		*/
 	}
 	/// Reacts when we stop colliding with something.
 	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
+		/*
 		if ( crashedWith->objectType == wall)
 			grounded = false;
+		*/
 	}
 
 	/**

@@ -84,6 +84,20 @@ namespace mp
 		sprite->addAnimation("airroll", 40, false, sequence);
 		sequence.clear();
 
+		sequence.push_back(sf::Vector3i(3,3,-40));
+		sequence.push_back(sf::Vector3i(3,3,-80));
+		sequence.push_back(sf::Vector3i(3,3,-120));
+		sequence.push_back(sf::Vector3i(3,3,-160));
+		sequence.push_back(sf::Vector3i(3,3,-200));
+		sequence.push_back(sf::Vector3i(3,3,-240));
+		sequence.push_back(sf::Vector3i(3,3,-260));
+		sequence.push_back(sf::Vector3i(3,3,-320));
+		sequence.push_back(sf::Vector3i(3,3,-360));
+
+		sequence.push_back(sf::Vector3i(1,3,0));
+		sprite->addAnimation("airroll2", 40, false, sequence);
+		sequence.clear();
+
 		sprite->playAnimation("idle");
 		
 	}
@@ -106,7 +120,12 @@ namespace mp
 		else if (!character->isGrounded())
 		{
 			if(character->isFlipping())
-				sprite->playAnimation("airroll");
+			{
+				if(character->isFacingLeft())
+					sprite->playAnimation("airroll2");
+				else
+					sprite->playAnimation("airroll");
+			}
 			else
 				sprite->playAnimation("jump");
 		}
