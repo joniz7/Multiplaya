@@ -583,8 +583,8 @@ namespace mp
 	{
 		worldDataMutex.lock();
 		// Calculate camera position (somehwere between character and mouse)
-		b2Vec2 position = worldData->getCurrentCharacter()->getBody()->GetPosition();
-		float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
+		const b2Vec2& position = worldData->getCurrentCharacter()->getBody()->GetPosition();
+		const float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
 		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
 

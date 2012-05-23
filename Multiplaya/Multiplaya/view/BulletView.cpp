@@ -39,8 +39,8 @@ namespace mp
 	void BulletView::updatePosition()
 	{
 		worldDataMutex.lock();
-		b2Vec2 position = model->getBody()->GetPosition();
-		b2Vec2 v = model->getBody()->GetLinearVelocity();
+		const b2Vec2& position = model->getBody()->GetPosition();
+		const b2Vec2& v = model->getBody()->GetLinearVelocity();
 		worldDataMutex.unlock();
 
 		float a = atan(v.x/v.y);
