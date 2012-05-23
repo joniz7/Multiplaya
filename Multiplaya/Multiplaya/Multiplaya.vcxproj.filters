@@ -110,20 +110,11 @@
     <ClCompile Include="services\MusicHandler.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
-    <ClCompile Include="view\Layer.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
-    <ClCompile Include="view\LayerHandler.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
     <ClCompile Include="services\input.cpp">
       <Filter>src\services</Filter>
     </ClCompile>
     <ClCompile Include="model\worldchain.cpp">
       <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="services\soundhandler.cpp">
-      <Filter>src\services</Filter>
     </ClCompile>
     <ClCompile Include="util\TextEventHelper.cpp">
       <Filter>src\util</Filter>
@@ -253,12 +244,6 @@
     <ClInclude Include="services\MusicHandler.h">
       <Filter>src\services</Filter>
     </ClInclude>
-    <ClInclude Include="view\Layer.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="view\LayerHandler.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
     <ClInclude Include="services\input.h">
       <Filter>src\services</Filter>
     </ClInclude>
@@ -270,9 +255,6 @@
     </ClInclude>
     <ClInclude Include="util\Event.h">
       <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="services\soundhandler.h">
-      <Filter>src\services</Filter>
     </ClInclude>
     <ClInclude Include="util\TextEventHelper.h">
       <Filter>src\util</Filter>

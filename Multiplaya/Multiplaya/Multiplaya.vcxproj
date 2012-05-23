@@ -105,7 +105,6 @@
     <ClCompile Include="services\MusicHandler.cpp" />
     <ClCompile Include="services\networkhandler.cpp" />
     <ClCompile Include="services\resourcehandler.cpp" />
-    <ClCompile Include="services\soundhandler.cpp" />
     <ClCompile Include="util\Observable.cpp" />
     <ClCompile Include="util\TextEventHelper.cpp" />
     <ClCompile Include="view\animatedsprite.cpp" />
@@ -115,8 +114,6 @@
     <ClCompile Include="view\GUIElements\GUIElement.cpp" />
     <ClCompile Include="view\GUIElements\TextField.cpp" />
     <ClCompile Include="view\HUDSprite.cpp" />
-    <ClCompile Include="view\Layer.cpp" />
-    <ClCompile Include="view\LayerHandler.cpp" />
     <ClCompile Include="view\screens\JoinGameScreen.cpp" />
     <ClCompile Include="view\screens\MainScreen.cpp" />
     <ClCompile Include="view\screens\PauseScreen.cpp" />
@@ -153,7 +150,6 @@
     <ClInclude Include="services\MusicHandler.h" />
     <ClInclude Include="services\networkhandler.h" />
     <ClInclude Include="services\resourcehandler.h" />
-    <ClInclude Include="services\soundhandler.h" />
     <ClInclude Include="util\Event.h" />
     <ClInclude Include="util\Observable.h" />
     <ClInclude Include="util\Observer.h" />
@@ -166,8 +162,6 @@
     <ClInclude Include="view\GUIElements\GUIElement.h" />
     <ClInclude Include="view\GUIElements\TextField.h" />
     <ClInclude Include="view\HUDSprite.h" />
-    <ClInclude Include="view\Layer.h" />
-    <ClInclude Include="view\LayerHandler.h" />
     <ClInclude Include="view\screens\JoinGameScreen.h" />
     <ClInclude Include="view\screens\MainScreen.h" />
     <ClInclude Include="view\screens\PauseScreen.h" />

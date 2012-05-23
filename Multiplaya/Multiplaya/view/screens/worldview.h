@@ -29,7 +29,6 @@
 
 #include "Screen.h"
 #include "../GUIElements/GUIElement.h"
-#include "../LayerHandler.h"
 #include "../../services/input.h"
 
 namespace mp
@@ -164,8 +163,6 @@ namespace mp
 
 			int counter;
 			float elapsed;
-
-			LayerHandler* layerHandler;
 			sf::Texture* sunTexture;
 			sf::Sprite* sunSprite;
 
