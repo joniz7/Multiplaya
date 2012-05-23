@@ -56,6 +56,8 @@ namespace mp
 		setGUIElement("hostButton", hostButton);
 
 		Button* settingsButton = new Button(0, 560, 250, 50, "Settings");
+		settingsButton->setBackgroundColor(sf::Color(184, 184, 184, 50));
+		settingsButton->enableHovering(false);
 		settingsButton->setFont(*font);
 		settingsButton->setTextPosition(60, 5);
 		settingsButton->setTextColor(sf::Color::Black);

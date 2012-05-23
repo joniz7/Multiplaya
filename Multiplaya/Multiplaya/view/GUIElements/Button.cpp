@@ -12,9 +12,25 @@ namespace guielements
 		hoverBorderThickness = 0;
 	}
 
-	Button::~Button()
+	/**
+	* Method for enable or disable hovering,
+	* if hoverings is disabled no nice effects will be shown on mouse over
+	* Default is that hovering is enabled
+	* @param hovering
+	*/
+	void Button::enableHovering(bool hovering)
 	{
-		//dtor
+		hoverEnabled = hovering;
+	}
+
+	/**
+	* Getter for hovering
+	* Default is that hovering is enabled
+	* @return Hovering on or off
+	*/
+	bool Button::hoveringEnabled()
+	{
+		return hoverEnabled;
 	}
 
 	/**
