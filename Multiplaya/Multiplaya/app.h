@@ -1,8 +1,3 @@
-////////////////////////////////////////////////////////////
-/// Application class. Manages the program, the controller,
-/// if you so will.
-////////////////////////////////////////////////////////////
-
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
@@ -26,13 +21,19 @@ typedef std::list<sf::Drawable*> RenderList;
 
 namespace mp
 {
-    class App
+	/**
+	 * The application class.
+	 * Creates the main parts of the application, and launches 
+	 * both the game and the NetworkHandler in different threads.
+	 * Contains the main loop of the program.
+	 */
+	class App
     {
         public:
            // App(sf::VideoMode mode);
 			App() {};
 			~App(){};
-            int exec(); //Main game loop
+            int exec();
         private:
 			sf::VideoMode videoMode;
             RenderList rListObjects;

@@ -30,6 +30,9 @@ namespace mp
 		std::vector<sf::Vector3i> sequence;
 	};
 
+	/**
+	 * Uses a sprite sheet and animations to represent animated objects.
+	 */
     class AnimatedSprite : public sf::Sprite
     {
         public:

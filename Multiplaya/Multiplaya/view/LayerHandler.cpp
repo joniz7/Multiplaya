@@ -2,15 +2,24 @@
 
 namespace mp
 {
+	/**
+	 * Creates a new LayerHandler.
+	 */
 	LayerHandler::LayerHandler()
 	{
 	}
 
+	/**
+	 * Adds a new layer to the layer handler.
+	 */
 	void LayerHandler::addLayer(sf::Sprite sprite, const float xSpeed)
 	{
 		layers.push_back( Layer( sprite, xSpeed ) );
 	}
 
+	/**
+	 * Draws all layers in this layer handler to screen.
+	 */
 	void LayerHandler::draw(sf::RenderTarget& window, sf::RenderStates states) const 
 	{
 		std::vector<Layer>::const_iterator it;
@@ -20,6 +29,9 @@ namespace mp
 		}
 	}
 
+	/**
+	 * Updates all layers in this layer handler.
+	 */
 	void LayerHandler::update(const float moved)
 	{
 		std::vector<Layer>::iterator it;
@@ -29,8 +41,9 @@ namespace mp
 		}
 	}
 
-	LayerHandler::~LayerHandler()
-	{
-	}
+	/**
+	 * Destroys this LayerHandler.
+	 */
+	LayerHandler::~LayerHandler() {}
 }
 

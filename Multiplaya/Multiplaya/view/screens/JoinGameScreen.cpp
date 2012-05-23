@@ -27,12 +27,6 @@ namespace mp
 		ipTitleText->setPosition(300, 100);
 		ipTitleText->setCharacterSize(30);
 
-		portTitleText = new sf::Text("Port");
-		portTitleText->setFont(*font);
-		portTitleText->setStyle(sf::Text::Bold);
-		portTitleText->setColor(sf::Color::White);
-		portTitleText->setPosition(300, 140);
-		portTitleText->setCharacterSize(30);
 	}
 
 	void JoinGameScreen::initTextFields()
@@ -44,12 +38,6 @@ namespace mp
 		ipTextField->setBorderThicknessClicked(1);
 		setGUIElement("ipTextField", ipTextField);
 
-		TextField* portTextField = new TextField(400, 145, 200, 30);
-		portTextField->setBorderColorClicked(sf::Color::Blue);
-		portTextField->setTextColor(sf::Color::Black);
-		portTextField->setTextSize(20);
-		portTextField->setBorderThicknessClicked(1);	
-		setGUIElement("portTextField", portTextField);
 	}
 
 	void JoinGameScreen::initFont()
@@ -87,7 +75,6 @@ namespace mp
 	{
 		window.draw(*background);
 		window.draw(*ipTitleText);
-		window.draw(*portTitleText);
 		window.draw(*screenTitleText);
 		Screen::draw(window, states);
 	}

@@ -12,7 +12,6 @@ namespace mp
 		cancelButton = joinGameScreen->getGUIElement("cancelButton");
 		connectButton = joinGameScreen->getGUIElement("connectButton");
 		ipTextField = (TextField*) joinGameScreen->getGUIElement("ipTextField");
-		portTextField = (TextField*) joinGameScreen->getGUIElement("portTextField");
 	}
 
 	JoinGameController::~JoinGameController() {}
@@ -41,26 +40,10 @@ namespace mp
 	{
 		if ( ipTextField->isMouseOver(mousePos) )
 		{
-			// lose focus
-			if (portTextField->isClicked())
-				portTextField->click();
-
 			if (ipTextField->isClicked())
 				ipTextField->click();
 			else
 				ipTextField->click();
-		}
-
-		if ( portTextField->isMouseOver(mousePos) )
-		{
-			// if ipTextField is clicked then lose focus..
-			if (ipTextField->isClicked())
-				ipTextField->click();
-
-			if (portTextField->isClicked())
-				portTextField->click();
-			else
-				portTextField->click();
 		}
 	}
 
@@ -69,7 +52,7 @@ namespace mp
 		if( connectButton->isMouseOver(mousePos) )
 		{
 			connectButton->click();
-			networkHandler->connectToServer("Jonte", "172.16.0.3");
+			networkHandler->connectToServer("Jonte", "129.16.187.42");
 
 			clock.restart();
 			float elapsed = clock.getElapsedTime().asSeconds();
@@ -99,8 +82,7 @@ namespace mp
 		{
 			if (ipTextField->isClicked())
 				ipTextField->setText(ipTextField->getText() + ev.text.unicode);
-			if (portTextField->isClicked())
-				portTextField->setText(portTextField->getText() + ev.text.unicode);
+
 		}
 		else if (TextEventHelper::isDot(ev))
 		{
@@ -112,8 +94,6 @@ namespace mp
 		{
 			if (ipTextField->isClicked())
 				ipTextField->removeLastCharacter();
-			if (portTextField->isClicked())
-				portTextField->removeLastCharacter();
 		}
 	}
 }

@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 //SFML specific headers
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -12,18 +9,13 @@
 //Game specific headers
 #include "app.h"
 
-////////////////////////////////////////////////////////////
-/// Entry point of application
-///
-/// \return Application exit code
-///
-////////////////////////////////////////////////////////////
-
-int main()
-{
-    // Create the application
+/**
+ * Entry point of application.
+ * @returns Application exit code
+ */
+int main() {
+    // Create the application,
 	mp::App application;
-
-    //Run
+    // and run it.
     return application.exec();
 }

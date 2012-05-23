@@ -4,8 +4,6 @@
 // Class header
 #include "character.h"
 
-
-
 namespace mp
 {
 	/**
@@ -19,6 +17,7 @@ namespace mp
     Character::Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
     {
 		this->world = world;
+		this->bodySize = size;
 
 		this->objectType = character;
 		this->grounded = false;
@@ -32,11 +31,13 @@ namespace mp
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
 		this->wallSliding = false;
+		this->floorSliding = false;
 		this->flipping = false;
 		this->facingLeft = true;
 		this->focusing = false;
 		this->backwards = false;
 		this->shouldFaceLeft = true;
+		this->linearDamping = 10;
 
 		this->kills  = 0;// Kill stat.
 		this->deaths = 0;// Death stat.
@@ -46,62 +47,25 @@ namespace mp
 		this->shootingTimer = new sf::Clock();
 		this->reloadTimer = new sf::Clock();
 
-		// Duplicated code, should probably use code in addBody or something..
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
-
-		bodyDef.position.Set(pos.x, pos.y);
-		body = world->CreateBody(&bodyDef);
-		// Define a box shape for our dynamic body.
-		b2PolygonShape dynamicBox;
-		dynamicBox.SetAsBox(size.x, size.y);
-
-		// Define the dynamic body fixture.
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &dynamicBox;
-		// Set the box density to be non-zero, so it will be dynamic.
-		fixtureDef.density = 1.0f;
-		// Override the default friction.
-		fixtureDef.friction = 0.0f;
-		// Set restitution
-		fixtureDef.restitution = 0.0f;
-
-		// Calculate unique identifying bits for this player.
-		// (This makes us not collide with our own bullets)
-		const short playerBits = short(pow(2.0, clientID + 1));
-		fixtureDef.filter.categoryBits = playerBits;
-		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
-
-		// Add the shape to the body.
-		b2Fixture* characterBodyFixture = body->CreateFixture(&fixtureDef);
-		characterBodyFixture->SetUserData( this );
-		body->SetFixedRotation(true);
-
-		//add foot sensor fixture
-		dynamicBox.SetAsBox(size.x*0.5f, 0.3f, b2Vec2(0,-1.7f), 0);
-		fixtureDef.isSensor = true;
-		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
-		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
-
-		//add left sensor fixture
-		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1, 0), 0);
-		fixtureDef.isSensor = true;
-		b2Fixture* leftSensorFixture = body->CreateFixture(&fixtureDef);
-		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
-
-		//add right sensor fixture
-		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.0f, 0), 0);
-		fixtureDef.isSensor = true;
-		b2Fixture* rightSensorFixture = body->CreateFixture(&fixtureDef);
-		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
+		createBody(pos);
 
 		soundReload.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_reload1.ogg") );
 		soundFire.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_fire1.ogg") );
+		soundJump.setBuffer( *ResourceHandler::instance().getSound("resources/sound/char_jump.ogg") );
 
 		soundReload.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
 		soundFire.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
+		soundJump.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
 
     }
+
+	/**
+	 * Called when character collides with something.
+	 */
+	void Character::setClientID(sf::Int8 ID) {
+		this->clientID = ID;
+		createBody(body->GetPosition());
+	}
 
 	/**
 	 * Called when character collides with something.
@@ -117,6 +81,68 @@ namespace mp
 		// No other checks neccessary?
 	}
 
+	void Character::createBody(b2Vec2 position) {
+
+		// Duplicated code, should probably use code in addBody or something..
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+
+		bodyDef.position.Set(position.x, position.y);
+		body = world->CreateBody(&bodyDef);
+		// Define a box shape for our dynamic body.
+		b2PolygonShape dynamicBox;
+		dynamicBox.SetAsBox(bodySize.x, bodySize.y);
+
+		// Define the dynamic body fixture.
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &dynamicBox;
+		// Set the box density to be non-zero, so it will be dynamic.
+		fixtureDef.density = 1.0f;
+		// Override the default friction.
+		fixtureDef.friction = 0.1f;
+		// Set restitution
+		fixtureDef.restitution = 0.0f;
+
+		// Calculate unique identifying bits for this player.
+		// (This makes us not collide with our own bullets)
+		const short playerBits = short(pow(2.0, clientID + 1));
+		fixtureDef.filter.categoryBits = playerBits;
+		fixtureDef.filter.maskBits = 0xFFFF & (~playerBits);
+
+		// Add the shape to the body.
+		b2Fixture* characterBodyFixture = body->CreateFixture(&fixtureDef);
+		characterBodyFixture->SetUserData( this );
+		body->SetFixedRotation(true);
+
+		b2CircleShape circleShape;
+
+		circleShape.m_radius = bodySize.x*0.75f;
+		circleShape.m_p.Set(0, -bodySize.y);
+
+		fixtureDef.shape = &circleShape;
+
+		//add foot sensor fixture
+		dynamicBox.SetAsBox(bodySize.x*0.5f, 0.3f, b2Vec2(0,-1.7f), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
+		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
+
+		fixtureDef.shape = &dynamicBox;
+
+		//add left sensor fixture
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(1.1f, 0), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* leftSensorFixture = body->CreateFixture(&fixtureDef);
+		leftSensorFixture->SetUserData( new CharacterLeftSensor( leftSideTouchWall ) );
+
+		//add right sensor fixture
+		dynamicBox.SetAsBox(0.1f, 1, b2Vec2(-1.1f, 0), 0);
+		fixtureDef.isSensor = true;
+		b2Fixture* rightSensorFixture = body->CreateFixture(&fixtureDef);
+		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
+
+	}
+
 	/**
 	 * Makes the character jump.
 	 * Handles wall-jumping as well as regular jumping.
@@ -124,21 +150,29 @@ namespace mp
 	void Character::jump()
 	{
 		if ( grounded ) {
-			body->ApplyLinearImpulse( b2Vec2(0, 350), body->GetPosition());
+			body->ApplyLinearImpulse( b2Vec2(0, 450), body->GetPosition());
 			setGrounded(false);
 			setWalking(false);
 		}
 		else if ( leftSideTouchWall  )
 		{
+			soundJump.play();
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
-			body->ApplyLinearImpulse( b2Vec2( -300, 400), body->GetPosition());
+			if(wallSliding)
+				body->ApplyLinearImpulse( b2Vec2( -300, 550), body->GetPosition());
+			else
+				body->ApplyLinearImpulse( b2Vec2( -300, 300), body->GetPosition());
 			leftSideTouchWall = false;
 			flipping = true;
 		}
 		else if ( rightSideTouchWall  )
 		{
+			soundJump.play();
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
-			body->ApplyLinearImpulse( b2Vec2( 300, 400), body->GetPosition());
+			if(wallSliding)
+				body->ApplyLinearImpulse( b2Vec2( 300, 550), body->GetPosition());
+			else
+				body->ApplyLinearImpulse( b2Vec2( 300, 300), body->GetPosition());
 			rightSideTouchWall = false;
 			flipping = true;
 		}
@@ -228,6 +262,7 @@ namespace mp
 			}
 		}
 	}
+
 	/**
 	 * Decreases bullets in clip, reloads if neccessary.
 	 * Note: Private method, call primaryFire() if you want to initiate shooting!
@@ -241,6 +276,7 @@ namespace mp
 		}
 	}
 
+	/// Checks if the character is shooting
 	bool Character::isShooting() {
 		return (shootingTimer->getElapsedTime().asMilliseconds() < cooldown);
 	}
@@ -259,6 +295,8 @@ namespace mp
 			reloadTimer->restart();
 		}
 	}
+
+	/// Checks if the character is reloading.
 	bool Character::isReloading() {
 		return (reloadTimer->getElapsedTime().asMilliseconds() < reloadTime);
 	}
@@ -295,11 +333,11 @@ namespace mp
 		gunPosition.Set( charPos.x - gunPosition.x, gunPosition.y + charPos.y);
 
 		// Create bullet, and add to world.
-		Bullet* bullet = new Bullet( 0 , world, gunPosition, force);
+		Bullet* bullet = new Bullet( clientID , world, gunPosition, force);
 		notifyObservers(BULLET_ADDED, bullet);
 
 		// Play the sound
-		//soundFire.play();
+		soundFire.play();
 	}
 
 	/**
@@ -346,21 +384,45 @@ namespace mp
 		return result;
 	}
 
+	/// Kills the character
 	void Character::kill()
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
 	}
 
-	/**
-	 * Updates which way the character is facing.
-	 */
+	/// Updates the character data.	
 	void Character::update()
 	{
+		// Get contact list (contact edges)
+		b2ContactEdge* ce = getBody()->GetContactList();
+		// Reset states
+		grounded = false;
+		leftSideTouchWall = false;
+		rightSideTouchWall = false;
+		// Loop through contact edges
+		while(ce != NULL)
+		{
+			// Check sensors
+			if (ce->contact->IsTouching())
+			{
+				if( ((CharacterFootSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterFootSensor )
+					grounded = true;
+				if( ((CharacterLeftSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterLeftSensor && ((CharacterLeftSensor*)(ce->contact->GetFixtureA()->GetUserData()))->objectType != character )
+					leftSideTouchWall = true;
+				if( ((CharacterRightSensor*)(ce->contact->GetFixtureB()->GetUserData()))->objectType == characterRightSensor && ((CharacterRightSensor*)(ce->contact->GetFixtureA()->GetUserData()))->objectType != character )
+					rightSideTouchWall = true;
+			}
+			// Get next contact edge
+			ce = ce->next;
+		}
+
+		// Determine based on character speed what direction we should be facing...
 		if( getBody()->GetLinearVelocity().x > 0 )
 			shouldFaceLeft = true;
 		else if( getBody()->GetLinearVelocity().x < 0 )
 			shouldFaceLeft = false;
 
+		// ...although focusing overrides that by facing the way we're aiming
 		if( isFocusing() && !isWallSliding() )
 		{
 			b2Vec2 charPos = body->GetPosition();
@@ -377,13 +439,15 @@ namespace mp
 				setIsFacingLeft(false);
 		}
 
+		// Determine backwards status (for animation purposes)
 		if(facingLeft != shouldFaceLeft)
 			backwards = true;
 		else
 			backwards = false;
 
+		// Handle linear damping based on what we are doing. When we are moving on the ground or falling through the air, linear damping should be nil.
 		if( isWallSliding() )
-			getBody()->SetLinearDamping(10);
+			getBody()->SetLinearDamping(linearDamping);
 		else if( !isGrounded() )
 			getBody()->SetLinearDamping(0);
 		else if( isWalking() )
@@ -391,7 +455,7 @@ namespace mp
 			if(isWalking())
 			{
 				if( isFocusing() && abs(getBody()->GetLinearVelocity().x)>15 )
-					getBody()->SetLinearDamping(10);
+					getBody()->SetLinearDamping(linearDamping);
 				else
 					getBody()->SetLinearDamping(0);
 			}
@@ -401,18 +465,10 @@ namespace mp
 		else if( !isGrounded() )
 			getBody()->SetLinearDamping(0);
 		else
-			getBody()->SetLinearDamping(10);
+			getBody()->SetLinearDamping(linearDamping);
 	}
 
-	void Character::connectToServer()
-	{
-		notifyObservers(CONNECT_SERVER, 0);
-	}
-
-
-	/**
-	 * Destructor.
-	 */
+	/// Destructor.	
     Character::~Character()
     {
 		delete shootingTimer;
@@ -420,23 +476,17 @@ namespace mp
 
     }
 
-	/**
-	 * Create a new foot sensor.
-	 */
+	/// Create a new foot sensor.
 	Character::CharacterFootSensor::CharacterFootSensor(bool& grounded, bool& isFlipping) : grounded(grounded), isFlipping(isFlipping) {
 		this->objectType = characterFootSensor;
 	}
 	/// Reacts when we start colliding with something.
 	void Character::CharacterFootSensor::onCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall) {
-			grounded = true;
-			isFlipping = false;
-		}
+
 	}
 	/// Reacts when we stop colliding with something.
 	void Character::CharacterFootSensor::onNoCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall)
-			grounded = false;
+
 	}
 
 	/**
@@ -448,20 +498,14 @@ namespace mp
 	}
 	/// Reacts when we start colliding with something.
 	void Character::CharacterLeftSensor::onCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall) {
-			leftSideTouchWall = true;
-		}
+
 	}
 	/// Reacts when we stop colliding with something.
 	void Character::CharacterLeftSensor::onNoCollision(GameObject* crashedWith) {
-		if ( crashedWith->objectType == wall) {
-			leftSideTouchWall = false;
-		}
+
 	}
 
-	/**
-	 * Create a new left sensor.
-	 */
+	/// Create a new left sensor.
 	Character::CharacterRightSensor::CharacterRightSensor(bool& rightSideTouchWall) : rightSideTouchWall(rightSideTouchWall) {
 		this->objectType = characterRightSensor;
 	}

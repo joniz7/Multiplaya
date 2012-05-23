@@ -40,27 +40,35 @@ namespace mp
 			virtual void moveUp() = 0;
 			virtual void moveDown() = 0;
 
-			virtual void setWalking(bool choice) = 0;
-			virtual void setWallSliding(bool wS) = 0;
-
 			virtual void setPosition(b2Vec2 position, float32 angle) = 0;
 
 			virtual void reload() = 0;
 
+			virtual void setTouchingWallLeft(bool choice) = 0;
 			virtual bool isTouchingWallLeft() = 0;
+
+			virtual void setTouchingWallRight(bool choice) = 0;
 			virtual bool isTouchingWallRight() = 0;
 
 			virtual short getKills() = 0;
 			virtual short getDeaths() = 0;
 
+			virtual void setWallSliding(bool choice) = 0;
 			virtual bool isWallSliding() = 0;
 
+			virtual void setFloorSliding(bool choice) = 0;
+			virtual bool isFloorSliding() = 0;
+
+			virtual void setGrounded(bool choice) = 0;
 			virtual bool isGrounded() = 0;
 
+			virtual void setWalking(bool choice) = 0;
 			virtual bool isWalking() = 0;
 
+			virtual void setIsFacingLeft(bool choice) = 0;
 			virtual bool isFacingLeft() = 0;
 
+			virtual void setFlipping(bool choice) = 0;
 			virtual bool isFlipping() = 0;
 
 			virtual bool isFocusing() = 0;

@@ -9,6 +9,9 @@
 
 namespace mp
 {
+	/**
+	 * The visual representation of a GameObject.
+	 */ 
 	class GameObjectView : public sf::Drawable
 	{
 		public:

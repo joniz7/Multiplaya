@@ -36,6 +36,8 @@ namespace mp
 				notifyObservers(EXIT_GAME, 0);
 			}
 
+
+
 			if (ev.type == sf::Event::MouseButtonReleased)
 			{
 				if ( joinButton->isMouseOver(mousePos) )
@@ -48,8 +50,9 @@ namespace mp
 				if ( hostButton->isMouseOver(mousePos) )
 				{
 					hostButton->click();
-					// Change screen in main controller.
-					notifyObservers(SHOW_HOST, 0);
+					networkHandler->setAsServer();
+					//networkHandler->setAsClient();
+					notifyObservers(START_GAME, 0);
 				}
 
 				if ( exitButton->isMouseOver(mousePos) )

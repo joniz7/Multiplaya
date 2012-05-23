@@ -21,6 +21,10 @@
 
 namespace mp
 {
+	/**
+	 * Class for managing loading and distribution of resources
+	 * such as textures, sounds etc.
+	 */
     class ResourceHandler
     {
         public:

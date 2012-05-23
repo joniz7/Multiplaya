@@ -2,7 +2,11 @@
 
 namespace mp
 {
-
+	/**
+	 * Create a new CharacterView, tied to the supplied ICharacter.
+	 * 
+	 * @param character - the ICharacter we're representing.
+	 */
 	CharacterView::CharacterView(ICharacter* character) {
 		this->character = character;
 
@@ -84,6 +88,20 @@ namespace mp
 		sprite->addAnimation("airroll", 40, false, sequence);
 		sequence.clear();
 
+		sequence.push_back(sf::Vector3i(3,3,-40));
+		sequence.push_back(sf::Vector3i(3,3,-80));
+		sequence.push_back(sf::Vector3i(3,3,-120));
+		sequence.push_back(sf::Vector3i(3,3,-160));
+		sequence.push_back(sf::Vector3i(3,3,-200));
+		sequence.push_back(sf::Vector3i(3,3,-240));
+		sequence.push_back(sf::Vector3i(3,3,-260));
+		sequence.push_back(sf::Vector3i(3,3,-320));
+		sequence.push_back(sf::Vector3i(3,3,-360));
+
+		sequence.push_back(sf::Vector3i(1,3,0));
+		sprite->addAnimation("airroll2", 40, false, sequence);
+		sequence.clear();
+
 		sprite->playAnimation("idle");
 		
 	}
@@ -92,6 +110,12 @@ namespace mp
 		target.draw(*sprite, states);
 	}
 
+	/**
+	 * Updates the position of this CharacterView.
+	 * 
+	 * Fetches the position and state from our ICharacter, and
+	 * chooses an animation depending on the state (jumping, walking etc).
+	 */
 	void CharacterView::updatePosition()
 	{
 		worldDataMutex.lock();
@@ -106,7 +130,12 @@ namespace mp
 		else if (!character->isGrounded())
 		{
 			if(character->isFlipping())
-				sprite->playAnimation("airroll");
+			{
+				if(character->isFacingLeft())
+					sprite->playAnimation("airroll2");
+				else
+					sprite->playAnimation("airroll");
+			}
 			else
 				sprite->playAnimation("jump");
 		}
@@ -135,10 +164,16 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	/**
+	 * Updates the sprite.
+	 */
 	void CharacterView::updateAnimation(float elapsed) {
 		this->sprite->update(elapsed);
 	}
 
+	/**
+	 * Destructor. Deletes the sprite.
+	 */
 	CharacterView::~CharacterView()
 	{
 		delete sprite;

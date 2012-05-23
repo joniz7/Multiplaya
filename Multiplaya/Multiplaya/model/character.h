@@ -14,6 +14,7 @@
 #include <cmath>
 
 #include "../defines.h"
+#include "../global.h"
 
 #include "ICharacter.h"
 
@@ -56,13 +57,18 @@ namespace mp
 
 			short getClip() { return clip; }
 
-			void setGrounded(bool choice) { grounded = choice; }
-			bool isGrounded() { return grounded; }
-
 			bool isShooting();
 			
 			bool isReloading();
-			void reload();
+			void reload();	
+
+			/// Sets the position of the character in the world.
+			void setPosition(b2Vec2 pos, float32 a) { body->SetTransform(pos, a); }
+			/// Sets the velocity of the character.
+			void setLinVelocity(b2Vec2 v) { body->SetLinearVelocity(v); }
+
+			void setGrounded(bool choice) { grounded = choice; }
+			bool isGrounded() { return grounded; }
 
 			void setWalking(bool choice) { walking = choice; }
 			bool isWalking() { return walking; }
@@ -70,19 +76,22 @@ namespace mp
 			void setIsFacingLeft(bool choice) { facingLeft = choice; }
 			bool isFacingLeft() { return facingLeft; }
 
-			/// Sets the position of the character in the world.
-			void setPosition(b2Vec2 pos, float32 a) { body->SetTransform(pos, a); }
-			/// Sets the velocity of the character.
-			void setLinVelocity(b2Vec2 v) { body->SetLinearVelocity(v); }
-
 			void setTouchingWallLeft(bool choice){ leftSideTouchWall = choice; }
 			bool isTouchingWallLeft(){ return leftSideTouchWall; }
 
-			void isTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
+			void setTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
 			bool isTouchingWallRight(){ return rightSideTouchWall; }
 
-			void setWallSliding(bool choice){wallSliding = choice;}
+			void setWallSliding(bool choice){
+				if(!grounded)
+					wallSliding = choice;
+				else
+					wallSliding = false;
+			}
 			bool isWallSliding(){ return wallSliding; }
+
+			void setFloorSliding(bool choice){ floorSliding = choice; }
+			bool isFloorSliding(){ return wallSliding; }
 
 			void setFlipping(bool choice){ flipping = choice; }
 			bool isFlipping(){return flipping;}
@@ -97,7 +106,7 @@ namespace mp
 			b2Vec2 getTargetPos(){ return targetPos; }
 
 			sf::Int8 getClientID(){ return clientID; } 
-			void setClientID(sf::Int8 ID) { clientID = ID; }
+			void setClientID(sf::Int8 ID);
 
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith) {}
@@ -105,10 +114,12 @@ namespace mp
 			void connectToServer();
 
         private:
+			b2Vec2 bodySize;
 			b2Vec2 targetPos;
 			void shoot();
 			void moveY(bool left);
 			void moveX(bool left);
+			void createBody(b2Vec2 position);
 
 			sf::Clock* shootingTimer;
 			sf::Clock* reloadTimer;
@@ -117,6 +128,7 @@ namespace mp
 			short maxHealth;
 			short cooldown;
 			short reloadTime;
+			short linearDamping;
 			
 			short clip;
 			short clipSize;
@@ -130,12 +142,14 @@ namespace mp
 			bool rightSideTouchWall;
 			bool walking;
 			bool wallSliding;
+			bool floorSliding;
 			bool flipping;
 			bool backwards;
 			bool shouldFaceLeft;
 
 			sf::Sound soundFire;
 			sf::Sound soundReload;
+			sf::Sound soundJump;
 
 			sf::Int8 clientID;
 

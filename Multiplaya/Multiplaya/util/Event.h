@@ -1,9 +1,10 @@
-////////////////////////////////////////////////////////////
-/// Event enum passed from Observable to Observer
-////////////////////////////////////////////////////////////
 #ifndef EVENT_H_INCLUDED
 #define EVENT_H_INCLUDED
 
+/**
+ * The Event enum, passed from Observable to Observer.
+ * Is used in two ways: by controller by the actual game.
+ */
 enum Event {
 	// Controller specific events.
 	START_GAME,
@@ -11,7 +12,6 @@ enum Event {
 	EXIT_GAME,
 	PAUSE_GAME,
 	RESUME_GAME,
-	SHOW_HOST,
 	SHOW_JOIN,
 	SHOW_MAIN_MENU,
 	SHOW_SETTINGS,

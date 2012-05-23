@@ -62,6 +62,14 @@ namespace mp
 
 			void characterMoved(float moved);
 
+			void resetClock(){
+				clock.restart();
+			}
+
+			void setClock(){
+				elapsed = clock.getElapsedTime().asSeconds();
+			}
+
 		protected:
 
 		private:

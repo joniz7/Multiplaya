@@ -19,7 +19,7 @@ namespace mp
 			virtual ~JoinGameController();
 			void handleInput();
 			/// Sets which NetworkHandler "join game" should use.
-			void setNetworkHandler(NetworkHandler* network){networkHandler = network;};
+			void setNetworkHandler(NetworkHandler* network){networkHandler = network;}
 		protected:
 		private:
 			sf::Event ev;
@@ -28,7 +28,6 @@ namespace mp
 			GUIElement* connectButton;
 
 			TextField* ipTextField;
-			TextField* portTextField;
 
 			NetworkHandler* networkHandler;
 

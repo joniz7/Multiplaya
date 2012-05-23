@@ -5,6 +5,9 @@
 
 namespace mp
 {
+	/**
+	 * Represents a background layer. Is used by LayerHandler.
+	 */
 	class Layer : public sf::Drawable
 	{
 		public:
