@@ -90,6 +90,9 @@ namespace mp
 			}
 			bool isWallSliding(){ return wallSliding; }
 
+			void setFloorSliding(bool choice){ floorSliding = choice; }
+			bool isFloorSliding(){ return wallSliding; }
+
 			void setFlipping(bool choice){ flipping = choice; }
 			bool isFlipping(){return flipping;}
 
@@ -139,6 +142,7 @@ namespace mp
 			bool rightSideTouchWall;
 			bool walking;
 			bool wallSliding;
+			bool floorSliding;
 			bool flipping;
 			bool backwards;
 			bool shouldFaceLeft;

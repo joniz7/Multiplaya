@@ -56,6 +56,9 @@ namespace mp
 			virtual void setWallSliding(bool choice) = 0;
 			virtual bool isWallSliding() = 0;
 
+			virtual void setFloorSliding(bool choice) = 0;
+			virtual bool isFloorSliding() = 0;
+
 			virtual void setGrounded(bool choice) = 0;
 			virtual bool isGrounded() = 0;
 

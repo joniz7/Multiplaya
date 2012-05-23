@@ -89,7 +89,7 @@ namespace mp {
 		if ( input->btnDwnDown() )
 		{
 			worldDataMutex.lock();
-			character->moveDown();
+			character->setFloorSliding(true);
 			worldDataMutex.unlock();
 		}
 		if( input->btnDwnPrimary() )

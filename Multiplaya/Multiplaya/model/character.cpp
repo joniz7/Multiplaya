@@ -31,6 +31,7 @@ namespace mp
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.
 		this->wallSliding = false;
+		this->floorSliding = false;
 		this->flipping = false;
 		this->facingLeft = true;
 		this->focusing = false;
@@ -98,7 +99,7 @@ namespace mp
 		// Set the box density to be non-zero, so it will be dynamic.
 		fixtureDef.density = 1.0f;
 		// Override the default friction.
-		fixtureDef.friction = 0.0f;
+		fixtureDef.friction = 0.1f;
 		// Set restitution
 		fixtureDef.restitution = 0.0f;
 
