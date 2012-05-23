@@ -2,7 +2,7 @@
 #include "worlddata.h"
 #include "world.h"
 
-#include "../global.h"
+#include "../includes/Global.h"
 
 namespace mp
 {

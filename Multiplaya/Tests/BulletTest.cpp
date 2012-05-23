@@ -6,7 +6,7 @@
 #include "gtest/gtest.h"
 
 //#include <global.h>
-#include <model/worlddata.h>
+#include <model/WorldData.h>
 
 
 namespace mpt {
@@ -54,12 +54,12 @@ TEST_F(BulletTest, bullet_comparisons)
 TEST_F(BulletTest, bullet_addition)
 {
 	// Add all our test bullets to world.	
-	for(int i=0;i<testBullets.size(); i++) {
+	for(unsigned int i=0;i<testBullets.size(); i++) {
 		worldData->addBullet(testBullets.at(i));
 	}
 	
 	// Compare previously created bullet with the one returned from getBullet().
-	for(int i=0;i<testBullets.size(); i++) {
+	for(unsigned int i=0;i<testBullets.size(); i++) {
 		ASSERT_EQ(testBullets.at(i)->getBody(), worldData->getBullet(i)->getBody());
 		ASSERT_EQ(testBullets.at(i)->getOwner(), worldData->getBullet(i)->getOwner());
 		ASSERT_EQ(testBullets.at(i)->getPosition(), worldData->getBullet(i)->getPosition());

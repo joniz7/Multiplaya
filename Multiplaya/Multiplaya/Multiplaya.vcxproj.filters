@@ -35,53 +35,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="model\world.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="model\worlddata.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="services\networkhandler.cpp">
-      <Filter>src\services</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="model\character.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="services\resourcehandler.cpp">
-      <Filter>src\services</Filter>
-    </ClCompile>
-    <ClCompile Include="services\confighandler.cpp">
-      <Filter>src\services</Filter>
-    </ClCompile>
-    <ClCompile Include="services\keylookup.cpp">
-      <Filter>src\services</Filter>
-    </ClCompile>
-    <ClCompile Include="view\animatedsprite.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
-    <ClCompile Include="view\CharacterView.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
-    <ClCompile Include="model\ContactListener.cpp">
-      <Filter>src\model</Filter>
     </ClCompile>
     <ClCompile Include="util\Observable.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="view\BulletView.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
-    <ClCompile Include="model\Wall.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
     <ClCompile Include="controller\Player.cpp">
       <Filter>src\controller</Filter>
-    </ClCompile>
-    <ClCompile Include="view\Window.cpp">
-      <Filter>src\view</Filter>
     </ClCompile>
     <ClCompile Include="controller\GameController.cpp">
       <Filter>src\controller</Filter>
@@ -101,20 +62,8 @@
     <ClCompile Include="view\GUIElements\TextField.cpp">
       <Filter>src\view\guielements</Filter>
     </ClCompile>
-    <ClCompile Include="view\HUDSprite.cpp">
-      <Filter>src\view</Filter>
-    </ClCompile>
     <ClCompile Include="view\GUIElements\GUIElement.cpp">
       <Filter>src\view\guielements</Filter>
-    </ClCompile>
-    <ClCompile Include="services\MusicHandler.cpp">
-      <Filter>src\services</Filter>
-    </ClCompile>
-    <ClCompile Include="services\input.cpp">
-      <Filter>src\services</Filter>
-    </ClCompile>
-    <ClCompile Include="model\worldchain.cpp">
-      <Filter>src\model</Filter>
     </ClCompile>
     <ClCompile Include="util\TextEventHelper.cpp">
       <Filter>src\util</Filter>
@@ -131,85 +80,88 @@
     <ClCompile Include="view\screens\worldview.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
-    <ClCompile Include="app.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="view\screens\PauseScreen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
     <ClCompile Include="controller\PauseScreenController.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
-    <ClCompile Include="model\DynamicGameObject.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
-    <ClCompile Include="model\bullet.cpp">
-      <Filter>src\model</Filter>
-    </ClCompile>
     <ClCompile Include="controller\IController.cpp">
       <Filter>src\controller</Filter>
     </ClCompile>
-    <ClCompile Include="global.cpp">
+    <ClCompile Include="model\Bullet.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Character.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\ContactListener.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\DynamicGameObject.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Wall.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\World.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\WorldChain.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\WorldData.cpp">
+      <Filter>src\model</Filter>
+    </ClCompile>
+    <ClCompile Include="services\ConfigHandler.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="services\Input.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="services\KeyLookup.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="services\MusicHandler.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="services\NetworkHandler.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="services\ResourceHandler.cpp">
+      <Filter>src\services</Filter>
+    </ClCompile>
+    <ClCompile Include="view\AnimatedSprite.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\BulletView.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\CharacterView.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\HUDSprite.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="view\Window.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\Global.cpp">
+      <Filter>src\includes</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="model\world.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="services\networkhandler.h">
-      <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="model\worlddata.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\character.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="services\resourcehandler.h">
-      <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="services\confighandler.h">
-      <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="services\keylookup.h">
-      <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="view\animatedsprite.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="view\CharacterView.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="model\ContactListener.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
     <ClInclude Include="util\Observable.h">
       <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="util\Observer.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="view\BulletView.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="model\GameObject.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\Wall.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="view\GameObjectView.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
     <ClInclude Include="controller\Player.h">
       <Filter>src\controller</Filter>
-    </ClInclude>
-    <ClInclude Include="view\Window.h">
-      <Filter>src\view</Filter>
     </ClInclude>
     <ClInclude Include="controller\GameController.h">
       <Filter>src\controller</Filter>
@@ -235,21 +187,6 @@
     <ClInclude Include="view\GUIElements\TextField.h">
       <Filter>src\view\guielements</Filter>
     </ClInclude>
-    <ClInclude Include="view\HUDSprite.h">
-      <Filter>src\view</Filter>
-    </ClInclude>
-    <ClInclude Include="services\MusicHandler.h">
-      <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="services\input.h">
-      <Filter>src\services</Filter>
-    </ClInclude>
-    <ClInclude Include="model\worldchain.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="model\ICharacter.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
     <ClInclude Include="util\Event.h">
       <Filter>src\util</Filter>
     </ClInclude>
@@ -274,19 +211,82 @@
     <ClInclude Include="controller\PauseScreenController.h">
       <Filter>src\controller</Filter>
     </ClInclude>
+    <ClInclude Include="model\Bullet.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Character.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\ContactListener.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
     <ClInclude Include="model\DynamicGameObject.h">
       <Filter>src\model</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>src\includes</Filter>
-    </ClInclude>
-    <ClInclude Include="Defines.h">
-      <Filter>src\includes</Filter>
-    </ClInclude>
-    <ClInclude Include="model\bullet.h">
+    <ClInclude Include="model\GameObject.h">
       <Filter>src\model</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
+    <ClInclude Include="model\ICharacter.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Wall.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\World.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\WorldChain.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\WorldData.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="services\ConfigHandler.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="services\Input.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="services\KeyLookup.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="services\MusicHandler.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="services\NetworkHandler.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="services\ResourceHandler.h">
+      <Filter>src\services</Filter>
+    </ClInclude>
+    <ClInclude Include="view\AnimatedSprite.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\BulletView.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\CharacterView.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\GameObjectView.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\HUDSprite.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\Window.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Defines.h">
+      <Filter>src\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Global.h">
+      <Filter>src\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Client.h">
+      <Filter>src\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

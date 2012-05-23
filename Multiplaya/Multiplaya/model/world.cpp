@@ -9,7 +9,7 @@
 #include <fstream>
 
 #include "ContactListener.h"
-#include "../global.h"
+#include "../includes/Global.h"
 
 
 

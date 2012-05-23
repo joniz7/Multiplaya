@@ -587,7 +587,7 @@ namespace mp
 		Bullet* tempBullet;
 		float32 x, y, xvel, yvel;
 
-		for(int i = 0; i<worldData->getBullets()->size(); i++)
+		for(unsigned int i = 0; i<worldData->getBullets()->size(); i++)
 		{
 			tempBullet = worldData->getBullet(i);
 			if(tempBullet->getOwner() != clientID)
@@ -655,7 +655,7 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::setCharacterData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle, bool grounded, bool walking, bool facingLeft, bool touchingWallLeft, bool touchingWallRight, bool wallSliding, bool flipping)
 	{
-		//worldDataMutex.lock();
+		worldDataMutex.lock();
 		if(worldData->exists(clientID))
 		{
 			ICharacter* character = worldData->getCharacter(clientID);
@@ -669,7 +669,7 @@ namespace mp
 			character->setWallSliding(wallSliding);
 			character->setFlipping(flipping);
 		}
-		//worldDataMutex.unlock();
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////
