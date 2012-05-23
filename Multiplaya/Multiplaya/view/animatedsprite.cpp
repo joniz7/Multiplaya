@@ -1,19 +1,14 @@
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 // Class header
 #include "animatedsprite.h"
 
-////////////////////////////////////////////////////////////
-/// Uses a sprite sheet and animations to represent animated
-/// objects.
-////////////////////////////////////////////////////////////
-
 namespace mp	
 {
-	////////////////////////////////////////////////////////////
-	// Constructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Creates a new AnimatedSprite.
+	 *
+	 * @param spriteSheet - the spritesheet this animation should use.
+	 * @param sheetDimensions - the dimensions of our spriteSheet.
+	 */
 	AnimatedSprite::AnimatedSprite(sf::Texture* spriteSheet, sf::Vector2i sheetDimensions) : sf::Sprite(*spriteSheet,sf::IntRect(0,0,spriteSheet->getSize().x/sheetDimensions.x,spriteSheet->getSize().y / sheetDimensions.y))
     {
 		// Calculate sprite size
@@ -30,17 +25,17 @@ namespace mp
 		setFrame(sf::Vector3i(0,0,0));
     }
 
-	////////////////////////////////////////////////////////////
-	// Destructor
-	////////////////////////////////////////////////////////////
+	/**
+	 * Destroys this AnimatedSprite.
+	 */
     AnimatedSprite::~AnimatedSprite()
     {
 		delete(p_anm);
     }
 
-	////////////////////////////////////////////////////////////
-	// Adds an animation to the animation map.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Adds an animation to the animation map.
+	 */
 	void AnimatedSprite::addAnimation(const std::string & animationName, int fps, bool loop, std::vector<sf::Vector3i> sequence)
 	{
 		Animation temp;
@@ -51,9 +46,11 @@ namespace mp
 		p_anm = &animationMap[animationName];
 	}
 
-	////////////////////////////////////////////////////////////
-	// Plays specified animation.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Plays specified animation.
+	 *
+	 * @param animationName - the name of the animation to play.
+	 */
 	void AnimatedSprite::playAnimation(const std::string & animationName)
 	{
 		// TODO: Check if animation exist before playing.
@@ -68,9 +65,10 @@ namespace mp
 		}
 	}
 
-	////////////////////////////////////////////////////////////
-	// Sets a specified frame.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Displays the specified frame of the sprite.
+	 * @param frame - the frame to set.
+	 */
 	void AnimatedSprite::setFrame(sf::Vector3i frame)
 	{
 		sf::IntRect frameRect(
@@ -84,9 +82,10 @@ namespace mp
 		setRotation((float)(frame.z+180));
 	}
 
-	////////////////////////////////////////////////////////////
-	// Updates the animated sprite.
-	////////////////////////////////////////////////////////////
+	/**
+	 * Updates the sprite's animation.
+	 * @param elapsed - how much time that has elapsed since last update.
+	 */
 	void AnimatedSprite::update(float elapsed)
 	{
 		// Add elapsed time to frame counter.
