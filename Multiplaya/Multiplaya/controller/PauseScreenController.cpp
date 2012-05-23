@@ -32,6 +32,7 @@ namespace mp
 				notifyObservers(EXIT_GAME, 0);
 			}
 			if ((ev.type == sf::Event::KeyPressed) && (ev.key.code == sf::Keyboard::Escape)) {
+				getRenderWindow()->setMouseCursorVisible(false);
 				// Tell our parent to resume the game.
 				notifyObservers(RESUME_GAME, 0);
 			}
@@ -40,6 +41,7 @@ namespace mp
 			{
 				if ( resumeButton->isMouseOver(mousePos) )
 				{
+					getRenderWindow()->setMouseCursorVisible(false);
 					resumeButton->click();
 					// Change screen in main controller.
 					notifyObservers(RESUME_GAME,0);
