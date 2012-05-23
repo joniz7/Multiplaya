@@ -37,9 +37,11 @@ namespace mp
 		protected:
 		private:
 			sf::RenderWindow* window;
-		   // std::vector<Screen*> screens;
 			std::map<std::string, Screen*> screens;
 			WorldView* worldView;
+
+			void initRenderWindow(const std::string screenTitle);
+			void initScreens(WorldData* worldData);
 	};
 }
 #endif // WINDOW_H

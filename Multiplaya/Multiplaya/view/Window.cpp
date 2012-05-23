@@ -10,27 +10,11 @@ namespace mp
 	// send worlddata in constructor
 	Window::Window(WorldData* worldData)
 	{
-		//window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), "Multiplaya");
-		const std::string WINDOW_TITLE = "Multiplaya";
-		if( ConfigHandler::instance().getBool("r_fullscreen") )
-			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), WINDOW_TITLE, sf::Style::Fullscreen, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
-		else
-			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), WINDOW_TITLE, sf::Style::Titlebar, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
-
-		window->setFramerateLimit(60);
-		// Set window data
-        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
-        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
+		std::string screenTitle = "Multiplaya";
+		initRenderWindow(screenTitle);
 
 		sf::Vector2u resolution = window->getSize();
-		screens["mainScreen"] = new MainScreen(resolution);
-		screens["pauseScreen"] = new PauseScreen(resolution);
-		screens["joinGameScreen"] = new JoinGameScreen(resolution);
-		screens["settingsScreen"] = new SettingsScreen(resolution);
-		// will change
-		screens["gameScreen"] = new WorldView(worldData, window);
-		screens["hostScreen"] = new HostGameScreen(resolution);
-		
+		initScreens(worldData);		
 
 	}
 
@@ -72,6 +56,31 @@ namespace mp
 
 	Screen* Window::getScreen(std::string string) {
 		return screens[string];
+	}
+
+	void Window::initScreens(WorldData* worldData)
+	{
+		sf::Vector2u resolution = window->getSize();
+		screens["mainScreen"] = new MainScreen(resolution);
+		screens["pauseScreen"] = new PauseScreen(resolution);
+		screens["joinGameScreen"] = new JoinGameScreen(resolution);
+		screens["settingsScreen"] = new SettingsScreen(resolution);
+		// will change
+		screens["gameScreen"] = new WorldView(worldData, window);
+		screens["hostScreen"] = new HostGameScreen(resolution);
+	}
+
+	void Window::initRenderWindow(const std::string screenTitle)
+	{
+		if( ConfigHandler::instance().getBool("r_fullscreen") )
+			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), screenTitle, sf::Style::Fullscreen, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
+		else
+			window = new sf::RenderWindow(sf::VideoMode(int(WIDTH), int(HEIGHT), 32), screenTitle, sf::Style::Titlebar, sf::ContextSettings(0,0,ConfigHandler::instance().getInt("r_antialiasing"),2,0 ) );
+
+		window->setFramerateLimit(60);
+		// Set window data
+        window->setVerticalSyncEnabled(ConfigHandler::instance().getBool("r_vsync"));
+        window->setFramerateLimit(ConfigHandler::instance().getInt("r_fpslimit"));
 	}
 
 	Window::~Window()
