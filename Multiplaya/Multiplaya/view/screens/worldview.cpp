@@ -31,6 +31,149 @@ namespace mp
 		initialize();
 	}
 
+	//////////////////////////////
+	// Initialize everything.
+	// Change SFML settings, etc.
+	//////////////////////////////
+	void WorldView::initialize() {
+		// Set up and initialize render window
+		// Don't display mouse cursor
+		//window->setMouseCursorVisible(false);
+
+		// The path to resources
+		resourcesDir = "resources/";
+
+		// Background stuff
+		float screenWidth = float(window->getSize().x);
+		float screenHeight = float(window->getSize().y);
+
+		backgroundTexture = new sf::Texture();
+		backgroundTexture->loadFromFile("resources/ui/bg.png");
+		backgroundSprite = new sf::Sprite();
+		backgroundSprite->setTexture(*backgroundTexture);
+		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
+		backgroundSprite->setPosition(-20, -10);
+		backgroundSprite->scale(0.02f, 0.02f);
+
+		// Load font file.
+		fontGothic = new sf::Font();
+		fontGothic->loadFromFile("resources/gothic.ttf");
+
+		// Setup fps labels.
+		renderFpsTxt = new sf::Text("Render fps: 00");
+		logicFpsTxt = new sf::Text("Logic fps: 00");
+
+		renderFpsTxt->setFont(*fontGothic);
+		renderFpsTxt->setCharacterSize(25);
+		renderFpsTxt->setStyle(sf::Text::Regular);
+		renderFpsTxt->setPosition(8, 0);
+
+		logicFpsTxt->setFont(*fontGothic);
+		logicFpsTxt->setCharacterSize(25);
+		logicFpsTxt->setStyle(sf::Text::Regular);
+		logicFpsTxt->setPosition(8, 30);
+
+		//----SFML stuff----
+		sf::Vector2f center(0,0);
+		sf::Vector2f halfSize(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 *PIXEL_SCALE);
+
+		// Intialize our camera.
+		this->zoomLevel = 0;	// We start at 0,
+		this->zoomLevelMax = 10;// 10 is our maximum zoomed-in level.
+		camera = new sf::View(center * PIXEL_SCALE, halfSize * PIXEL_SCALE);
+		camera->zoom( 1.5 );
+
+		// Rotate the view 180 degrees
+		camera->setRotation(180);
+
+		// Initialize the HUD.
+		this->initHUD();
+
+		// Red dot?
+		dotTex = new sf::Texture();
+		dotSpr = new sf::Sprite();
+		if(!dotTex->loadFromFile("resources/ui/reddot.png"))
+			std::cout << "Failed to load texture: reddot.png" << std::endl;
+		dotSpr->setTexture(*dotTex);
+		dotSpr->setOrigin(32, 32);
+		dotSpr->setScale(0.5f, 0.5f);
+
+		createCharacterViews();
+
+		updateWorldVertices();
+
+		std::cout << "Render window initialized!" << std::endl;
+	}
+
+		/////////////////////////////////
+	/// Initializes all HUD elements.
+	/////////////////////////////////
+	void WorldView::initHUD() {
+		const int WIDTH = window->getSize().x;
+		const int HEIGHT = window->getSize().y;
+		int x, y;
+
+		//------- Create "Kills" sprite. -------
+		killsTexture = new sf::Texture();
+		if (!killsTexture->loadFromFile((resourcesDir + "ui/hud/kills.png"))) {
+			std::cout << "Failed to load texture: kills.png" << std::endl;
+		}
+		killsSprite = new sf::Sprite();
+		killsSprite->setTexture(*killsTexture);
+		x = ((WIDTH)/2) - killsSprite->getTexture()->getSize().x;
+		y = 0;
+		killsSprite->setPosition(float(x),float(y));
+		// TODO: uncomment below line and fix the positioning error that occurs.
+		//killsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		// Create text label to display kill count.
+		killsText = new sf::Text("0");
+		killsText->setFont(*fontGothic);
+		killsText->setCharacterSize(60);
+		killsText->setStyle(sf::Text::Regular);
+		// TODO: Fix positioning. Fails for strings of length>1.
+		x = int(killsSprite->getPosition().x + (float(WIDTH)/12.5f));
+		y = int(killsSprite->getPosition().y + (float(HEIGHT)/18.0f));
+		killsText->setPosition(float(x), float(y));
+
+		//------- Create "Deaths" sprite. -------
+		deathsTexture = new sf::Texture();
+		// Load image file
+		if (!deathsTexture->loadFromFile((resourcesDir + "ui/hud/deaths.png"))) {
+			std::cout << "Failed to load texture: deaths.png" << std::endl;
+		}
+		deathsSprite = new sf::Sprite();
+		deathsSprite->setTexture(*deathsTexture);
+		x = ((WIDTH)/2);
+		y = 0;
+		deathsSprite->setPosition(float(x),float(y));
+		// TODO: read above.
+		//deathsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		deathsText = new sf::Text("0");
+		deathsText ->setFont(*fontGothic);
+		deathsText ->setCharacterSize(60);
+		x = int(deathsSprite->getPosition().x + (WIDTH/9));  // TODO: kinda hardcoded.
+		y = int(deathsSprite->getPosition().y + (HEIGHT/18));// doesn't work for all res's?
+		deathsText->setPosition(float(x), float(y));
+
+		//-------- Ammo sprite. ---------
+		// ammo sprite.
+		ammoSprite = new HUDSprite(resourcesDir + "ui/hud/ammo.png", sf::Vector2i(3,4));
+		x = 0;
+		y = (HEIGHT) - ammoSprite->getHeight();
+		ammoSprite->setPosition(float(x),float(y));
+		//ammoSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
+
+		//--------- HP sprite. ---------.
+		hpSprite = new HUDSprite(resourcesDir + "ui/hud/hp.png", sf::Vector2i(5,2));
+		x = (WIDTH)  - hpSprite->getWidth();
+		y = (HEIGHT) - hpSprite->getHeight();
+		hpSprite->setPosition(float(x),float(y));
+		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
+		//------------------------------
+	}
+
 	////////////////////////////////////////////////////////////
 	// Safely convert int to string. TODO: Should be moved to
 	// util class and included instead.
@@ -133,166 +276,6 @@ namespace mp
 		this->mousePosWindow = mousePosWindow;
 	}
 
-	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-		
-			// Set world view so we can render the world in world coordinates
-			window.setView(*camera);
-			
-            // Render World.
-			drawWorld( window );
-
-			//	window.draw(*layerHandler);
-
-			// Render UI.
-			drawHUD( window );			
-	}
-
-	//////////////////////////////
-	// Initialize everything.
-	// Change SFML settings, etc.
-	//////////////////////////////
-	void WorldView::initialize() {
-		// Set up and initialize render window
-		// Don't display mouse cursor
-		//window->setMouseCursorVisible(false);
-
-		// The path to resources
-		resourcesDir = "resources/";
-
-		// Background stuff
-		float screenWidth = float(window->getSize().x);
-		float screenHeight = float(window->getSize().y);
-
-		backgroundTexture = new sf::Texture();
-		backgroundTexture->loadFromFile("resources/ui/bg.png");
-		backgroundSprite = new sf::Sprite();
-		backgroundSprite->setTexture(*backgroundTexture);
-		backgroundSprite->setOrigin(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 * PIXEL_SCALE);
-		backgroundSprite->setPosition(-20, -10);
-		backgroundSprite->scale(0.02f, 0.02f);
-
-		// Load font file.
-		fontGothic = new sf::Font();
-		fontGothic->loadFromFile("resources/gothic.ttf");
-
-		// Setup fps labels.
-		renderFpsTxt = new sf::Text("Render fps: 00");
-		logicFpsTxt = new sf::Text("Logic fps: 00");
-
-		renderFpsTxt->setFont(*fontGothic);
-		renderFpsTxt->setCharacterSize(25);
-		renderFpsTxt->setStyle(sf::Text::Regular);
-		renderFpsTxt->setPosition(8, 0);
-
-		logicFpsTxt->setFont(*fontGothic);
-		logicFpsTxt->setCharacterSize(25);
-		logicFpsTxt->setStyle(sf::Text::Regular);
-		logicFpsTxt->setPosition(8, 30);
-
-		//----SFML stuff----
-		sf::Vector2f center(0,0);
-		sf::Vector2f halfSize(screenWidth / 2 * PIXEL_SCALE, screenHeight / 2 *PIXEL_SCALE);
-
-		// Intialize our camera.
-		this->zoomLevel = 0;	// We start at 0,
-		this->zoomLevelMax = 10;// 10 is our maximum zoomed-in level.
-		camera = new sf::View(center * PIXEL_SCALE, halfSize * PIXEL_SCALE);
-		camera->zoom( 1.5 );
-
-		// Rotate the view 180 degrees
-		camera->setRotation(180);
-
-		// Initialize the HUD.
-		this->initHUD();
-
-		// Red dot?
-		dotTex = new sf::Texture();
-		dotSpr = new sf::Sprite();
-		if(!dotTex->loadFromFile("resources/ui/reddot.png"))
-			std::cout << "Failed to load texture: reddot.png" << std::endl;
-		dotSpr->setTexture(*dotTex);
-		dotSpr->setOrigin(32, 32);
-		dotSpr->setScale(0.5f, 0.5f);
-
-		createCharacterViews();
-
-		updateWorldVertices();
-
-		std::cout << "Render window initialized!" << std::endl;
-	}
-
-	
-	/////////////////////////////////
-	/// Initializes all HUD elements.
-	/////////////////////////////////
-	void WorldView::initHUD() {
-		const int WIDTH = window->getSize().x;
-		const int HEIGHT = window->getSize().y;
-		int x, y;
-
-		//------- Create "Kills" sprite. -------
-		killsTexture = new sf::Texture();
-		if (!killsTexture->loadFromFile((resourcesDir + "ui/hud/kills.png"))) {
-			std::cout << "Failed to load texture: kills.png" << std::endl;
-		}
-		killsSprite = new sf::Sprite();
-		killsSprite->setTexture(*killsTexture);
-		x = ((WIDTH)/2) - killsSprite->getTexture()->getSize().x;
-		y = 0;
-		killsSprite->setPosition(float(x),float(y));
-		// TODO: uncomment below line and fix the positioning error that occurs.
-		//killsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
-
-		// Create text label to display kill count.
-		killsText = new sf::Text("0");
-		killsText->setFont(*fontGothic);
-		killsText->setCharacterSize(60);
-		killsText->setStyle(sf::Text::Regular);
-		// TODO: Fix positioning. Fails for strings of length>1.
-		x = int(killsSprite->getPosition().x + (float(WIDTH)/12.5f));
-		y = int(killsSprite->getPosition().y + (float(HEIGHT)/18.0f));
-		killsText->setPosition(float(x), float(y));
-
-
-		//------- Create "Deaths" sprite. -------
-		deathsTexture = new sf::Texture();
-		// Load image file
-		if (!deathsTexture->loadFromFile((resourcesDir + "ui/hud/deaths.png"))) {
-			std::cout << "Failed to load texture: deaths.png" << std::endl;
-		}
-		deathsSprite = new sf::Sprite();
-		deathsSprite->setTexture(*deathsTexture);
-		x = ((WIDTH)/2);
-		y = 0;
-		deathsSprite->setPosition(float(x),float(y));
-		// TODO: read above.
-		//deathsSprite.setScale(WIDTH / 1920, HEIGHT / 1080);
-
-		deathsText = new sf::Text("0");
-		deathsText ->setFont(*fontGothic);
-		deathsText ->setCharacterSize(60);
-		x = int(deathsSprite->getPosition().x + (WIDTH/9));  // TODO: kinda hardcoded.
-		y = int(deathsSprite->getPosition().y + (HEIGHT/18));// doesn't work for all res's?
-		deathsText->setPosition(float(x), float(y));
-
-		//-------- Ammo sprite. ---------
-		// ammo sprite.
-		ammoSprite = new HUDSprite(resourcesDir + "ui/hud/ammo.png", sf::Vector2i(3,4));
-		x = 0;
-		y = (HEIGHT) - ammoSprite->getHeight();
-		ammoSprite->setPosition(float(x),float(y));
-		//ammoSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
-
-		//--------- HP sprite. ---------.
-		hpSprite = new HUDSprite(resourcesDir + "ui/hud/hp.png", sf::Vector2i(5,2));
-		x = (WIDTH)  - hpSprite->getWidth();
-		y = (HEIGHT) - hpSprite->getHeight();
-		hpSprite->setPosition(float(x),float(y));
-		//hpSprite->setScale(WIDTH / 1920, HEIGHT / 1080);
-		//------------------------------
-
-	}
-
 	// Fetches all character models,
 	// and creates their corresponding views.
 	void WorldView::createCharacterViews() {
@@ -311,20 +294,17 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	// better name
-	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
-	{
-		std::vector<GameObjectView*>::const_iterator it;
-		for ( it = vector.begin() ; it < vector.end(); it++ )
-			window.draw(**it);
-	}
-
-	void WorldView::drawWorld(sf::RenderTarget& window) const
-	{
+	
+	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+		// Set world view so we can render the world in world coordinates
+		window.setView(*camera);
+		// Render World.
 		drawEnvironment(window);
 		drawWorldGeo(window);
 		drawCharacters(window);
 		drawBullets(window);
+		// Render UI.
+		drawHUD( window );			
 	}
 
 	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
@@ -373,6 +353,14 @@ namespace mp
 		}
 	}
 
+	// better name
+	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
+	{
+		std::vector<GameObjectView*>::const_iterator it;
+		for ( it = vector.begin() ; it < vector.end(); it++ )
+			window.draw(**it);
+	}
+
 	void WorldView::update()
 	{
 		updateFpsCounters();
@@ -381,8 +369,8 @@ namespace mp
 
 		// Access world data
 		worldDataMutex.lock();
-		updateBullets();
-		updateCharacters();
+		updateVector(bullets);
+		updateVector(characters);
 		updateHUD();
 
 		// Unlock world data mutex
@@ -443,10 +431,12 @@ namespace mp
 
 	void WorldView::updateVector(std::vector<GameObjectView*>& vector)
 	{
+		worldViewMutex.lock();
 		std::vector<GameObjectView*>::iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ ) {
 			(*it)->update();
 		}
+		worldViewMutex.unlock();
 	}
 
 	void WorldView::updateCamera()
@@ -464,18 +454,6 @@ namespace mp
 		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
 		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
-	}
-
-	void WorldView::updateBullets()
-	{
-		worldViewMutex.lock();
-		updateVector(bullets);
-		worldViewMutex.unlock();
-	}
-
-	void WorldView::updateCharacters()
-	{
-		updateVector(characters);
 	}
 
 	void WorldView::updateHUD()

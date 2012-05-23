@@ -3593,7 +3593,7 @@
 
 1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/util/Event.h
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/ICharacter.h
+1337813074 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/ICharacter.h
 	"DynamicGameObject.h"
 	"gameobjects/StandardBullet.h"
 
@@ -3887,12 +3887,12 @@
 1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/character.cpp
 	"character.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/world.cpp
+1337813074 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/world.cpp
 	"world.h"
 	"worlddata.h"
 	<iostream>
 	<fstream>
-	"ContactListener.h"
+	"../services/ContactListener.h"
 	"../includes/Global.h"
 
 1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worldchain.cpp
@@ -4073,7 +4073,7 @@
 	"../GUIElements/TextField.h"
 	<map>
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.h
+1337813074 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.h
 	<string>
 	<cstdlib>
 	<cmath>
@@ -4131,7 +4131,7 @@
 	"Screen.h"
 	<iostream>
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.cpp
+1337813074 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.cpp
 	"worldview.h"
 	"../../model/worlddata.h"
 	"../../includes/Global.h"
@@ -4184,9 +4184,14 @@
 1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/DynamicGameObject.cpp
 	"DynamicGameObject.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/DefaultCharacter.cpp
+1337813074 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/DefaultCharacter.cpp
 	"DefaultCharacter.h"
 
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/StandardBullet.cpp
 	"StandardBullet.h"
+
+1337813074 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/ContactListener.h
+	<Box2D.h>
+	<iostream>
+	"../model/GameObject.h"
 

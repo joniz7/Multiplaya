@@ -12,7 +12,10 @@ namespace guielements
 	{
 		public:
 			Button(const float xPos, const float yPos, const int width, const int height, std::string text );
-			virtual ~Button();
+			virtual ~Button() {}
+
+			void enableHovering(bool hovering);
+			bool hoveringEnabled();
 
 			const sf::Color& getHoverBorderColor();
 			void setHoverBorderColor(const sf::Color& color);
