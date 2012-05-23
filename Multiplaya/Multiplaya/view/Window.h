@@ -19,9 +19,7 @@ namespace mp
 		public:
 			Window(WorldData* worldData);
 			virtual ~Window();
-			void exec();
 
-			void draw(Screen* screen);
 			void drawMainMenu();
 			void drawPauseMenu();
 			void drawJoinMenu();
@@ -29,16 +27,18 @@ namespace mp
 			void drawGame();
 			void drawSettingsMenu();
 
-
 			Screen* getScreen(std::string string);
 			sf::RenderWindow* getRenderWindow();
 
+			/// Returns the gamewindow / screen
 			WorldView* getGameWindow() { return static_cast<WorldView*>(screens["gameScreen"]); }
 		protected:
 		private:
 			sf::RenderWindow* window;
 			std::map<std::string, Screen*> screens;
 			WorldView* worldView;
+
+			void draw(Screen* screen);
 
 			void initRenderWindow(const std::string screenTitle);
 			void initScreens(WorldData* worldData);
