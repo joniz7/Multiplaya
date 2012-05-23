@@ -32,7 +32,7 @@ namespace mp
 		backgroundTexture = new sf::Texture();
 		
 		// Pick one of three background images
-		backgroundTexture = getRandomBackground(3);
+		backgroundTexture = getRandomBackground();
 		backgroundSprite = new sf::Sprite();
 		backgroundSprite->setTexture(*backgroundTexture);
 		backgroundSprite->setPosition(0, 0);
@@ -80,17 +80,17 @@ namespace mp
 		gameTitleText->setCharacterSize(40);
 	}
 
-	sf::Texture* MainScreen::getRandomBackground(int nrOfBackgrounds)
+	sf::Texture* MainScreen::getRandomBackground()
 	{
 		srand ( time(NULL) );
-		int randomInt = rand() % nrOfBackgrounds;
+		int randomInt = rand() % 3;
 
 		switch(randomInt) {
 			case 0:
 				return ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title0.jpg");
 			case 1:
 				return ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title1.jpg");
-			case 2:
+			default:
 				return ResourceHandler::instance().getTexture("resources/ui/backgrounds/bg_title2.jpg");
 		}
 	}
