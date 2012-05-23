@@ -77,9 +77,6 @@
     <ClCompile Include="view\screens\Screen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
-    <ClCompile Include="view\screens\worldview.cpp">
-      <Filter>src\view\screens</Filter>
-    </ClCompile>
     <ClCompile Include="view\screens\PauseScreen.cpp">
       <Filter>src\view\screens</Filter>
     </ClCompile>
@@ -152,6 +149,9 @@
     <ClCompile Include="App.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="view\screens\WorldView.cpp">
+      <Filter>src\view\screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="util\Observable.h">
@@ -200,9 +200,6 @@
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="view\screens\Screen.h">
-      <Filter>src\view\screens</Filter>
-    </ClInclude>
-    <ClInclude Include="view\screens\worldview.h">
       <Filter>src\view\screens</Filter>
     </ClInclude>
     <ClInclude Include="view\screens\PauseScreen.h">
@@ -288,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="view\screens\WorldView.h">
+      <Filter>src\view\screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
