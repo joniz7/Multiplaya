@@ -155,7 +155,7 @@ namespace mp
 		}
 		else if ( leftSideTouchWall  )
 		{
-			//soundJump.play();
+			soundJump.play();
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
 			if(wallSliding)
 				body->ApplyLinearImpulse( b2Vec2( -300, 550), body->GetPosition());
@@ -166,7 +166,7 @@ namespace mp
 		}
 		else if ( rightSideTouchWall  )
 		{
-			//soundJump.play();
+			soundJump.play();
 			body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x,0));
 			if(wallSliding)
 				body->ApplyLinearImpulse( b2Vec2( 300, 550), body->GetPosition());

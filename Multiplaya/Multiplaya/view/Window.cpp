@@ -38,7 +38,9 @@ namespace mp
 	/// Draw the game screen
 	void Window::drawGame()	{
 		screens["gameScreen"]->update();
+		((WorldView*)screens["gameScreen"])->resetClock();
 		draw(screens["gameScreen"]);
+		((WorldView*)screens["gameScreen"])->setClock();
 	}
 
 	

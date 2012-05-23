@@ -151,13 +151,11 @@ namespace mp
 			*mousePos = window->convertCoords( sf::Vector2i(mousePosWindow->x, mousePosWindow->y), *camera ) / PIXEL_SCALE;
 
 			*mouseSpeed = (*mousePos - *mousePosOld) / PIXEL_SCALE;
-            // Get elapsed time since last frame
-            elapsed = clock.getElapsedTime().asSeconds();
-            clock.restart();
 
 			// diff
-		//	layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
+			//	layerHandler->update(worldData->getCharacter(0)->getPosition().x - characterXPos);
 			characterXPos = worldData->getCharacter(0)->getPosition().x;
+
 
 			// Every 10th frame:
 			if(counter == 10) {
@@ -193,10 +191,10 @@ namespace mp
 
 
 		// Access world data
-		//worldDataMutex.lock();
+		worldDataMutex.lock();
 
 		for(unsigned int i=0;i<characters.size();i++) {
-			((CharacterView*)characters.at(i))->updateAnimation(elapsed);
+			((CharacterView*)characters.at(i))->updateAnimation( (float)(1.0f/60.0f) );
 		}
 
 		updatePositions();
@@ -205,25 +203,27 @@ namespace mp
 
 
 		// Unlock world data mutex
-		//worldDataMutex.unlock();
+		worldDataMutex.unlock();
 
 	}
 
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
-
+		
 			// Set world view so we can render the world in world coordinates
 			window.setView(*camera);
-
+			
             // Render World.
 			drawWorld( window );
 
-		//	window.draw(*layerHandler);
+			//	window.draw(*layerHandler);
 
 			// Render UI.
 			drawHUD( window );
+			
 
 			// Save mouse position for next frame
 			*mousePosOld = *mousePos;
+			
 	}
 
 	//////////////////////////////

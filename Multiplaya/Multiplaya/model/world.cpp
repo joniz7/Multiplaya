@@ -56,9 +56,9 @@ namespace mp
 	 * The logic loop; updates the game world, runs Box2D and everything else.
 	 */
     void World::exec() {
-			clock->restart();
 			// Lock world data so only one thread can access world data at the same time
 			worldDataMutex.lock();
+			clock->restart();
 			// Perform a physics step
 			world->Step(timeStep, velocityIterations, positionIterations);
 

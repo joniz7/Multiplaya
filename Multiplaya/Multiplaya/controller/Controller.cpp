@@ -135,7 +135,10 @@ namespace mp
 			world->exec();
 		}
 
+
 		(window->*currentDrawFunction)(); // Draw screen.
+
+
 		currentController->handleInput(); // Handle input.
 	}
 }
