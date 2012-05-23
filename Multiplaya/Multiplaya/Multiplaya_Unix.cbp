@@ -84,6 +84,8 @@
 		<Unit filename="controller/JoinGameController.h" />
 		<Unit filename="controller/MainScreenController.cpp" />
 		<Unit filename="controller/MainScreenController.h" />
+		<Unit filename="controller/PauseScreenController.cpp" />
+		<Unit filename="controller/PauseScreenController.h" />
 		<Unit filename="controller/Player.cpp" />
 		<Unit filename="controller/Player.h" />
 		<Unit filename="defines.h" />
@@ -92,6 +94,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="model/ContactListener.cpp" />
 		<Unit filename="model/ContactListener.h" />
+		<Unit filename="model/DynamicGameObject.cpp" />
+		<Unit filename="model/DynamicGameObject.h" />
 		<Unit filename="model/GameObject.h" />
 		<Unit filename="model/ICharacter.h" />
 		<Unit filename="model/Wall.cpp" />
@@ -120,13 +124,6 @@
 		<Unit filename="services/resourcehandler.h" />
 		<Unit filename="services/soundhandler.cpp" />
 		<Unit filename="services/soundhandler.h" />
-		<Unit filename="sfml.h" />
-		<Unit filename="sound/sound.cpp" />
-		<Unit filename="sound/sound.h" />
-		<Unit filename="sound/uisound.cpp" />
-		<Unit filename="sound/uisound.h" />
-		<Unit filename="sound/worldsound.cpp" />
-		<Unit filename="sound/worldsound.h" />
 		<Unit filename="util/Event.h" />
 		<Unit filename="util/Observable.cpp" />
 		<Unit filename="util/Observable.h" />
@@ -135,8 +132,6 @@
 		<Unit filename="util/TextEventHelper.h" />
 		<Unit filename="view/BulletView.cpp" />
 		<Unit filename="view/BulletView.h" />
-		<Unit filename="view/CharacterSprite.cpp" />
-		<Unit filename="view/CharacterSprite.h" />
 		<Unit filename="view/CharacterView.cpp" />
 		<Unit filename="view/CharacterView.h" />
 		<Unit filename="view/GUIElements/Button.cpp" />
@@ -148,25 +143,28 @@
 		<Unit filename="view/GameObjectView.h" />
 		<Unit filename="view/HUDSprite.cpp" />
 		<Unit filename="view/HUDSprite.h" />
-		<Unit filename="view/HostGameScreen.cpp" />
-		<Unit filename="view/HostGameScreen.h" />
-		<Unit filename="view/JoinGameScreen.cpp" />
-		<Unit filename="view/JoinGameScreen.h" />
 		<Unit filename="view/Layer.cpp" />
 		<Unit filename="view/Layer.h" />
 		<Unit filename="view/LayerHandler.cpp" />
 		<Unit filename="view/LayerHandler.h" />
-		<Unit filename="view/MainScreen.cpp" />
-		<Unit filename="view/MainScreen.h" />
-		<Unit filename="view/Screen.h" />
-		<Unit filename="view/SettingsScreen.cpp" />
-		<Unit filename="view/SettingsScreen.h" />
 		<Unit filename="view/Window.cpp" />
 		<Unit filename="view/Window.h" />
 		<Unit filename="view/animatedsprite.cpp" />
 		<Unit filename="view/animatedsprite.h" />
-		<Unit filename="view/worldview.cpp" />
-		<Unit filename="view/worldview.h" />
+		<Unit filename="view/screens/HostGameScreen.cpp" />
+		<Unit filename="view/screens/HostGameScreen.h" />
+		<Unit filename="view/screens/JoinGameScreen.cpp" />
+		<Unit filename="view/screens/JoinGameScreen.h" />
+		<Unit filename="view/screens/MainScreen.cpp" />
+		<Unit filename="view/screens/MainScreen.h" />
+		<Unit filename="view/screens/PauseScreen.cpp" />
+		<Unit filename="view/screens/PauseScreen.h" />
+		<Unit filename="view/screens/Screen.cpp" />
+		<Unit filename="view/screens/Screen.h" />
+		<Unit filename="view/screens/SettingsScreen.cpp" />
+		<Unit filename="view/screens/SettingsScreen.h" />
+		<Unit filename="view/screens/worldview.cpp" />
+		<Unit filename="view/screens/worldview.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
