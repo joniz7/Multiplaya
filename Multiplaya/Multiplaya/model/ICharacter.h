@@ -53,6 +53,9 @@ namespace mp
 			virtual short getKills() = 0;
 			virtual short getDeaths() = 0;
 
+			bool isDead() { return dead; }
+			void setDead(bool d) { dead = d; }
+
 			virtual void setWallSliding(bool choice) = 0;
 			virtual bool isWallSliding() = 0;
 
@@ -88,6 +91,9 @@ namespace mp
 
 			virtual void setTargetPos(b2Vec2 targetPos) = 0;
 			virtual b2Vec2 getTargetPos() = 0;
+
+		protected:
+			bool dead;
 
 	};
 }

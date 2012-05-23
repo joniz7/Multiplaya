@@ -21,6 +21,7 @@ namespace mp
 		this->leftSideTouchWall = false;
 		this->rightSideTouchWall = false;
 		this->walking = false;
+		this->dead = false;
 		this->maxHealth = 80;
 		this->setHealth(50); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
@@ -384,7 +385,7 @@ namespace mp
 	/// Kills the character
 	void DefaultCharacter::kill()
 	{
-		std::cout << "I'm a dead character. FML" << std::endl;
+		dead = true;
 	}
 
 	/// Updates the character data.	
