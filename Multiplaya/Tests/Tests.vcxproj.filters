@@ -28,6 +28,9 @@
     <Filter Include="Multiplaya\includes">
       <UniqueIdentifier>{a38db4d9-ccb1-4645-8821-b44a4116347a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Multiplaya\model\gameobjects">
+      <UniqueIdentifier>{65d93163-9de8-472e-827f-624e1ca3fd19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -51,12 +54,6 @@
     <ClInclude Include="..\Multiplaya\includes\Global.h">
       <Filter>Multiplaya\includes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Multiplaya\model\Character.h">
-      <Filter>Multiplaya\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Multiplaya\model\ContactListener.h">
-      <Filter>Multiplaya\model</Filter>
-    </ClInclude>
     <ClInclude Include="..\Multiplaya\model\DynamicGameObject.h">
       <Filter>Multiplaya\model</Filter>
     </ClInclude>
@@ -66,9 +63,6 @@
     <ClInclude Include="..\Multiplaya\model\ICharacter.h">
       <Filter>Multiplaya\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\Multiplaya\model\Wall.h">
-      <Filter>Multiplaya\model</Filter>
-    </ClInclude>
     <ClInclude Include="..\Multiplaya\model\World.h">
       <Filter>Multiplaya\model</Filter>
     </ClInclude>
@@ -76,9 +70,6 @@
       <Filter>Multiplaya\model</Filter>
     </ClInclude>
     <ClInclude Include="..\Multiplaya\model\WorldData.h">
-      <Filter>Multiplaya\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Multiplaya\model\Bullet.h">
       <Filter>Multiplaya\model</Filter>
     </ClInclude>
     <ClInclude Include="..\Multiplaya\services\ConfigHandler.h">
@@ -97,6 +88,9 @@
       <Filter>Multiplaya\services</Filter>
     </ClInclude>
     <ClInclude Include="..\Multiplaya\services\ResourceHandler.h">
+      <Filter>Multiplaya\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Multiplaya\services\ContactListener.h">
       <Filter>Multiplaya\services</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,16 +119,7 @@
     <ClCompile Include="..\Multiplaya\includes\Global.cpp">
       <Filter>Multiplaya\includes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Multiplaya\model\Character.cpp">
-      <Filter>Multiplaya\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Multiplaya\model\ContactListener.cpp">
-      <Filter>Multiplaya\model</Filter>
-    </ClCompile>
     <ClCompile Include="..\Multiplaya\model\DynamicGameObject.cpp">
-      <Filter>Multiplaya\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Multiplaya\model\Wall.cpp">
       <Filter>Multiplaya\model</Filter>
     </ClCompile>
     <ClCompile Include="..\Multiplaya\model\World.cpp">
@@ -144,9 +129,6 @@
       <Filter>Multiplaya\model</Filter>
     </ClCompile>
     <ClCompile Include="..\Multiplaya\model\WorldData.cpp">
-      <Filter>Multiplaya\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Multiplaya\model\Bullet.cpp">
       <Filter>Multiplaya\model</Filter>
     </ClCompile>
     <ClCompile Include="..\Multiplaya\services\ConfigHandler.cpp">
@@ -165,6 +147,15 @@
       <Filter>Multiplaya\services</Filter>
     </ClCompile>
     <ClCompile Include="..\Multiplaya\services\ResourceHandler.cpp">
+      <Filter>Multiplaya\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Multiplaya\model\gameobjects\StandardBullet.cpp">
+      <Filter>Multiplaya\model\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Multiplaya\model\gameobjects\DefaultCharacter.cpp">
+      <Filter>Multiplaya\model\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Multiplaya\services\ContactListener.cpp">
       <Filter>Multiplaya\services</Filter>
     </ClCompile>
   </ItemGroup>

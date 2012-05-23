@@ -16,7 +16,6 @@
 #include <iostream>
 #include <sstream>
 
-
 // Box2D specific headers
 #include <Box2D.h>
 
