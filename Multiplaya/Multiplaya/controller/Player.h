@@ -5,9 +5,9 @@
 #include <Box2D.h>
 
 #include "../includes/Global.h"
-#include "../model/WorldData.h"
+#include "../model/worlddata.h"
 #include "../model/ICharacter.h"
-#include "../services/Input.h"
+#include "../services/input.h"
 
 
 namespace mp
