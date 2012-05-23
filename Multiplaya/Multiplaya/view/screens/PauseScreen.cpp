@@ -53,10 +53,10 @@ namespace mp
 
 		Button* disconnectButton = new Button(0, 560, 300, 50, "Disconnect");
 		disconnectButton->setBackgroundColor(sf::Color(184, 184, 184, 30));
+		disconnectButton->enableHovering(false);
 		disconnectButton->setFont(*font);
 		disconnectButton->setTextPosition(60, 5);
 		disconnectButton->setTextColor(sf::Color::White);
-		disconnectButton->enableHovering(false);
 		setGUIElement("disconnectButton", disconnectButton);
 
 		Button* exitButton = new Button(0, 620, 300, 50, "Exit game");
