@@ -82,7 +82,12 @@ namespace mp
 			void setTouchingWallRight(bool choice){ rightSideTouchWall = choice; }
 			bool isTouchingWallRight(){ return rightSideTouchWall; }
 
-			void setWallSliding(bool choice){wallSliding = choice;}
+			void setWallSliding(bool choice){
+				if(!grounded)
+					wallSliding = choice;
+				else
+					wallSliding = false;
+			}
 			bool isWallSliding(){ return wallSliding; }
 
 			void setFlipping(bool choice){ flipping = choice; }
