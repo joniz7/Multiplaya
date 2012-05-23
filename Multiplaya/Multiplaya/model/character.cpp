@@ -19,6 +19,7 @@ namespace mp
     Character::Character(b2World* world, b2Vec2 pos, b2Vec2 size, sf::Int8 clientID)
     {
 		this->world = world;
+		this->bodySize = size;
 
 		this->objectType = character;
 		this->grounded = false;
@@ -46,15 +47,49 @@ namespace mp
 		this->shootingTimer = new sf::Clock();
 		this->reloadTimer = new sf::Clock();
 
+		createBody(pos);
+
+		soundReload.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_reload1.ogg") );
+		soundFire.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_fire1.ogg") );
+
+		soundReload.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
+		soundFire.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
+
+    }
+
+	/**
+	 * Called when character collides with something.
+	 */
+	void Character::setClientID(sf::Int8 ID) {
+		this->clientID = ID;
+		createBody(body->GetPosition());
+	}
+
+	/**
+	 * Called when character collides with something.
+	 */
+	void Character::onCollision(GameObject* crashedWith)
+	{
+		// If we collided with bullet, take damage.
+		if (crashedWith->objectType == bullet) {
+			std::cout << "Collision: Character <-> bullet" << std::endl;
+			Bullet* b = static_cast<Bullet*>( crashedWith );
+			inflictDamage(b);
+		}
+		// No other checks neccessary?
+	}
+
+	void Character::createBody(b2Vec2 position) {
+
 		// Duplicated code, should probably use code in addBody or something..
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
 
-		bodyDef.position.Set(pos.x, pos.y);
+		bodyDef.position.Set(position.x, position.y);
 		body = world->CreateBody(&bodyDef);
 		// Define a box shape for our dynamic body.
 		b2PolygonShape dynamicBox;
-		dynamicBox.SetAsBox(size.x, size.y);
+		dynamicBox.SetAsBox(bodySize.x, bodySize.y);
 
 		// Define the dynamic body fixture.
 		b2FixtureDef fixtureDef;
@@ -79,13 +114,13 @@ namespace mp
 
 		b2CircleShape circleShape;
 
-		circleShape.m_radius = size.x*0.75f;
-		circleShape.m_p.Set(0, -size.y);
+		circleShape.m_radius = bodySize.x*0.75f;
+		circleShape.m_p.Set(0, -bodySize.y);
 
 		fixtureDef.shape = &circleShape;
 
 		//add foot sensor fixture
-		dynamicBox.SetAsBox(size.x*0.5f, 0.3f, b2Vec2(0,-1.7f), 0);
+		dynamicBox.SetAsBox(bodySize.x*0.5f, 0.3f, b2Vec2(0,-1.7f), 0);
 		fixtureDef.isSensor = true;
 		b2Fixture* footSensorFixture = body->CreateFixture(&fixtureDef);
 		footSensorFixture->SetUserData( new CharacterFootSensor( grounded, flipping ) );
@@ -104,26 +139,6 @@ namespace mp
 		b2Fixture* rightSensorFixture = body->CreateFixture(&fixtureDef);
 		rightSensorFixture->SetUserData( new CharacterRightSensor( rightSideTouchWall) );
 
-		soundReload.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_reload1.ogg") );
-		soundFire.setBuffer( *ResourceHandler::instance().getSound("resources/sound/pistol_fire1.ogg") );
-
-		soundReload.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
-		soundFire.setVolume(ConfigHandler::instance().getFloat("s2_fxvolume"));
-
-    }
-
-	/**
-	 * Called when character collides with something.
-	 */
-	void Character::onCollision(GameObject* crashedWith)
-	{
-		// If we collided with bullet, take damage.
-		if (crashedWith->objectType == bullet) {
-			std::cout << "Collision: Character <-> bullet" << std::endl;
-			Bullet* b = static_cast<Bullet*>( crashedWith );
-			inflictDamage(b);
-		}
-		// No other checks neccessary?
 	}
 
 	/**
