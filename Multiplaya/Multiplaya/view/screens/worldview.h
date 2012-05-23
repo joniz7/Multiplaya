@@ -71,6 +71,8 @@ namespace mp
 				elapsed = clock.getElapsedTime().asSeconds();
 			}
 
+			void updateWorldVertices();
+
 		protected:
 
 		private:
@@ -142,20 +144,18 @@ namespace mp
 			void drawHUD(sf::RenderTarget& window) const;
 			void drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const;
 
-			void updateVectorPos(std::vector<GameObjectView*>& vector);
+			void updateVector(std::vector<GameObjectView*>& vector);
 
 			virtual void hover (const sf::Vector2i& mousePos) { }
 
-			void tempLoop();
 			void updateFpsCounters();
 
 			void updateCamera();
 			void updateHUD();
+			void updateBullets();
+			void updateCharacters();
+			void updateSightPos();
 
-			void updatePositions();
-			void updateBulletsPos();
-			void updateCharactersPos();
-			void updateWorldVertices();
 
 			int counter;
 			float elapsed;

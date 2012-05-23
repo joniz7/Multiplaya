@@ -15,7 +15,7 @@ namespace mp
 	class GameObjectView : public sf::Drawable
 	{
 		public:
-			virtual void updatePosition() = 0;
+			virtual void update() = 0;
 	};
 }
 #endif // OBSERVER_H

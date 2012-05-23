@@ -116,8 +116,10 @@ namespace mp
 	 * Fetches the position and state from our ICharacter, and
 	 * chooses an animation depending on the state (jumping, walking etc).
 	 */
-	void CharacterView::updatePosition()
+	void CharacterView::update()
 	{
+		updateAnimation( (float) (1.0f / 60.0f) );
+	
 		worldDataMutex.lock();
 
 		b2Vec2 position = character->getBody()->GetPosition();
