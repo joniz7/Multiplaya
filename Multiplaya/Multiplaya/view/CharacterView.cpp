@@ -2,7 +2,11 @@
 
 namespace mp
 {
-
+	/**
+	 * Create a new CharacterView, tied to the supplied ICharacter.
+	 * 
+	 * @param character - the ICharacter we're representing.
+	 */
 	CharacterView::CharacterView(ICharacter* character) {
 		this->character = character;
 
@@ -106,6 +110,12 @@ namespace mp
 		target.draw(*sprite, states);
 	}
 
+	/**
+	 * Updates the position of this CharacterView.
+	 * 
+	 * Fetches the position and state from our ICharacter, and
+	 * chooses an animation depending on the state (jumping, walking etc).
+	 */
 	void CharacterView::updatePosition()
 	{
 		worldDataMutex.lock();
@@ -154,10 +164,16 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	/**
+	 * Updates the sprite.
+	 */
 	void CharacterView::updateAnimation(float elapsed) {
 		this->sprite->update(elapsed);
 	}
 
+	/**
+	 * Destructor. Deletes the sprite.
+	 */
 	CharacterView::~CharacterView()
 	{
 		delete sprite;
