@@ -19,7 +19,7 @@
 
 // Game specific headers
 #include "../global.h"
-#include "../client.h"
+#include "../Client.h"
 #include "../model/world.h"
 #include "../model/worlddata.h"
 
