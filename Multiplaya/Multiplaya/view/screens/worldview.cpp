@@ -105,7 +105,7 @@ namespace mp
 		std::cout << "Render window initialized!" << std::endl;
 	}
 
-		/////////////////////////////////
+	/////////////////////////////////
 	/// Initializes all HUD elements.
 	/////////////////////////////////
 	void WorldView::initHUD() {
@@ -185,6 +185,9 @@ namespace mp
 	   return ss.str();//return a string with the contents of the stream
 	}
 
+	/////////////////////////////////
+	/// Notifies some shit.
+	/////////////////////////////////
 	void WorldView::notify(Event e, void* object)
 	{
 		// could change to switch case
@@ -215,12 +218,17 @@ namespace mp
 		}
 	}
 
+	/////////////////////////////////
+	/// Add a bullet to the view.
+	/////////////////////////////////
 	void WorldView::addBullet(IBullet* bullet)
 	{
 		bullets.push_back(  new BulletView( bullet ) );
 	}
 
-	// delete bullet at index i
+	/////////////////////////////////
+	/// Delete the bullet at index i.
+	/////////////////////////////////
 	void WorldView::deleteBullet(int i)
 	{
 		BulletView* bullet = (BulletView*) bullets.at(i);
@@ -228,10 +236,16 @@ namespace mp
 		delete bullet;
 	}
 
+	/////////////////////////////////
+	/// Add a character to the view.
+	/////////////////////////////////
 	void WorldView::addCharacter(ICharacter* character) {
 		characters.push_back( new CharacterView( character ) );
 	}
 
+	/////////////////////////////////
+	/// Delete the character at index i.
+	/////////////////////////////////
 	void WorldView::deleteCharacter(int i)
 	{
 		//worldViewMutex.lock();
@@ -271,13 +285,17 @@ namespace mp
 		}
 	}
 
+	/////////////////////////////////
+	/// Sets the mouse position (wait what).
+	/////////////////////////////////
 	void WorldView::setMousePos(const sf::Vector2i& mousePosWindow)
 	{
 		this->mousePosWindow = mousePosWindow;
 	}
 
-	// Fetches all character models,
-	// and creates their corresponding views.
+	/////////////////////////////////
+	/// Fetches all character models and creates their corresponding views.
+	/////////////////////////////////
 	void WorldView::createCharacterViews() {
 		worldDataMutex.lock();
 
@@ -294,7 +312,9 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
-	
+	/////////////////////////////////
+	/// Draw shit.
+	/////////////////////////////////
 	void WorldView::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 		// Set world view so we can render the world in world coordinates
 		window.setView(*camera);
@@ -307,17 +327,26 @@ namespace mp
 		drawHUD( window );			
 	}
 
+	/////////////////////////////////
+	/// Draw the lines representing the world physics.
+	/////////////////////////////////
 	void WorldView::drawWorldGeo(sf::RenderTarget& window) const
 	{
 		for(std::vector<sf::VertexArray*>::const_iterator it = worldGeo.begin(); it != worldGeo.end(); ++it)
 			window.draw( (**it) );
 	}
 
+	/////////////////////////////////
+	/// Draw the environment.
+	/////////////////////////////////
 	void WorldView::drawEnvironment(sf::RenderTarget& window) const
 	{
 		window.draw(*backgroundSprite);
 	}
 
+	/////////////////////////////////
+	/// Draw the bullets
+	/////////////////////////////////
 	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
 		worldViewMutex.lock();
@@ -325,11 +354,17 @@ namespace mp
 		worldViewMutex.unlock();
 	}
 
+	/////////////////////////////////
+	/// Draw the characters.
+	/////////////////////////////////
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
 		drawVector(characters, window);
 	}
 
+	/////////////////////////////////
+	/// Draw the HUD elements.
+	/////////////////////////////////
 	void WorldView::drawHUD(sf::RenderTarget& window) const {
 		// Set default view so we can render the ui in window coordinates
 		window.setView(this->window->getDefaultView());
@@ -353,7 +388,9 @@ namespace mp
 		}
 	}
 
-	// better name
+	/////////////////////////////////
+	/// Draw a GameObjectView vector.
+	/////////////////////////////////
 	void WorldView::drawVector(const std::vector<GameObjectView*>& vector, sf::RenderTarget& window) const
 	{
 		std::vector<GameObjectView*>::const_iterator it;
@@ -361,6 +398,9 @@ namespace mp
 			window.draw(**it);
 	}
 
+	/////////////////////////////////
+	/// Update the world view.
+	/////////////////////////////////
 	void WorldView::update()
 	{
 		updateFpsCounters();
@@ -377,11 +417,17 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	/////////////////////////////////
+	/// Why the hell does this need its own function?
+	/////////////////////////////////
 	void WorldView::updateSightPos()
 	{
 		dotSpr->setPosition( (float) mousePosWindow.x, (float) mousePosWindow.y);
 	}
 
+	/////////////////////////////////
+	/// Update the debug counters.
+	/////////////////////////////////
 	void WorldView::updateFpsCounters()
 	{
 		// Every 10th frame:
@@ -429,6 +475,9 @@ namespace mp
 		worldDataMutex.unlock();
 	}
 
+	/////////////////////////////////
+	/// Update a GameObjectView vector.
+	/////////////////////////////////
 	void WorldView::updateVector(std::vector<GameObjectView*>& vector)
 	{
 		worldViewMutex.lock();
@@ -439,6 +488,9 @@ namespace mp
 		worldViewMutex.unlock();
 	}
 
+	/////////////////////////////////
+	/// Update the camera.
+	/////////////////////////////////
 	void WorldView::updateCamera()
 	{
 		worldDataMutex.lock();
@@ -456,6 +508,9 @@ namespace mp
 		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
 	}
 
+	/////////////////////////////////
+	/// Update the HUD elements.
+	/////////////////////////////////
 	void WorldView::updateHUD()
 	{
 		worldDataMutex.lock();
