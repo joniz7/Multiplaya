@@ -28,10 +28,8 @@ MVC - Model-View-Controller, a design pattern.
 
 2.1 Overview 
 The design follows the Model-View-Controller pattern.
-The application will be run in two threads: One for the model, and one for the view.
-This two-threaded setup assures that all game logic is updated consistently, regardless of how good the game runs
-on any one user's computer.
-The controller is what creates these two threads.
+The application will be run in two threads: One for the game, and one for the network.
+The network thread will lie and listen for data constantly, and update the main game as needed.
 
 
 2.1.1 The Model
@@ -39,29 +37,26 @@ The model is where the game state is saved, and all calculations are performed.
 
 The entire game state is represented here, most notably the map and all physical objects (characters and bullets).
 All mutable things, i.e. the physical objects, are saved in the WorldData class, which is used for communicating
-with other parts of the program. The static world and the physics engine exists in the World class.
+with other parts of the program. The physics engine exists in the World class.
 
 Everything is stored and calculated using the physics framework Box2D. The physical objects available consists of 
 Characters or Bullets, which are both represented using (x,y)-coordinates and a force vector.
 
-The World class is also what houses the "logic loop". This essentially performs all calculations, which includes applying the
-force vectors on the objects to make them move, and executing collision checks.
+The World class main functionality is in the exec() function. This essentially performs all calculations, which includes
+applying the force vectors on the objects to make them move, and executing collision checks. 
 
-Since this logic loop is in its own thread, it is run continuously at a set interval independent from the FPS of the view
-(more on that later). This allows the game's graphics to be a bit "laggy", while still maintaining a precisely updated world.
+2.1.1 The Controller and The View
+The controller handles input and changing of the game state, while the view represents the actual window and graphics of the game.
 
+The main loop is located in the controller. This is essentially what calls everything else and decides who does what, when.
+As for the view: we have a main class called Window, which has several Screens in a list. These include the Main Menu, the
+pause menu, the join game screen and the actual game. The controller keeps track of which screen is currently seleted, and
+calls the appropriate draw method in its loop.
 
-2.1.1 The View
-The view represents the actual window and graphics of the game.
-
-All bullets and characters has graphical representations, which are stored here. Each graphical representation has a
-reference to its model counterpart, from where it retrieves its coordinates and other information needed to display it.
-We are using the graphical framework SFML for storing the sprites of characters, and for handling the actual window.
-
-In the view we have a "graphics loop", which continuously polls the WorldData class asking for new data, and draws all our
-graphical representations to the screen. Since this is also run in a separate thread, it can execute at any pace which the
-computer allows, without affecting the game logic. This is especially important as we need to maintain a consistent game logic
-for all players.
+The WorldView is one of the previously mentioned screens, and arguably the most important one. All bullets and characters has
+graphical representations, which are stored in WorldView. Each graphical representation has a reference to its model counterpart,
+from where it retrieves its coordinates and other information needed to display it. We are using the graphical framework SFML for
+storing the sprites of characters, and for handling the actual window.
 
 
 
@@ -75,6 +70,7 @@ for all players.
 2.2.1 General
 The application is decomposed into the following modules:
 
+controller - keeps track of which state we're in, and handles input.
 view - Handles the window, and draws the game to the screen.
 model - Handles the game world, and performs all necessary physic checks.
 services - contains several subsystems.
@@ -99,13 +95,14 @@ clients.
 
 
 2.2.3 Dependency analysis
-???
+We have performed dependency analysis using Visual Studio Feature Pack. We're actively working to keep dependencies down.
+See attached file "5-dependencyAnalysis.png".
 
 
 2.3 Concurrency issues
-The application consists of two threads, one for the game logics and one for displaying the graphics.
-The view thread communicates with the model thread using the WorldData class, which contains all information which
-is relevant to the view (e.g. the position and rotation of all objects). The WorldData class is locked using a mutex
+The application consists of two threads, one for the game loop and one for housing the NetworkHandler.
+The NetworkHandler thread communicates with the main thread using the WorldData class, which contains all information
+which is relevant (e.g. the position and rotation of all objects). The WorldData class is locked using a mutex
 when it is being accessed.
 
 
@@ -127,5 +124,4 @@ N/A
 "2-model.png" shows how the model part of our game is structured.
 "3-controllerView.png" displays in detail the controller and view, and how they're connected.
 "4-gameUML.png" gives an overview of the whole of the actual game, excluding menus and such stuff.
-"
-
+"5-dependencyAnalysis.png" is an image of all our dependencies.
