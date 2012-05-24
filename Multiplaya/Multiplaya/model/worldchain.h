@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////
+/// World chain class. Represents a segment of lines that
+/// acts as world physics.
+////////////////////////////////////////////////////////////
 #ifndef WORLDCHAIN_H_INCLUDED
 #define WORLDCHAIN_H_INCLUDED
 
@@ -15,6 +19,7 @@ namespace mp
 			~WorldChain();
 			virtual void onCollision(GameObject* crashedWith);
 			virtual void onNoCollision(GameObject* crashedWith){}
+			// Returns a vector of all the vertices in the chain for drawing etc.
 			std::vector<b2Vec2>* getVertices(){ return &verticeList; }
 		private:
 			b2World* world;

@@ -31,10 +31,10 @@ namespace mp
 		initialize();
 	}
 
-	//////////////////////////////
-	// Initialize everything.
-	// Change SFML settings, etc.
-	//////////////////////////////
+	/////////////////////////////////
+	/// Initialize everything.
+	/// Set SFML settings, etc.
+	/////////////////////////////////
 	void WorldView::initialize() {
 		// Set up and initialize render window
 		// Don't display mouse cursor

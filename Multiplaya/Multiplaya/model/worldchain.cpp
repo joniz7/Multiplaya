@@ -1,7 +1,13 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
 #include "worldchain.h"
 
 namespace mp
 {
+	////////////////////////////////////////////////////////////
+	// Constructor
+	////////////////////////////////////////////////////////////
 	WorldChain::WorldChain(b2World* world, b2Vec2 vertices[], int length, float friction)
 	{
 
@@ -28,9 +34,6 @@ namespace mp
 
 	void WorldChain::onCollision(GameObject* crashedWith)
 	{
-		if (crashedWith->objectType != wall) {
-			//std::cout << "Collision: wall <-> ?" << std::endl;
-		}
 	}
 
 	WorldChain::~WorldChain()
