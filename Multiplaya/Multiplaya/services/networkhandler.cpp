@@ -31,7 +31,7 @@ namespace mp
 		//Binds the receiving socket to any port
 		if(receiver.bind(sf::UdpSocket::AnyPort) == sf::Socket::Error)
 		{
-			std::cout<<"Error binding tsdfasdfsao port " << receivePort << std::endl;
+			std::cout<<"Error binding to port " << receivePort << std::endl;
 		}
 
 		receivePort = receiver.getLocalPort();
@@ -42,6 +42,9 @@ namespace mp
 		clientMap[myID].IP = serverIP;
 		clientMap[myID].name = "host";
 		clientMap[myID].port = 55001;
+		clientMap[myID].disconnectCounter = 0;
+		clientMap[myID].kills = 0;
+		clientMap[myID].deaths = 0;
     }
 
 	void NetworkHandler::exec() 
@@ -134,6 +137,8 @@ namespace mp
 							client.name = name;
 							client.disconnectCounter = 0;
 							client.port = senderLocalPort;
+							client.kills = 0;
+							client.deaths = 0;
 
 							//adds that client to the clientmap
 							clientMap[currentClientID] = client;
@@ -318,15 +323,11 @@ namespace mp
 					{
 						receivedData >> numOfChars;
 
-						short health, kills, deaths;
+						sf::Int8 health, kills, deaths;
 
 						for(int i = 0; i<numOfChars; i++)
 						{
 							receivedData >> clientID >> health >> kills >> deaths;
-							if(clientID == myID)
-							{
-								std::cout <<"new health: "<<health<<"  new kills: "<<kills<<"  new deaths: "<<deaths<<std::endl;
-							}
 							setCharacterData(clientID, health, kills, deaths);
 						}
 						break;
@@ -518,25 +519,36 @@ namespace mp
 		}
 
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+	}
 
-		type = 16;
-
-		packet.clear();
+	////////////////////////////////////////////////////////////
+	/// Sends statistics like health, kills and deaths to the client
+	////////////////////////////////////////////////////////////
+	void NetworkHandler::sendCharacterStatsToClient(sf::Int8 clientID)
+	{
+		sf::Int8 type = 16, numOfChars = worldData->getCharacters()->size();
+		sf::Packet packet;
 
 		packet << type << numOfChars;
 
-		sf::Int8 health, kills, deaths;
+		sf::Int8 ID, health, kills, deaths;
+		ICharacter* tempCharacter;
+		int tempid;
+		std::cout<<"num of chras: "<<worldData->getCharacters()->size()<<std::endl;
 		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
-			packet << tempCharacter->getClientID();
+			ID = tempCharacter->getClientID();
+			tempid = ID;
+			std::cout<<"id: "<<tempid<<"   health: "<<tempCharacter->getHealth()<<"   deaths: "<<clientMap[tempCharacter->getClientID()].deaths<<"    kills: "<<clientMap[tempCharacter->getClientID()].kills<<std::endl;;
 			health = tempCharacter->getHealth();
 			kills = clientMap[tempCharacter->getClientID()].kills;
 			deaths = clientMap[tempCharacter->getClientID()].deaths;
-			packet << health << kills << deaths;
+			packet << ID << health << kills << deaths;
 		}
 
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+		std::cout<<"health: "<<tempCharacter->getHealth()<<"   deaths: "<<clientMap[tempCharacter->getClientID()].deaths<<"    kills: "<<clientMap[tempCharacter->getClientID()].kills<<std::endl;
 	}
 
 
@@ -601,6 +613,7 @@ namespace mp
 				worldDataMutex.lock();
 				sendCharacterDataToClient((*it).first);
 				sendBulletDataToClient((*it).first);
+				sendCharacterStatsToClient((*it).first);
 				worldDataMutex.unlock();
 			}
 		}
@@ -662,38 +675,6 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Sends the bullets created by the client to the server
-	////////////////////////////////////////////////////////////
-	void NetworkHandler::sendBulletDataToServer()
-	{
-		/*
-		if(bulletsToSend.size()>0)
-		{
-			sf::Int8 type = 5, numOfBullets = bulletsToSend.size();
-			sf::Packet packet;
-			BufferBullet tempBullet;
-			float32 x, y, xvel, yvel;
-			packet << type << numOfBullets;
-
-			for(int i = 0; i<numOfBullets; i++)
-			{
-				tempBullet = bulletsToSend.at(i);
-				x = tempBullet.x;
-				y = tempBullet.y;
-				xvel = tempBullet.xvel;
-				yvel = tempBullet.yvel;
-
-				packet << myID << x << y << xvel << yvel;
-			}
-
-			bulletsToSend.clear();
-
-			sender.send(packet, serverIP, 55001);
-		}
-		*/
-	}
-
-	////////////////////////////////////////////////////////////
 	/// Sets general data about the character.
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::setCharacterData(sf::Int8 clientID, short health, short kills, short deaths)
@@ -745,11 +726,17 @@ namespace mp
 	}
 
 	////////////////////////////////////////////////////////////
-	/// Sets the IPAddress of the server
+	/// Respawns the selected character at the spawnpoint.
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::setIPAddress(const sf::String IPAddress)
+	void NetworkHandler::respawnCharacter(sf::Int8 clientID)
 	{
-		serverIP = IPAddress.toAnsiString();
+		worldDataMutex.lock();
+		if(worldData->exists(clientID))
+		{
+			ICharacter* character = worldData->getCharacter(clientID);
+			character->setHealth(80);
+			character->setPosition(b2Vec2(0.0f, 4.0f), 0);
+		}
 	}
 
 	////////////////////////////////////////////////////////////
@@ -827,6 +814,7 @@ namespace mp
 		{
 			IBullet* bullet = (IBullet*)object;
 			clientMap[bullet->getOwner()].kills++;
+			std::cout<<"JAG DOG!!!"<<std::endl;
 		}
 	}
 }
