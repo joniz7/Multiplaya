@@ -96,7 +96,7 @@ namespace mp
 			virtual void setHealth(short health) = 0;
 			virtual void setKills(short kills) = 0;
 			virtual void setDeaths(short deaths) = 0;
-			
+			virtual void incKills() = 0;	
 		protected:
 			bool dead;
 

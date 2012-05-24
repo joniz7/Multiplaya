@@ -23,7 +23,7 @@ namespace mp
 		this->walking = false;
 		this->dead = false;
 		this->maxHealth = 80;
-		this->setHealth(50); // TODO should default value be defined elsewhere?
+		this->setHealth(80); // TODO should default value be defined elsewhere?
 		this->cooldown = 100; // milliseconds in between shots.
 		this->reloadTime = 1000; // Milliseconds it takes to reload.
 		this->clipSize = 11; // Amount of bullets magazine holds.
@@ -67,6 +67,10 @@ namespace mp
 			std::cout << "Collision: DefaultCharacter <-> bullet" << std::endl;
 			IBullet* b = static_cast<IBullet*>( crashedWith );
 			inflictDamage(b);
+			if(dead)
+			{
+				notifyObservers(CHARACTER_KILLED, b);
+			}
 		}
 		// No other checks neccessary?
 	}
@@ -372,6 +376,7 @@ namespace mp
 	{
 		std::cout << "I'm a dead character. FML" << std::endl;
 		notifyObservers(CHARACTER_DIED, this);
+		deaths++;
 		dead = true;
 	}
 

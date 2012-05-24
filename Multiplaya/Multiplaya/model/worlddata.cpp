@@ -247,9 +247,9 @@ namespace mp
 			{
 				notifyObservers(SEND_BULLET, bullet);
 			}
-			//worldDataMutex.lock();
+
 			addBullet(bullet);
-			//worldDataMutex.unlock();
+
 		}
 		else if (e == CONNECT_SERVER) 
 		{
@@ -262,6 +262,8 @@ namespace mp
 		else if(e == CHARACTER_KILLED)
 		{
 			notifyObservers(CHARACTER_KILLED, object);
+			IBullet* b = (IBullet*)object;
+			getCharacter(b->getOwner())->incKills();
 		}
 	}
 

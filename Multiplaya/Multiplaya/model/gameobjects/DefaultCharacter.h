@@ -53,9 +53,11 @@ namespace mp
 			short getHealthState();
 			void setHealth(short health);
 
-			short getKills()  { return kills; }
+			short getKills()  { return kills; std::cout<<kills<<std::endl;}
+			void setKills(short kills){this->kills = kills; }
+			void incKills(){kills++;}
+
 			short getDeaths() { return deaths; }
-			void setKills(short kills){this->kills = kills;}
 			void setDeaths(short deaths){this->deaths = deaths;}
 
 			short getClip() { return clip; }

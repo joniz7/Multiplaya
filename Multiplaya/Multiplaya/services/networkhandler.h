@@ -42,12 +42,11 @@ namespace mp
 			bool isConnectedToServer(){return hasConnected;};
 			void sendCharacterDataToServer();
 			void sendCharacterDataToClient(sf::Int8 clientID);
+			void sendCharacterStatsToClient(sf::Int8 clientID);
 			void sendCharactersToClient(sf::Int8 clientID);
-			void sendBulletDataToServer();
 			void sendBulletDataToClient(sf::Int8 clientID);
 			void removeCharacter(sf::Int8 clientID);
 			void updateAllClients();
-			void setIPAddress(const sf::String IPAddress);
 			void setAsServer();
 			void setAsClient();
 
@@ -58,6 +57,7 @@ namespace mp
 			void setCharacterData(sf::Int8 clientID, short health, short kills, short deaths);
 			void setCharacterMoveData(sf::Int8 clientID, b2Vec2 position, b2Vec2 velocity, float32 angle);
 			void setCharacterAnimation(sf::Int8 clientID, bool grounded, bool walking, bool facingLeft, bool touchingLeftWall, bool touchingRightWall, bool wallSliding, bool flipping);
+			void respawnCharacter(sf::Int8 clientID);
 			sf::UdpSocket receiver;
 			sf::UdpSocket sender;
 			bool running;
