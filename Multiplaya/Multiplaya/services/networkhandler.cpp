@@ -390,9 +390,9 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	/// Connects a client to the server with the given IPAddress
 	////////////////////////////////////////////////////////////
-	void NetworkHandler::connectToServer(std::string name, std::string IPAddress)
+	void NetworkHandler::connectToServer(std::string name, sf::String IPAddress)
 	{
-		serverIP = IPAddress;
+		serverIP = IPAddress.toAnsiString();
 		sf::Int8 type = 1;
 		sf::Uint16 port = receivePort;
 		sf::Packet packet;
