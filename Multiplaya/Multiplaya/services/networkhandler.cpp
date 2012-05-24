@@ -785,19 +785,25 @@ namespace mp
 		}
 		else if(e == CHARACTER_DIED)
 		{
-			ICharacter* character = (ICharacter*)object;
-			sf::Int8 clientID = character->getClientID();
-			clientMap[clientID].deaths++;
-			sf::Packet packet;
-			sf::Int8 type = 6;
-			packet << type << character->getClientID();
+			if(isServer)
+			{
+				ICharacter* character = (ICharacter*)object;
+				sf::Int8 clientID = character->getClientID();
+				clientMap[clientID].deaths++;
+				sf::Packet packet;
+				sf::Int8 type = 6;
+				packet << type << character->getClientID();
 			
-			sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+				sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
+			}
 		}
 		else if(e == CHARACTER_KILLED)
 		{
-			IBullet* bullet = (IBullet*)object;
-			clientMap[bullet->getOwner()].kills++;
+			if(isServer)
+			{
+				IBullet* bullet = (IBullet*)object;
+				clientMap[bullet->getOwner()].kills++;
+			}
 		}
 	}
 }
