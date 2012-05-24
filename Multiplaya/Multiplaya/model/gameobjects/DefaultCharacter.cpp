@@ -49,7 +49,8 @@ namespace mp
     }
 
 	/**
-	 * Called when character collides with something.
+	 * Sets the client ID for the character.
+	 * Also creates a new body with the new client ID
 	 */
 	void DefaultCharacter::setClientID(sf::Int8 ID) {
 		this->clientID = ID;
@@ -369,6 +370,8 @@ namespace mp
 	/// Kills the character
 	void DefaultCharacter::kill()
 	{
+		std::cout << "I'm a dead character. FML" << std::endl;
+		notifyObservers(CHARACTER_DIED, this);
 		dead = true;
 	}
 

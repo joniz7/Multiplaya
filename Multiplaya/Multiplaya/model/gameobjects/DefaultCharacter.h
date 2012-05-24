@@ -55,6 +55,8 @@ namespace mp
 
 			short getKills()  { return kills; }
 			short getDeaths() { return deaths; }
+			void setKills(short kills){this->kills = kills;}
+			void setDeaths(short deaths){this->deaths = deaths;}
 
 			short getClip() { return clip; }
 
