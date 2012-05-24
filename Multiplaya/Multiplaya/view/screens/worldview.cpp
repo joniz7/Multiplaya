@@ -505,7 +505,8 @@ namespace mp
 		float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
 		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
-		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
+		//camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
+		camera->setCenter(position.x * PIXEL_SCALE, position.y * PIXEL_SCALE);
 	}
 
 	/////////////////////////////////
