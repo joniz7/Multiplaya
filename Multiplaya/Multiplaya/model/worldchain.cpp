@@ -1,10 +1,15 @@
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
 #include "worldchain.h"
 
 namespace mp
 {
+	////////////////////////////////////////////////////////////
+	// Constructor
+	////////////////////////////////////////////////////////////
 	WorldChain::WorldChain(b2World* world, b2Vec2 vertices[], int length, float friction)
 	{
-
 		// Save vertices
 		for(int i=0;i<length;i++)
 			verticeList.push_back(vertices[i]);
@@ -22,19 +27,19 @@ namespace mp
 		fixture->SetUserData(this);
 
 		this->world = world;
-		this->chainBody = body;
+		this->body = body;
 		this->objectType = wall;
 	}
 
 	void WorldChain::onCollision(GameObject* crashedWith)
 	{
-		if (crashedWith->objectType != wall) {
-			//std::cout << "Collision: wall <-> ?" << std::endl;
-		}
 	}
-
+	
+	////////////////////////////////////////////////////////////
+	// Destructor
+	////////////////////////////////////////////////////////////
 	WorldChain::~WorldChain()
 	{
-		world->DestroyBody(chainBody);
+		world->DestroyBody(body);
 	}
 }

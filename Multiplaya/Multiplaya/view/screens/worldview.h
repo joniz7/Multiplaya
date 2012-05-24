@@ -125,15 +125,11 @@ namespace mp
 			void addCharacter(ICharacter* character);
 			void deleteCharacter(int i);
 
-
-
 			void createCharacterViews();
 
 			void initialize();
 			void initHUD();
 			void initMusic();
-
-
 
 			virtual void draw(sf::RenderTarget& window, sf::RenderStates states) const;
 			void drawWorldGeo(sf::RenderTarget& window) const;
@@ -152,7 +148,6 @@ namespace mp
 			void updateCamera();
 			void updateHUD();
 			void updateSightPos();
-
 
 			int counter;
 			float elapsed;
