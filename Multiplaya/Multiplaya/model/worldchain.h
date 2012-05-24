@@ -22,8 +22,6 @@ namespace mp
 			// Returns a vector of all the vertices in the chain for drawing etc.
 			std::vector<b2Vec2>* getVertices(){ return &verticeList; }
 		private:
-			b2World* world;
-			b2Body* chainBody;
 			std::vector<b2Vec2> verticeList;
 	};
 }

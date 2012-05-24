@@ -10,7 +10,6 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	WorldChain::WorldChain(b2World* world, b2Vec2 vertices[], int length, float friction)
 	{
-
 		// Save vertices
 		for(int i=0;i<length;i++)
 			verticeList.push_back(vertices[i]);
@@ -28,16 +27,19 @@ namespace mp
 		fixture->SetUserData(this);
 
 		this->world = world;
-		this->chainBody = body;
+		this->body = body;
 		this->objectType = wall;
 	}
 
 	void WorldChain::onCollision(GameObject* crashedWith)
 	{
 	}
-
+	
+	////////////////////////////////////////////////////////////
+	// Destructor
+	////////////////////////////////////////////////////////////
 	WorldChain::~WorldChain()
 	{
-		world->DestroyBody(chainBody);
+		world->DestroyBody(body);
 	}
 }
