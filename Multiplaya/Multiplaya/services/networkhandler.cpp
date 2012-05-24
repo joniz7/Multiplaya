@@ -85,29 +85,8 @@ namespace mp
 		while(running) 
 		{
 			//Receives a packet
-			//std::cout<<"Receiving data..."<<std::endl;
 			receivedData.clear();
 			receiver.receive(receivedData, senderIP, senderPort);
-			
-			if(isServer)
-			{
-				for(it = clientMap.begin(); it != clientMap.end(); it++)
-				{
-					if((*it).second.IP == senderIP)
-					{
-						(*it).second.disconnectCounter = 0;
-					}
-					else
-					{
-						(*it).second.disconnectCounter++;
-						if((*it).second.disconnectCounter == 400)
-						{
-							//disconnectClient((*it).first);
-						}
-					}
-				}
-			}
-			
 
 			//Tries to read what type of message the packet was
 			if(!(receivedData >> type))
