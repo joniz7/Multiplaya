@@ -64,7 +64,6 @@ namespace mp
 	{
 		// If we collided with bullet, take damage.
 		if (crashedWith->objectType == bullet) {
-			std::cout << "Collision: DefaultCharacter <-> bullet" << std::endl;
 			IBullet* b = static_cast<IBullet*>( crashedWith );
 			inflictDamage(b);
 			if(dead)
@@ -356,7 +355,6 @@ namespace mp
 		else {
 			this->health = health;
 		}
-		std::cout << "health: " << this->health << std::endl;
 	}
 
 	/**
@@ -374,7 +372,6 @@ namespace mp
 	/// Kills the character
 	void DefaultCharacter::kill()
 	{
-		std::cout << "I'm a dead character. FML" << std::endl;
 		notifyObservers(CHARACTER_DIED, this);
 		deaths++;
 		dead = true;

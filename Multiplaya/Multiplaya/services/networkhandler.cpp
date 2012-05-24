@@ -93,8 +93,6 @@ namespace mp
 			{
 				for(it = clientMap.begin(); it != clientMap.end(); it++)
 				{
-					//std::cout << "before" << (*it).second.disconnectCounter << std::endl;
-					//std::cout << (*it).second.IP << "    " << senderIP << std::endl;
 					if((*it).second.IP == senderIP)
 					{
 						(*it).second.disconnectCounter = 0;
@@ -107,7 +105,6 @@ namespace mp
 							//disconnectClient((*it).first);
 						}
 					}
-					//std::cout << "after" << (*it).second.disconnectCounter << std::endl;
 				}
 			}
 			
@@ -118,14 +115,17 @@ namespace mp
 			else 
 			{
 				outputType = type;
-				//Checks what type of packet has been sent and does
-				//The appropriate thing with it
+				////////////////////////////////////////////////////////////
+				/// Giant switch-case that, depending on what type the packet is
+				/// does the appropriate thing.
+				///
+				/// Thing to note. 
+				/// Single digit packet types are meant for the server.
+				/// Double digit packet types are meant for the client.
 				switch(type)
 				{
 					//Client trying to connect
 					case 1:
-						//std::cout<<"type 1"<<std::endl;
-						//Creates a client from the data
 						if(isServer) 
 						{
 							if(sendOutput)
@@ -160,10 +160,6 @@ namespace mp
 
 					//Client trying to disconnect
 					case 2:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 2"<<std::endl;
 						receivedData >> clientID;
 
 						client = clientMap[clientID];
@@ -175,10 +171,6 @@ namespace mp
 
 					//Receive a text message and send it to all clients
 					case 3:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 3"<<std::endl;
 						message.clear();
 						receivedData >> message;
 						//std::cout<<"Recieved a message: "<<message<<std::endl;
@@ -196,14 +188,9 @@ namespace mp
 						break;
 					//Receive character data from a client.
 					case 4:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 4"<<std::endl;
 						receivedData >> clientID >> x >> y >> xvel >> yvel >> angle >> grounded >> walking >> facingLeft >>  touchingLeftWall >> touchingRightWall >> wallSliding >> flipping;
 						position.Set(x,y);
 						velocity.Set(xvel, yvel);
-						test = clientID;
 
 						setCharacterMoveData(clientID, position, velocity, angle);
 						setCharacterAnimation(clientID, grounded, walking, facingLeft, touchingLeftWall, touchingRightWall, wallSliding, flipping);
@@ -211,10 +198,6 @@ namespace mp
 						break;
 					//Receive bullet data from a client
 					case 5:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 5"<<std::endl;
 						receivedData >> numOfBullets;
 
 						//All the bullets in the packet is added to the world
@@ -228,12 +211,19 @@ namespace mp
 							model->createBullet(position, velocity, clientID);
 						}
 						break;
+					case 6:
+					{
+						sf::Int8 clientID;
+						receivedData >> clientID;
+						int test = clientID;
+						std::cout<<"fickdet"<<test<<std::endl;
+						
+						respawnCharacter(clientID);
+						break;
+					}
+						
 					//Recieve your ID from the server
 					case 11:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 11"<<std::endl;
 						receivedData >> myID;
 						worldDataMutex.lock();
 						worldData->getCharacter(0)->setClientID(myID);
@@ -243,20 +233,12 @@ namespace mp
 						break;
 					//Receive a text message
 					case 12:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 12"<<std::endl;
 						message.clear();
 						receivedData >> message;
 						std::cout<<"Recieved a message: "<<message<<std::endl;
 						break;
 					//Receive character data from the server
 					case 13:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 13"<<std::endl;
 						receivedData >> numOfChars;
 
 						for(int i = 0; i<numOfChars; i++)
@@ -271,10 +253,6 @@ namespace mp
 						break;
 					//Receive bullet data from the server
 					case 14:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
-						//std::cout<<"type 14"<<std::endl;
 						receivedData >> numOfBullets;
 						if(numOfBullets > 0)
 						{
@@ -303,9 +281,6 @@ namespace mp
 						break;
 					//Receive characters to create from the server
 					case 15:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
 						receivedData >> numOfChars;
 
 						size.Set(1.0f, 2.0f);
@@ -334,9 +309,6 @@ namespace mp
 					}
 					//Remove the specified character
 					case 17:
-						if(sendOutput)
-								std::cout<<"type "<<outputType<<std::endl;
-
 						receivedData >> clientID;
 
 						worldData->removeCharacter(clientID);
@@ -534,13 +506,13 @@ namespace mp
 		sf::Int8 ID, health, kills, deaths;
 		ICharacter* tempCharacter;
 		int tempid;
-		std::cout<<"num of chras: "<<worldData->getCharacters()->size()<<std::endl;
+
 		for(int i = 0; i<numOfChars; i++)
 		{
 			tempCharacter = worldData->getCharacter(i);
 			ID = tempCharacter->getClientID();
 			tempid = ID;
-			std::cout<<"id: "<<tempid<<"   health: "<<tempCharacter->getHealth()<<"   deaths: "<<clientMap[tempCharacter->getClientID()].deaths<<"    kills: "<<clientMap[tempCharacter->getClientID()].kills<<std::endl;;
+			
 			health = tempCharacter->getHealth();
 			kills = clientMap[tempCharacter->getClientID()].kills;
 			deaths = clientMap[tempCharacter->getClientID()].deaths;
@@ -548,7 +520,6 @@ namespace mp
 		}
 
 		sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
-		std::cout<<"health: "<<tempCharacter->getHealth()<<"   deaths: "<<clientMap[tempCharacter->getClientID()].deaths<<"    kills: "<<clientMap[tempCharacter->getClientID()].kills<<std::endl;
 	}
 
 
@@ -587,7 +558,7 @@ namespace mp
 	{
 		worldData->removeCharacter(clientID);
 
-		sf::Int8 type = 16;
+		sf::Int8 type = 17;
 		sf::Packet packet;
 		std::map<sf::Int8, Client>::iterator it;
 		
@@ -730,14 +701,20 @@ namespace mp
 	////////////////////////////////////////////////////////////
 	void NetworkHandler::respawnCharacter(sf::Int8 clientID)
 	{
+		
 		worldDataMutex.lock();
+		b2Vec2 position;
+		position.Set(0.0f, 4.0f);
+		std::cout<<"hej"<<std::endl;
 		if(worldData->exists(clientID))
 		{
+			std::cout<<"då"<<std::endl;
 			ICharacter* character = worldData->getCharacter(clientID);
 			character->setHealth(80);
-			character->setPosition(b2Vec2(0.0f, 4.0f), 0);
+			character->setPosition(position, 0);
 		}
 		worldDataMutex.unlock();
+		
 	}
 
 	////////////////////////////////////////////////////////////
@@ -809,8 +786,13 @@ namespace mp
 		else if(e == CHARACTER_DIED)
 		{
 			ICharacter* character = (ICharacter*)object;
-			clientMap[character->getClientID()].deaths++;
-			respawnCharacter(character->getClientID());
+			sf::Int8 clientID = character->getClientID();
+			clientMap[clientID].deaths++;
+			sf::Packet packet;
+			sf::Int8 type = 6;
+			packet << type << character->getClientID();
+			
+			sender.send(packet, clientMap[clientID].IP, clientMap[clientID].port);
 		}
 		else if(e == CHARACTER_KILLED)
 		{

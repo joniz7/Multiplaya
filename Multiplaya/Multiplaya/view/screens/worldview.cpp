@@ -207,14 +207,18 @@ namespace mp
 		}
 		else if (e == CHARACTER_ADDED)
 		{
+			worldViewMutex.lock();
 			std::cout << "Adding character to view" << std::endl;
 			ICharacter* character = (ICharacter*)object;
 			addCharacter(character);
+			worldViewMutex.unlock();
 		}
 		else if (e == CHARACTER_DELETED)
 		{
+			worldViewMutex.lock();
 			int i = ( intptr_t )object;
 			deleteCharacter(i);
+			worldViewMutex.unlock();
 		}
 	}
 
@@ -359,7 +363,9 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
+		worldViewMutex.lock();
 		drawVector(characters, window);
+		worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////

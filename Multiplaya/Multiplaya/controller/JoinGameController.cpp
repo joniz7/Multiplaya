@@ -61,7 +61,6 @@ namespace mp
 
 			if(networkHandler->isConnectedToServer())
 			{
-				//networkHandler->setIPAddress(ipTextField->getText());
 				networkHandler->setAsClient();
 				// Change screen in main controller.
 				notifyObservers(START_GAME, 0);

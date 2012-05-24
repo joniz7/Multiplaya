@@ -1,4 +1,4 @@
-System design document for Multiplaya
+﻿System design document for Multiplaya
 
   Version: 1
 
@@ -89,7 +89,13 @@ services/resourcehandler - Handles all resources, i.e. textures.
 
 
 2.2.2 Layering
-???
+The application uses a client - server system for the network part. One player chooses to 
+host a game as a server, other players can then connect to him in order to play with each other.
+
+The server keeps a list of all the clients. The clients sends important data to the server at a 
+regular pace. Data like position in the world, if they are shooting etc. The server then takes this information,
+calculates what needs to be calculated like if a player is hit by a bullet, and then sends it all back to the 
+clients. 
 
 
 2.2.3 Dependency analysis

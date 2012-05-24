@@ -74,7 +74,6 @@ namespace mp
 
 		// If we collide with character, explode (we handle the dmg elsewhere).
 		else if (crashedWith->objectType == character) {
-			std::cout << "Collision: bullet <-> character" << std::endl;
 			this->explode();
 		}
 	}
