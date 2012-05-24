@@ -28,7 +28,6 @@
 #include "../../includes/Global.h"
 
 #include "Screen.h"
-#include "../GUIElements/GUIElement.h"
 #include "../../services/input.h"
 
 namespace mp
