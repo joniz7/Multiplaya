@@ -737,6 +737,7 @@ namespace mp
 			character->setHealth(80);
 			character->setPosition(b2Vec2(0.0f, 4.0f), 0);
 		}
+		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -809,12 +810,12 @@ namespace mp
 		{
 			ICharacter* character = (ICharacter*)object;
 			clientMap[character->getClientID()].deaths++;
+			respawnCharacter(character->getClientID());
 		}
 		else if(e == CHARACTER_KILLED)
 		{
 			IBullet* bullet = (IBullet*)object;
 			clientMap[bullet->getOwner()].kills++;
-			std::cout<<"JAG DOG!!!"<<std::endl;
 		}
 	}
 }
