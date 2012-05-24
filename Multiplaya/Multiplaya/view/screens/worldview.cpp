@@ -418,7 +418,7 @@ namespace mp
 	}
 
 	/////////////////////////////////
-	/// Why the hell does this need its own function?
+	/// Updates the sight pos
 	/////////////////////////////////
 	void WorldView::updateSightPos()
 	{
@@ -497,16 +497,15 @@ namespace mp
 		// Calculate camera position (somehwere between character and mouse)
 		const b2Vec2& position = worldData->getCurrentCharacter()->getBody()->GetPosition();
 		const float32 angle = worldData->getCurrentCharacter()->getBody()->GetAngle();
-		//testSpr.setPosition(position.x*PIXEL_SCALE,position.y*PIXEL_SCALE);
 		worldDataMutex.unlock();
 
-		sf::Vector2f mousePos = window->convertCoords(mousePosWindow, *getCamera());
+		sf::Vector2f mousePos = window->convertCoords(mousePosWindow, *getCamera()) / PIXEL_SCALE;
 
 		float x = (((position.x + mousePos.x) / 2 + position.x) / 2 + position.x) / 2;
 		float y = (((position.y + mousePos.y) / 2 + position.y) / 2 + position.y) / 2;
 
-		//camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
-		camera->setCenter(position.x * PIXEL_SCALE, position.y * PIXEL_SCALE);
+		camera->setCenter(x * PIXEL_SCALE, y * PIXEL_SCALE);
+		//camera->setCenter(position.x * PIXEL_SCALE, position.y * PIXEL_SCALE);
 	}
 
 	/////////////////////////////////
