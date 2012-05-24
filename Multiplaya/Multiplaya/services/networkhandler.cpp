@@ -216,7 +216,6 @@ namespace mp
 						sf::Int8 clientID;
 						receivedData >> clientID;
 						int test = clientID;
-						std::cout<<"fickdet"<<test<<std::endl;
 						
 						respawnCharacter(clientID);
 						break;
