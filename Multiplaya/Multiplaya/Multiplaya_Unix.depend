@@ -3591,9 +3591,9 @@
 1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/util/Observer.h
 	"Event.h"
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/util/Event.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/util/Event.h
 
-1337813074 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/ICharacter.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/ICharacter.h
 	"DynamicGameObject.h"
 	"gameobjects/StandardBullet.h"
 
@@ -3602,7 +3602,7 @@
 	<Box2D.h>
 	<iostream>
 
-1337756584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worldchain.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worldchain.h
 	"GameObject.h"
 	<Box2D.h>
 	<iostream>
@@ -3639,7 +3639,7 @@
 	<map>
 	"../services/resourcehandler.h"
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/Button.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/Button.h
 	"GUIElement.h"
 
 1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/GUIElement.h
@@ -3755,7 +3755,7 @@
 	<SFML/Graphics.hpp>
 	"../util/Observable.h"
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/networkhandler.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/networkhandler.h
 	<string>
 	<cstdlib>
 	<cmath>
@@ -3851,7 +3851,7 @@
 1337697914 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/controller/IController.cpp
 	"IController.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/controller/JoinGameController.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/controller/JoinGameController.cpp
 	"JoinGameController.h"
 
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/controller/MainScreenController.cpp
@@ -3895,7 +3895,7 @@
 	"../services/ContactListener.h"
 	"../includes/Global.h"
 
-1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worldchain.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worldchain.cpp
 	"worldchain.h"
 
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/MusicHandler.cpp
@@ -3923,7 +3923,7 @@
 	<fstream>
 	<algorithm>
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/networkhandler.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/networkhandler.cpp
 	"networkhandler.h"
 
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/resourcehandler.cpp
@@ -3967,23 +3967,23 @@
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/util/Observable.cpp
 	"Observable.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/BulletView.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/BulletView.cpp
 	"BulletView.h"
 
 1337612937 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/CharacterSprite.cpp
 	"CharacterSprite.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/CharacterView.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/CharacterView.cpp
 	"CharacterView.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/Button.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/Button.cpp
 	"Button.h"
 
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/GUIElement.cpp
 	"GUIElement.h"
 	<iostream>
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/TextField.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/GUIElements/TextField.cpp
 	"TextField.h"
 	<iostream>
 
@@ -4024,7 +4024,7 @@
 	"../services/confighandler.h"
 	"animatedsprite.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worlddata.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/worlddata.cpp
 	"worlddata.h"
 	"world.h"
 	"../includes/Global.h"
@@ -4051,7 +4051,7 @@
 	<SFML/Graphics.hpp>
 	"../GUIElements/GUIElement.h"
 
-1337689885 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/MainScreen.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/MainScreen.h
 	"Screen.h"
 	<map>
 	"../../services/resourcehandler.h"
@@ -4073,7 +4073,7 @@
 	"../GUIElements/TextField.h"
 	<map>
 
-1337813074 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.h
 	<string>
 	<cstdlib>
 	<cmath>
@@ -4087,14 +4087,13 @@
 	"../HUDSprite.h"
 	"../../includes/Global.h"
 	"Screen.h"
-	"../GUIElements/GUIElement.h"
 	"../../services/input.h"
 
 1337756584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/DynamicGameObject.h
 	"GameObject.h"
 	"../util/Observable.h"
 
-1337756584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/PauseScreen.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/PauseScreen.h
 	"Screen.h"
 	<map>
 	"../../services/resourcehandler.h"
@@ -4115,13 +4114,13 @@
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/JoinGameScreen.cpp
 	"JoinGameScreen.h"
 
-1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/MainScreen.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/MainScreen.cpp
 	"MainScreen.h"
 	<iostream>
 	<string>
 	<sstream>
 
-1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/PauseScreen.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/PauseScreen.cpp
 	"PauseScreen.h"
 	<iostream>
 	<string>
@@ -4131,14 +4130,14 @@
 	"Screen.h"
 	<iostream>
 
-1337813074 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/view/screens/worldview.cpp
 	"worldview.h"
 	"../../model/worlddata.h"
 	"../../includes/Global.h"
 	"../../services/confighandler.h"
 	"../animatedsprite.h"
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/DefaultCharacter.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/DefaultCharacter.h
 	<string>
 	<cstdlib>
 	<list>
@@ -4172,10 +4171,10 @@
 	<SFML/System.hpp>
 	"DynamicGameObject.h"
 
-1337809398 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/includes/Client.h
+1337836584 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/includes/Client.h
 	<string>
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/controller/PauseScreenController.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/controller/PauseScreenController.cpp
 	"PauseScreenController.h"
 
 1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/includes/Global.cpp
@@ -4184,14 +4183,17 @@
 1337756584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/DynamicGameObject.cpp
 	"DynamicGameObject.h"
 
-1337813074 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/DefaultCharacter.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/DefaultCharacter.cpp
 	"DefaultCharacter.h"
 
-1337809398 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/StandardBullet.cpp
+1337836584 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/model/gameobjects/StandardBullet.cpp
 	"StandardBullet.h"
 
 1337813074 /home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/ContactListener.h
 	<Box2D.h>
 	<iostream>
 	"../model/GameObject.h"
+
+1337813074 source:/home/niklas/cpp/Multiplaya/Multiplaya/Multiplaya/services/ContactListener.cpp
+	"ContactListener.h"
 
