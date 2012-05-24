@@ -1,12 +1,10 @@
 Requirements and Analysis Document for group 9
-Table of Contents:
-
 
 Version: 1
 
 Date: 15/3 2012
 
-Author: Niklas Logren, Niklas Andr�asson, Jonathan Orr�, Felix Willebrand Westin
+Author: Niklas Logren, Niklas Andreasson, Jonathan Orro, Felix Willebrand Westin
 
 This version overrides all previous versions.
 
@@ -63,8 +61,15 @@ There should not be any legal issues regarding rights or code.
 2.3 Application models
 
 2.3.1 Use case model
-
-UML and a list of UC names (text for all in appendix)
+Entering a game
+Hosting a game
+Joining a game
+Jumping
+Reloading
+Shooting
+Walking
+Walljumping
+See attachment for a diagram.
 
 2.3.2 Use cases priority
 
@@ -78,16 +83,21 @@ UML and a list of UC names (text for all in appendix)
 2.3.3 Domain model
 
 UML, possible some text.
+Entering a game
+Hosting a game
+Joining a game
+Jumping
+Reloading
+Shooting
+Walking
+Walljumping
+
 
 2.3.4 User interface
 Application will use a fixed GUI supporting different resolutions.
 
 2.4 References
 
-  APPENDIX
-
-  GUI
-
-  Domain model
-
-  Use case texts
+See folder "use cases" for descriptions of use cases.
+See picture "1-Use_cases.png" for overview of use cases.
+See picture "2-Domain_model.png" for a basic look of our game world.

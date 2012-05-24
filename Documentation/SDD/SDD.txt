@@ -1,8 +1,5 @@
 System design document for Multiplaya
 
-Table of Contents
-blaha~
-
   Version: 1
 
   Date 2012-04-26
@@ -120,6 +117,9 @@ N/A
 
 3 References
 
-  APPENDIX 
-
+"1-overview.png" - gives a brief overview of the program's fundamental parts.
+"2-model.png" shows how the model part of our game is structured.
+"3-controllerView.png" displays in detail the controller and view, and how they're connected.
+"4-gameUML.png" gives an overview of the whole of the actual game, excluding menus and such stuff.
+"
 
