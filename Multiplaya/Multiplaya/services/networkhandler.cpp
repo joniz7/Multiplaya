@@ -238,7 +238,7 @@ namespace mp
 							//The current bullet list is cleared
 							if(worldData->getBullets()->size()>0)
 							{
-								worldData->removeAllBullets(myID);
+								worldData->removeBulletsExcept(myID);
 							}
 						
 							//And replaced by the new bullets

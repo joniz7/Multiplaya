@@ -37,7 +37,6 @@ namespace mp
 	void Controller::notify(Event e, void* object) {
 		switch (e) {
 			case START_GAME:     startGame();        break;
-			case STOP_GAME:      stopGame();         break;
 			case EXIT_GAME:      exitGame();         break;
 			case PAUSE_GAME:     pauseGame();        break;
 			case RESUME_GAME:    resumeGame();       break;
@@ -48,8 +47,6 @@ namespace mp
 	}
 
 	void Controller::startGame() {
-		// TODO: reset everything here.
-
 		// Start our ingame music.
 		this->runGame = true;
 		MusicHandler::instance().chooseSong("bg");
@@ -59,19 +56,13 @@ namespace mp
 		this->currentDrawFunction = &Window::drawGame;
 		this->currentController = controllers["game"];
 	}
-	void Controller::stopGame() {
-		this->runGame = false;
-		// TODO: replace with "inGame"
-		this->currentDrawFunction = &Window::drawMainMenu;
-		this->currentController = controllers["mainScreen"];
-	}
+
 	void Controller::exitGame() {
 		this->runGame = false;
 		exit(0);
 	}
 
 	void Controller::pauseGame(){
-		// TODO: replace with "inGameMenu".
 		this->currentDrawFunction = &Window::drawPauseMenu;
 		this->currentController = controllers["pauseScreen"];
 		};
@@ -83,6 +74,10 @@ namespace mp
 	}
 
 	void Controller::showMainMenu(){
+		// If we're coming  from ingame, reset game world.
+		if (runGame) {
+			this->reset();
+		}
 		// Start our menu music.
 		MusicHandler::instance().chooseSong("menu");
 		MusicHandler::instance().play();
@@ -97,6 +92,10 @@ namespace mp
 		this->currentController = controllers["joinGame"];
 	}
 
+	void Controller::reset() {
+		// TODO: implement more reset() methods.
+		world->reset();
+	}
 
 	Controller::~Controller()
 	{

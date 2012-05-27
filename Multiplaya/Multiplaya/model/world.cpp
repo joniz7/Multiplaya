@@ -20,13 +20,20 @@ namespace mp
 	 * 
 	 * @param worldData - the data container to use for the world.
 	 */
-    World::World(WorldData* worldData)
-    {
+    World::World(WorldData* worldData) {
 		this->worldData = worldData;
+		reset();
+    }
+
+	/**
+	 * Creates a fresh instance of the physics world.
+	 */
+	void World::reset() {
 		// Setup the world properties
 		const b2Vec2 gravity(0, -9.8f * 8);
 		// Create the world
 		world = new b2World(gravity);
+
 		worldDataMutex.lock();
 		world->SetContactListener(new ContactListener());
 		worldDataMutex.unlock();
@@ -49,8 +56,7 @@ namespace mp
 
 		// Unlock world data
 		worldDataMutex.unlock();
-
-    }
+	}
 
 	/**
 	 * The logic loop; updates the game world, runs Box2D and everything else.

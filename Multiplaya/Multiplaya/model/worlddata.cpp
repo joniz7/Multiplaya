@@ -187,7 +187,7 @@ namespace mp
 	 *
 	 * @param clientID - the client whose bullets should be exempt from deleting.
 	 */
-	void WorldData::removeAllBullets(sf::Int8 clientID)
+	void WorldData::removeBulletsExcept(sf::Int8 clientID)
 	{
 		worldDataMutex.lock();
 		IBullet* bullet;

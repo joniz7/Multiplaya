@@ -35,6 +35,7 @@ namespace mp
     {
         public:
 			World(WorldData* worldData);
+			void reset();
 			void exec();
             ~World();
 			b2World* getWorld(){ return world; }

@@ -86,7 +86,7 @@ namespace mp
 
 			void scheduleForDeletion(DynamicGameObject* object);
 			void removeBullet(IBullet* bullet);
-			void removeAllBullets(sf::Int8 clientID);
+			void removeBulletsExcept(sf::Int8 clientID);
 
 			// Setters
 			// Set logic fps

@@ -36,12 +36,13 @@ namespace mp
 			sf::RenderWindow* renderWindow;
 		
 			void startGame();
-			void stopGame();
 			void exitGame();
 			void pauseGame();
 			void resumeGame();
 			void showMainMenu();
 			void showJoinMenu();
+
+			void reset();
 	};
 }
 #endif // CONTROLLER_H

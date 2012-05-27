@@ -252,11 +252,9 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::deleteCharacter(int i)
 	{
-		//worldViewMutex.lock();
 		CharacterView* character = (CharacterView*) characters.at(i);
 		characters.erase(characters.begin() + i);
-		delete character;
-		//worldViewMutex.unlock();
+		//delete character; // TODO why does this fail?
 	}
 
 	/////////////////////////////////
