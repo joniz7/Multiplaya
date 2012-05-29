@@ -31,6 +31,32 @@ namespace mp
 		initialize();
 	}
 
+	/**
+	 * Resets this WorldView.
+	 * Destroys and re-creates characters, possible bullets and the map.
+	 * Note: Since we fetch everything from WorldData, reset that first.
+	 */
+	void WorldView::reset() {
+		worldViewMutex.lock();
+
+		// Delete all our current characterViews (if any).
+		for (unsigned int i=0;i<characters.size();i++) {
+			//delete characters.at(i); // TODO can't delete. Why is that?
+		} characters.clear();
+		// Create new ones.
+		createCharacterViews();
+
+		// Delete all our current bulletViews (if any).
+		for (unsigned int i=0;i<bullets.size();i++) {
+			//delete bullets.at(i); // TODO can't delete (I think). Why is that?
+		} bullets.clear();
+
+		// Resets the map.
+		updateWorldVertices();
+
+		worldViewMutex.unlock();
+	}
+
 	/////////////////////////////////
 	/// Initialize everything.
 	/// Set SFML settings, etc.
@@ -98,9 +124,8 @@ namespace mp
 		dotSpr->setOrigin(32, 32);
 		dotSpr->setScale(0.5f, 0.5f);
 
-		createCharacterViews();
-
-		updateWorldVertices();
+		// Creates characters and loads the map.
+		reset();
 
 		std::cout << "Render window initialized!" << std::endl;
 	}
@@ -453,11 +478,12 @@ namespace mp
 	}
 
 	////////////////////////////////
-	/// Refreshes the vertices representings
+	/// Refreshes the vertices representing
 	/// the world physics geo.
 	////////////////////////////////
 	void WorldView::updateWorldVertices()
 	{
+		// TODO: should delete the objects as well?
 		worldGeo.clear();
 
 		worldDataMutex.lock();

@@ -93,8 +93,14 @@ namespace mp
 	}
 
 	void Controller::reset() {
-		// TODO: implement more reset() methods.
+		// Reset model.
 		world->reset();
+		
+		// Reset GameController.
+		((GameController*) controllers["game"])->reset();
+
+		// Reset view
+		window->getGameWindow()->reset();
 	}
 
 	Controller::~Controller()

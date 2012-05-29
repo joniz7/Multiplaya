@@ -29,6 +29,8 @@ namespace mp
 	 * Creates a fresh instance of the physics world.
 	 */
 	void World::reset() {
+		worldData->reset();
+
 		// Setup the world properties
 		const b2Vec2 gravity(0, -9.8f * 8);
 		// Create the world

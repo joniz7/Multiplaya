@@ -21,13 +21,7 @@ namespace mp
 		worldView = (WorldView*) gameScreen;
 		this->model = model;
 		this->network = NULL;
-		this->currentPlayer = new Player();
-
-		worldDataMutex.lock();
-		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
-		worldDataMutex.unlock();
-
-		zoomFactor = 0;
+		reset();
     }
 
 	void GameController::setNetworkHandler(NetworkHandler* network) 
@@ -35,6 +29,15 @@ namespace mp
 		this->network = network;
 	}
 
+	void GameController::reset() {
+		
+		this->currentPlayer = new Player();
+		worldDataMutex.lock();
+		this->currentPlayer->setCharacter(model->getWorldData()->getCurrentCharacter());
+		worldDataMutex.unlock();
+
+		zoomFactor = 0;
+	}
 
 	/**
 	 * Handles input for when we're ingame.

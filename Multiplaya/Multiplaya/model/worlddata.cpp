@@ -10,13 +10,39 @@ namespace mp
 	/**
 	 * Creates a new WorldData instance.
 	 */
-    WorldData::WorldData()
-	{
+    WorldData::WorldData() {
+		reset();
+	}
+
+	void WorldData::reset() {
 		logicFps = 0;
 		// TODO hardcoded. not good !1!
 		currentCharacterId = 0;
-
 		isClient = false;
+
+		std::cout << "characters.size(): "<< characters.size() << std::endl;
+		std::cout << "bullets.size(): "<< bullets.size() << std::endl;
+		std::cout << "chains.size(): "<< chains.size() << std::endl;
+		std::cout << "bodies.size(): "<< bodies.size() << std::endl;
+		
+		worldDataMutex.lock();
+		for (int i=0;i<characters.size(); i++) {
+			scheduleForDeletion(characters.at(i));
+		} characters.clear();
+
+		for (int i=0;i<bullets.size(); i++) {
+			scheduleForDeletion(bullets.at(i));
+		} bullets.clear();
+
+		for (int i=0;i<chains.size(); i++) {
+			delete chains.at(i);
+			//scheduleForDeletion(chains.at(i)); // TODO should chains be dynamic game objects?
+		} chains.clear();
+
+		//chains.clear();
+		//bodies.clear();
+
+		worldDataMutex.unlock();
 	}
 
 	/**

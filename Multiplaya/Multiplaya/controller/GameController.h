@@ -43,6 +43,7 @@ namespace mp
         public:
 			GameController(World* model, sf::RenderWindow* window, Screen* joinGameScreen);
 			~GameController();
+			void reset();
 			void handleInput();
 			void setNetworkHandler(NetworkHandler* network);
             

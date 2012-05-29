@@ -38,6 +38,7 @@ namespace mp
         public:
 			WorldData();
             ~WorldData();
+			void reset();
 
 			//Adders
 			void addCharacter(ICharacter* c);

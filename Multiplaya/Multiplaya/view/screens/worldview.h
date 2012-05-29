@@ -43,7 +43,7 @@ namespace mp
     {
         public:
 			WorldView( WorldData* worldData, sf::RenderWindow* window );
-
+			void reset();
 			/// returns sf::View pointing to camera
 			sf::View* getView() { return camera; }
             ~WorldView();
