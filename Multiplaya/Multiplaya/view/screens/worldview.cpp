@@ -37,24 +37,21 @@ namespace mp
 	 * Note: Since we fetch everything from WorldData, reset that first.
 	 */
 	void WorldView::reset() {
-		worldViewMutex.lock();
 
 		// Delete all our current characterViews (if any).
-		for (unsigned int i=0;i<characters.size();i++) {
+		/*for (unsigned int i=0;i<characters.size();i++) {
 			//delete characters.at(i); // TODO can't delete. Why is that?
-		} characters.clear();
+		}*/ characters.clear();
 		// Create new ones.
 		createCharacterViews();
 
 		// Delete all our current bulletViews (if any).
-		for (unsigned int i=0;i<bullets.size();i++) {
+		/*for (unsigned int i=0;i<bullets.size();i++) {
 			//delete bullets.at(i); // TODO can't delete (I think). Why is that?
-		} bullets.clear();
+		}*/ bullets.clear();
 
 		// Resets the map.
 		updateWorldVertices();
-
-		worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -220,30 +217,30 @@ namespace mp
 		{
 			worldViewMutex.lock();
 			IBullet* bullet = ( IBullet* )object;
-			addBullet(bullet);
 			worldViewMutex.unlock();
+			addBullet(bullet);
 		}
 		else if (e == BULLET_DELETED)
 		{
 			worldViewMutex.lock();
 			int i = ( intptr_t )object;
-			deleteBullet(i);
 			worldViewMutex.unlock();
+			deleteBullet(i);
 		}
 		else if (e == CHARACTER_ADDED)
 		{
 			worldViewMutex.lock();
 			std::cout << "Adding character to view" << std::endl;
 			ICharacter* character = (ICharacter*)object;
-			addCharacter(character);
 			worldViewMutex.unlock();
+			addCharacter(character);
 		}
 		else if (e == CHARACTER_DELETED)
 		{
 			worldViewMutex.lock();
 			int i = ( intptr_t )object;
-			deleteCharacter(i);
 			worldViewMutex.unlock();
+			deleteCharacter(i);
 		}
 	}
 
@@ -324,11 +321,11 @@ namespace mp
 	/// Fetches all character models and creates their corresponding views.
 	/////////////////////////////////
 	void WorldView::createCharacterViews() {
-		worldDataMutex.lock();
-
 		// Fetch character models.
+		worldDataMutex.lock();
 		std::vector<ICharacter*>* characterModels = worldData->getCharacters();
 		std::cout<<"Characters: "<<worldData->getCharacters()->size()<<std::endl;
+		worldDataMutex.unlock();
 		// Loop through them,
 		for (unsigned int i = 0; i < characterModels->size(); i++) {
 			// create for each one a visual representation,
@@ -336,7 +333,6 @@ namespace mp
 			// and add it to our list of CharacterViews.
 			this->characters.push_back( view );
 		}
-		worldDataMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -432,14 +428,9 @@ namespace mp
 		updateCamera();
 		updateSightPos();
 
-		// Access world data
-		worldDataMutex.lock();
 		updateVector(bullets);
 		updateVector(characters);
 		updateHUD();
-
-		// Unlock world data mutex
-		worldDataMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -483,8 +474,8 @@ namespace mp
 		worldGeo.clear();
 
 		worldDataMutex.lock();
-
 		std::vector<WorldChain*> wee = *worldData->getChains();
+		worldDataMutex.unlock();
 
 		for(std::vector<WorldChain*>::iterator it = wee.begin(); it != wee.end(); ++it)
 		{
@@ -498,7 +489,6 @@ namespace mp
 				worldGeo.back()->setPrimitiveType(sf::LinesStrip);
 			}
 		}
-		worldDataMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -506,12 +496,10 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::updateVector(std::vector<GameObjectView*>& vector)
 	{
-		worldViewMutex.lock();
 		std::vector<GameObjectView*>::iterator it;
 		for ( it = vector.begin() ; it < vector.end(); it++ ) {
 			(*it)->update();
 		}
-		worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -540,8 +528,9 @@ namespace mp
 	void WorldView::updateHUD()
 	{
 		worldDataMutex.lock();
-
 		ICharacter* currentCharacter = worldData->getCurrentCharacter();
+		worldDataMutex.unlock();
+
 		std::ostringstream kills, deaths; // (convert short->string)
 
 		kills << currentCharacter -> getKills();
@@ -551,8 +540,6 @@ namespace mp
 
 		ammoSprite->setState(currentCharacter->getClip());
 		hpSprite->setState(currentCharacter->getHealthState());
-
-		worldDataMutex.unlock();
 	}
 
 	////////////////////////////////////////////////////////////
