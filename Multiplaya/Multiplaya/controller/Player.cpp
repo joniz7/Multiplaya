@@ -33,43 +33,31 @@ namespace mp {
 			// Left movement key is pressed
 			if ( input->btnDwnLeft() && !input->btnDwnRight() )	// Character should face left
 			{
-				worldDataMutex.lock();
 				if(character->isTouchingWallLeft())
 					character->setWallSliding(true);
-				worldDataMutex.unlock();
 			}
 			// Right movement key is pressed
 			else if ( input->btnDwnRight() && !input->btnDwnLeft() )	// Character should face right
 			{
-				worldDataMutex.lock();
 				if(character->isTouchingWallRight())
 					character->setWallSliding(true);
-				worldDataMutex.unlock();
 			}
 
 			// If we're not trying to move in both directions at once
 			if( !(input->btnDwnLeft() && input->btnDwnRight()) )
 			{
 				if ( input->btnDwnLeft() && !input->btnDwnRight() ) {
-					worldDataMutex.lock();
 					character->moveLeft();
-					worldDataMutex.unlock();
 				}
 				else if ( input->btnDwnRight() && !input->btnDwnLeft() ) {
-					worldDataMutex.lock();
 					character->moveRight();
-					worldDataMutex.unlock();
 				}
 
 				if (input->btnDwnLeft() || input->btnDwnRight() && character->isGrounded()) {
-					worldDataMutex.lock();
 					character->setWalking(true);
-					worldDataMutex.unlock();
 				}
 				else {
-					worldDataMutex.lock();
 					character->setWalking(false);
-					worldDataMutex.unlock();
 				}
 			}
 		}
@@ -81,45 +69,33 @@ namespace mp {
 		if ( input->btnDwnUp() )
 		{
 			/*
-			worldDataMutex.lock();
 			moveUp();
-			worldDataMutex.unlock();
 			*/
 		}
 		if ( input->btnDwnDown() )
 		{
-			worldDataMutex.lock();
 			character->setFloorSliding(true);
-			worldDataMutex.unlock();
 		}
 		if( input->btnDwnPrimary() )
         {
 			b2Vec2 targetPos(mousePos.x, mousePos.y);
-			worldDataMutex.lock();
 			character->setFocusing(true);
 			character->primaryFire(targetPos);
-			worldDataMutex.unlock();
         }
 		if( input->btnDwnSecondary() )
         {
-			worldDataMutex.lock();
 			character->setFocusing(true);
-			worldDataMutex.unlock();
         }
 		else
 		{
-			worldDataMutex.lock();
 			character->setFocusing(false);
-			worldDataMutex.unlock();
 		}
 		if ( input->btnDwnJump() )
 		{
 			//same as above will be moved to character class
 			if(released)
 			{
-				worldDataMutex.lock();
 				character->jump();
-				worldDataMutex.unlock();
 
 				released = false;
 			}
@@ -131,10 +107,10 @@ namespace mp {
 
 		/*if ( pressingKeyForConnecting() )
 		{
-			//worldData->notify() bblala
 			worldDataMutex.lock();
-			character->connectToServer();
+			//worldData->notify() bblala
 			worldDataMutex.unlock();
+			character->connectToServer();
 		}*/
 
 		if ( input->btnDwnReload() )

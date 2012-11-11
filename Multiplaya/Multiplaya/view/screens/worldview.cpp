@@ -446,9 +446,13 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::updateFpsCounters()
 	{
-		// Every 10th frame:
-		if(counter == 10) {
-			int renderFps = (int)(1 / elapsed);
+		// Every 10th frame: NOPE
+		//if(counter == 10) {
+			int renderFps;
+			if( (int)(1 / elapsed) > 60 )
+				renderFps = 60;
+			else
+				renderFps = (int)(1 / elapsed);
 
 			worldDataMutex.lock();
 			int logicFps = worldData->getLogicFps();
@@ -459,9 +463,9 @@ namespace mp
 			std::string logicFpsString = convertInt(logicFps);
 			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
-			counter = 0;
-		} else
-			counter++;
+			//counter = 0;
+		//} else
+			//counter++;
 	}
 
 	////////////////////////////////

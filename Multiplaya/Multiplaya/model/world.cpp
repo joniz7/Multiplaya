@@ -49,7 +49,7 @@ namespace mp
 		// Lock world data so only one thread can access world data at the same time
 		worldDataMutex.lock();
 
-		// Add´test character to the world.
+		// Add test character to the world.
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
 		//worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
 
@@ -64,8 +64,6 @@ namespace mp
 	 * The logic loop; updates the game world, runs Box2D and everything else.
 	 */
     void World::exec() {
-			// Lock world data so only one thread can access world data at the same time
-			worldDataMutex.lock();
 			clock->restart();
 			// Perform a physics step
 			world->Step(timeStep, velocityIterations, positionIterations);
@@ -91,16 +89,22 @@ namespace mp
 			// Get frame time
 			float elapsed = clock->getElapsedTime().asSeconds();
 			// Save logic fps
-			worldData->setLogicFps((int)(1 / elapsed));
+			worldDataMutex.lock();
+			if( (int)(1 / elapsed) > 60 )
+				worldData->setLogicFps( 60 );
+			else
+				worldData->setLogicFps( (int)(1 / elapsed) );
 
 			// Unlock world data
 			worldDataMutex.unlock();
 
+			/* //TODO: THIS IS THE PERFORMANCE HOG WE'VE BEEN LOOKING FOR FOREVER ASDFGASDEHAJSD
 			// Have we finished faster than expected?
 			if(elapsed<(1 / 120.0f)) {
 				// Leave the arena now and rest - you've earned it.
 				sf::sleep( sf::seconds( (1 / 120.0f)-elapsed ) );
 			}
+			*/
 
 			if( sf::Keyboard::isKeyPressed( sf::Keyboard::F5 ) )
 				reloadStuff();
