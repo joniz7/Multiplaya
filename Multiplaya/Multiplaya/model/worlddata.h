@@ -64,6 +64,7 @@ namespace mp
 
 			/// Get list of all bullets.
 			std::vector<IBullet*>* getBullets(){ return &bullets; }
+			int getBulletCount(){return bullets.size(); };
 			std::vector<DynamicGameObject*>* getDeletionList() { return &deletionList; }
 			/// Get list of all bodies.
 			std::vector<b2Body*>* getBodies(){ return &bodies; }

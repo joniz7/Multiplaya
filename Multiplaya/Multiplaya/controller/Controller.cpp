@@ -134,7 +134,7 @@ namespace mp
 		}
 
 
-		(window->*currentDrawFunction)(); // Draw screen.
+		(window->*currentDrawFunction)(); // Draw screen. TODO: Move this to separate thread. Very important!
 
 
 		currentController->handleInput(); // Handle input.

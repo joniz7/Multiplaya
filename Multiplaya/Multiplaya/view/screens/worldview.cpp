@@ -90,6 +90,7 @@ namespace mp
 		// Setup fps labels.
 		renderFpsTxt = new sf::Text("Render fps: 00");
 		logicFpsTxt = new sf::Text("Logic fps: 00");
+		bulletCountTxt = new sf::Text("Bullets: 0");
 
 		renderFpsTxt->setFont(*fontGothic);
 		renderFpsTxt->setCharacterSize(25);
@@ -100,6 +101,11 @@ namespace mp
 		logicFpsTxt->setCharacterSize(25);
 		logicFpsTxt->setStyle(sf::Text::Regular);
 		logicFpsTxt->setPosition(8, 30);
+
+		bulletCountTxt->setFont(*fontGothic);
+		bulletCountTxt->setCharacterSize(25);
+		bulletCountTxt->setStyle(sf::Text::Regular);
+		bulletCountTxt->setPosition(8, 60);
 
 		//----SFML stuff----
 		sf::Vector2f center(0,0);
@@ -377,7 +383,7 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
-		drawVector(bullets, window);
+		//drawVector(bullets, window);
 	}
 
 	/////////////////////////////////
@@ -411,6 +417,7 @@ namespace mp
 		{
 			window.draw(*renderFpsTxt);
 			window.draw(*logicFpsTxt);
+			window.draw(*bulletCountTxt);
 		}
 	}
 
@@ -429,7 +436,8 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::update()
 	{
-		updateFpsCounters();
+		if(debugMode)
+			updateFpsCounters();
 		updateCamera();
 		updateSightPos();
 
@@ -451,29 +459,36 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::updateFpsCounters()
 	{
-		// Every 10th frame: NOPE
-		//if(counter == 10) {
-			int renderFps;
-			if( (int)(1 / elapsed) > fpsLimit )
-				renderFps = fpsLimit;
-			else
-				renderFps = (int)(1 / elapsed);
+			int renderFps = (int)(1 / elapsed);
 
 			worldDataMutex.lock();
 			int logicFps = worldData->getLogicFps();
+			int bulletCount = worldData->getBulletCount();
 			worldDataMutex.unlock();
 
-			std::string renderFpsString = convertInt(renderFps);
+			// Calculate average render fps over the last second
+			recentRenderFps.push_back(renderFps);
+			if(recentRenderFps.size()>60)
+				recentRenderFps.erase(recentRenderFps.begin());
+			int avgRenderFps = 0;
+			for(int i=0;i<recentRenderFps.size();i++) {
+				avgRenderFps+=recentRenderFps.at(i);
+			}
+			avgRenderFps = avgRenderFps/recentRenderFps.size();
+
+			std::string bulletCountString = convertInt(bulletCount);
+			bulletCountTxt->setString("Bullets: " + bulletCountString);
+
+		// Only update fps counters every so often to increase readabilty
+		if(counter == 5) {
+			std::string renderFpsString = convertInt(avgRenderFps);
 			renderFpsTxt->setString("Render fps: " + renderFpsString);
 			std::string logicFpsString = convertInt(logicFps);
-			if(logicFps > 60)
-				logicFpsTxt->setString("Logic fps:  60+");
-			else
-				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
-
-			//counter = 0;
-		//} else
-			//counter++;
+			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
+			// Reset counter
+			counter = 0;
+		} else
+			counter++;
 	}
 
 	////////////////////////////////

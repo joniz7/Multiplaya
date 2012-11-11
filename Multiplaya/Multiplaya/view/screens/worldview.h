@@ -107,6 +107,7 @@ namespace mp
 
 			sf::Text* renderFpsTxt;
 			sf::Text* logicFpsTxt;
+			sf::Text* bulletCountTxt;
 
 			sf::Texture* backgroundTexture;
 			sf::Sprite* backgroundSprite;
@@ -148,6 +149,8 @@ namespace mp
 			void updateHUD();
 			void updateSightPos();
 
+			std::vector<int> recentRenderFps;
+			std::vector<int> recentLogicFps;
 			bool drawHud;
 			bool debugMode;
 			short counter;

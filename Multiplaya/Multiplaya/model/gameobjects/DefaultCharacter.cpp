@@ -24,7 +24,7 @@ namespace mp
 		this->dead = false;
 		this->maxHealth = 80;
 		this->setHealth(80); // TODO should default value be defined elsewhere?
-		this->cooldown = 100; // milliseconds in between shots.
+		this->cooldown = 5; // milliseconds in between shots.
 		this->reloadTime = 1000; // Milliseconds it takes to reload.
 		this->clipSize = 11; // Amount of bullets magazine holds.
 		this->clip = clipSize; // Begin game fully loaded.

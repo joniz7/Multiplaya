@@ -43,7 +43,7 @@ namespace mp
 		// World step properties
 		timeStep = 1.0f / 60.0f;
 		velocityIterations = 6;
-		positionIterations = 2;
+		positionIterations = 3;
 		clock = new sf::Clock();
 
 		// Lock world data so only one thread can access world data at the same time
@@ -53,11 +53,11 @@ namespace mp
 		worldData->addCharacter( world, b2Vec2(0.0f, 4.0f), b2Vec2(1.0f, 2.0f), 0 );
 		//worldData->addCharacter( world, b2Vec2(2.0f, 4.0f), b2Vec2(1.0f, 2.0f), 1 );
 
-		// Load world physics
-		loadMap("resources/maps/test");
-
 		// Unlock world data
 		worldDataMutex.unlock();
+
+		// Load world physics
+		loadMap("resources/maps/test");
 	}
 
 	/**
@@ -90,12 +90,12 @@ namespace mp
 			float elapsed = clock->getElapsedTime().asSeconds();
 			// Save logic fps
 			worldDataMutex.lock();
-			worldData->setLogicFps( (int)(1 / elapsed) );
+			worldData->setLogicFps( ((int)(1 / elapsed)) / 2 );
 
 			// Unlock world data
 			worldDataMutex.unlock();
 
-			/* //TODO: THIS IS THE PERFORMANCE HOG WE'VE BEEN LOOKING FOR FOREVER ASDFGASDEHAJSD
+			/* // TODO: THIS IS THE PERFORMANCE HOG WE'VE BEEN LOOKING FOR FOREVER ASDFGASDEHAJSD
 			// Have we finished faster than expected?
 			if(elapsed<(1 / 120.0f)) {
 				// Leave the arena now and rest - you've earned it.
