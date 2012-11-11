@@ -376,9 +376,7 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::drawBullets(sf::RenderTarget& window) const
 	{
-		worldViewMutex.lock();
 		drawVector(bullets, window);
-		worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////
@@ -386,9 +384,7 @@ namespace mp
 	/////////////////////////////////
 	void WorldView::drawCharacters(sf::RenderTarget& window) const
 	{
-		worldViewMutex.lock();
 		drawVector(characters, window);
-		worldViewMutex.unlock();
 	}
 
 	/////////////////////////////////
