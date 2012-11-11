@@ -66,6 +66,11 @@ namespace mp
 		// The path to resources
 		resourcesDir = "resources/";
 
+		// Save stuff found in config. TODO: Move this to a global class/work on config handler
+		fpsLimit = ConfigHandler::instance().getInt("r_fpslimit");
+		drawHud = ConfigHandler::instance().getBool("r_drawhud");
+		debugMode = ConfigHandler::instance().getBool("s_debugmode");
+
 		// Background stuff
 		float screenWidth = float(window->getSize().x);
 		float screenHeight = float(window->getSize().y);
@@ -391,7 +396,7 @@ namespace mp
 		window.setView(this->window->getDefaultView());
 		window.draw(*dotSpr);
 		// Draw hud
-		if(ConfigHandler::instance().getBool("r_drawhud")) {
+		if(drawHud) {
 			window.draw(*killsSprite);
 			window.draw(*killsText);
 
@@ -402,7 +407,7 @@ namespace mp
 			window.draw(*hpSprite);
 		}
 		// Draw debug labels
-		if(ConfigHandler::instance().getBool("s_debugmode"))
+		if(debugMode)
 		{
 			window.draw(*renderFpsTxt);
 			window.draw(*logicFpsTxt);
@@ -449,8 +454,8 @@ namespace mp
 		// Every 10th frame: NOPE
 		//if(counter == 10) {
 			int renderFps;
-			if( (int)(1 / elapsed) > 60 )
-				renderFps = 60;
+			if( (int)(1 / elapsed) > fpsLimit )
+				renderFps = fpsLimit;
 			else
 				renderFps = (int)(1 / elapsed);
 
@@ -461,7 +466,10 @@ namespace mp
 			std::string renderFpsString = convertInt(renderFps);
 			renderFpsTxt->setString("Render fps: " + renderFpsString);
 			std::string logicFpsString = convertInt(logicFps);
-			logicFpsTxt->setString("Logic fps:  " + logicFpsString);
+			if(logicFps > 60)
+				logicFpsTxt->setString("Logic fps:  60+");
+			else
+				logicFpsTxt->setString("Logic fps:  " + logicFpsString);
 
 			//counter = 0;
 		//} else

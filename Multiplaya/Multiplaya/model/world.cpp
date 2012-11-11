@@ -90,10 +90,7 @@ namespace mp
 			float elapsed = clock->getElapsedTime().asSeconds();
 			// Save logic fps
 			worldDataMutex.lock();
-			if( (int)(1 / elapsed) > 60 )
-				worldData->setLogicFps( 60 );
-			else
-				worldData->setLogicFps( (int)(1 / elapsed) );
+			worldData->setLogicFps( (int)(1 / elapsed) );
 
 			// Unlock world data
 			worldDataMutex.unlock();

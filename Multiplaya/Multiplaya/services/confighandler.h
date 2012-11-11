@@ -12,7 +12,7 @@ namespace mp
 {
 	/**
 	 * A singleton class, which reads data from a configuration file
-	 * and stores it in a map for easy access from anywhere in the program.
+	 * and stores it in a map for easy access from anywhere in the program. Should not be read in real-time since it does string comparision!
 	 */
     class ConfigHandler
     {

@@ -259,12 +259,15 @@ namespace mp
 	 * Note: Private method, call primaryFire() if you want to initiate shooting!
 	 */
 	void DefaultCharacter::shoot() {
+		shootingTimer->restart();
+		/* // TODO: Commented this out to test stuff.
 		if (--clip <= 0) {
 			this->reload();
 		}
 		else {
 			shootingTimer->restart();
 		}
+		*/
 	}
 
 	/// Checks if the character is shooting

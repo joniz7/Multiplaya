@@ -148,7 +148,10 @@ namespace mp
 			void updateHUD();
 			void updateSightPos();
 
-			int counter;
+			bool drawHud;
+			bool debugMode;
+			short counter;
+			short fpsLimit;
 			float elapsed;
     };
 }
